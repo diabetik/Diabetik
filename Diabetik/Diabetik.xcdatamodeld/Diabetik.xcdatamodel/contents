@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="2061" systemVersion="12D78" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="UAAccount" representedClassName="UAAccount" parentEntity="UABaseObject">
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dob" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photoPath" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UAEvent" inverseName="account" inverseEntity="UAEvent" syncable="YES"/>
+        <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UAReminder" inverseName="account" inverseEntity="UAReminder" syncable="YES"/>
+        <relationship name="runKeeperAccount" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="UARunKeeperAccount" inverseName="account" inverseEntity="UARunKeeperAccount" syncable="YES"/>
+        <userInfo/>
+    </entity>
+    <entity name="UAActivity" representedClassName="UAActivity" parentEntity="UAEvent" syncable="YES">
+        <attribute name="minutes" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <entity name="UABaseObject" representedClassName="UAManagedObject" isAbstract="YES" syncable="YES">
+        <attribute name="createdTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="modifiedTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="uuid" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="UAEvent" representedClassName="UAEvent" isAbstract="YES" parentEntity="UABaseObject" syncable="YES">
+        <attribute name="externalSource" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="externalUUID" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="filterType" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lon" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photoPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sectionIdentifier" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" indexed="YES" syncable="YES"/>
+        <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UAAccount" inverseName="events" inverseEntity="UAAccount" syncable="YES"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UATag" inverseName="events" inverseEntity="UATag" syncable="YES"/>
+    </entity>
+    <entity name="UAMeal" representedClassName="UAMeal" parentEntity="UAEvent" syncable="YES">
+        <attribute name="grams" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="UAMedicine" representedClassName="UAMedicine" parentEntity="UAEvent" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="UANote" representedClassName="UANote" parentEntity="UAEvent" syncable="YES"/>
+    <entity name="UAReading" representedClassName="UAReading" parentEntity="UAEvent" syncable="YES">
+        <attribute name="mgValue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="mmoValue" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <entity name="UAReminder" representedClassName="UAReminder" parentEntity="UABaseObject" syncable="YES">
+        <attribute name="active" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
+        <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="days" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="lat" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="lng" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="locationName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="message" attributeType="String" syncable="YES"/>
+        <attribute name="trigger" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UAAccount" inverseName="reminders" inverseEntity="UAAccount" syncable="YES"/>
+    </entity>
+    <entity name="UAReminderTrigger" syncable="YES"/>
+    <entity name="UARunKeeperAccount" representedClassName="UARunKeeperAccount" parentEntity="UABaseObject" syncable="YES">
+        <attribute name="lastSyncTimestamp" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="syncInterval" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="account" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="UAAccount" inverseName="runKeeperAccount" inverseEntity="UAAccount" syncable="YES"/>
+    </entity>
+    <entity name="UATag" representedClassName="UATag" parentEntity="UABaseObject" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="nameLC" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UAEvent" inverseName="tags" inverseEntity="UAEvent" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="UAAccount" positionX="-929" positionY="36" width="128" height="163"/>
+        <element name="UAActivity" positionX="-981" positionY="-306" width="128" height="60"/>
+        <element name="UABaseObject" positionX="-740" positionY="107" width="128" height="90"/>
+        <element name="UAEvent" positionX="-1125" positionY="-156" width="128" height="223"/>
+        <element name="UAMeal" positionX="-693" positionY="-307" width="128" height="75"/>
+        <element name="UAMedicine" positionX="-1127" positionY="-306" width="128" height="75"/>
+        <element name="UANote" positionX="-551" positionY="-306" width="128" height="45"/>
+        <element name="UAReading" positionX="-837" positionY="-306" width="128" height="75"/>
+        <element name="UAReminder" positionX="-740" positionY="-162" width="128" height="210"/>
+        <element name="UARunKeeperAccount" positionX="-920" positionY="279" width="128" height="103"/>
+        <element name="UATag" positionX="-1127" positionY="108" width="128" height="90"/>
+        <element name="UAReminderTrigger" positionX="-569" positionY="-160" width="128" height="43"/>
+    </elements>
+</model>
