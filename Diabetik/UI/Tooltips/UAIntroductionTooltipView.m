@@ -86,7 +86,6 @@
     header.font = [UAFont standardBoldFontWithSize:26.0f];
     header.text = NSLocalizedString(@"Hi there!", nil);
     header.adjustsFontSizeToFitWidth = YES;
-    header.minimumScaleFactor = 0.5f;
     if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
     {
         header.minimumScaleFactor = 0.5f;
