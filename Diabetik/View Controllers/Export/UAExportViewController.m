@@ -415,7 +415,7 @@
         {
             NSDictionary *monthData = [reportData objectForKey:month];
             NSDictionary *monthStats = [monthData objectForKey:@"stats"];
-            data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, %@, %@, %@", month, [valueFormatter stringFromNumber:[monthStats objectForKey:@"readings_avg"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_minutes"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_grams"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"lowest_reading"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"highest_reading"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"readings_deviation"]]];
+            data = [data stringByAppendingFormat:@"\n\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\"", month, [valueFormatter stringFromNumber:[monthStats objectForKey:@"readings_avg"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_minutes"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_grams"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"lowest_reading"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"highest_reading"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"readings_deviation"]]];
             
         }
     }
