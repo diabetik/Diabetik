@@ -217,7 +217,7 @@
 #pragma mark - Accessors
 - (void)setDeviationValue:(NSNumber *)value withFormatter:(NSNumberFormatter *)valueFormatter
 {
-    if(value > 0)
+    if([value doubleValue] > 0)
     {
         deviationImageView.image = [UIImage imageNamed:@"JournalIconDeviation.png"];
         deviationLabel.text = [valueFormatter stringFromNumber:value];
@@ -234,7 +234,7 @@
 }
 - (void)setAverageGlucoseValue:(NSNumber *)value withFormatter:(NSNumberFormatter *)valueFormatter
 {
-    if(value > 0)
+    if([value doubleValue] > 0)
     {
         glucoseImageView.image = [UIImage imageNamed:@"JournalIconAverageBlood.png"];
         glucoseLabel.text = [valueFormatter stringFromNumber:value];
@@ -251,7 +251,7 @@
 }
 - (void)setLowGlucoseValue:(NSNumber *)value withFormatter:(NSNumberFormatter *)valueFormatter
 {
-    if(value > 0)
+    if([value doubleValue] > 0)
     {
         lowGlucoseImageView.image = [UIImage imageNamed:@"JournalIconLowestBlood.png"];
         lowGlucoseLabel.text = [valueFormatter stringFromNumber:value];
@@ -268,7 +268,7 @@
 }
 - (void)setHighGlucoseValue:(NSNumber *)value withFormatter:(NSNumberFormatter *)valueFormatter
 {
-    if(value > 0)
+    if([value doubleValue] > 0)
     {
         highGlucoseImageView.image = [UIImage imageNamed:@"JournalIconHighestBlood.png"];
         highGlucoseLabel.text = [valueFormatter stringFromNumber:value];
@@ -302,7 +302,7 @@
 }
 - (void)setMealValue:(NSNumber *)value withFormatter:(NSNumberFormatter *)valueFormatter
 {
-    if(value > 0)
+    if([value doubleValue] > 0)
     {
         mealImageView.image = [UIImage imageNamed:@"JournalIconFood.png"];
         mealLabel.text = [valueFormatter stringFromNumber:value];
