@@ -175,19 +175,39 @@
         [tweetButton setImage:[UIImage imageNamed:@"AddEntryKeyboardTweet.png"] forState:UIControlStateNormal];
         [tweetButton setTitle:NSLocalizedString(@"Tweet", @"A button allowing users to post an entry on Twitter") forState:UIControlStateNormal];
         [tweetButton addTarget:self action:@selector(presentTweetComposer:) forControlEvents:UIControlEventTouchUpInside];
-        if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0") || ![SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter])
+        
+        BOOL enableTwitterButton = YES;
+        if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0") || !NSClassFromString(@"SLComposeViewController"))
         {
-            [tweetButton setEnabled:NO];
+            enableTwitterButton = NO;            
         }
+        else
+        {
+            if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
+            {
+                enableTwitterButton = NO;
+            }
+        }
+        [tweetButton setEnabled:enableTwitterButton];        
         
         UAKeyboardBackingViewButton *likeButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero];
         [likeButton setImage:[UIImage imageNamed:@"AddEntryKeyboardLike.png"] forState:UIControlStateNormal];
         [likeButton setTitle:NSLocalizedString(@"Like", @"A button allowing users to 'Like' an entry on Facebook") forState:UIControlStateNormal];
         [likeButton addTarget:self action:@selector(presentFacebookComposer:) forControlEvents:UIControlEventTouchUpInside];
-        if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0") || ![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
+        
+        BOOL enableFacebookButton = YES;
+        if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0") || !NSClassFromString(@"SLComposeViewController"))
         {
-            [likeButton setEnabled:NO];
+            enableFacebookButton = NO;
         }
+        else
+        {
+            if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
+            {
+                enableFacebookButton = NO;
+            }
+        }
+        [likeButton setEnabled:enableFacebookButton];
         
         UAKeyboardBackingViewButton *deleteButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero];
         [deleteButton setImage:[UIImage imageNamed:@"AddEntryKeyboardTrash.png"] forState:UIControlStateNormal];

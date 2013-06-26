@@ -24,11 +24,21 @@
 
 - (NSUInteger)supportedInterfaceOrientations
 {
-    return [self.topViewController supportedInterfaceOrientations];
+    if([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)])
+    {
+        return [self.topViewController supportedInterfaceOrientations];
+    }
+    
+    return 0;
 }
 - (BOOL)shouldAutorotate
 {
-    return [self.topViewController shouldAutorotate];
+    if([self.topViewController respondsToSelector:@selector(shouldAutorotate)])
+    {
+        return [self.topViewController shouldAutorotate];
+    }
+    
+    return NO;
 }
 
 @end
