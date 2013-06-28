@@ -509,6 +509,7 @@
 		533F356C17736C5500AD89E2 /* UAExportTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355617736C5500AD89E2 /* UAExportTooltipView.m */; };
 		533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355817736C5500AD89E2 /* UAIntroductionTooltipView.m */; };
 		533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */; };
+		535D4CC4177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535D4CC3177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m */; };
 		538DBA78166F830300F0709F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA77166F830300F0709F /* UIKit.framework */; };
 		538DBA7A166F830300F0709F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA79166F830300F0709F /* Foundation.framework */; };
 		538DBA7C166F830300F0709F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA7B166F830300F0709F /* CoreGraphics.framework */; };
@@ -1210,6 +1211,8 @@
 		533F355917736C5500AD89E2 /* UARemindersTooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARemindersTooltipView.h; sourceTree = "<group>"; };
 		533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARemindersTooltipView.m; sourceTree = "<group>"; };
 		533F355B17736C5500AD89E2 /* UAUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAUI.h; sourceTree = "<group>"; };
+		535D4CC2177DFE6000EE0C5D /* UAInsulinCalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorViewController.h; sourceTree = "<group>"; };
+		535D4CC3177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorViewController.m; sourceTree = "<group>"; };
 		538DBA73166F830300F0709F /* Diabetik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diabetik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		538DBA77166F830300F0709F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		538DBA79166F830300F0709F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1972,6 +1975,8 @@
 		533F325E1773266600AD89E2 /* Events */ = {
 			isa = PBXGroup;
 			children = (
+				535D4CC1177DFB9900EE0C5D /* Insulin Calculator */,
+				533F327E1773266600AD89E2 /* UI */,
 				533F325F1773266600AD89E2 /* Cells */,
 				533F32661773266600AD89E2 /* Image View */,
 				533F326B1773266600AD89E2 /* Map View */,
@@ -1989,7 +1994,6 @@
 				533F327B1773266600AD89E2 /* UAMedicineInputViewController.m */,
 				533F327C1773266600AD89E2 /* UANoteInputViewController.h */,
 				533F327D1773266600AD89E2 /* UANoteInputViewController.m */,
-				533F327E1773266600AD89E2 /* UI */,
 			);
 			path = Events;
 			sourceTree = "<group>";
@@ -2405,6 +2409,15 @@
 				533F355217736C5500AD89E2 /* UAModalView.m */,
 			);
 			path = "Modal view";
+			sourceTree = "<group>";
+		};
+		535D4CC1177DFB9900EE0C5D /* Insulin Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				535D4CC2177DFE6000EE0C5D /* UAInsulinCalculatorViewController.h */,
+				535D4CC3177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m */,
+			);
+			path = "Insulin Calculator";
 			sourceTree = "<group>";
 		};
 		538DBA68166F830300F0709F = {
@@ -3059,6 +3072,7 @@
 				533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */,
 				533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */,
 				532D0EE5177D83C6000D793F /* Appirater.m in Sources */,
+				535D4CC4177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

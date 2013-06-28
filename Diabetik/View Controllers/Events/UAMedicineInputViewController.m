@@ -21,6 +21,7 @@
 #import "NSDate+Extension.h"
 #import "NSString+Extension.h"
 
+#import "UAInsulinCalculatorViewController.h"
 #import "UAMedicineInputViewController.h"
 #import "UAAppDelegate.h"
 
@@ -120,6 +121,15 @@
     }
     
     [super viewWillAppear:animated];
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    UAInsulinCalculatorViewController *vc = [[UAInsulinCalculatorViewController alloc] initWithMOC:self.moc andAccount:[[UAAccountController sharedInstance] activeAccount]];
+    [self presentViewController:vc animated:YES completion:^{
+        
+    }];
 }
 - (void)didBecomeActive:(BOOL)editing
 {

@@ -219,12 +219,20 @@
 }
 - (UAEvent *)fetchEventForAccount:(UAAccount *)account withExternalUUID:(NSString *)uuid inContext:(NSManagedObjectContext *)moc
 {
+    NSArray *objects = [self fetchEventsWithPredicate:[NSPredicate predicateWithFormat:@"externalUUID == %@ && account == %@", uuid, account] inContext:moc];
+    if (objects != nil && [objects count] > 0)
+    {
+        return [objects objectAtIndex:0];
+    }
+    
+    return nil;
+}
+- (NSArray *)fetchEventsWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)moc
+{
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
     [request setEntity:entity];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"externalUUID == %@ && account == %@", uuid, account];
     [request setPredicate:predicate];
     
     // Execute the fetch.
@@ -232,7 +240,7 @@
     NSArray *objects = [moc executeFetchRequest:request error:&error];
     if (objects != nil && [objects count] > 0)
     {
-        return [objects objectAtIndex:0];
+        return objects;
     }
     
     return nil;
