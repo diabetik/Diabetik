@@ -384,8 +384,11 @@
                 NSDate *startDate = [(NSDate *)event.timestamp dateAtStartOfMonth];
                 NSDate *endDate = [startDate dateAtEndOfMonth];
 
-                NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:startDate toDate:endDate];
-                [dictionary setObject:@{@"startDate": startDate, @"endDate": endDate, @"stats": stats, @"events": @[event]} forKey:date];
+                if(startDate && endDate)
+                {
+                    NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:startDate toDate:endDate];
+                    [dictionary setObject:@{@"startDate": startDate, @"endDate": endDate, @"stats": stats, @"events": @[event]} forKey:date];
+                }
             }
             else
             {
