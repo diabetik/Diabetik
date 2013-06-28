@@ -20,6 +20,7 @@
 
 #import <Dropbox/Dropbox.h>
 #import "NXOAuth2.h"
+#import "Appirater.h"
 
 #import "UAHelper.h"
 #import "UAAppDelegate.h"
@@ -52,13 +53,21 @@
 #pragma mark - UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Initiate HockeyApp if we have applicable credentials
+    // Initialise HockeyApp if we have applicable credentials
     if(kHockeyAppIdentifierKey && [kHockeyAppIdentifierKey length])
     {
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppIdentifierKey delegate:self];
         [[BITHockeyManager sharedHockeyManager] startManager];
     }
 
+    // Initialise Appirater
+    [Appirater setAppId:@"634983291"];
+    [Appirater setDaysUntilPrompt:7];
+    [Appirater setUsesUntilPrompt:10];
+    [Appirater setSignificantEventsUntilPrompt:-1];
+    [Appirater setTimeBeforeReminding:2];
+    [Appirater setDebug:NO];
+    
     // Is this a first run experience?
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasRunBeforeKey])
     {
@@ -98,11 +107,21 @@
     // Fetch and cache default keyboard sizes after our view hierarchy has been setup
     [[UAKeyboardController sharedInstance] fetchKeyboardSize];
     
+    // Let Appirater know our application has launched
+    [Appirater appLaunched:YES];
+    
     return YES;
 }
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     [self saveContext];
+}
+- (void)applicationWillEnterForeground:(UIApplication *)application
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"applicationResumed" object:nil];
+    
+    // Let Appirater know our application has launched
+    [Appirater appLaunched:YES];
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
@@ -326,12 +345,6 @@
     }    
     
     return _persistentStoreCoordinator;
-}
-
-#pragma mark - UIApplicationDelegate methods
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"applicationResumed" object:nil];
 }
 
 #pragma mark - Helpers
