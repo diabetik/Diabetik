@@ -176,10 +176,13 @@
             NSDate *fromDate = [[NSCalendar currentCalendar] dateFromComponents:comps];
             NSDate *toDate = [fromDate dateAtEndOfMonth];
             
-            NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:fromDate toDate:toDate];
-            
-            title = [dateFormatter stringFromDate:fromDate];
-            [data setObject:stats forKey:title];
+            if(fromDate && toDate)
+            {
+                NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:fromDate toDate:toDate];
+                
+                title = [dateFormatter stringFromDate:fromDate];
+                [data setObject:stats forKey:title];
+            }
         }
     }
     
