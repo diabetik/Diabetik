@@ -24,12 +24,17 @@
 @implementation UAReading
 @dynamic mgValue, mmoValue;
 
+#pragma mark - Transient properties
 - (NSNumber *)value
 {
     NSInteger unitSetting = [[NSUserDefaults standardUserDefaults] integerForKey:kBGTrackingUnitKey];
     NSString *valueKey = (unitSetting == BGTrackingUnitMG) ? @"mgValue" : @"mmoValue";
     
     return (NSNumber *)[self valueForKey:valueKey];
+}
+- (NSString *)humanReadableName
+{
+    return NSLocalizedString(@"Reading", nil);
 }
 
 @end

@@ -22,5 +22,10 @@
 
 @implementation UANote
 
+#pragma mark - Transient properties
+- (NSString *)humanReadableName
+{
+    return NSLocalizedString(@"Note", nil);
+}
 
 @end
