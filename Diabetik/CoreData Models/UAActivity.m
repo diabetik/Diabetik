@@ -23,4 +23,10 @@
 @implementation UAActivity
 @dynamic minutes;
 
+#pragma mark - Transient properties
+- (NSString *)humanReadableName
+{
+    return NSLocalizedString(@"Activity", nil);
+}
+
 @end

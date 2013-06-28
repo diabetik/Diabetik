@@ -71,6 +71,10 @@
     
     return tmp;
 }
+- (NSString *)humanReadableName
+{
+    return @"";
+}
 
 #pragma mark - Time stamp setter
 - (void)setTimestamp:(NSDate *)newDate

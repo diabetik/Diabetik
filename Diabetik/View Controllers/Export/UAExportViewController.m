@@ -438,21 +438,21 @@
                 NSString *date = [dateFormatter stringFromDate:event.timestamp];
                 if([event isKindOfClass:[UAMeal class]])
                 {
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@,,, %@", date, time, NSStringFromClass([event class]), name, notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@,,, %@", date, time, [event humanReadableName], name, notes];
                 }
                 else if([event isKindOfClass:[UAMeal class]])
                 {
                     UAMeal *meal = (UAMeal *)event;
                     
                     NSString *value = [valueFormatter stringFromNumber:meal.grams];
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, NSStringFromClass([event class]), name, value, NSLocalizedString(@"grams", @"Unit of measurement"), notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, [event humanReadableName], name, value, NSLocalizedString(@"grams", @"Unit of measurement"), notes];
                 }
                 else if([event isKindOfClass:[UAActivity class]])
                 {
                     UAActivity *activity = (UAActivity *)event;
                     
                     NSString *activityTime = [UAHelper formatMinutes:[activity.minutes integerValue]];
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, %@, %@, %@", date, time, NSStringFromClass([event class]), name, activityTime, NSLocalizedString(@"time", @"Unit of measurement"), notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, %@, %@, %@", date, time, [event humanReadableName], name, activityTime, NSLocalizedString(@"time", @"Unit of measurement"), notes];
                 }
                 else if([event isKindOfClass:[UAMedicine class]])
                 {
@@ -460,7 +460,7 @@
                     
                     NSString *value = [valueFormatter stringFromNumber:medicine.amount];
                     NSString *unit = [[UAEventController sharedInstance] medicineTypeHR:[medicine.type integerValue]];
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, NSStringFromClass([event class]), name, value, unit, notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, [event humanReadableName], name, value, unit, notes];
                 }
                 else if([event isKindOfClass:[UAReading class]])
                 {
@@ -468,7 +468,7 @@
                     
                     NSString *value = [valueFormatter stringFromNumber:reading.value];
                     NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, NSStringFromClass([event class]), name, value, unit, notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, [event humanReadableName], name, value, unit, notes];
                 }
             }
         }
@@ -557,21 +557,21 @@
                 NSString *date = [dateFormatter stringFromDate:event.timestamp];
                 if([event isKindOfClass:[UAMeal class]])
                 {
-                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], NSStringFromClass([event class]), name, @"", notes]];
+                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, @"", notes]];
                 }
                 else if([event isKindOfClass:[UAMeal class]])
                 {
                     UAMeal *meal = (UAMeal *)event;
                     
                     NSString *value = [valueFormatter stringFromNumber:meal.grams];
-                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], NSStringFromClass([event class]), name, value, notes]];
+                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, value, notes]];
                 }
                 else if([event isKindOfClass:[UAActivity class]])
                 {
                     UAActivity *activity = (UAActivity *)event;
                     
                     NSString *activityTime = [valueFormatter stringFromNumber:activity.minutes];
-                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], NSStringFromClass([event class]), name, activityTime, notes]];
+                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, activityTime, notes]];
                 }
                 else if([event isKindOfClass:[UAMedicine class]])
                 {
@@ -579,7 +579,7 @@
                     
                     NSString *value = [valueFormatter stringFromNumber:medicine.amount];
                     NSString *unit = [[UAEventController sharedInstance] medicineTypeHR:[medicine.type integerValue]];
-                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], NSStringFromClass([event class]), name, [NSString stringWithFormat:@"%@%@", value, unit], notes]];
+                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, [NSString stringWithFormat:@"%@%@", value, unit], notes]];
                 }
                 else if([event isKindOfClass:[UAReading class]])
                 {
@@ -587,7 +587,7 @@
                     
                     NSString *value = [valueFormatter stringFromNumber:reading.value];
                     NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
-                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], NSStringFromClass([event class]), name, [NSString stringWithFormat:@"%@%@", value, unit], notes]];
+                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, [NSString stringWithFormat:@"%@%@", value, unit], notes]];
                 }
             }
         }

@@ -23,4 +23,10 @@
 @implementation UAMeal
 @dynamic type, grams;
 
+#pragma mark - Transient properties
+- (NSString *)humanReadableName
+{
+    return NSLocalizedString(@"Meal", nil);
+}
+
 @end

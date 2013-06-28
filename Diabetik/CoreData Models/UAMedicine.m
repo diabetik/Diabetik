@@ -24,4 +24,10 @@
 @dynamic amount;
 @dynamic type;
 
+#pragma mark - Transient properties
+- (NSString *)humanReadableName
+{
+    return NSLocalizedString(@"Medication", nil);
+}
+
 @end

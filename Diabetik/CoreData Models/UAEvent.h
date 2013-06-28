@@ -38,6 +38,9 @@
 @property (nonatomic, retain) NSDate *primitiveTimestamp;
 @property (nonatomic, retain) NSString *primitiveSectionIdentifier;
 
+// Transient properties
+- (NSString *)humanReadableName;
+
 @end
 
 @interface UAEvent (CoreDataGeneratedAccessors)
