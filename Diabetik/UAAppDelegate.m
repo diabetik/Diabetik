@@ -52,10 +52,11 @@
 #pragma mark - UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Initiate TestFlight if we have applicable credentials
-    if(kTestFlightAppKey && [kTestFlightAppKey length])
+    // Initiate HockeyApp if we have applicable credentials
+    if(kHockeyAppIdentifierKey && [kHockeyAppIdentifierKey length])
     {
-        [TestFlight takeOff:kTestFlightAppKey];
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppIdentifierKey delegate:self];
+        [[BITHockeyManager sharedHockeyManager] startManager];
     }
 
     // Is this a first run experience?

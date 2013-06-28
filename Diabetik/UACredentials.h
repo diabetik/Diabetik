@@ -24,7 +24,7 @@
 #define Diabetik_UACredentials_h
 
 // Keys
-static NSString * const kTestFlightAppKey = @"";
+static NSString * const kHockeyAppIdentifierKey = @"";
 static NSString * const kDropboxAppKey = @"";
 static NSString * const kDropboxSecret = @"";
 
