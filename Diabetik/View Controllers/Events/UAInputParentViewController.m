@@ -570,6 +570,7 @@
         [tweetComposerSheet addImage:[[UAMediaController sharedInstance] imageWithFilename:targetVC.currentPhotoPath]];
     }
     
+    __weak typeof(self) weakSelf = self;
     [tweetComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
         switch (result) {
             case SLComposeViewControllerResultCancelled:
@@ -586,6 +587,8 @@
             default:
                 break;
         }
+        
+        [weakSelf dismissViewControllerAnimated:YES completion:nil];
     }];
     [self presentViewController:tweetComposerSheet animated:YES completion:nil];
 }
@@ -602,6 +605,7 @@
         [facebookComposerSheet addImage:[[UAMediaController sharedInstance] imageWithFilename:targetVC.currentPhotoPath]];
     }
     
+    __weak typeof(self) weakSelf = self;
     [facebookComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
         switch (result) {
             case SLComposeViewControllerResultCancelled:
@@ -618,6 +622,8 @@
             default:
                 break;
         }
+        
+        [weakSelf dismissViewControllerAnimated:YES completion:nil];
     }];
     [self presentViewController:facebookComposerSheet animated:YES completion:nil];
 }

@@ -1,8 +1,8 @@
 //
-//  UAInsulinCalculatorViewController.h
+//  UAInsulinCalculatorTextFieldViewCell.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 28/06/2013.
+//  Created by Nial Giacomelli on 29/06/2013.
 //  Copyright (c) 2013 UglyApps. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,12 +18,7 @@
 //  limitations under the License.
 //
 
-#import "UABaseViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface UAInsulinCalculatorViewController : UABaseTableViewController <UITextFieldDelegate>
-@property (nonatomic, retain) NSManagedObjectContext *moc;
-
-// Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC andAccount:(UAAccount *)anAccount;
-
+@interface UAInsulinCalculatorTextFieldViewCell : UAGenericTableViewCell
 @end
