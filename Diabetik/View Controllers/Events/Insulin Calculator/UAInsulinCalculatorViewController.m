@@ -34,7 +34,8 @@
     NSIndexPath *activeIndexPath;
     
     id accountSwitchNotifier;
-    UILabel *explanatoryLabel;
+    UILabel *totalLabel;
+    UIToolbar *toolbar;
     
     NSMutableDictionary *selectedMeals;
     NSNumber *totalCarbs;
@@ -60,7 +61,7 @@
         selectedMeals = [NSMutableDictionary dictionary];
 
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:1];
+        [valueFormatter setMaximumFractionDigits:2];
         
         self.title = NSLocalizedString(@"Insulin calculator", nil);
         
@@ -90,27 +91,57 @@
     UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconSave.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(addReminder:)];
     [self.navigationItem setRightBarButtonItem:saveBarButtonItem animated:NO];
     */
-    
-    explanatoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width-20.0f, 0.0f)];
-    explanatoryLabel.numberOfLines = 0;
-    explanatoryLabel.textAlignment = NSTextAlignmentCenter;
-    explanatoryLabel.backgroundColor = [UIColor clearColor];
-    explanatoryLabel.font = [UAFont standardDemiBoldFontWithSize:14.0f];
-    explanatoryLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-    explanatoryLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    explanatoryLabel.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.6f];
-    explanatoryLabel.text = @"Calculations use the following formula:\n\n((glucose-TR)/CF) + (carbohydrates/KF)\n\nIf in doubt, consult your doctor";
-    [explanatoryLabel sizeToFit];
-    
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, explanatoryLabel.frame.size.height+15.0f)];
-    explanatoryLabel.frame = CGRectMake(floorf(self.view.frame.size.width/2.0f - explanatoryLabel.frame.size.width/2), 0.0f, explanatoryLabel.frame.size.width, explanatoryLabel.frame.size.height);
-    [footerView addSubview:explanatoryLabel];
-    
-    self.tableView.tableFooterView = footerView;
 }
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:accountSwitchNotifier];
+}
+- (void)loadView
+{
+    UIView *baseView = [[UIView alloc] initWithFrame:CGRectZero];
+    baseView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
+    self.tableView = [[UITableView alloc] initWithFrame:baseView.frame style:tableStyle];
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundView = nil;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorColor = [UIColor colorWithRed:189.0f/255.0f green:189.0f/255.0f blue:189.0f/255.0f alpha:1.0f];
+    [baseView addSubview:self.tableView];
+    
+    toolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
+    toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    
+    
+    NSMutableArray *items = [NSMutableArray array];
+    
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showDetails:)];
+    [items addObject:item1];
+    [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
+    
+    totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0 , 11.0f, 200.0f, 21.0f)];
+    [totalLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
+    [totalLabel setBackgroundColor:[UIColor clearColor]];
+    [totalLabel setTextColor:[UIColor whiteColor]];
+    [totalLabel setText:@""];
+    [totalLabel setTextAlignment:UITextAlignmentCenter];
+    
+    [items addObject:[[UIBarButtonItem alloc] initWithCustomView:totalLabel]];
+    [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
+    
+    [toolbar setItems:items animated:YES];
+    [baseView addSubview:toolbar];
+    
+    self.view = baseView;
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    toolbar.frame = CGRectMake(0.0f, self.view.frame.size.height - 44.0f, self.view.frame.size.width, 44.0f);
+    self.tableView.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height - toolbar.frame.size.height);
 }
 
 #pragma mark - Logic
@@ -179,7 +210,19 @@
     double insulinForCarbs = [totalCarbs doubleValue]/[carbohydrateRatio doubleValue];
     double insulinTotal = insulinForCarbs + insulinForCorrection;
     
+    totalLabel.text = [NSString stringWithFormat:@"%@ + %@ = %@", [valueFormatter stringFromNumber:[NSNumber numberWithDouble:insulinForCorrection]], [valueFormatter stringFromNumber:[NSNumber numberWithDouble:insulinForCarbs]], [valueFormatter stringFromNumber:[NSNumber numberWithDouble:insulinTotal]]];
     NSLog(@"cor: %f carbs: %f total: %f", insulinForCorrection, insulinForCarbs, insulinTotal);
+}
+
+#pragma mark - UI
+- (void)showDetails:(id)sender
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"About Insulin Calculation", nil)
+                                                        message:NSLocalizedString(@"Calculations use the following formula:\n\n((currentBG-targetBG)/correctiveFactor) + (carbohydrates/carbohydrateRatio)\n\nIf in doubt, consult your doctor", nil)
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+                                              otherButtonTitles:nil];
+    [alertView show];
 }
 
 #pragma mark - UITableViewDelegate methods
@@ -187,7 +230,7 @@
 {
     [self.view endEditing:YES];
     
-    if(indexPath.section == 1)
+    if(indexPath.section == 1 && indexPath.row > 0)
     {
         UAEvent *event = [latestEvents objectAtIndex:indexPath.row-1];
         if([selectedMeals objectForKey:event.uuid])
@@ -419,6 +462,7 @@
     }
     
     activeIndexPath = nil;
+    [self recalculate];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

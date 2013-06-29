@@ -4,9 +4,9 @@
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="dob" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="insulinCarbRatio" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="insulinCorrectiveFactor" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="insulinTargetBG" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="insulinCarbRatio" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <attribute name="insulinCorrectiveFactor" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <attribute name="insulinTargetBG" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photoPath" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UAEvent" inverseName="account" inverseEntity="UAEvent" syncable="YES"/>

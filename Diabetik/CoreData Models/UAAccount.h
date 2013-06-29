@@ -26,6 +26,9 @@
 @class UARunKeeperAccount;
 
 @interface UAAccount : UAManagedObject
+@property (nonatomic, retain) NSNumber * insulinCarbRatio;
+@property (nonatomic, retain) NSNumber * insulinCorrectiveFactor;
+@property (nonatomic, retain) NSNumber * insulinTargetBG;
 
 @property (nonatomic, retain) NSDate * created;
 @property (nonatomic, retain) NSDate * dob;

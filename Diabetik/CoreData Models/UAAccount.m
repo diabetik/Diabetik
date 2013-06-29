@@ -23,6 +23,9 @@
 #import "UARunKeeperAccount.h"
 
 @implementation UAAccount
+@dynamic insulinCarbRatio;
+@dynamic insulinCorrectiveFactor;
+@dynamic insulinTargetBG;
 @dynamic created;
 @dynamic dob;
 @dynamic gender;
