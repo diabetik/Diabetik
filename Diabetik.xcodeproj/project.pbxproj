@@ -510,6 +510,8 @@
 		533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355817736C5500AD89E2 /* UAIntroductionTooltipView.m */; };
 		533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */; };
 		535D4CC4177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535D4CC3177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m */; };
+		536E964A177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E9649177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */; };
+		536E964F177F5B7300140DF0 /* Diabetik2_to_1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 536E964E177F5B7300140DF0 /* Diabetik2_to_1.1.xcmappingmodel */; };
 		538DBA78166F830300F0709F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA77166F830300F0709F /* UIKit.framework */; };
 		538DBA7A166F830300F0709F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA79166F830300F0709F /* Foundation.framework */; };
 		538DBA7C166F830300F0709F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA7B166F830300F0709F /* CoreGraphics.framework */; };
@@ -1213,6 +1215,10 @@
 		533F355B17736C5500AD89E2 /* UAUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAUI.h; sourceTree = "<group>"; };
 		535D4CC2177DFE6000EE0C5D /* UAInsulinCalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorViewController.h; sourceTree = "<group>"; };
 		535D4CC3177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorViewController.m; sourceTree = "<group>"; };
+		536E9648177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTextFieldViewCell.h; sourceTree = "<group>"; };
+		536E9649177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTextFieldViewCell.m; sourceTree = "<group>"; };
+		536E964B177F5A3800140DF0 /* Diabetik_1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Diabetik_1.1.xcdatamodel; sourceTree = "<group>"; };
+		536E964E177F5B7300140DF0 /* Diabetik2_to_1.1.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik2_to_1.1.xcmappingmodel; sourceTree = "<group>"; };
 		538DBA73166F830300F0709F /* Diabetik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diabetik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		538DBA77166F830300F0709F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		538DBA79166F830300F0709F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1324,6 +1330,7 @@
 				533F31E81773266600AD89E2 /* Sync Proxies */,
 				533F30401773266500AD89E2 /* CoreData Models */,
 				533F305D1773266500AD89E2 /* Diabetik.xcdatamodeld */,
+				536E964E177F5B7300140DF0 /* Diabetik2_to_1.1.xcmappingmodel */,
 				533F30591773266500AD89E2 /* Localizable.strings */,
 				533F305B1773266500AD89E2 /* Diabetik-Info.plist */,
 				533F305C1773266500AD89E2 /* Diabetik-Prefix.pch */,
@@ -2414,10 +2421,20 @@
 		535D4CC1177DFB9900EE0C5D /* Insulin Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				536E9647177F0B9200140DF0 /* Cells */,
 				535D4CC2177DFE6000EE0C5D /* UAInsulinCalculatorViewController.h */,
 				535D4CC3177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m */,
 			);
 			path = "Insulin Calculator";
+			sourceTree = "<group>";
+		};
+		536E9647177F0B9200140DF0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				536E9648177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.h */,
+				536E9649177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		538DBA68166F830300F0709F = {
@@ -3073,6 +3090,8 @@
 				533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */,
 				532D0EE5177D83C6000D793F /* Appirater.m in Sources */,
 				535D4CC4177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m in Sources */,
+				536E964A177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */,
+				536E964F177F5B7300140DF0 /* Diabetik2_to_1.1.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3204,8 +3223,8 @@
 		538DBAA3166F830300F0709F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3225,6 +3244,8 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Diabetik;
+				PROVISIONING_PROFILE = "43DE9B5C-6BD5-4BB2-A1C6-B405682510B9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "43DE9B5C-6BD5-4BB2-A1C6-B405682510B9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3232,8 +3253,8 @@
 		538DBAA4166F830300F0709F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3253,6 +3274,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Diabetik;
+				PROVISIONING_PROFILE = "43DE9B5C-6BD5-4BB2-A1C6-B405682510B9";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "43DE9B5C-6BD5-4BB2-A1C6-B405682510B9";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -3286,8 +3309,9 @@
 			children = (
 				533F305E1773266500AD89E2 /* Diabetik.xcdatamodel */,
 				533F305F1773266500AD89E2 /* Diabetik_2.xcdatamodel */,
+				536E964B177F5A3800140DF0 /* Diabetik_1.1.xcdatamodel */,
 			);
-			currentVersion = 533F305F1773266500AD89E2 /* Diabetik_2.xcdatamodel */;
+			currentVersion = 536E964B177F5A3800140DF0 /* Diabetik_1.1.xcdatamodel */;
 			path = Diabetik.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

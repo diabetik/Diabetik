@@ -127,7 +127,8 @@
     [super viewDidAppear:animated];
     
     UAInsulinCalculatorViewController *vc = [[UAInsulinCalculatorViewController alloc] initWithMOC:self.moc andAccount:[[UAAccountController sharedInstance] activeAccount]];
-    [self presentViewController:vc animated:YES completion:^{
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+    [self presentViewController:nvc animated:YES completion:^{
         
     }];
 }

@@ -30,6 +30,7 @@
 #import "UAJournalViewController.h"
 #import "UATimelineViewController.h"
 #import "UAExportViewController.h"
+#import "UAInsulinCalculatorViewController.h"
 
 #import "UASideMenuCell.h"
 #import "UASideMenuAccountCell.h"
@@ -143,7 +144,7 @@
     }
     else if(section == 1)
     {
-        return 5;
+        return 6;
     }
     else if(section == 2)
     {
@@ -211,23 +212,29 @@
         }
         else if(indexPath.row == 1)
         {
-            cell.textLabel.text = NSLocalizedString(@"Reminders", nil);
+            cell.textLabel.text = NSLocalizedString(@"Insulin Calculator", nil);
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders.png"];
         }
         else if(indexPath.row == 2)
         {
+            cell.textLabel.text = NSLocalizedString(@"Reminders", nil);
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders.png"];
+        }
+        else if(indexPath.row == 3)
+        {
             cell.textLabel.text = NSLocalizedString(@"Export", @"Menu item to take users to the export screen");
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconExport.png"];
         }
-        else if(indexPath.row == 3)
+        else if(indexPath.row == 4)
         {
             cell.textLabel.text = NSLocalizedString(@"Credits", @"Menu item to show users the application credits");
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconCredits.png"];
         }
-        else if(indexPath.row == 4)
+        else if(indexPath.row == 5)
         {
             cell.textLabel.text = NSLocalizedString(@"Settings", nil);
             cell.textLabel.textColor = [UIColor whiteColor];
@@ -329,13 +336,22 @@
         else if(indexPath.row == 1)
         {
             UANavigationController *nvc = (UANavigationController *)[[self sidePanelController] centerPanel];
+            if(![[nvc topViewController] isKindOfClass:[UAInsulinCalculatorViewController class]])
+            {
+                UAInsulinCalculatorViewController *vc = [[UAInsulinCalculatorViewController alloc] initWithMOC:self.moc andAccount:[[UAAccountController sharedInstance] activeAccount]];
+                [nvc pushViewController:vc animated:NO];
+            }
+        }
+        else if(indexPath.row == 2)
+        {
+            UANavigationController *nvc = (UANavigationController *)[[self sidePanelController] centerPanel];
             if(![[nvc topViewController] isKindOfClass:[UARemindersViewController class]])
             {
                 UARemindersViewController *vc = [[UARemindersViewController alloc] initWithMOC:self.moc];
                 [nvc pushViewController:vc animated:NO];
             }
         }
-        else if(indexPath.row == 2)
+        else if(indexPath.row == 3)
         {
             UANavigationController *nvc = (UANavigationController *)[[self sidePanelController] centerPanel];
             if(![[nvc topViewController] isKindOfClass:[UAExportViewController class]])
@@ -344,11 +360,11 @@
                 [nvc pushViewController:vc animated:NO];
             }
         }
-        else if(indexPath.row == 3)
+        else if(indexPath.row == 4)
         {
             [self showCredits];
         }
-        else if(indexPath.row == 4)
+        else if(indexPath.row == 5)
         {
             UANavigationController *nvc = (UANavigationController *)[[self sidePanelController] centerPanel];
             if(![[nvc topViewController] isKindOfClass:[UASettingsViewController class]])

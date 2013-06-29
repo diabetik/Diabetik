@@ -5,10 +5,24 @@
 //  Created by Nial Giacomelli on 28/06/2013.
 //  Copyright (c) 2013 UglyApps. All rights reserved.
 //
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
 
 #import "UAInsulinCalculatorViewController.h"
 #import "UAAccountController.h"
 #import "UAEventController.h"
+
+#import "UAInsulinCalculatorTextFieldViewCell.h"
 
 #import "UAMeal.h"
 #import "UAReading.h"
@@ -16,13 +30,20 @@
 @interface UAInsulinCalculatorViewController ()
 {
     NSArray *latestEvents;
+    NSNumberFormatter *valueFormatter;
+    NSIndexPath *activeIndexPath;
+    
+    id accountSwitchNotifier;
+    UILabel *explanatoryLabel;
     
     NSMutableDictionary *selectedMeals;
+    NSNumber *totalCarbs;
     NSNumber *currentGlucose, *targetGlucose;
     NSNumber *correctiveFactor, *carbohydrateRatio;
 }
 
 // Logic
+- (void)setupView;
 - (void)recalculate;
 
 @end
@@ -33,58 +54,129 @@
 #pragma mark - Setup
 - (id)initWithMOC:(NSManagedObjectContext *)aMOC andAccount:(UAAccount *)anAccount
 {
-    self = [super initWithNibName:nil bundle:nil];
+    self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         _moc = aMOC;
         selectedMeals = [NSMutableDictionary dictionary];
+
+        valueFormatter = [[NSNumberFormatter alloc] init];
+        [valueFormatter setMaximumFractionDigits:1];
         
-        // Set some default values
-        targetGlucose = [UAHelper convertBGValue:[NSNumber numberWithDouble:8.3] fromUnit:BGTrackingUnitMMO toUnit:[UAHelper userBGUnit]];
-        correctiveFactor = [NSNumber numberWithDouble:100.0];
-        carbohydrateRatio = [NSNumber numberWithDouble:20.0];
+        self.title = NSLocalizedString(@"Insulin calculator", nil);
         
-        // Fetch our latest glucose reading to try to pre-determine glucose reading
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account == %@ && filterType == %d && timestamp >= %@", anAccount, ReadingFilterType, [NSDate dateWithHoursBeforeNow:24]];
-        if(predicate)
-        {
-            // Take our latest blood glucose reading
-            NSArray *previousGlucoseReadings = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate inContext:_moc];
-            if(previousGlucoseReadings)
-            {
-                UAReading *reading = (UAReading *)[previousGlucoseReadings objectAtIndex:0];
-                currentGlucose = [reading value];
-            }
-        }
-        else
-        {
-            // If we can't find our current glucose reading, default it to 0
-            currentGlucose = [NSNumber numberWithDouble:0.0];
-        }
+        // Setup a notification for account switches
+        __weak typeof(self) weakSelf = self;
+        accountSwitchNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsSwitchedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            
+            [weakSelf setupView];
+        }];
         
-        // Fetch a list of previous meals and medicine usage over the past 24 hours
-        predicate = [NSPredicate predicateWithFormat:@"account == %@ && (filterType == %d || filterType == %d) && timestamp >= %@", anAccount, MealFilterType, MedicineFilterType, [NSDate dateWithHoursBeforeNow:24]];
-        if(predicate)
-        {
-            latestEvents = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate inContext:_moc];
-        }
+        [self setupView];
     }
     return self;
 }
-
-#pragma mark - Logic
-- (void)recalculate
+- (void)viewWillAppear:(BOOL)animated
 {
-    double totalGrams = 0.0;
-    for(NSString *uuid in selectedMeals)
+    [super viewWillAppear:animated];
+    
+    // Setup header buttons
+    if([self isPresentedModally])
     {
-        UAMeal *meal = (UAMeal *)[selectedMeals objectForKey:uuid];
-        totalGrams += [[meal grams] doubleValue];
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconCancel.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
+        [self.navigationItem setLeftBarButtonItem:cancelBarButtonItem animated:NO];
     }
     
-    NSLog(@"Total grams: %f", totalGrams);
+    /*
+    UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconSave.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(addReminder:)];
+    [self.navigationItem setRightBarButtonItem:saveBarButtonItem animated:NO];
+    */
+    
+    explanatoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width-20.0f, 0.0f)];
+    explanatoryLabel.numberOfLines = 0;
+    explanatoryLabel.textAlignment = NSTextAlignmentCenter;
+    explanatoryLabel.backgroundColor = [UIColor clearColor];
+    explanatoryLabel.font = [UAFont standardDemiBoldFontWithSize:14.0f];
+    explanatoryLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+    explanatoryLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    explanatoryLabel.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.6f];
+    explanatoryLabel.text = @"Calculations use the following formula:\n\n((glucose-TR)/CF) + (carbohydrates/KF)\n\nIf in doubt, consult your doctor";
+    [explanatoryLabel sizeToFit];
+    
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, explanatoryLabel.frame.size.height+15.0f)];
+    explanatoryLabel.frame = CGRectMake(floorf(self.view.frame.size.width/2.0f - explanatoryLabel.frame.size.width/2), 0.0f, explanatoryLabel.frame.size.width, explanatoryLabel.frame.size.height);
+    [footerView addSubview:explanatoryLabel];
+    
+    self.tableView.tableFooterView = footerView;
+}
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:accountSwitchNotifier];
+}
+
+#pragma mark - Logic
+- (void)setupView
+{
+    UAAccount *account = [[UAAccountController sharedInstance] activeAccount];
+    
+    latestEvents = nil;    
+    [selectedMeals removeAllObjects];
+    
+    // Set some default values
+    totalCarbs = [NSNumber numberWithDouble:0.0];
+    targetGlucose = [UAHelper convertBGValue:[NSNumber numberWithDouble:8.3] fromUnit:BGTrackingUnitMMO toUnit:[UAHelper userBGUnit]];
+    correctiveFactor = [NSNumber numberWithDouble:100.0];
+    carbohydrateRatio = [NSNumber numberWithDouble:20.0];
+    
+    // Fetch our latest glucose reading to try to pre-determine glucose reading
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account == %@ && filterType == %d && timestamp >= %@", account, ReadingFilterType, [NSDate dateWithHoursBeforeNow:24]];
+    if(predicate)
+    {
+        // Take our latest blood glucose reading
+        NSArray *previousGlucoseReadings = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate inContext:_moc];
+        if(previousGlucoseReadings)
+        {
+            UAReading *reading = (UAReading *)[previousGlucoseReadings objectAtIndex:0];
+            currentGlucose = [reading value];
+        }
+    }
+    else
+    {
+        // If we can't find our current glucose reading, default it to 0
+        currentGlucose = [NSNumber numberWithDouble:0.0];
+    }
+    
+    // Fetch a list of previous meals over the past 24 hours
+    predicate = [NSPredicate predicateWithFormat:@"account == %@ && filterType == %d && timestamp >= %@", account, MealFilterType, [NSDate dateWithHoursBeforeNow:24]];
+    if(predicate)
+    {
+        latestEvents = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate inContext:_moc];
+    }
+    
+    // Update our UI
+    [[self tableView] reloadData];
+}
+- (void)recalculate
+{
+    // Determine if the user's selecting existing meals or entering carbs manually
+    double newTotalCarbs = 0.0;
+    if([[selectedMeals allKeys] count])
+    {
+        for(NSString *uuid in selectedMeals)
+        {
+            UAMeal *meal = (UAMeal *)[selectedMeals objectForKey:uuid];
+            newTotalCarbs += [[meal grams] doubleValue];
+        }
+    }
+    else
+    {
+        newTotalCarbs = [totalCarbs doubleValue];
+    }
+    
+    totalCarbs = [NSNumber numberWithDouble:newTotalCarbs];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationFade];
     
     double insulinForCorrection = ([currentGlucose doubleValue] - [targetGlucose doubleValue]) / [correctiveFactor doubleValue];
-    double insulinForCarbs = totalGrams/[carbohydrateRatio doubleValue];
+    double insulinForCarbs = [totalCarbs doubleValue]/[carbohydrateRatio doubleValue];
     double insulinTotal = insulinForCarbs + insulinForCorrection;
     
     NSLog(@"cor: %f carbs: %f total: %f", insulinForCorrection, insulinForCarbs, insulinTotal);
@@ -93,11 +185,11 @@
 #pragma mark - UITableViewDelegate methods
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.view endEditing:YES];
     
     if(indexPath.section == 1)
     {
-        UAEvent *event = [latestEvents objectAtIndex:indexPath.row];
+        UAEvent *event = [latestEvents objectAtIndex:indexPath.row-1];
         if([selectedMeals objectForKey:event.uuid])
         {
             [selectedMeals removeObjectForKey:event.uuid];
@@ -107,7 +199,13 @@
             [selectedMeals setObject:event forKey:event.uuid];
         }
         
-        [aTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        // If we just unticked our last meal, go ahead and reset our total carbs value to 0
+        if(![[selectedMeals allKeys] count])
+        {
+            totalCarbs = [NSNumber numberWithDouble:0.0];
+        }
+        
+        [aTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
 
         // Attempt a recalculation
         [self recalculate];
@@ -121,70 +219,212 @@
 }
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    if(section == 0 || section == 2)
+    if(section == 0)
+    {
+        return 2;
+    }
+    else if(section == 2)
     {
         return 2;
     }
     else
     {
-        return [latestEvents count];
+        return [latestEvents count]+1;
     }
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if(section == 0) return NSLocalizedString(@"General", nil);
-    if(section == 1) return NSLocalizedString(@"Carbohydrates", nil);
+    if(section == 0) return NSLocalizedString(@"Input", nil);
     if(section == 2) return NSLocalizedString(@"Factors", nil);
     
     return @"";
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(section == 1) return 0.0f;
+    
+    return 40.0f;
+}
+- (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section
+{
+    if(section == 1) return nil;
+    
+    UAGenericTableHeaderView *header = [[UAGenericTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, aTableView.frame.size.width, 40.0f)];
+    [header setText:[self tableView:aTableView titleForHeaderInSection:section]];
+    return header;
+}
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:@"UASettingsCell"];
-    if (!cell)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UASettingsCell"];
-    }
-    cell.accessoryType = UITableViewCellAccessoryNone;
+    UAGenericTableViewCell *cell = nil;
     
     if(indexPath.section == 0)
     {
+        cell = (UAInsulinCalculatorTextFieldViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UACalculatorInputCell"];
+        if (!cell)
+        {
+            cell = [[UAInsulinCalculatorTextFieldViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorInputCell"];
+        }
+        [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
+        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if(indexPath.row == 0)
         {
-            cell.textLabel.text = NSLocalizedString(@"Current blood glucose", nil);
+            cell.textLabel.text = NSLocalizedString(@"Current BG", nil);
+            cell.detailTextLabel.text = NSLocalizedString(@"Current blood sugar", nil);
+            
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            textField.text = [valueFormatter stringFromNumber:currentGlucose];
+            textField.tag = 0;
+            textField.delegate = self;
         }
         else if(indexPath.row == 1)
         {
-            cell.textLabel.text = NSLocalizedString(@"Target blood glucose", nil);        
+            cell.textLabel.text = NSLocalizedString(@"Target BG", nil);
+            cell.detailTextLabel.text = NSLocalizedString(@"Target blood sugar", nil);
+            
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            textField.text = [valueFormatter stringFromNumber:targetGlucose];
+            textField.tag = 1;
+            textField.delegate = self;
         }
     }
     else if(indexPath.section == 1)
     {
-        UAEvent *event = [latestEvents objectAtIndex:indexPath.row];
-        cell.textLabel.text = event.name;
-        
-        if([selectedMeals objectForKey:event.uuid])
+        if(indexPath.row == 0)
         {
-            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            cell = (UAInsulinCalculatorTextFieldViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UACalculatorInputCell"];
+            if (!cell)
+            {
+                cell = [[UAInsulinCalculatorTextFieldViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorInputCell"];
+            }
+            [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
+            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.text = NSLocalizedString(@"Total carbohydrates", nil);
+            cell.detailTextLabel.text = NSLocalizedString(@"Enter or select below", nil);
+            
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            textField.text = [valueFormatter stringFromNumber:totalCarbs];
+            textField.tag = 2;
+            textField.delegate = self;
+        }
+        else
+        {
+            cell = [aTableView dequeueReusableCellWithIdentifier:@"UACalculatorCell"];
+            if (!cell)
+            {
+                cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UACalculatorCell"];
+            }
+            [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            
+            UAEvent *event = [latestEvents objectAtIndex:indexPath.row-1];
+            if([event isKindOfClass:[UAMeal class]])
+            {
+                UAMeal *meal = (UAMeal *)event;
+                cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@g)", meal.name, [valueFormatter stringFromNumber:meal.grams]];
+            }
+            else
+            {
+                cell.textLabel.text = event.name;
+            }
+            
+            if([selectedMeals objectForKey:event.uuid])
+            {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
         }
     }
     else if(indexPath.section == 2)
     {
+        cell = (UAInsulinCalculatorTextFieldViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UACalculatorInputCell"];
+        if (!cell)
+        {
+            cell = [[UAInsulinCalculatorTextFieldViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorInputCell"];
+        }
+        [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if(indexPath.row == 0)
         {
-            cell.textLabel.text = NSLocalizedString(@"Carbohydrate factor", nil);
+            cell.textLabel.text = NSLocalizedString(@"Carbohydrate Ratio", nil);
+            cell.detailTextLabel.text = NSLocalizedString(@"1u insulin for every X grams", nil);
+            
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            textField.text = [valueFormatter stringFromNumber:carbohydrateRatio];
+            textField.tag = 3;
+            textField.delegate = self;
         }
         else if(indexPath.row == 1)
         {
-            cell.textLabel.text = NSLocalizedString(@"Corrective factor", nil);
+            cell.textLabel.text = NSLocalizedString(@"Correction Factor", nil);
+            cell.detailTextLabel.text = NSLocalizedString(@"1u insulin for every X mg/dl", nil);
+            
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            textField.text = [valueFormatter stringFromNumber:correctiveFactor];
+            textField.tag = 4;
+            textField.delegate = self;
         }
     }
     
     return cell;
+}
+
+- (void)keyboardWillBeShown:(NSNotification *)aNotification
+{
+    [super keyboardWillBeShown:aNotification];
+    
+    [self.tableView scrollToRowAtIndexPath:activeIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+}
+
+#pragma mark - UITextFieldDelegate methods
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    id cell = textField.superview.superview;
+    if([cell isKindOfClass:[UITableViewCell class]])
+    {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)cell];
+        if(indexPath)
+        {
+            activeIndexPath = indexPath;
+            [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+        }
+    }
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(textField.tag == 0)
+    {
+        currentGlucose = [valueFormatter numberFromString:textField.text];
+    }
+    else if(textField.tag == 1)
+    {
+        targetGlucose = [valueFormatter numberFromString:textField.text];
+    }
+    else if(textField.tag == 2)
+    {
+        totalCarbs = [valueFormatter numberFromString:textField.text];
+        
+        [selectedMeals removeAllObjects];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+    }
+    else if(textField.tag == 3)
+    {
+        carbohydrateRatio = [valueFormatter numberFromString:textField.text];
+    }
+    else if(textField.tag == 4)
+    {
+        correctiveFactor = [valueFormatter numberFromString:textField.text];
+    }
+    
+    activeIndexPath = nil;
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return YES;
 }
 
 @end
