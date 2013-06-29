@@ -511,7 +511,7 @@
 		533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */; };
 		535D4CC4177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 535D4CC3177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m */; };
 		536E964A177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E9649177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */; };
-		536E964F177F5B7300140DF0 /* Diabetik2_to_1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 536E964E177F5B7300140DF0 /* Diabetik2_to_1.1.xcmappingmodel */; };
+		536E9653177FA0C100140DF0 /* Diabetik2_to_1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 536E9652177FA0C100140DF0 /* Diabetik2_to_1.1.xcmappingmodel */; };
 		538DBA78166F830300F0709F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA77166F830300F0709F /* UIKit.framework */; };
 		538DBA7A166F830300F0709F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA79166F830300F0709F /* Foundation.framework */; };
 		538DBA7C166F830300F0709F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA7B166F830300F0709F /* CoreGraphics.framework */; };
@@ -1218,7 +1218,7 @@
 		536E9648177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTextFieldViewCell.h; sourceTree = "<group>"; };
 		536E9649177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTextFieldViewCell.m; sourceTree = "<group>"; };
 		536E964B177F5A3800140DF0 /* Diabetik_1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Diabetik_1.1.xcdatamodel; sourceTree = "<group>"; };
-		536E964E177F5B7300140DF0 /* Diabetik2_to_1.1.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik2_to_1.1.xcmappingmodel; sourceTree = "<group>"; };
+		536E9652177FA0C100140DF0 /* Diabetik2_to_1.1.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik2_to_1.1.xcmappingmodel; sourceTree = SOURCE_ROOT; };
 		538DBA73166F830300F0709F /* Diabetik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diabetik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		538DBA77166F830300F0709F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		538DBA79166F830300F0709F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1330,7 +1330,7 @@
 				533F31E81773266600AD89E2 /* Sync Proxies */,
 				533F30401773266500AD89E2 /* CoreData Models */,
 				533F305D1773266500AD89E2 /* Diabetik.xcdatamodeld */,
-				536E964E177F5B7300140DF0 /* Diabetik2_to_1.1.xcmappingmodel */,
+				536E9652177FA0C100140DF0 /* Diabetik2_to_1.1.xcmappingmodel */,
 				533F30591773266500AD89E2 /* Localizable.strings */,
 				533F305B1773266500AD89E2 /* Diabetik-Info.plist */,
 				533F305C1773266500AD89E2 /* Diabetik-Prefix.pch */,
@@ -3091,7 +3091,7 @@
 				532D0EE5177D83C6000D793F /* Appirater.m in Sources */,
 				535D4CC4177DFE6000EE0C5D /* UAInsulinCalculatorViewController.m in Sources */,
 				536E964A177F0BAB00140DF0 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */,
-				536E964F177F5B7300140DF0 /* Diabetik2_to_1.1.xcmappingmodel in Sources */,
+				536E9653177FA0C100140DF0 /* Diabetik2_to_1.1.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

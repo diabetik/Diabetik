@@ -122,16 +122,6 @@
     
     [super viewWillAppear:animated];
 }
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    UAInsulinCalculatorViewController *vc = [[UAInsulinCalculatorViewController alloc] initWithMOC:self.moc andAccount:[[UAAccountController sharedInstance] activeAccount]];
-    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
-    [self presentViewController:nvc animated:YES completion:^{
-        
-    }];
-}
 - (void)didBecomeActive:(BOOL)editing
 {
     [parentVC updateKeyboardButtons];
