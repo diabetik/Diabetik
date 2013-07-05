@@ -5,8 +5,10 @@
         <attribute name="dob" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="gender" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="insulinCarbRatio" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
-        <attribute name="insulinCorrectiveFactor" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
-        <attribute name="insulinTargetBG" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <attribute name="insulinMGCorrectiveFactor" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <attribute name="insulinMGTargetBG" optional="YES" attributeType="Double" defaultValueString="0" syncable="YES"/>
+        <attribute name="insulinMMOCorrectiveFactor" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="insulinMMOTargetBG" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photoPath" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UAEvent" inverseName="account" inverseEntity="UAEvent" syncable="YES"/>
@@ -80,7 +82,7 @@
         <relationship name="events" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="UAEvent" inverseName="tags" inverseEntity="UAEvent" syncable="YES"/>
     </entity>
     <elements>
-        <element name="UAAccount" positionX="-936" positionY="-9" width="128" height="208"/>
+        <element name="UAAccount" positionX="-936" positionY="-9" width="128" height="238"/>
         <element name="UAActivity" positionX="-981" positionY="-306" width="128" height="60"/>
         <element name="UABaseObject" positionX="-740" positionY="107" width="128" height="90"/>
         <element name="UAEvent" positionX="-1125" positionY="-156" width="128" height="223"/>

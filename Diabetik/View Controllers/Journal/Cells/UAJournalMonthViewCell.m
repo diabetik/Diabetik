@@ -139,7 +139,7 @@
         
         mealDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(201.0f, y + 32.0f, 100.0f, 16.0f)];
         mealDetailLabel.backgroundColor = [UIColor clearColor];
-        mealDetailLabel.text = NSLocalizedString(@"GRAMS", @"Label for the amount of grams of carbohydrate eaten");
+        mealDetailLabel.text = [NSLocalizedString(@"Grams", @"Label for the amount of grams of carbohydrate eaten") uppercaseString];
         mealDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
         mealDetailLabel.textAlignment = NSTextAlignmentCenter;
         mealDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];
@@ -162,7 +162,7 @@
         
         deviationDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y + 32.0f, 100.0f, 16.0f)];
         deviationDetailLabel.backgroundColor = [UIColor clearColor];
-        deviationDetailLabel.text = NSLocalizedString(@"DEVIATION", @"Label for the statistical deviation in blood glucose values");
+        deviationDetailLabel.text = [NSLocalizedString(@"Deviation", @"Label for the statistical deviation in blood glucose values") uppercaseString];
         deviationDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
         deviationDetailLabel.textAlignment = NSTextAlignmentCenter;
         deviationDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];
@@ -183,7 +183,7 @@
         
         lowGlucoseDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(101.0f, y + 32.0f, 100.0f, 16.0f)];
         lowGlucoseDetailLabel.backgroundColor = [UIColor clearColor];
-        lowGlucoseDetailLabel.text = NSLocalizedString(@"LOWEST", @"Label for the lowest blood glucose reading in a given month");
+        lowGlucoseDetailLabel.text = [NSLocalizedString(@"Lowest", @"Label for the lowest blood glucose reading in a given month") uppercaseString];
         lowGlucoseDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
         lowGlucoseDetailLabel.textAlignment = NSTextAlignmentCenter;
         lowGlucoseDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];
@@ -204,7 +204,7 @@
         
         highGlucoseDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(201.0f, y + 32.0f, 100.0f, 16.0f)];
         highGlucoseDetailLabel.backgroundColor = [UIColor clearColor];
-        highGlucoseDetailLabel.text = NSLocalizedString(@"HIGHEST", @"Label for highest blood glucose reading in a given month");
+        highGlucoseDetailLabel.text = [NSLocalizedString(@"Highest", @"Label for highest blood glucose reading in a given month") uppercaseString];
         highGlucoseDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
         highGlucoseDetailLabel.textAlignment = NSTextAlignmentCenter;
         highGlucoseDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];

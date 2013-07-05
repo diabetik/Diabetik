@@ -24,8 +24,10 @@
 
 @implementation UAAccount
 @dynamic insulinCarbRatio;
-@dynamic insulinCorrectiveFactor;
-@dynamic insulinTargetBG;
+@dynamic insulinMGCorrectiveFactor;
+@dynamic insulinMMOCorrectiveFactor;
+@dynamic insulinMGTargetBG;
+@dynamic insulinMMOTargetBG;
 @dynamic created;
 @dynamic dob;
 @dynamic gender;

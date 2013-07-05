@@ -445,7 +445,7 @@
                     UAMeal *meal = (UAMeal *)event;
                     
                     NSString *value = [valueFormatter stringFromNumber:meal.grams];
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, [event humanReadableName], name, value, NSLocalizedString(@"grams", @"Unit of measurement"), notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, [event humanReadableName], name, value, [NSLocalizedString(@"Grams", @"Unit of measurement") lowercaseString], notes];
                 }
                 else if([event isKindOfClass:[UAActivity class]])
                 {

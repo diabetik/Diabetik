@@ -54,9 +54,17 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Initialise HockeyApp if we have applicable credentials
-    if(kHockeyAppIdentifierKey && [kHockeyAppIdentifierKey length])
+    if(
+       kHockeyAppBetaIdentifierKey && [kHockeyAppBetaIdentifierKey length] &&
+       kHockeyAppLiveIdentifierKey && [kHockeyAppLiveIdentifierKey length]
+    )
     {
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppIdentifierKey delegate:self];
+#ifdef RELEASE_BUILD
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppLiveIdentifierKey delegate:self];
+#else
+        NSLog(@"Running beta build");
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppBetaIdentifierKey delegate:self];
+#endif
         [[BITHockeyManager sharedHockeyManager] startManager];
     }
 
@@ -71,7 +79,7 @@
     // Is this a first run experience?
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasRunBeforeKey])
     {
-        // Dump any existing local notifications
+        // Dump any existing local notifications (handy when the application has been deleted and re-installed, as iOS likes to keep local notifications around for 24 hours)
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasRunBeforeKey];
@@ -83,7 +91,7 @@
     
     // Setup our backup controller
     self.backupController = [[UABackupController alloc] initWithMOC:[self managedObjectContext]];
-    
+
     // Call various singletons
     [[UAReminderController sharedInstance] setMOC:self.managedObjectContext];
     [[UAEventController sharedInstance] setMOC:self.managedObjectContext];
@@ -226,6 +234,10 @@
                                                           UITextAttributeFont,
                                                           nil]];
     [[UINavigationBar appearance] setTitleVerticalPositionAdjustment:1.0f forBarMetrics:UIBarMetricsDefault];
+    
+    // UITabBar
+    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"ToolbarBackground.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
+    [[UIToolbar appearance] setShadowImage:[[UIImage alloc] init] forToolbarPosition:UIToolbarPositionBottom];
     
     // UISearchBar
     [[UISearchBar appearance] setSearchFieldBackgroundImage:[[UIImage imageNamed:@"SearchInputBackground.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateNormal];

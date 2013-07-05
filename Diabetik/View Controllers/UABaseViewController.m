@@ -22,6 +22,9 @@
 #import "UAKeyboardController.h"
 
 @interface UABaseViewController ()
+{
+    UIView *dismissableOverlayView;
+}
 @end
 
 @implementation UABaseViewController
@@ -133,6 +136,20 @@
 - (void)didSwitchUserAccount
 {
     // STUB
+}
+
+#pragma mark - Helpers
+- (UIView *)dismissableView
+{
+    if(!dismissableOverlayView)
+    {
+        dismissableOverlayView = [[UIView alloc] initWithFrame:self.view.frame];
+        dismissableOverlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        dismissableOverlayView.backgroundColor = [UIColor clearColor];
+        dismissableOverlayView.userInteractionEnabled = YES;
+    }
+    
+    return dismissableOverlayView;
 }
 
 #pragma mark - Autorotation

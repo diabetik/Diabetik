@@ -46,7 +46,7 @@
     
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:kRebuildIndexNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSignificantSettingsChangeNotification object:nil];
 }
 - (void)minSliderValueChanged:(UISlider *)sender
 {
