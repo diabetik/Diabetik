@@ -22,10 +22,10 @@
 #import "UAAccountController.h"
 #import "UAEventController.h"
 
-#import "UAInsulinCalculatorTextFieldViewCell.h"
-
 #import "UAMeal.h"
 #import "UAReading.h"
+
+#import "UAInsulinCalculatorTextFieldViewCell.h"
 
 @interface UAInsulinCalculatorViewController ()
 {
@@ -33,7 +33,7 @@
     NSNumberFormatter *valueFormatter;
     NSIndexPath *activeIndexPath;
     
-    id accountSwitchNotifier;
+    id accountSwitchNotifier, settingsChangeNotifier;
     UILabel *totalLabel;
     UIToolbar *toolbar;
     
@@ -65,10 +65,13 @@
         
         self.title = NSLocalizedString(@"Insulin calculator", nil);
         
-        // Setup a notification for account switches
+        // Setup notifications
         __weak typeof(self) weakSelf = self;
         accountSwitchNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsSwitchedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
             
+            [weakSelf setupView];
+        }];
+        settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSignificantSettingsChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
             [weakSelf setupView];
         }];
         
@@ -95,6 +98,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:accountSwitchNotifier];
+    [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];
 }
 - (void)loadView
 {
@@ -111,14 +115,19 @@
     self.tableView.separatorColor = [UIColor colorWithRed:189.0f/255.0f green:189.0f/255.0f blue:189.0f/255.0f alpha:1.0f];
     [baseView addSubview:self.tableView];
     
+    // Setup our toolbar
     toolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
     toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
     
-    
     NSMutableArray *items = [NSMutableArray array];
     
-    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showDetails:)];
-    [items addObject:item1];
+    UIButton *settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 16.0f, 16.0f)];
+    [settingsButton setImage:[UIImage imageNamed:@"ToolbarIconSettings.png"] forState:UIControlStateNormal];
+    [settingsButton setImage:[UIImage imageNamed:@"ToolbarIconSettingsPressed.png"] forState:UIControlStateHighlighted];
+    [settingsButton addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithCustomView:settingsButton];
+    [items addObject:settings];
     [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
     
     totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0 , 11.0f, 200.0f, 21.0f)];
@@ -153,12 +162,22 @@
     [selectedMeals removeAllObjects];
     
     // Set some default values
+    if([UAHelper userBGUnit] == BGTrackingUnitMMO)
+    {
+        targetGlucose = ([account.insulinMMOTargetBG doubleValue] == 0) ? [NSNumber numberWithDouble:6.5] : account.insulinMMOTargetBG;
+        correctiveFactor = [NSNumber numberWithDouble:10.0];
+    }
+    else
+    {
+        targetGlucose = ([account.insulinMGTargetBG doubleValue] == 0) ? [NSNumber numberWithDouble:117.0] : account.insulinMGTargetBG;
+        correctiveFactor = [NSNumber numberWithDouble:100.0];
+    }
+    currentGlucose = [NSNumber numberWithDouble:0.0];
     totalCarbs = [NSNumber numberWithDouble:0.0];
-    targetGlucose = [UAHelper convertBGValue:[NSNumber numberWithDouble:8.3] fromUnit:BGTrackingUnitMMO toUnit:[UAHelper userBGUnit]];
-    correctiveFactor = [NSNumber numberWithDouble:100.0];
     carbohydrateRatio = [NSNumber numberWithDouble:20.0];
     
     // Fetch our latest glucose reading to try to pre-determine glucose reading
+    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account == %@ && filterType == %d && timestamp >= %@", account, ReadingFilterType, [NSDate dateWithHoursBeforeNow:24]];
     if(predicate)
     {
@@ -169,11 +188,6 @@
             UAReading *reading = (UAReading *)[previousGlucoseReadings objectAtIndex:0];
             currentGlucose = [reading value];
         }
-    }
-    else
-    {
-        // If we can't find our current glucose reading, default it to 0
-        currentGlucose = [NSNumber numberWithDouble:0.0];
     }
     
     // Fetch a list of previous meals over the past 24 hours
@@ -225,6 +239,12 @@
     [alertView show];
 }
 
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [[self view] endEditing:YES];
+}
+
 #pragma mark - UITableViewDelegate methods
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -258,40 +278,34 @@
 #pragma mark - UITableViewDataSource methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
     if(section == 0)
     {
-        return 2;
+        return 3;
     }
-    else if(section == 2)
+    else if(section == 1)
     {
         return 2;
     }
-    else
-    {
-        return [latestEvents count]+1;
-    }
+    
+    return 0;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if(section == 0) return NSLocalizedString(@"Input", nil);
-    if(section == 2) return NSLocalizedString(@"Factors", nil);
+    if(section == 1) return NSLocalizedString(@"Factors", nil);
     
     return @"";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(section == 1) return 0.0f;
-    
     return 40.0f;
 }
 - (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section
 {
-    if(section == 1) return nil;
-    
     UAGenericTableHeaderView *header = [[UAGenericTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, aTableView.frame.size.width, 40.0f)];
     [header setText:[self tableView:aTableView titleForHeaderInSection:section]];
     return header;
@@ -314,8 +328,8 @@
         if(indexPath.row == 0)
         {
             cell.textLabel.text = NSLocalizedString(@"Current BG", nil);
-            cell.detailTextLabel.text = NSLocalizedString(@"Current blood sugar", nil);
             
+            NSLog(@"%@ %@", currentGlucose, [valueFormatter stringFromNumber:currentGlucose]);
             UITextField *textField = (UITextField *)cell.accessoryControl;
             textField.text = [valueFormatter stringFromNumber:currentGlucose];
             textField.tag = 0;
@@ -324,14 +338,24 @@
         else if(indexPath.row == 1)
         {
             cell.textLabel.text = NSLocalizedString(@"Target BG", nil);
-            cell.detailTextLabel.text = NSLocalizedString(@"Target blood sugar", nil);
             
             UITextField *textField = (UITextField *)cell.accessoryControl;
             textField.text = [valueFormatter stringFromNumber:targetGlucose];
             textField.tag = 1;
             textField.delegate = self;
         }
+        else if(indexPath.row == 2)
+        {
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.text = NSLocalizedString(@"Total carbohydrates", nil);
+            
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            textField.text = [valueFormatter stringFromNumber:totalCarbs];
+            textField.tag = 2;
+            textField.delegate = self;
+        }
     }
+    /*
     else if(indexPath.section == 1)
     {
         if(indexPath.row == 0)
@@ -379,7 +403,8 @@
             }
         }
     }
-    else if(indexPath.section == 2)
+    */
+    else if(indexPath.section == 1)
     {
         cell = (UAInsulinCalculatorTextFieldViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UACalculatorInputCell"];
         if (!cell)
@@ -401,8 +426,10 @@
         }
         else if(indexPath.row == 1)
         {
+            NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
+            
             cell.textLabel.text = NSLocalizedString(@"Correction Factor", nil);
-            cell.detailTextLabel.text = NSLocalizedString(@"1u insulin for every X mg/dl", nil);
+            cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"1u insulin for every X %@", nil), unit];
             
             UITextField *textField = (UITextField *)cell.accessoryControl;
             textField.text = [valueFormatter stringFromNumber:correctiveFactor];
@@ -424,6 +451,12 @@
 #pragma mark - UITextFieldDelegate methods
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    // Add a tappable overlay view
+    UIView *dismissableView = [self dismissableView];
+    if([dismissableView superview]) [dismissableView removeFromSuperview];
+    
+    [self.view addSubview:dismissableView];
+    
     id cell = textField.superview.superview;
     if([cell isKindOfClass:[UITableViewCell class]])
     {
@@ -437,6 +470,10 @@
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    // Remove our tappable overlay view
+    UIView *dismissableView = [self dismissableView];
+    if([dismissableView superview]) [dismissableView removeFromSuperview];
+    
     if(textField.tag == 0)
     {
         currentGlucose = [valueFormatter numberFromString:textField.text];

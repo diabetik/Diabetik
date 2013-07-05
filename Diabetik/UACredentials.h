@@ -23,8 +23,11 @@
 #ifndef Diabetik_UACredentials_h
 #define Diabetik_UACredentials_h
 
-// Keys
-static NSString * const kHockeyAppIdentifierKey = @"";
+// HockeyApp
+static NSString * const kHockeyAppLiveIdentifierKey = @"";
+static NSString * const kHockeyAppBetaIdentifierKey = @"";
+
+// Dropbox
 static NSString * const kDropboxAppKey = @"";
 static NSString * const kDropboxSecret = @"";
 

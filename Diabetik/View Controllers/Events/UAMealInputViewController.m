@@ -208,7 +208,7 @@
         }
         textField.inputAccessoryView = nil;
         
-        [(UILabel *)[cell label] setText:NSLocalizedString(@"Grams", @"Unit of measurement")];
+        [(UILabel *)[cell label] setText:NSLocalizedString(@"Carbs", @"Amount of carbohydrates")];
     }
     else if(indexPath.row == 2)
     {

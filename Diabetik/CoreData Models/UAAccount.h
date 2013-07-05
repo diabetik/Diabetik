@@ -27,8 +27,10 @@
 
 @interface UAAccount : UAManagedObject
 @property (nonatomic, retain) NSNumber * insulinCarbRatio;
-@property (nonatomic, retain) NSNumber * insulinCorrectiveFactor;
-@property (nonatomic, retain) NSNumber * insulinTargetBG;
+@property (nonatomic, retain) NSNumber * insulinMGCorrectiveFactor;
+@property (nonatomic, retain) NSNumber * insulinMMOCorrectiveFactor;
+@property (nonatomic, retain) NSNumber * insulinMGTargetBG;
+@property (nonatomic, retain) NSNumber * insulinMMOTargetBG;
 
 @property (nonatomic, retain) NSDate * created;
 @property (nonatomic, retain) NSDate * dob;

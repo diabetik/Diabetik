@@ -43,7 +43,7 @@
     NSDateFormatter *dateFormatter;
     NSNumberFormatter *valueFormatter;
     
-    id rebuildIndexNotifier;
+    id settingsChangeNotifier;
     id coredataChangeNotifier;
     
     BOOL needsDataRefresh;
@@ -79,7 +79,7 @@
         coredataChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextObjectsDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
             needsDataRefresh = YES;
         }];
-        rebuildIndexNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRebuildIndexNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSignificantSettingsChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
             needsDataRefresh = YES;
             [weakSelf refreshView];
         }];
@@ -88,7 +88,7 @@
 }
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:rebuildIndexNotifier];    
+    [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];    
     [[NSNotificationCenter defaultCenter] removeObserver:accountSwitchNotifier];
     [[NSNotificationCenter defaultCenter] removeObserver:coredataChangeNotifier];
 }

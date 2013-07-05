@@ -43,6 +43,9 @@
 - (BOOL)isPresentedModally;
 - (void)didSwitchUserAccount;
 
+// Helpers
+- (UIView *)dismissableView;
+
 @end
 
 @interface UABaseTableViewController : UABaseViewController <UITableViewDataSource, UITableViewDelegate>
