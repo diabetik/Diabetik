@@ -24,7 +24,7 @@
 #pragma mark - Transforms
 - (NSString *)escapedForCSV
 {
-    NSString *value = [self stringByReplacingOccurrencesOfString: @"\"" withString: @"\\\""];
+    NSString *value = [self stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""];
     return [NSString stringWithFormat:@"\"%@\"", value];
 }
 
