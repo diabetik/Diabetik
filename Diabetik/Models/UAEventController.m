@@ -282,20 +282,23 @@
         }
     }
     
+    double readingsAvg = 0;
+    double readingsDeviation = 0;
     if(totalReadings <= 0)
     {
         lowestReading = 0.0f;
         highestReading = 0.0f;
     }
-    
-    double readingsAvg = readingsTotal / totalReadings;
-    double readingsDeviation = 0;
-    for(NSNumber *reading in readingValues)
+    else
     {
-        double diff = fabs([reading doubleValue] - readingsAvg);
-        readingsDeviation += diff;
+        readingsAvg = readingsTotal / totalReadings;
+        for(NSNumber *reading in readingValues)
+        {
+            double diff = fabs([reading doubleValue] - readingsAvg);
+            readingsDeviation += diff;
+        }
+        readingsDeviation /= totalReadings;
     }
-    readingsDeviation /= totalReadings;
     
     return @{
              @"min_date": minDate,
