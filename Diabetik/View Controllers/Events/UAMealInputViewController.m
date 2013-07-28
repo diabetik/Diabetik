@@ -123,8 +123,6 @@
         meal.type = [NSNumber numberWithInteger:0];
         meal.grams = [NSNumber numberWithDouble:grams];
         
-        NSLog(@"%@ %f", meal.grams, grams);
-        
         if(!notes.length) notes = nil;
         meal.notes = notes;
         
