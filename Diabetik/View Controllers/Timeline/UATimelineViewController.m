@@ -95,7 +95,7 @@
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"d MMMM yyyy"];
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:1];
+        [valueFormatter setMaximumFractionDigits:3];
         
         _relativeDays = days;
         _needsDataRefresh = NO;
@@ -117,7 +117,7 @@
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"d MMMM yyyy"];
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:1];
+        [valueFormatter setMaximumFractionDigits:3];
         
         _relativeDays = -1;
         _needsDataRefresh = NO;

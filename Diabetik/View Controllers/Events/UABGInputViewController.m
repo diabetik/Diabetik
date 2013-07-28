@@ -49,7 +49,7 @@
         value = @"";
         
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:1];
+        [valueFormatter setMaximumFractionDigits:3];
     }
     return self;
 }
@@ -63,7 +63,7 @@
         reading = (UAReading *)aEvent;
         
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:1];
+        [valueFormatter setMaximumFractionDigits:3];
         
         mmoValue = [valueFormatter stringFromNumber:reading.mmoValue];
         mgValue = [valueFormatter stringFromNumber:reading.mgValue];

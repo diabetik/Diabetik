@@ -71,7 +71,7 @@
         [timeFormatter setTimeStyle:NSDateFormatterMediumStyle];
         
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:1];
+        [valueFormatter setMaximumFractionDigits:3];
 
         reportData = nil;
         selectedMonths = [[NSMutableDictionary alloc] init];
@@ -379,26 +379,29 @@
         for(UAEvent *event in objects)
         {
             NSString *date = [dateKeyFormatter stringFromDate:event.timestamp];
-            if(![dictionary objectForKey:date])
+            if(date)
             {
-                NSDate *startDate = [(NSDate *)event.timestamp dateAtStartOfMonth];
-                NSDate *endDate = [startDate dateAtEndOfMonth];
-
-                if(startDate && endDate)
+                if(![dictionary objectForKey:date])
                 {
-                    NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:startDate toDate:endDate];
-                    [dictionary setObject:@{@"startDate": startDate, @"endDate": endDate, @"stats": stats, @"events": @[event]} forKey:date];
+                    NSDate *startDate = [(NSDate *)event.timestamp dateAtStartOfMonth];
+                    NSDate *endDate = [startDate dateAtEndOfMonth];
+
+                    if(startDate && endDate)
+                    {
+                        NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:startDate toDate:endDate];
+                        [dictionary setObject:@{@"startDate": startDate, @"endDate": endDate, @"stats": stats, @"events": @[event]} forKey:date];
+                    }
                 }
+                else
+                {
+                    NSMutableDictionary *month = [NSMutableDictionary dictionaryWithDictionary:[dictionary objectForKey:date]];
+                    NSArray *events = [[month objectForKey:@"events"] arrayByAddingObject:event];
+                    [month setObject:events forKey:@"events"];
+                    [dictionary setObject:month forKey:date];
+                }
+                
+                [selectedMonths setValue:[NSNumber numberWithBool:YES] forKey:date];
             }
-            else
-            {
-                NSMutableDictionary *month = [NSMutableDictionary dictionaryWithDictionary:[dictionary objectForKey:date]];
-                NSArray *events = [[month objectForKey:@"events"] arrayByAddingObject:event];
-                [month setObject:events forKey:@"events"];
-                [dictionary setObject:month forKey:date];
-            }
-            
-            [selectedMonths setValue:[NSNumber numberWithBool:YES] forKey:date];
         }
         
         if([[dictionary allKeys] count])
@@ -411,19 +414,19 @@
 }
 - (NSData *)generateCSVData
 {
-    NSString *data = @"Month, Glucose Avg., Total Activity, Total Grams, Glucose (Lowest), Glucose (Highest), Glucose (Avg. Deviation)";
+    NSString *data = @"Month,Glucose Avg.,Total Activity,Total Grams,Glucose (Lowest),Glucose (Highest),Glucose (Avg. Deviation)";
     for(NSString *month in reportData)
     {
         if([[selectedMonths objectForKey:month] boolValue])
         {
             NSDictionary *monthData = [reportData objectForKey:month];
             NSDictionary *monthStats = [monthData objectForKey:@"stats"];
-            data = [data stringByAppendingFormat:@"\n\"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\", \"%@\"", month, [valueFormatter stringFromNumber:[monthStats objectForKey:@"readings_avg"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_minutes"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_grams"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"lowest_reading"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"highest_reading"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"readings_deviation"]]];
+            data = [data stringByAppendingFormat:@"\n\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\"", month, [valueFormatter stringFromNumber:[monthStats objectForKey:@"readings_avg"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_minutes"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_grams"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"lowest_reading"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"highest_reading"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"readings_deviation"]]];
             
         }
     }
     
-    data = [data stringByAppendingFormat:@"\n\nDate, Time, Type, Info, Amount, Unit, Notes"];
+    data = [data stringByAppendingFormat:@"\n\nDate,Time,Type,Info,Amount,Unit,Notes"];
     for(NSString *month in reportData)
     {
         if([[selectedMonths objectForKey:month] boolValue])
@@ -438,21 +441,21 @@
                 NSString *date = [dateFormatter stringFromDate:event.timestamp];
                 if([event isKindOfClass:[UAMeal class]])
                 {
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@,,, %@", date, time, [event humanReadableName], name, notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,,,%@", date, time, [event humanReadableName], name, notes];
                 }
                 else if([event isKindOfClass:[UAMeal class]])
                 {
                     UAMeal *meal = (UAMeal *)event;
                     
                     NSString *value = [valueFormatter stringFromNumber:meal.grams];
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, [event humanReadableName], name, value, [NSLocalizedString(@"Grams", @"Unit of measurement") lowercaseString], notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,\"%@\",%@,%@", date, time, [event humanReadableName], name, value, [NSLocalizedString(@"Grams", @"Unit of measurement") lowercaseString], notes];
                 }
                 else if([event isKindOfClass:[UAActivity class]])
                 {
                     UAActivity *activity = (UAActivity *)event;
                     
                     NSString *activityTime = [UAHelper formatMinutes:[activity.minutes integerValue]];
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, %@, %@, %@", date, time, [event humanReadableName], name, activityTime, NSLocalizedString(@"time", @"Unit of measurement"), notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,%@,%@,%@", date, time, [event humanReadableName], name, activityTime, NSLocalizedString(@"time", @"Unit of measurement"), notes];
                 }
                 else if([event isKindOfClass:[UAMedicine class]])
                 {
@@ -460,7 +463,7 @@
                     
                     NSString *value = [valueFormatter stringFromNumber:medicine.amount];
                     NSString *unit = [[UAEventController sharedInstance] medicineTypeHR:[medicine.type integerValue]];
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, [event humanReadableName], name, value, unit, notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,\"%@\",%@,%@", date, time, [event humanReadableName], name, value, unit, notes];
                 }
                 else if([event isKindOfClass:[UAReading class]])
                 {
@@ -468,7 +471,7 @@
                     
                     NSString *value = [valueFormatter stringFromNumber:reading.value];
                     NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
-                    data = [data stringByAppendingFormat:@"\n\"%@\", %@, %@, %@, \"%@\", %@, %@", date, time, [event humanReadableName], name, value, unit, notes];
+                    data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,\"%@\",%@,%@", date, time, [event humanReadableName], name, value, unit, notes];
                 }
             }
         }

@@ -58,6 +58,7 @@
         
         fromDate = aFromDate;
         toDate = aToDate;
+        reportData = nil;
         
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -210,22 +211,28 @@
 #pragma mark - Logic
 - (void)fetchReportData
 {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:self.moc];
-    [fetchRequest setEntity:entity];
-    [fetchRequest setFetchBatchSize:20];
+    NSDate *fetchFromDate = [fromDate dateAtStartOfDay];
+    NSDate *fetchToDate = [toDate dateAtEndOfDay];
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    NSArray *sortDescriptors = @[sortDescriptor];
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@ && account = %@", [fromDate dateAtStartOfDay], [toDate dateAtEndOfDay], [[UAAccountController sharedInstance] activeAccount]]];
-    
-    NSError *error = nil;
-    reportData = [self.moc executeFetchRequest:fetchRequest error:&error];
-    
-    if(error)
+    if(fetchFromDate)
     {
-        reportData = nil;
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:self.moc];
+        [fetchRequest setEntity:entity];
+        [fetchRequest setFetchBatchSize:20];
+        
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+        NSArray *sortDescriptors = @[sortDescriptor];
+        [fetchRequest setSortDescriptors:sortDescriptors];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@ && account = %@", fetchFromDate, fetchToDate, [[UAAccountController sharedInstance] activeAccount]]];
+        
+        NSError *error = nil;
+        reportData = [self.moc executeFetchRequest:fetchRequest error:&error];
+        
+        if(error)
+        {
+            reportData = nil;
+        }
     }
 }
 - (void)didSelectReport:(UIButton *)previewButton

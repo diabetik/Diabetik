@@ -48,7 +48,7 @@
         self.title = NSLocalizedString(@"Add a Meal", nil);
         
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:1];
+        [valueFormatter setMaximumFractionDigits:3];
         
         _type = 0;
         grams = 0;
@@ -63,7 +63,7 @@
         self.title = NSLocalizedString(@"Edit Meal", nil);
         
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:1];
+        [valueFormatter setMaximumFractionDigits:3];
         
         meal = (UAMeal *)aEvent;
         name = meal.name;

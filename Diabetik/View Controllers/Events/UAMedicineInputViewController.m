@@ -53,7 +53,7 @@
         self.title = NSLocalizedString(@"Add Medicine", nil);
         
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:1];
+        [valueFormatter setMaximumFractionDigits:3];
     }
     return self;
 }
@@ -65,7 +65,7 @@
         self.title = NSLocalizedString(@"Edit Medicine", nil);
         
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:1];
+        [valueFormatter setMaximumFractionDigits:3];
         
         _medicine = (UAMedicine *)aEvent;
         _type = [self.medicine.type integerValue];
