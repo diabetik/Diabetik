@@ -61,7 +61,7 @@
         selectedMeals = [NSMutableDictionary dictionary];
 
         valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:2];
+        [valueFormatter setMaximumFractionDigits:3];
         
         self.title = NSLocalizedString(@"Insulin calculator", nil);
         
