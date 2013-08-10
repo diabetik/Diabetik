@@ -26,6 +26,6 @@
 @property (nonatomic, strong) UIImageView *rightAccessoryIcon;
 
 // Logic
-- (void)showTopBorder:(BOOL)state;
+- (void)showBottomBorder:(BOOL)state;
 
 @end

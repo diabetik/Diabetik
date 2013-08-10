@@ -41,14 +41,7 @@
         _label.text = @" ";
         _label.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
         _label.adjustsFontSizeToFitWidth = YES;
-        if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-        {
-            _label.minimumScaleFactor = 0.5f;
-        }
-        else
-        {
-            _label.minimumFontSize = 8.0f;
-        }
+        _label.minimumScaleFactor = 0.5f;
         [self.contentView addSubview:_label];
         
         _borderView = [[UIView alloc] initWithFrame:CGRectMake(0, self.frame.size.height-1.0f, self.frame.size.width, 1.0f)];

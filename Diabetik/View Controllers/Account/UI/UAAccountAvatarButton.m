@@ -27,14 +27,8 @@
 {
     [super layoutSubviews];
     
-    self.imageView.frame = CGRectMake(5.0f, 4.0f, self.frame.size.width-10.0f, self.frame.size.height-10.0f);
-}
-- (void)drawRect:(CGRect)rect
-{
-    [super drawRect:rect];
-    
-    UIImage *background = [UIImage imageNamed:@"AccountAvatarDefault.png"];
-    [background drawAtPoint:CGPointMake(0.0f, 0.0f)];
+    self.imageView.frame = CGRectMake(0.0f, 0.0f, self.frame.size.width, self.frame.size.height);
+    self.imageView.layer.cornerRadius = self.frame.size.width/2.0f;
 }
 
 @end

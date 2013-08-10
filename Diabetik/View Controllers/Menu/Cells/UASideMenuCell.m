@@ -22,7 +22,7 @@
 
 @interface UASideMenuCell ()
 {
-    UIView *topBorder;
+    UIView *bottomBorder;
 }
 @end
 
@@ -33,10 +33,10 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.textLabel.textColor = [UIColor whiteColor];
-        self.textLabel.highlightedTextColor = [UIColor whiteColor];
-        self.textLabel.shadowColor = [UIColor colorWithRed:28.0f/255.0f green:41.0f/255.0f blue:59.0f/255.0f alpha:1.0f];
-        self.textLabel.shadowOffset = CGSizeMake(0, -1);
+        
+        self.backgroundColor = [UIColor whiteColor];
+        
+        self.textLabel.textColor = [UIColor colorWithRed:115.0f/255.0f green:127.0f/255.0f blue:123.0f/255.0f alpha:1.0f];
         self.textLabel.font = [UAFont standardDemiBoldFontWithSize:16.0f];
         self.textLabel.backgroundColor = [UIColor clearColor];
         
@@ -59,16 +59,19 @@
         [self.contentView addSubview:self.rightAccessoryIcon];
         
         // Borders
+        /*
         topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0.0f, self.bounds.size.width, 1.0f)];
         topBorder.backgroundColor = [UIColor colorWithRed:51.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
         topBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         topBorder.hidden = YES;
         [self.contentView addSubview:topBorder];
+         */
         
-        UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-1.0f, self.bounds.size.width, 1.0f)];
-        bottomBorder.backgroundColor = [UIColor colorWithRed:38.0f/255.0f green:38.0f/255.0f blue:38.0f/255.0f alpha:1.0f];
+        bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(40.0f, self.bounds.size.height-1.0f, self.bounds.size.width, 0.5f)];
+        bottomBorder.backgroundColor = [UIColor colorWithRed:225.0f/255.0f green:225.0f/255.0f blue:225.0f/255.0f alpha:1.0f];
         bottomBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         [self.contentView addSubview:bottomBorder];
+
     }
     return self;
 }
@@ -82,9 +85,9 @@
 }
 
 #pragma mark - Logic
-- (void)showTopBorder:(BOOL)state
+- (void)showBottomBorder:(BOOL)state
 {
-    topBorder.hidden = !state;
+    bottomBorder.hidden = !state;
 }
 
 @end

@@ -334,7 +334,6 @@
             
             UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"Repeating", nil), NSLocalizedString(@"Date", nil)]];
             segmentedControl.frame = CGRectMake(0.0f, 0.0f, 150.0f, 30.0f);
-            segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
             segmentedControl.clipsToBounds = YES;
             [segmentedControl addTarget:self action:@selector(changeType:) forControlEvents:UIControlEventValueChanged];
             cell.accessoryView = segmentedControl;

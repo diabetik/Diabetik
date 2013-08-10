@@ -102,7 +102,7 @@
         CLLocation *location = [[CLLocation alloc] initWithLatitude:[reminder.lat doubleValue] longitude:[reminder.lng doubleValue]];
 
         BOOL regionAlreadyMonitored = NO;
-        for(CLRegion *region in newRegions)
+        for(CLCircularRegion *region in newRegions)
         {
             if([region containsCoordinate:location.coordinate])
             {
@@ -113,7 +113,7 @@
         
         if(!regionAlreadyMonitored)
         {
-            CLRegion *region = [[CLRegion alloc] initCircularRegionWithCenter:location.coordinate radius:150 identifier:reminder.uuid];
+            CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:location.coordinate radius:150 identifier:reminder.uuid];
             [self.locationManager startMonitoringForRegion:region];
             [newRegions addObject:region];
         }
@@ -188,7 +188,7 @@
         self.currentLocationFailureCallback = nil;
     }
 }
-- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLRegion *)region
+- (void)locationManager:(CLLocationManager *)manager didEnterRegion:(CLCircularRegion *)region
 {
     NSArray *reminders = [[UAReminderController sharedInstance] fetchAllReminders];
     for(UAReminder *reminder in [reminders objectAtIndex:kReminderTypeLocation])
@@ -210,7 +210,7 @@
         }
     }
 }
-- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLRegion *)region
+- (void)locationManager:(CLLocationManager *)manager didExitRegion:(CLCircularRegion *)region
 {
     NSArray *reminders = [[UAReminderController sharedInstance] fetchAllReminders];
     for(UAReminder *reminder in [reminders objectAtIndex:kReminderTypeLocation])

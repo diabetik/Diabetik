@@ -43,14 +43,7 @@
         header.font = [UAFont standardBoldFontWithSize:26.0f];
         header.text = NSLocalizedString(@"Credits", nil);
         header.adjustsFontSizeToFitWidth = YES;
-        if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-        {
-            header.minimumScaleFactor = 0.5f;
-        }
-        else
-        {
-            header.minimumFontSize = 13.0f;
-        }
+        header.minimumScaleFactor = 0.5f;
         [self addSubview:header];
         
         UIView *border = [[UIView alloc] initWithFrame:CGRectMake(floorf(self.frame.size.width/2 - 20.0f), 70.0f, 40.0f, 2.0f)];

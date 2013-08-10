@@ -135,7 +135,7 @@
     [totalLabel setBackgroundColor:[UIColor clearColor]];
     [totalLabel setTextColor:[UIColor whiteColor]];
     [totalLabel setText:@""];
-    [totalLabel setTextAlignment:UITextAlignmentCenter];
+    [totalLabel setTextAlignment:NSTextAlignmentCenter];
     
     [items addObject:[[UIBarButtonItem alloc] initWithCustomView:totalLabel]];
     [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];

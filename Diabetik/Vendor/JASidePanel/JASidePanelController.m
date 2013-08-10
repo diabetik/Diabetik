@@ -127,8 +127,8 @@ static char ja_kvoContext;
 
 - (void)_baseInit {
     self.style = JASidePanelSingleActive;
-    self.leftGapPercentage = 0.84f;
-    self.rightGapPercentage = 0.8f;
+    self.leftGapPercentage = 1.0f;
+    self.rightGapPercentage = 1.0f;
     self.minimumMovePercentage = 0.15f;
     self.maximumAnimationDuration = 0.2f;
     self.bounceDuration = 0.1f;
@@ -318,6 +318,7 @@ static char ja_kvoContext;
 }
 
 - (void)styleContainer:(UIView *)container animate:(BOOL)animate duration:(NSTimeInterval)duration {
+    /*
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRoundedRect:container.bounds cornerRadius:0.0f];
     if (animate) {
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"shadowPath"];
@@ -331,10 +332,11 @@ static char ja_kvoContext;
     container.layer.shadowRadius = 10.0f;
     container.layer.shadowOpacity = 0.75f;
     container.clipsToBounds = NO;
+    */
 }
 
 - (void)stylePanel:(UIView *)panel {
-    panel.layer.cornerRadius = 4.0f;
+   // panel.layer.cornerRadius = 4.0f;
     panel.clipsToBounds = YES;
 }
 
@@ -521,6 +523,7 @@ static char ja_kvoContext;
         CGRect frame = _centerPanelRestingFrame;
         frame.origin.x += [self _correctMovement:translate.x];
         self.centerPanelContainer.frame = frame;
+        self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
         
         // if center panel has focus, make sure correct side panel is revealed
         if (self.state == JASidePanelCenterVisible) {
@@ -731,6 +734,8 @@ static char ja_kvoContext;
     [UIView animateWithDuration:duration delay:0.0f options:UIViewAnimationOptionCurveLinear|UIViewAnimationOptionLayoutSubviews animations:^{
 
         self.centerPanelContainer.frame = _centerPanelRestingFrame;
+        self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
+        
         [self styleContainer:self.centerPanelContainer animate:YES duration:duration];
         if (self.style == JASidePanelMultipleActive) {
             [self _layoutSideContainers:NO duration:0.0f];
@@ -750,9 +755,13 @@ static char ja_kvoContext;
                 CGRect bounceFrame = _centerPanelRestingFrame;
                 bounceFrame.origin.x += bounceDistance;
                 self.centerPanelContainer.frame = bounceFrame;
+                self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
+                
             } completion:^(__unused BOOL finished2) {
                 [UIView animateWithDuration:self.bounceDuration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
-                    self.centerPanelContainer.frame = _centerPanelRestingFrame;				
+                    self.centerPanelContainer.frame = _centerPanelRestingFrame;
+                    self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
+                    
                 } completion:completion];
             }];
         } else if (completion) {
@@ -820,7 +829,9 @@ static char ja_kvoContext;
     if (animated) {
         [self _animateCenterPanel:shouldBounce completion:nil];
     } else {
-        self.centerPanelContainer.frame = _centerPanelRestingFrame;	
+        self.centerPanelContainer.frame = _centerPanelRestingFrame;
+        self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
+        
         [self styleContainer:self.centerPanelContainer animate:NO duration:0.0f];
         if (self.style == JASidePanelMultipleActive) {
             [self _layoutSideContainers:NO duration:0.0f];
@@ -844,7 +855,9 @@ static char ja_kvoContext;
     if (animated) {
         [self _animateCenterPanel:shouldBounce completion:nil];
     } else {
-        self.centerPanelContainer.frame = _centerPanelRestingFrame;	
+        self.centerPanelContainer.frame = _centerPanelRestingFrame;
+        self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
+        
         [self styleContainer:self.centerPanelContainer animate:NO duration:0.0f];
         if (self.style == JASidePanelMultipleActive) {
             [self _layoutSideContainers:NO duration:0.0f];
@@ -869,7 +882,9 @@ static char ja_kvoContext;
             [self _unloadPanels];
         }];
     } else {
-        self.centerPanelContainer.frame = _centerPanelRestingFrame;	
+        self.centerPanelContainer.frame = _centerPanelRestingFrame;
+        self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
+        
         [self styleContainer:self.centerPanelContainer animate:NO duration:0.0f];
         if (self.style == JASidePanelMultipleActive) {
             [self _layoutSideContainers:NO duration:0.0f];
@@ -995,6 +1010,8 @@ static char ja_kvoContext;
                 CGRect frame = self.centerPanelContainer.frame;
                 frame.origin.x = self.state == JASidePanelLeftVisible ? self.centerPanelContainer.frame.size.width : -self.centerPanelContainer.frame.size.width;
                 self.centerPanelContainer.frame = frame;
+                self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
+                
                 if (self.shouldResizeLeftPanel || self.shouldResizeRightPanel) {
                     [self _layoutSidePanels];
                 }

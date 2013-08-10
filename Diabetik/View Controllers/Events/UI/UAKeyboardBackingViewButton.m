@@ -34,14 +34,7 @@
         self.titleLabel.font = [UAFont standardDemiBoldFontWithSize:13.0f];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel.adjustsFontSizeToFitWidth = YES;
-        if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-        {
-            self.titleLabel.minimumScaleFactor = 0.5f;
-        }
-        else
-        {
-            self.titleLabel.minimumFontSize = 6.0f;
-        }
+        self.titleLabel.minimumScaleFactor = 0.5f;
         
         [self setTitleColor:[UIColor colorWithRed:148.0f/255.0f green:148.0f/255.0f blue:148.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         

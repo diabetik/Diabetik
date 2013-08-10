@@ -248,11 +248,11 @@
     [[UINavigationBar appearance] setTitleVerticalPositionAdjustment:1.0f forBarMetrics:UIBarMetricsDefault];
     */
     
+    /*
     // UITabBar
     [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"ToolbarBackground.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
     [[UIToolbar appearance] setShadowImage:[[UIImage alloc] init] forToolbarPosition:UIToolbarPositionBottom];
     
-    /*
     // UISearchBar
     [[UISearchBar appearance] setSearchFieldBackgroundImage:[[UIImage imageNamed:@"SearchInputBackground.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateNormal];
     [[UISearchBar appearance] setImage:[UIImage imageNamed:@"SearchBarIconMagGlass.png"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
@@ -260,19 +260,23 @@
     [[UISearchBar appearance] setPositionAdjustment:UIOffsetMake(-5.0f, -1.0f) forSearchBarIcon:UISearchBarIconBookmark];
     */
     
+    NSShadow *dropShadow = [[NSShadow alloc] init];
+    dropShadow.shadowColor = [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:0.15f];
+    dropShadow.shadowOffset = CGSizeMake(0.0f, 1.0f);
+    
     // UISwitch
     [[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:22.0f/255.0f green:211.0f/255.0f blue:160.0f/255.0f alpha:1.0f]];
     
     // UISegmentedControl
     attributes = @{
-                   UITextAttributeFont: [UAFont standardDemiBoldFontWithSize:13.0f],
-                   UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
-                   UITextAttributeTextShadowColor: [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:0.15f],
-                   UITextAttributeTextColor: [UIColor whiteColor]
+                   NSFontAttributeName: [UAFont standardDemiBoldFontWithSize:13.0f],
+                   NSShadowAttributeName: dropShadow,
+                   NSForegroundColorAttributeName: [UIColor whiteColor]
                    };
     [[UISegmentedControl appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
     [[UISegmentedControl appearance] setTintColor:[UIColor colorWithRed:22.0f/255.0f green:211.0f/255.0f blue:160.0f/255.0f alpha:1.0f]];
     
+    /*
     // UIBarButtonItem
     UIImage *buttonBG = [[UIImage imageNamed:@"NavBarBtn.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 3, 0, 3)];
     UIImage *buttonHighlightedBG = [[UIImage imageNamed:@"NavBarBtnPressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 3, 0, 3)];
@@ -282,25 +286,23 @@
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
     {
         attributes = @{
-                       UITextAttributeFont: [UAFont standardDemiBoldFontWithSize:13.0f],
-                       UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
-                       UITextAttributeTextShadowColor: [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:0.15f],
-                       UITextAttributeTextColor: [UIColor whiteColor]
+                       NSFontAttributeName: [UAFont standardDemiBoldFontWithSize:13.0f],
+                       NSShadowAttributeName: dropShadow,
+                       NSForegroundColorAttributeName: [UIColor whiteColor]
                        };
         [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
         
         attributes = @{
-                       UITextAttributeFont: [UAFont standardDemiBoldFontWithSize:13.0f],
-                       UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 1.0f)],
-                       UITextAttributeTextShadowColor: [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:0.15f],
-                       UITextAttributeTextColor: [UIColor whiteColor]
+                       NSFontAttributeName: [UAFont standardDemiBoldFontWithSize:13.0f],
+                       NSShadowAttributeName: dropShadow,
+                       NSForegroundColorAttributeName: [UIColor whiteColor]
                        };
         [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateHighlighted];
         
         attributes = @{
-                       UITextAttributeFont: [UAFont standardDemiBoldFontWithSize:13.0f],
-                       UITextAttributeTextShadowOffset: [NSValue valueWithUIOffset:UIOffsetMake(0.0f, 0.0f)],
-                       UITextAttributeTextColor: [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:0.15f]
+                       NSFontAttributeName: [UAFont standardDemiBoldFontWithSize:13.0f],
+                       NSShadowAttributeName: dropShadow,
+                       NSForegroundColorAttributeName: [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:0.15f]
                        };
         [[UIBarButtonItem appearance] setTitleTextAttributes:attributes forState:UIControlStateDisabled];
     }
@@ -309,6 +311,7 @@
     UIImage *backButtonHighlightedBG = [[UIImage imageNamed:@"NavBarBtnBackPressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 3)];
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonBG forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearance] setBackButtonBackgroundImage:backButtonHighlightedBG forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    */
 }
 - (void)saveContext
 {

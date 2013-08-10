@@ -106,7 +106,6 @@
         cell.textLabel.text = NSLocalizedString(@"BG units", @"Blood glucose units");
         
         UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"mg/dL", @"mmoI/L"]];
-        segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
         [segmentedControl addTarget:self action:@selector(changeBGUnits:) forControlEvents:UIControlEventValueChanged];
         cell.accessoryView = segmentedControl;
         

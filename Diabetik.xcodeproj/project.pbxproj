@@ -20,6 +20,7 @@
 		532D0EE7177D83C6000D793F /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EC8177D83C6000D793F /* AppiraterLocalizable.strings */; };
 		532D0EEA177D9662000D793F /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EE9177D9662000D793F /* StoreKit.framework */; };
 		53327C46170DDED3004FA6D2 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53327C43170DDEC9004FA6D2 /* libOAuth2Client.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		53350EC917B6A86300223662 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53350EC817B6A86300223662 /* Media.xcassets */; };
 		53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */; };
 		533F07411708B70500B7BF55 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07401708B70500B7BF55 /* Dropbox.framework */; };
 		533F07431708B71700B7BF55 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07421708B71700B7BF55 /* CFNetwork.framework */; };
@@ -595,6 +596,7 @@
 		532D0EE3177D83C6000D793F /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AppiraterLocalizable.strings"; sourceTree = "<group>"; };
 		532D0EE9177D9662000D793F /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		53327C3B170DDEC8004FA6D2 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = "OAuth2Client-master/OAuth2Client.xcodeproj"; sourceTree = "<group>"; };
+		53350EC817B6A86300223662 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		533F07401708B70500B7BF55 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
 		533F07421708B71700B7BF55 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -1410,6 +1412,7 @@
 				533F30651773266500AD89E2 /* Fonts */,
 				533F30731773266500AD89E2 /* Media */,
 				533F31E11773266600AD89E2 /* SFX */,
+				53350EC817B6A86300223662 /* Media.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2668,6 +2671,7 @@
 				533F33351773266600AD89E2 /* DefaultFieldsetBackgroundPressed@2x.png in Resources */,
 				533F33361773266600AD89E2 /* DefaultFieldsetBackgroundSelected@2x.png in Resources */,
 				533F33371773266600AD89E2 /* DefaultFieldsetBackgroundTop.png in Resources */,
+				53350EC917B6A86300223662 /* Media.xcassets in Resources */,
 				533F33381773266600AD89E2 /* DefaultFieldsetBackgroundTop@2x.png in Resources */,
 				533F33391773266600AD89E2 /* DefaultFieldsetBackgroundTopPressed.png in Resources */,
 				533F333A1773266600AD89E2 /* DefaultFieldsetBackgroundTopPressed@2x.png in Resources */,
@@ -3212,8 +3216,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
+				PROVISIONING_PROFILE = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3222,7 +3226,7 @@
 		5359DD0617855DCB00141823 /* Beta Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
@@ -3244,8 +3248,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
+				PROVISIONING_PROFILE = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Beta Release";
@@ -3278,8 +3282,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
+				PROVISIONING_PROFILE = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -3305,8 +3309,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = "-ObjC";
-				PROVISIONING_PROFILE = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
+				PROVISIONING_PROFILE = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -3315,7 +3319,7 @@
 		538DBAA3166F830300F0709F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3336,8 +3340,8 @@
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
+				PROVISIONING_PROFILE = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -3345,7 +3349,7 @@
 		538DBAA4166F830300F0709F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
@@ -3367,8 +3371,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0579A5CA-A6C5-4FA3-A92C-81FD38A3DFD6";
+				PROVISIONING_PROFILE = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8F1F0951-8E16-4B04-83FC-C5CF76779803";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

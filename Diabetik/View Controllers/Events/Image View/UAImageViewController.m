@@ -44,7 +44,6 @@
 {
     self = [super init];
     if (self) {
-        self.wantsFullScreenLayout = YES;
         
         _image = aImage;        
         

@@ -30,7 +30,7 @@
     
     self.accessoryIcon.contentMode = UIViewContentModeScaleToFill;
     self.accessoryIcon.frame = CGRectMake(self.accessoryIcon.frame.origin.x, 11.0f, 20.0f, 20.0f);
-    self.accessoryIcon.layer.cornerRadius = 2;
+    self.accessoryIcon.layer.cornerRadius = 10.0f;
     self.accessoryIcon.layer.masksToBounds = YES;
 }
 

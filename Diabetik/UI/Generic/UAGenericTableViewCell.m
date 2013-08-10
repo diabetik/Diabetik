@@ -47,14 +47,7 @@
         self.textLabel.shadowOffset = CGSizeMake(0, 1);
         self.textLabel.highlightedTextColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
         self.textLabel.adjustsFontSizeToFitWidth = YES;
-        if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-        {
-            self.textLabel.minimumScaleFactor = 0.5f;
-        }
-        else
-        {
-            self.textLabel.minimumFontSize = 8.0f;
-        }
+        self.textLabel.minimumScaleFactor = 0.5f;
         
         self.detailTextLabel.font = [UAFont standardRegularFontWithSize:13.0f];
         self.detailTextLabel.backgroundColor = [UIColor clearColor];

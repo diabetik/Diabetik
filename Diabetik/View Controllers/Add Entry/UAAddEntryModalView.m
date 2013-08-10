@@ -52,45 +52,45 @@
         [self addSubview:container];
         
         CGFloat width = floorf((container.frame.size.width-3.0f)/2.0f);
-        CGFloat height = floorf((container.frame.size.height-7.0f)/3.0f);
+        CGFloat height = floorf((container.frame.size.height-3.0f)/3.0f);
         
         buttons = [[NSMutableArray alloc] init];
-        UAAddEntryModalButton *medicineButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(1.0f, 5.0f, width, height)];
+        UAAddEntryModalButton *medicineButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(1.0f, 0.0f, width, height)];
         [medicineButton setTag:0];
         [medicineButton setImage:[UIImage imageNamed:@"AddEntryModalMedicineIcon.png"] forState:UIControlStateNormal];
         [medicineButton setTitle:NSLocalizedString(@"Medication", nil) forState:UIControlStateNormal];
         [medicineButton addTarget:self action:@selector(selectedOption:) forControlEvents:UIControlEventTouchUpInside];
         [container addSubview:medicineButton];
         
-        UAAddEntryModalButton *readingButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(2.0f + width, 5.0f, width, height)];
+        UAAddEntryModalButton *readingButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(2.0f + width, 0.0f, width, height)];
         [readingButton setTag:1];
         [readingButton setImage:[UIImage imageNamed:@"AddEntryModalBloodIcon.png"] forState:UIControlStateNormal];
         [readingButton setTitle:NSLocalizedString(@"Reading", @"Blood glucose reading entry type") forState:UIControlStateNormal];
         [readingButton addTarget:self action:@selector(selectedOption:) forControlEvents:UIControlEventTouchUpInside];
         [container addSubview:readingButton];
         
-        UAAddEntryModalButton *mealButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(1.0f, 6.0f + height, width, height)];
+        UAAddEntryModalButton *mealButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(1.0f, 1.0f + height, width, height)];
         [mealButton setTag:2];
         [mealButton setImage:[UIImage imageNamed:@"AddEntryModalMealIcon.png"] forState:UIControlStateNormal];
         [mealButton setTitle:NSLocalizedString(@"Meal", @"Meal entry type") forState:UIControlStateNormal];
         [mealButton addTarget:self action:@selector(selectedOption:) forControlEvents:UIControlEventTouchUpInside];
         [container addSubview:mealButton];
         
-        UAAddEntryModalButton *activityButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(2.0f + width, 6.0f + height, width, height)];
+        UAAddEntryModalButton *activityButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(2.0f + width, 1.0f + height, width, height)];
         [activityButton setTag:3];
         [activityButton setImage:[UIImage imageNamed:@"AddEntryModalActivityIcon.png"] forState:UIControlStateNormal];
         [activityButton setTitle:NSLocalizedString(@"Activity", @"Activity (physical exercise) entry type") forState:UIControlStateNormal];
         [activityButton addTarget:self action:@selector(selectedOption:) forControlEvents:UIControlEventTouchUpInside];
         [container addSubview:activityButton];
         
-        UAAddEntryModalButton *noteButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(1.0f, 7.0f + height*2, width, height)];
+        UAAddEntryModalButton *noteButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(1.0f, 2.0f + height*2, width, height)];
         [noteButton setTag:4];
         [noteButton setImage:[UIImage imageNamed:@"AddEntryModalNoteIcon.png"] forState:UIControlStateNormal];
         [noteButton setTitle:NSLocalizedString(@"Note", @"Note entry type") forState:UIControlStateNormal];
         [noteButton addTarget:self action:@selector(selectedOption:) forControlEvents:UIControlEventTouchUpInside];
         [container addSubview:noteButton];
         
-        UAAddEntryModalButton *cancelButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(2.0f + width, 7.0f + height*2, width, height)];
+        UAAddEntryModalButton *cancelButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(2.0f + width, 2.0f + height*2, width, height)];
         [cancelButton setTag:5];
         [cancelButton setImage:[UIImage imageNamed:@"AddEntryModalCancelIcon.png"] forState:UIControlStateNormal];
         [cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
@@ -103,16 +103,6 @@
         [buttons addObject:activityButton];
         [buttons addObject:noteButton];
         [buttons addObject:cancelButton];
-        
-        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.frame];
-        imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        imageView.image = [[UIImage imageNamed:@"AddEntryModalBackground.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
-        imageView.userInteractionEnabled = NO;
-        imageView.backgroundColor = [UIColor clearColor];
-        [container addSubview:imageView];
-        
-        container.layer.cornerRadius = 6;
-        container.layer.masksToBounds = YES;
     }
     return self;
 }

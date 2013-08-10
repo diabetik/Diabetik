@@ -43,14 +43,7 @@
         header.font = [UAFont standardBoldFontWithSize:26.0f];
         header.text = NSLocalizedString(@"Reminders", nil);
         header.adjustsFontSizeToFitWidth = YES;
-        if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-        {
-            header.minimumScaleFactor = 0.5f;
-        }
-        else
-        {
-            header.minimumFontSize = 13.0f;
-        }
+        header.minimumScaleFactor = 0.5f;
         [containerView addSubview:header];
         
         UILabel *content = [[UILabel alloc] initWithFrame:CGRectMake(floorf(self.frame.size.width/2 - 225/2), headerHeight+20, 225, contentHeight)];

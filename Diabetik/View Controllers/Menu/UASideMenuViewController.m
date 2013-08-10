@@ -62,7 +62,7 @@
     [super viewDidLoad];
     
     overscrollView = nil;
-    self.view.backgroundColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
+    self.view.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:246.0f/255.0f blue:245.0f/255.0f alpha:1.0f];
 
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0.0f)];
     self.tableView.tableHeaderView = headerView;
@@ -89,7 +89,7 @@
         frame.origin.y = -frame.size.height;
         overscrollView = [[UIView alloc] initWithFrame:frame];
         [overscrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-        overscrollView.backgroundColor = [UIColor colorWithRed:41.0f/255.0f green:41.0f/255.0f blue:41.0f/255.0f alpha:1.0f];
+        overscrollView.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:246.0f/255.0f blue:245.0f/255.0f alpha:1.0f];
         [self.tableView addSubview:overscrollView];
     }
 }
@@ -207,31 +207,26 @@
         if(indexPath.row == 0)
         {
             cell.textLabel.text = NSLocalizedString(@"Journal", nil);
-            cell.textLabel.textColor = [UIColor whiteColor];
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconJournal.png"];
         }
         else if(indexPath.row == 1)
         {
             cell.textLabel.text = NSLocalizedString(@"Reminders", nil);
-            cell.textLabel.textColor = [UIColor whiteColor];
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders.png"];
         }
         else if(indexPath.row == 2)
         {
             cell.textLabel.text = NSLocalizedString(@"Export", @"Menu item to take users to the export screen");
-            cell.textLabel.textColor = [UIColor whiteColor];
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconExport.png"];
         }
         else if(indexPath.row == 3)
         {
             cell.textLabel.text = NSLocalizedString(@"Credits", @"Menu item to show users the application credits");
-            cell.textLabel.textColor = [UIColor whiteColor];
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconCredits.png"];
         }
         else if(indexPath.row == 4)
         {
             cell.textLabel.text = NSLocalizedString(@"Settings", nil);
-            cell.textLabel.textColor = [UIColor whiteColor];
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconSettings.png"];
         }
     }
@@ -258,7 +253,7 @@
         }
     }
     
-    [cell showTopBorder:(indexPath.row == 0)];
+    [cell showBottomBorder:!(indexPath.row == [self tableView:aTableView numberOfRowsInSection:indexPath.section]-1)];
     
     return cell;
 }
@@ -269,9 +264,9 @@
     CGFloat height = [self tableView:aTableView heightForHeaderInSection:section];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, height-23.0f, aTableView.frame.size.width, height)];
-    view.backgroundColor = [UIColor colorWithRed:41.0f/255.0f green:41.0f/255.0f blue:41.0f/255.0f alpha:1.0f];
+    view.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:246.0f/255.0f blue:245.0f/255.0f alpha:1.0f];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12.0f, height-23.0f, aTableView.frame.size.width, 23.0f)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40.0f, height-23.0f, aTableView.frame.size.width, 23.0f)];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithRed:122.0f/255.0f green:122.0f/255.0f blue:122.0f/255.0f alpha:1.0f];
     label.text = [[self tableView:aTableView titleForHeaderInSection:section] uppercaseString];
@@ -281,7 +276,7 @@
     [view addSubview:label];
     
     UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, view.bounds.size.height-1.0f, view.bounds.size.width, 1.0f)];
-    bottomBorder.backgroundColor = [UIColor colorWithRed:38.0f/255.0f green:38.0f/255.0f blue:38.0f/255.0f alpha:1.0f];
+    bottomBorder.backgroundColor = [UIColor colorWithRed:220.0f/255.0f green:223.0f/255.0f blue:222.0f/255.0f alpha:1.0f];
     bottomBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [view addSubview:bottomBorder];
     
@@ -291,7 +286,7 @@
 {
     if(section == 0)
     {
-        return 66.0f;
+        return 65.0f;
     }
     return 23.0f;
 }

@@ -344,7 +344,6 @@
             cell.textLabel.text = NSLocalizedString(@"Gender", nil);
             
             UISegmentedControl *segmentedControl = [[UISegmentedControl alloc] initWithItems:@[NSLocalizedString(@"Male", @"Gender selector switch"), NSLocalizedString(@"Female", @"Gender selector switch")]];
-            segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
             [segmentedControl addTarget:self action:@selector(changeGender:) forControlEvents:UIControlEventValueChanged];
             cell.accessoryView = segmentedControl;
             
