@@ -534,6 +534,7 @@
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
+		53FF442617B54E450047B6A5 /* UASideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FF442517B54E450047B6A5 /* UASideMenuController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1249,6 +1250,8 @@
 		53B576751709DF02007322EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		53FF442417B54E450047B6A5 /* UASideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuController.h; sourceTree = "<group>"; };
+		53FF442517B54E450047B6A5 /* UASideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuController.m; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2336,6 +2339,8 @@
 				533F354C17736C5500AD89E2 /* Navigation */,
 				533F354F17736C5500AD89E2 /* Tooltips */,
 				533F355B17736C5500AD89E2 /* UAUI.h */,
+				53FF442417B54E450047B6A5 /* UASideMenuController.h */,
+				53FF442517B54E450047B6A5 /* UASideMenuController.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -2539,6 +2544,11 @@
 				CLASSPREFIX = UA;
 				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = UglyApps;
+				TargetAttributes = {
+					538DBA72166F830300F0709F = {
+						DevelopmentTeam = WJUU699234;
+					};
+				};
 			};
 			buildConfigurationList = 538DBA6D166F830300F0709F /* Build configuration list for PBXProject "Diabetik" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -3036,6 +3046,7 @@
 				533F34B01773266600AD89E2 /* UAEventMapViewController.m in Sources */,
 				533F34B11773266600AD89E2 /* UAActivityInputViewController.m in Sources */,
 				533F34B21773266600AD89E2 /* UABGInputViewController.m in Sources */,
+				53FF442617B54E450047B6A5 /* UASideMenuController.m in Sources */,
 				533F34B31773266600AD89E2 /* UAInputBaseViewController.m in Sources */,
 				533F34B41773266600AD89E2 /* UAInputParentViewController.m in Sources */,
 				533F34B51773266600AD89E2 /* UAMealInputViewController.m in Sources */,
@@ -3192,9 +3203,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -3213,7 +3222,7 @@
 		5359DD0617855DCB00141823 /* Beta Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
@@ -3228,7 +3237,7 @@
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/OAuth2Client-master/**";
 				INFOPLIST_FILE = "Diabetik/Diabetik-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3253,9 +3262,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3289,9 +3296,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -3310,7 +3315,7 @@
 		538DBAA3166F830300F0709F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3323,7 +3328,7 @@
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/OAuth2Client-master/**";
 				INFOPLIST_FILE = "Diabetik/Diabetik-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
@@ -3340,7 +3345,7 @@
 		538DBAA4166F830300F0709F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
@@ -3355,7 +3360,7 @@
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "RELEASE_BUILD=1";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/OAuth2Client-master/**";
 				INFOPLIST_FILE = "Diabetik/Diabetik-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",

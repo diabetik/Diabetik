@@ -24,6 +24,7 @@
 #import "UAUI.h"
 #import "UABackupController.h"
 #import "JASidePanelController.h"
+#import "UASideMenuController.h"
 
 #import "UAAccount.h"
 #import "UASyncController.h"

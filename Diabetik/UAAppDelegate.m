@@ -101,14 +101,23 @@
     [UALocationController sharedInstance];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     UAJournalViewController *journalViewController = [[UAJournalViewController alloc] initWithMOC:self.managedObjectContext];
     UANavigationController *navigationController = [[UANavigationController alloc] initWithRootViewController:journalViewController];
+    
     self.viewController = [[JASidePanelController alloc] init];
     self.viewController.leftPanel = [[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext];
     self.viewController.centerPanel = navigationController;
     self.viewController.rightPanel = nil;
     self.viewController.panningLimitedToTopViewController = NO;
-
+    
+    /*
+    
+    self.viewController = [[UASideMenuController alloc] initWithNibName:nil bundle:nil];
+    self.viewController.leftPanel = [[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext];
+    self.viewController.centerPanel = navigationController;
+    */
+    
     [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
 
@@ -215,6 +224,9 @@
 {
     NSDictionary *attributes = nil;
     
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.0f/255.0f green:174.0f/255.0f blue:127.0f/255.0f alpha:1.0f]];
+    
+    /*
     // UINavigationBar
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavBarBackground.png"] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"NavBarBackgroundLandscape.png"] forBarMetrics:UIBarMetricsLandscapePhone];
@@ -234,16 +246,19 @@
                                                           UITextAttributeFont,
                                                           nil]];
     [[UINavigationBar appearance] setTitleVerticalPositionAdjustment:1.0f forBarMetrics:UIBarMetricsDefault];
+    */
     
     // UITabBar
     [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"ToolbarBackground.png"] forToolbarPosition:UIToolbarPositionBottom barMetrics:UIBarMetricsDefault];
     [[UIToolbar appearance] setShadowImage:[[UIImage alloc] init] forToolbarPosition:UIToolbarPositionBottom];
     
+    /*
     // UISearchBar
     [[UISearchBar appearance] setSearchFieldBackgroundImage:[[UIImage imageNamed:@"SearchInputBackground.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(15, 15, 15, 15)] forState:UIControlStateNormal];
     [[UISearchBar appearance] setImage:[UIImage imageNamed:@"SearchBarIconMagGlass.png"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
     [[UISearchBar appearance] setImage:[UIImage imageNamed:@"SearchIconCollapse.png"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
     [[UISearchBar appearance] setPositionAdjustment:UIOffsetMake(-5.0f, -1.0f) forSearchBarIcon:UISearchBarIconBookmark];
+    */
     
     // UISwitch
     [[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:22.0f/255.0f green:211.0f/255.0f blue:160.0f/255.0f alpha:1.0f]];

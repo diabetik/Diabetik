@@ -88,31 +88,6 @@
             position = UACellBackgroundViewPositionBottom;
         }
     }
-    
-    UIImageView *background = (UIImageView *)self.backgroundView;
-    UIImageView *selectedBackground = (UIImageView *)self.selectedBackgroundView;
-    switch(position)
-    {
-        case UACellBackgroundViewPositionTop:
-            background.image = [[UIImage imageNamed:@"DefaultFieldsetBackgroundTop.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(6, 7, 1, 7)];
-            selectedBackground.image = [[UIImage imageNamed:@"DefaultFieldsetBackgroundTopPressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(6, 7, 1, 7)];
-            
-            break;
-        case UACellBackgroundViewPositionMiddle:
-            background.image = [[UIImage imageNamed:@"DefaultFieldsetBackgroundMiddle.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 1, 7)];
-            selectedBackground.image = [[UIImage imageNamed:@"DefaultFieldsetBackgroundMiddlePressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 1, 7)];
-            
-            break;
-        case UACellBackgroundViewPositionBottom:
-            background.image = [[UIImage imageNamed:@"DefaultFieldsetBackgroundBottom.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 6, 14)];
-            selectedBackground.image = [UIImage imageNamed:@"DefaultFieldsetBackgroundBottomPressed.png"];
-            
-            break;
-        case UACellBackgroundViewPositionSingle:
-            background.image = [[UIImage imageNamed:@"DefaultFieldsetBackground.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 6, 14)];
-            selectedBackground.image = [UIImage imageNamed:@"DefaultFieldsetBackgroundPressed.png"];
-            break;
-    }
 }
 - (void)setAccessoryType:(UITableViewCellAccessoryType)accessoryType
 {
