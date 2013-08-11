@@ -38,6 +38,8 @@
         isVisible = NO;
         isFirstLoad = YES;
         
+        self.automaticallyAdjustsScrollViewInsets = NO;
+        
         __weak typeof(self) weakSelf = self;
         accountSwitchNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsSwitchedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
             [weakSelf didSwitchUserAccount];
@@ -174,7 +176,7 @@
 #pragma mark - Setup
 - (id)initWithStyle:(UITableViewStyle)style
 {
-    self = [super init];
+    self = [super initWithNibName:nil bundle:nil];
     if(self)
     {
         isVisible = NO;
@@ -188,10 +190,13 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillBeShown:)
                                                      name:UIKeyboardWillShowNotification object:nil];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillBeHidden:)
                                                      name:UIKeyboardWillHideNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWasHidden:)
+                                                     name:UIKeyboardDidHideNotification object:nil];
         
         UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconBack.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
         [self.navigationItem setBackBarButtonItem:backBarButtonItem];
@@ -212,6 +217,8 @@
     self.tableView.backgroundView = nil;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor colorWithRed:189.0f/255.0f green:189.0f/255.0f blue:189.0f/255.0f alpha:1.0f];
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64.0f, 0.0f, 0.0f, 0.0f);
+    self.tableView.contentInset = UIEdgeInsetsMake(64.0f, 0.0f, 0.0f, 0.0f);
     [baseView addSubview:self.tableView];
     
     self.view = baseView;
@@ -224,28 +231,36 @@
 #pragma mark - Logic
 - (void)keyboardWillBeShown:(NSNotification*)aNotification
 {
+    // STUB
+}
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSLog(@"Keyboard was shown %@", [self class]);
     NSDictionary *info = [aNotification userInfo];
     CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.navigationController.navigationBar ? 64.0f : 0.0f, 0.0f, keyboardSize.height, 0.0f);
+    
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
     
     CGRect aRect = self.view.frame;
     aRect.size.height -= keyboardSize.height;
 }
-- (void)keyboardWasShown:(NSNotification*)aNotification
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     // STUB
 }
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+- (void)keyboardWasHidden:(NSNotification*)aNotification
 {
-    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    NSLog(@"Keyboard was hidden %@", [self class]);
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.navigationController.navigationBar ? 64.0f : 0.0f, 0.0f, 0.0f, 0.0f);
+    
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
 }
 
-#pragma mark - UITableViewDelegate methods
+#pragma mark - UITableViewDataSource methods
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 0;
@@ -254,6 +269,8 @@
 {
     return nil;
 }
+
+#pragma mark - UITableViewDelegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap"];

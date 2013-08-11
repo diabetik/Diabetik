@@ -62,6 +62,7 @@
     id applicationResumeNotifier;
     id orientationChangeNotifier;
 }
+
 @property (nonatomic, strong) UAReportsViewController *reportsVC;
 @property (nonatomic, strong) UADetailViewController *detailViewController;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
@@ -136,25 +137,26 @@
     [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
     
     // Setup our search bar
-    searchBar = [[UISearchBar alloc] init];
+    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
     searchBar.delegate = self;
-    searchBar.frame = CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f);
-    searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     searchBar.showsBookmarkButton = YES;
-    searchBar.backgroundImage = [[UIImage alloc] init];
-    [self setSearchBarBehaviour];
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 41.0f)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320, 44.0f)];
     headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    headerView.backgroundColor = [UIColor redColor];
     [headerView addSubview:searchBar];
     
     searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
     self.searchDisplayController.delegate = self;
+    //self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
     self.tableView.tableHeaderView = headerView;
     
-    self.tableView.contentOffset = CGPointMake(0.0f, searchBar.frame.size.height);
+    [searchBar sizeToFit];
+    [self setSearchBarBehaviour];
+    
+    self.tableView.contentOffset = CGPointMake(0.0f, headerView.bounds.size.height);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
     self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -694,6 +696,10 @@
 }
 
 #pragma mark - UISearchBarDelegate functions
+- (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
+{
+    [self.searchDisplayController setActive:NO animated:YES];
+}
 - (void)searchBarBookmarkButtonClicked:(UISearchBar *)aSearchBar
 {
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];

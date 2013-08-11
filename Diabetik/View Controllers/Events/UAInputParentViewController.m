@@ -148,13 +148,13 @@
 {
     [super viewDidLoad];
     
-    // Setup our table view
-    self.view.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
+    
+    // Setup our table view
+    self.view.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
     if(!self.keyboardBackingView)
     {
         self.locationButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero];
@@ -236,6 +236,8 @@
         self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         self.scrollView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
         self.scrollView.alwaysBounceHorizontal = YES;
+        self.scrollView.directionalLockEnabled = YES;
+        self.scrollView.backgroundColor = [UIColor whiteColor];
         [self.view insertSubview:self.scrollView belowSubview:self.keyboardBackingView];
         
         for(UAInputBaseViewController *vc in self.viewControllers)

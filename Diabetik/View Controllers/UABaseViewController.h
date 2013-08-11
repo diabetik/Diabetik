@@ -61,5 +61,6 @@
 - (void)keyboardWillBeShown:(NSNotification*)aNotification;
 - (void)keyboardWasShown:(NSNotification*)aNotification;
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification;
+- (void)keyboardWasHidden:(NSNotification*)aNotification;
 
 @end

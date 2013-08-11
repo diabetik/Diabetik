@@ -50,6 +50,8 @@
     {
         isFooter = NO;
         
+        self.backgroundColor = [UIColor clearColor];
+        
         UIImageView *background = [[UIImageView alloc] initWithFrame:self.bounds];
         background.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         background.backgroundColor = [UIColor clearColor];

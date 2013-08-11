@@ -35,18 +35,6 @@
     {
         _moc = aMOC;
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWasShown:)
-                                                     name:UIKeyboardDidShowNotification object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillBeShown:)
-                                                     name:UIKeyboardWillShowNotification object:nil];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillBeHidden:)
-                                                     name:UIKeyboardWillHideNotification object:nil];
-        
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         
@@ -54,6 +42,21 @@
         self.currentPhotoPath = nil;
         self.lat = nil, self.lon = nil;
         self.date = [NSDate date];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWasShown:)
+                                                     name:UIKeyboardDidShowNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillBeShown:)
+                                                     name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillBeHidden:)
+                                                     name:UIKeyboardWillHideNotification object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWasHidden:)
+                                                     name:UIKeyboardDidHideNotification object:nil];
         
         self.autocompleteBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
         self.autocompleteBar.showTagButton = NO;
@@ -94,8 +97,8 @@
     self.tableView.backgroundView = nil;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor colorWithRed:189.0f/255.0f green:189.0f/255.0f blue:189.0f/255.0f alpha:1.0f];
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, kAccessoryViewHeight, 0);
-    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 48.0f, 0);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64.0f, 0, kAccessoryViewHeight, 0);
+    self.tableView.contentInset = UIEdgeInsetsMake(64.0f, 0.0f, 48.0f, 0.0f);
     [baseView addSubview:self.tableView];
     
     self.view = baseView;
@@ -105,8 +108,8 @@
     [super viewDidLoad];
     
     self.tableView.backgroundView = nil;
-    self.tableView.backgroundColor = [UIColor clearColor]; //[UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
-    self.view.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
+    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     
     [self.tableView reloadData];
@@ -264,9 +267,10 @@
     {
         [self.autocompleteTagBar showSuggestionsForInput:nil];
     }
+        NSLog(@"TextViewDidChange %@", NSStringFromCGSize(textView.contentSize));
     
     // Update values
-    textViewHeight = textView.contentSize.height;
+    textViewHeight = textView.intrinsicContentSize.height;
     notes = textView.text;
     
     // Finally, update our tableview
@@ -325,7 +329,7 @@
                 textView.text = [textView.text stringByReplacingCharactersInRange:NSMakeRange(range.location+1, range.length-1) withString:[NSString stringWithFormat:@"%@ ", suggestion]];
             }
             
-            textViewHeight = textView.contentSize.height;
+            textViewHeight = textView.intrinsicContentSize.height;
             notes = textView.text;
             
             //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
@@ -549,16 +553,20 @@
 #pragma mark - Notifications
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
+    [parentVC.keyboardBackingView setKeyboardState:kKeyboardShown];
 }
 - (void)keyboardWillBeShown:(NSNotification *)aNotification
 {
-    [parentVC.keyboardBackingView setKeyboardState:kKeyboardShown];
+    // STUB
 }
 - (void)keyboardWillBeHidden:(NSNotification *)aNotification
-{    
+{
+    // STUB
+}
+- (void)keyboardWasHidden:(NSNotification *)aNotification
+{
     [parentVC.keyboardBackingView setKeyboardState:kKeyboardHidden];
 }
-
 
 #pragma mark - UINavigationController
 - (void)didMoveToParentViewController:(UIViewController *)parent

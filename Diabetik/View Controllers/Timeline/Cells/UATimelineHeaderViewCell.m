@@ -32,6 +32,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self)
     {
+        self.backgroundColor = [UIColor clearColor];
+        
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40.0f)];
         _dateLabel.font = [UAFont standardDemiBoldFontWithSize:13.0f];
         _dateLabel.shadowOffset = CGSizeMake(0, 1);

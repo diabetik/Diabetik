@@ -54,6 +54,8 @@
     
     if(self)
     {
+        self.backgroundColor = [UIColor clearColor];
+        
         UIView *view = [[UIView alloc] initWithFrame:self.bounds];
         UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.bounds.size.width, 196.0f)];
         background.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
