@@ -13,7 +13,7 @@ typedef enum UASideMenuState {
     UALeftPanelVisible = 1
 } UASideMenuState;
 
-@interface UASideMenuController : UIViewController
+@interface UASideMenuController : UIViewController <UICollisionBehaviorDelegate>
 @property (nonatomic, assign) UASideMenuState menuState;
 
 @property (nonatomic, strong) UIViewController *leftPanel;

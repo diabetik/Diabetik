@@ -54,161 +54,166 @@
     
     if(self)
     {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
+
+        // Header/month label
+        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, 35.0f)];
+        headerView.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:246.0f/255.0f blue:245.0f/255.0f alpha:1.0f];
+        headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         
-        UIView *view = [[UIView alloc] initWithFrame:self.bounds];
-        UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.bounds.size.width, 196.0f)];
-        background.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        background.backgroundColor = [UIColor clearColor];
-        background.image = [UIImage imageNamed:@"JournalCardBackground.png"];
-        [view addSubview:background];
-        self.backgroundView = view;
-        
-        view = [[UIView alloc] initWithFrame:self.bounds];
-        UIImageView *selectedBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.bounds.size.width, 196.0f)];
-        selectedBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        selectedBackground.backgroundColor = [UIColor clearColor];
-        selectedBackground.image = [UIImage imageNamed:@"JournalCardBackgroundPressed.png"];
-        [view addSubview:selectedBackground];
-        self.selectedBackgroundView = view;
-        
-        CGFloat y = 60.0f;
-        
-        // Month label
-        _monthLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 15.0f, self.frame.size.width, 18.0f)];
+        UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, headerView.frame.size.height-0.5f, headerView.frame.size.width, 0.5f)];
+        borderView.backgroundColor = [UIColor colorWithRed:213.0f/255.0f green:216.0f/255.0f blue:215.0f/255.0f alpha:1.0f];
+        borderView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        [headerView addSubview:borderView];
+    
+        _monthLabel = [[UILabel alloc] initWithFrame:CGRectMake(44.0f, 1.0f, headerView.frame.size.width-44.0f, 33.0f)];
         _monthLabel.backgroundColor = [UIColor clearColor];
-        _monthLabel.textColor = [UIColor colorWithRed:128.0f/255.0f green:127.0f/255.0f blue:127.0f/255.0f alpha:1.0];
-        _monthLabel.font = [UAFont standardDemiBoldFontWithSize:16.0f];
-        _monthLabel.shadowColor = [UIColor whiteColor];
-        _monthLabel.shadowOffset = CGSizeMake(0, 1);
+        _monthLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
+        _monthLabel.font = [UAFont standardDemiBoldFontWithSize:14.0f];
         _monthLabel.highlightedTextColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
-        [self.contentView addSubview:_monthLabel];
+        [headerView addSubview:_monthLabel];
+        
+        [self.contentView addSubview:headerView];
+        
+        UIView *verticalBorder = [[UIView alloc] initWithFrame:CGRectMake(160.0f, headerView.bounds.size.height, 1.0f, self.bounds.size.height-headerView.bounds.size.height)];
+        verticalBorder.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+        verticalBorder.backgroundColor = [UIColor colorWithRed:213.0f/255.0f green:216.0f/255.0f blue:215.0f/255.0f alpha:1.0f];
+        [self.contentView addSubview:verticalBorder];
+        
+        CGFloat y = headerView.bounds.size.height;
         
         // Glucose
         glucoseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"JournalIconAverageBloodInactive.png"]];
-        glucoseImageView.frame = CGRectMake((50 - glucoseImageView.frame.size.width/2), y, glucoseImageView.frame.size.width, glucoseImageView.frame.size.height);
+        glucoseImageView.frame = CGRectMake(12.0f, y + 10.0f, glucoseImageView.frame.size.width, glucoseImageView.frame.size.height);
         [self.contentView addSubview:glucoseImageView];
         
-        glucoseLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y + 18.0f, 100.0f, 16.0f)];
+        glucoseLabel = [[UILabel alloc] initWithFrame:CGRectMake(44.0f, y + 9.0f, 100.0f, 16.0f)];
         glucoseLabel.backgroundColor = [UIColor clearColor];
         glucoseLabel.text = @"0.0";
-        glucoseLabel.font = [UAFont standardMediumFontWithSize:13.0f];
-        glucoseLabel.textAlignment = NSTextAlignmentCenter;
+        glucoseLabel.font = [UAFont standardMediumFontWithSize:16.0f];
+        glucoseLabel.textAlignment = NSTextAlignmentLeft;
         glucoseLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:glucoseLabel];
         
-        glucoseDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y + 32.0f, 100.0f, 16.0f)];
+        glucoseDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(44.0f, y + 27.0f, 100.0f, 16.0f)];
         glucoseDetailLabel.backgroundColor = [UIColor clearColor];
-        glucoseDetailLabel.text = NSLocalizedString(@"AVERAGE", @"Label for average blood glucose reading");
+        glucoseDetailLabel.text = NSLocalizedString(@"Average", @"Label for average blood glucose reading");
         glucoseDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
-        glucoseDetailLabel.textAlignment = NSTextAlignmentCenter;
+        glucoseDetailLabel.textAlignment = NSTextAlignmentLeft;
         glucoseDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:glucoseDetailLabel];
         
-        // Activity
-        activityImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"JournalIconActivityInactive.png"]];
-        activityImageView.frame = CGRectMake(101.0f + (50 - activityImageView.frame.size.width/2), y, activityImageView.frame.size.width, activityImageView.frame.size.height);
-        [self.contentView addSubview:activityImageView];
-        
-        activityLabel = [[UILabel alloc] initWithFrame:CGRectMake(100.0f, y + 18.0f, 100.0f, 16.0f)];
-        activityLabel.backgroundColor = [UIColor clearColor];
-        activityLabel.text = @"0";
-        activityLabel.font = [UAFont standardMediumFontWithSize:12.0f];
-        activityLabel.textAlignment = NSTextAlignmentCenter;
-        activityLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
-        [self.contentView addSubview:activityLabel];
-        
-        activityDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(101.0f, y + 32.0f, 100.0f, 16.0f)];
-        activityDetailLabel.backgroundColor = [UIColor clearColor];
-        activityDetailLabel.text = NSLocalizedString(@"ACTIVITY", @"Label for total amount of activity (physical exercise)");
-        activityDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
-        activityDetailLabel.textAlignment = NSTextAlignmentCenter;
-        activityDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];
-        [self.contentView addSubview:activityDetailLabel];
+        UIView *horizontalBorder = [[UIView alloc] initWithFrame:CGRectMake(44.0f, y + 46.0f, 116.0f, 1.0f)];
+        horizontalBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        horizontalBorder.backgroundColor = [UIColor colorWithRed:213.0f/255.0f green:216.0f/255.0f blue:215.0f/255.0f alpha:1.0f];
+        [self.contentView addSubview:horizontalBorder];
         
         // Meal
         mealImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"JournalIconFoodInactive.png"]];
-        mealImageView.frame = CGRectMake(201.0f + (50 - mealImageView.frame.size.width/2), y, mealImageView.frame.size.width, mealImageView.frame.size.height);
+        mealImageView.frame = CGRectMake(171.0f, y + 10.0f, mealImageView.frame.size.width, mealImageView.frame.size.height);
         [self.contentView addSubview:mealImageView];
         
-        mealLabel = [[UILabel alloc] initWithFrame:CGRectMake(201.0f, y + 18.0f, 100.0f, 16.0f)];
+        mealLabel = [[UILabel alloc] initWithFrame:CGRectMake(204.0f, y + 9.0f, 100.0f, 16.0f)];
         mealLabel.backgroundColor = [UIColor clearColor];
         mealLabel.text = @"0";
-        mealLabel.font = [UAFont standardMediumFontWithSize:12.0f];
-        mealLabel.textAlignment = NSTextAlignmentCenter;
+        mealLabel.font = [UAFont standardMediumFontWithSize:16.0f];
+        mealLabel.textAlignment = NSTextAlignmentLeft;
         mealLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:mealLabel];
         
-        mealDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(201.0f, y + 32.0f, 100.0f, 16.0f)];
+        mealDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(204.0f, y + 27.0f, 100.0f, 16.0f)];
         mealDetailLabel.backgroundColor = [UIColor clearColor];
-        mealDetailLabel.text = [NSLocalizedString(@"Grams", @"Label for the amount of grams of carbohydrate eaten") uppercaseString];
+        mealDetailLabel.text = NSLocalizedString(@"Grams", @"Label for the amount of grams of carbohydrate eaten");
         mealDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
-        mealDetailLabel.textAlignment = NSTextAlignmentCenter;
+        mealDetailLabel.textAlignment = NSTextAlignmentLeft;
         mealDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:mealDetailLabel];
         
-        y += 72.0f;
+        y += 45.0f;
+        
+        // Activity
+        activityImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"JournalIconActivityInactive.png"]];
+        activityImageView.frame = CGRectMake(12.0f, y + 10.0f, activityImageView.frame.size.width, activityImageView.frame.size.height);
+        [self.contentView addSubview:activityImageView];
+        
+        activityLabel = [[UILabel alloc] initWithFrame:CGRectMake(44.0f, y + 9.0f, 100.0f, 16.0f)];
+        activityLabel.backgroundColor = [UIColor clearColor];
+        activityLabel.text = @"0";
+        activityLabel.font = [UAFont standardMediumFontWithSize:16.0f];
+        activityLabel.textAlignment = NSTextAlignmentLeft;
+        activityLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
+        [self.contentView addSubview:activityLabel];
+        
+        activityDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(44.0f, y + 27.0f, 100.0f, 16.0f)];
+        activityDetailLabel.backgroundColor = [UIColor clearColor];
+        activityDetailLabel.text = NSLocalizedString(@"Activity", @"Label for total amount of activity (physical exercise)");
+        activityDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
+        activityDetailLabel.textAlignment = NSTextAlignmentLeft;
+        activityDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];
+        [self.contentView addSubview:activityDetailLabel];
         
         // Deviation
         deviationImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"JournalIconDeviationInactive.png"]];
-        deviationImageView.frame = CGRectMake((50 - deviationImageView.frame.size.width/2), y, deviationImageView.frame.size.width, deviationImageView.frame.size.height);
+        deviationImageView.frame = CGRectMake(171.0f, y + 10.0f, deviationImageView.frame.size.width, deviationImageView.frame.size.height);
         [self.contentView addSubview:deviationImageView];
         
-        deviationLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y + 18.0f, 100.0f, 16.0f)];
+        deviationLabel = [[UILabel alloc] initWithFrame:CGRectMake(204.0f, y + 9.0f, 100.0f, 16.0f)];
         deviationLabel.backgroundColor = [UIColor clearColor];
         deviationLabel.text = @"0.0";
-        deviationLabel.font = [UAFont standardMediumFontWithSize:12.0f];
-        deviationLabel.textAlignment = NSTextAlignmentCenter;
+        deviationLabel.font = [UAFont standardMediumFontWithSize:16.0f];
+        deviationLabel.textAlignment = NSTextAlignmentLeft;
         deviationLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:deviationLabel];
         
-        deviationDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y + 32.0f, 100.0f, 16.0f)];
+        deviationDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(204.0f, y + 27.0f, 100.0f, 16.0f)];
         deviationDetailLabel.backgroundColor = [UIColor clearColor];
-        deviationDetailLabel.text = [NSLocalizedString(@"Deviation", @"Label for the statistical deviation in blood glucose values") uppercaseString];
+        deviationDetailLabel.text = NSLocalizedString(@"Deviation", @"Label for the statistical deviation in blood glucose values");
         deviationDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
-        deviationDetailLabel.textAlignment = NSTextAlignmentCenter;
+        deviationDetailLabel.textAlignment = NSTextAlignmentLeft;
         deviationDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:deviationDetailLabel];
         
+        y += 45.0f;
+        
         // Low Glucose
         lowGlucoseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"JournalIconLowestBloodInactive.png"]];
-        lowGlucoseImageView.frame = CGRectMake(101.0f + (50 - lowGlucoseImageView.frame.size.width/2), y, lowGlucoseImageView.frame.size.width, lowGlucoseImageView.frame.size.height);
+        lowGlucoseImageView.frame = CGRectMake(12.0f, y + 10.0f, lowGlucoseImageView.frame.size.width, lowGlucoseImageView.frame.size.height);
         [self.contentView addSubview:lowGlucoseImageView];
         
-        lowGlucoseLabel = [[UILabel alloc] initWithFrame:CGRectMake(101.0f, y + 18.0f, 100.0f, 16.0f)];
+        lowGlucoseLabel = [[UILabel alloc] initWithFrame:CGRectMake(44.0f, y + 9.0f, 100.0f, 16.0f)];
         lowGlucoseLabel.backgroundColor = [UIColor clearColor];
         lowGlucoseLabel.text = @"0";
-        lowGlucoseLabel.font = [UAFont standardMediumFontWithSize:12.0f];
-        lowGlucoseLabel.textAlignment = NSTextAlignmentCenter;
+        lowGlucoseLabel.font = [UAFont standardMediumFontWithSize:16.0f];
+        lowGlucoseLabel.textAlignment = NSTextAlignmentLeft;
         lowGlucoseLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:lowGlucoseLabel];
         
-        lowGlucoseDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(101.0f, y + 32.0f, 100.0f, 16.0f)];
+        lowGlucoseDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(44.0f, y + 27.0f, 100.0f, 16.0f)];
         lowGlucoseDetailLabel.backgroundColor = [UIColor clearColor];
-        lowGlucoseDetailLabel.text = [NSLocalizedString(@"Lowest", @"Label for the lowest blood glucose reading in a given month") uppercaseString];
+        lowGlucoseDetailLabel.text = NSLocalizedString(@"Lowest", @"Label for the lowest blood glucose reading in a given month");
         lowGlucoseDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
-        lowGlucoseDetailLabel.textAlignment = NSTextAlignmentCenter;
+        lowGlucoseDetailLabel.textAlignment = NSTextAlignmentLeft;
         lowGlucoseDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:lowGlucoseDetailLabel];
         
         // High Glucose
         highGlucoseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"JournalIconHighestBloodInactive.png"]];
-        highGlucoseImageView.frame = CGRectMake(201.0f + (50 - highGlucoseImageView.frame.size.width/2), y, highGlucoseImageView.frame.size.width, highGlucoseImageView.frame.size.height);
+        highGlucoseImageView.frame = CGRectMake(171.0f, y + 10.0f, highGlucoseImageView.frame.size.width, highGlucoseImageView.frame.size.height);
         [self.contentView addSubview:highGlucoseImageView];
         
-        highGlucoseLabel = [[UILabel alloc] initWithFrame:CGRectMake(201.0f, y + 18.0f, 100.0f, 16.0f)];
+        highGlucoseLabel = [[UILabel alloc] initWithFrame:CGRectMake(204.0f, y + 9.0f, 100.0f, 16.0f)];
         highGlucoseLabel.backgroundColor = [UIColor clearColor];
         highGlucoseLabel.text = @"0";
-        highGlucoseLabel.font = [UAFont standardMediumFontWithSize:12.0f];
-        highGlucoseLabel.textAlignment = NSTextAlignmentCenter;
+        highGlucoseLabel.font = [UAFont standardMediumFontWithSize:16.0f];
+        highGlucoseLabel.textAlignment = NSTextAlignmentLeft;
         highGlucoseLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:highGlucoseLabel];
         
-        highGlucoseDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(201.0f, y + 32.0f, 100.0f, 16.0f)];
+        highGlucoseDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(204.0f, y + 27.0f, 100.0f, 16.0f)];
         highGlucoseDetailLabel.backgroundColor = [UIColor clearColor];
-        highGlucoseDetailLabel.text = [NSLocalizedString(@"Highest", @"Label for highest blood glucose reading in a given month") uppercaseString];
+        highGlucoseDetailLabel.text = NSLocalizedString(@"Highest", @"Label for highest blood glucose reading in a given month");
         highGlucoseDetailLabel.font = [UAFont standardDemiBoldFontWithSize:11.0f];
-        highGlucoseDetailLabel.textAlignment = NSTextAlignmentCenter;
+        highGlucoseDetailLabel.textAlignment = NSTextAlignmentLeft;
         highGlucoseDetailLabel.textColor = [UIColor colorWithRed:167.0f/255.0f green:179.0f/255.0f blue:175.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:highGlucoseDetailLabel];
     }

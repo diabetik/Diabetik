@@ -62,7 +62,7 @@
     [super viewDidLoad];
     
     overscrollView = nil;
-    self.view.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:246.0f/255.0f blue:245.0f/255.0f alpha:1.0f];
+    self.view.backgroundColor = [UIColor clearColor];
 
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0.0f)];
     self.tableView.tableHeaderView = headerView;
@@ -264,7 +264,7 @@
     CGFloat height = [self tableView:aTableView heightForHeaderInSection:section];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, height-23.0f, aTableView.frame.size.width, height)];
-    view.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:246.0f/255.0f blue:245.0f/255.0f alpha:1.0f];
+    view.backgroundColor = [UIColor clearColor];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40.0f, height-23.0f, aTableView.frame.size.width, 23.0f)];
     label.backgroundColor = [UIColor clearColor];

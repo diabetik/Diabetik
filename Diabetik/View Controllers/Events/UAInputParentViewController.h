@@ -77,7 +77,4 @@
 - (void)updateKeyboardButtons;
 - (void)updateNavigationBar;
 
-// Helpers
-- (UAInputBaseViewController *)targetViewController;
-
 @end

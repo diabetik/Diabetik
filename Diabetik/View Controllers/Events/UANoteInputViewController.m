@@ -208,6 +208,12 @@
     cell.control.tag = indexPath.row;
 }
 
+#pragma mark - UI
+- (UIColor *)tintColor
+{
+    return [UIColor colorWithRed:126.0f/255.0f green:113.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+}
+
 #pragma mark - UITableViewDatasource methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
 {

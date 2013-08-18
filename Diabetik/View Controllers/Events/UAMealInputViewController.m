@@ -246,6 +246,12 @@
     cell.control.tag = indexPath.row;
 }
 
+#pragma mark - UI
+- (UIColor *)tintColor
+{
+    return [UIColor colorWithRed:254.0f/255.0f green:201.0f/255.0f blue:105.0f/255.0f alpha:1.0f];
+}
+
 #pragma mark - Social helpers
 - (NSString *)facebookSocialMessageText
 {

@@ -75,6 +75,7 @@
 
 // UI
 - (void)triggerDeleteEvent:(id)sender;
+- (UIColor *)tintColor;
 
 // Metadata
 - (void)requestCurrentLocation;

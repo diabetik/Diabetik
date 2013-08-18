@@ -218,6 +218,10 @@
     UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag+1 inSection:0]];
     [cell.control becomeFirstResponder];
 }
+- (UIColor *)tintColor
+{
+    return [UIColor greenColor];
+}
 
 #pragma mark - Social helpers
 - (NSString *)facebookSocialMessageText

@@ -46,6 +46,13 @@
     BOOL isAnimatingAddEntry;
     BOOL isBeingPopped;
 }
+
+// Helpers
+- (UAInputBaseViewController *)targetViewController;
+- (UIColor *)colorLerpFrom:(UIColor *)start
+                        to:(UIColor *)end
+              withDuration:(float)t;
+
 @end
 
 @implementation UAInputParentViewController
@@ -144,14 +151,11 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    self.navigationController.navigationBar.barTintColor = [[self targetViewController] tintColor];
     
     // Setup our table view
     self.view.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
@@ -299,6 +303,7 @@
         self.viewControllers = nil;
     }
 }
+
 #pragma mark - Logic
 - (void)saveEvent:(id)sender
 {
@@ -466,6 +471,8 @@
     
     UAInputBaseViewController *targetVC = [self targetViewController];
     [targetVC didBecomeActive:currentlyEditing];
+    
+    self.navigationController.navigationBar.barTintColor = [targetVC tintColor];
     
     [self updateNavigationBar];
     [self updateKeyboardButtons];
@@ -853,6 +860,26 @@
     }
     
     return nil;
+}
+- (UIColor *)colorLerpFrom:(UIColor *)start
+                        to:(UIColor *)end
+              withDuration:(float)t
+{
+    if(t < 0.0f) t = 0.0f;
+    if(t > 1.0f) t = 1.0f;
+    
+    const CGFloat *startComponent = CGColorGetComponents(start.CGColor);
+    const CGFloat *endComponent = CGColorGetComponents(end.CGColor);
+    
+    float startAlpha = CGColorGetAlpha(start.CGColor);
+    float endAlpha = CGColorGetAlpha(end.CGColor);
+    
+    float r = startComponent[0] + (endComponent[0] - startComponent[0]) * t;
+    float g = startComponent[1] + (endComponent[1] - startComponent[1]) * t;
+    float b = startComponent[2] + (endComponent[2] - startComponent[2]) * t;
+    float a = startAlpha + (endAlpha - startAlpha) * t;
+    
+    return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
 
 #pragma mark - Autorotation

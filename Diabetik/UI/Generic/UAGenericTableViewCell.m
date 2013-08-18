@@ -32,12 +32,12 @@
     {
         UIImageView *background = [[UIImageView alloc] initWithFrame:self.bounds];
         background.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        background.backgroundColor = [UIColor clearColor];
+        background.backgroundColor = [UIColor whiteColor];
         self.backgroundView = background;
         
         UIImageView *selectedBackground = [[UIImageView alloc] initWithFrame:self.bounds];
         selectedBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        selectedBackground.backgroundColor = [UIColor clearColor];
+        selectedBackground.backgroundColor = [UIColor colorWithRed:225.0f/255.0f green:225.0f/255.0f blue:225.0f/255.0f alpha:1.0f];
         self.selectedBackgroundView = selectedBackground;
         
         self.textLabel.backgroundColor = [UIColor clearColor];

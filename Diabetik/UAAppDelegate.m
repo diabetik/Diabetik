@@ -110,9 +110,8 @@
     self.viewController.centerPanel = navigationController;
     self.viewController.rightPanel = nil;
     self.viewController.panningLimitedToTopViewController = NO;
-    
+
     /*
-    
     self.viewController = [[UASideMenuController alloc] initWithNibName:nil bundle:nil];
     self.viewController.leftPanel = [[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext];
     self.viewController.centerPanel = navigationController;
@@ -224,7 +223,7 @@
 {
     NSDictionary *attributes = nil;
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.0f/255.0f green:174.0f/255.0f blue:127.0f/255.0f alpha:1.0f]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:24.0f/255.0f green:198.0f/255.0f blue:187.0f/255.0f alpha:1.0f]];
     
     NSShadow *dropShadow = [[NSShadow alloc] init];
     dropShadow.shadowColor = [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:0.15f];

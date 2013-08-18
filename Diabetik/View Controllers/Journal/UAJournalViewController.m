@@ -61,7 +61,7 @@
 #pragma mark - Setup
 - (id)initWithMOC:(NSManagedObjectContext *)aMOC
 {
-    self = [super initWithStyle:UITableViewStyleGrouped];
+    self = [super initWithStyle:UITableViewStylePlain];
     if (self)
     {
         __weak typeof(self) weakSelf = self;
@@ -102,6 +102,25 @@
     [titleView addSubview:imageView];
     self.navigationItem.titleView = titleView;
     
+    // Setup our table header view
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 34.0f)];
+    headerView.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:246.0f/255.0f blue:245.0f/255.0f alpha:1.0f];
+    headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    
+    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(44.0f, 1.0f, headerView.frame.size.width-44.0f, 33.0f)];
+    headerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    headerLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
+    headerLabel.text = [NSLocalizedString(@"Jump to", nil) uppercaseString];
+    headerLabel.font = [UAFont standardDemiBoldFontWithSize:14.0f];
+    [headerView addSubview:headerLabel];
+    
+    UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, headerView.frame.size.height-0.5f, headerView.frame.size.width, 0.5f)];
+    borderView.backgroundColor = [UIColor colorWithRed:213.0f/255.0f green:216.0f/255.0f blue:215.0f/255.0f alpha:1.0f];
+    borderView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+    [headerView addSubview:borderView];
+    
+    self.tableView.tableHeaderView = headerView;
+    
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     
     [self refreshView];
@@ -111,7 +130,7 @@
     [super viewDidLoad];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+ 
     UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconAdd.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
     [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
     
@@ -224,7 +243,7 @@
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
     UAAppDelegate *delegate = (UAAppDelegate*)[[UIApplication sharedApplication] delegate];
-    [delegate.viewController showLeftPanel:YES];
+    //[delegate.viewController showLeftPanel:YES];
 }
 - (void)showTips
 {
@@ -280,34 +299,12 @@
 {
     if(indexPath.section == 0)
     {
-        if(indexPath.row == 1)
-        {
-            return 41.0f;
-        }
-        else
-        {
-            return 42.0f;
-        }
+        return 44.0f;
     }
     else
     {
-        if(indexPath.row == [[readings allKeys] count]-1)
-        {
-            return 196.0f;
-        }
-        else
-        {
-            return 205.0f;
-        }
+        return 168.0f;
     }
-}
-- (CGFloat)tableView:(UITableView *)aTableView heightForHeaderInSection:(NSInteger)section
-{
-    return 0.0f;
-}
-- (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section
-{
-    return nil;
 }
 
 #pragma mark - UITableViewDataSource functions
@@ -397,7 +394,7 @@
         [cell setActivityValue:totalMinutes];
         [cell setLowGlucoseValue:[NSNumber numberWithDouble:lowGlucose] withFormatter:valueFormatter];
         [cell setHighGlucoseValue:[NSNumber numberWithDouble:highGlucose] withFormatter:valueFormatter];
-        cell.monthLabel.text = key;
+        cell.monthLabel.text = [key uppercaseString];
         
         return cell;
     }
