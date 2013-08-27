@@ -218,7 +218,7 @@
     UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag+1 inSection:0]];
     [cell.control becomeFirstResponder];
 }
-- (UIColor *)tintColor
+- (UIColor *)barTintColor
 {
     return [UIColor greenColor];
 }

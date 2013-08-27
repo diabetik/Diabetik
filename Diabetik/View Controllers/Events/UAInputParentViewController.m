@@ -155,7 +155,7 @@
 {
     [super viewWillAppear:animated];
     
-    self.navigationController.navigationBar.barTintColor = [[self targetViewController] tintColor];
+    self.navigationController.navigationBar.barTintColor = [[self targetViewController] barTintColor];
     
     // Setup our table view
     self.view.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
@@ -264,7 +264,7 @@
     // Setup header buttons
     if([self isPresentedModally])
     {
-        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconCancel.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconCancel.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
         [self.navigationItem setLeftBarButtonItem:cancelBarButtonItem animated:NO];
     }
     
@@ -288,6 +288,17 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenAddDragUIHint];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    if(isBeingPopped)
+    {
+        UIColor *defaultBarTintColor = kDefaultBarTintColor;
+        [self.navigationController.navigationBar setBarTintColor:defaultBarTintColor];
+    }
+    
 }
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -472,23 +483,22 @@
     UAInputBaseViewController *targetVC = [self targetViewController];
     [targetVC didBecomeActive:currentlyEditing];
     
-    self.navigationController.navigationBar.barTintColor = [targetVC tintColor];
+    self.navigationController.navigationBar.barTintColor = [targetVC barTintColor];
     
     [self updateNavigationBar];
     [self updateKeyboardButtons];
 }
-
 - (void)handleBack:(id)sender
 {
-    [super handleBack:sender];
-    
     isBeingPopped = YES;
+    
+    [super handleBack:sender];
 }
 - (void)handleBack:(id)sender withSound:(BOOL)playSound
 {
-    [super handleBack:sender withSound:playSound];
-    
     isBeingPopped = YES;
+    
+    [super handleBack:sender withSound:playSound];
 }
 
 #pragma mark - UI

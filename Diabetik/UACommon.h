@@ -29,6 +29,8 @@
 #ifndef Diabetik_UACommon_h
 #define Diabetik_UACommon_h
 
+#define kDefaultBarTintColor [UIColor colorWithRed:25.0f/255.0f green:198.0f/255.0f blue:187.0f/255.0f alpha:1.0f];
+
 // Macros
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)

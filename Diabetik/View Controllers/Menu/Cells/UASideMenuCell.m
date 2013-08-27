@@ -36,8 +36,8 @@
         
         self.backgroundColor = [UIColor clearColor];
         
-        self.textLabel.textColor = [UIColor colorWithRed:115.0f/255.0f green:127.0f/255.0f blue:123.0f/255.0f alpha:1.0f];
-        self.textLabel.font = [UAFont standardDemiBoldFontWithSize:16.0f];
+        self.textLabel.textColor = [UIColor colorWithRed:92.0f/255.0f green:102.0f/255.0f blue:99.0f/255.0f alpha:1.0f];
+        self.textLabel.font = [UAFont standardMediumFontWithSize:16.0f];
         self.textLabel.backgroundColor = [UIColor clearColor];
         
         self.detailTextLabel.font = [UAFont standardMediumFontWithSize:12.0f];

@@ -21,11 +21,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@interface UAManagedObject : NSManagedObject
+#import "WHISyncableObject.h"
+
+@interface UAManagedObject : NSManagedObject <WHISyncableObject>
 @property (nonatomic, assign) BOOL traversed;
-@property (nonatomic, retain) NSString *uuid;
-@property (nonatomic, retain) NSDate *createdTimestamp;
-@property (nonatomic, retain) NSDate *modifiedTimestamp;
+@property (nonatomic, strong) NSString *uuid;
+@property (nonatomic, readonly) NSString *guid;
+@property (nonatomic, strong) NSDate *createdTimestamp;
+@property (nonatomic, strong) NSDate *modifiedTimestamp;
 
 // Archiving/Unarchiving
 - (NSDictionary *)dictionaryRepresentation;

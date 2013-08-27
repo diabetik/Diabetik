@@ -258,7 +258,7 @@
 }
 
 #pragma mark - UI
-- (UIColor *)tintColor
+- (UIColor *)barTintColor
 {
     return [UIColor colorWithRed:254.0f/255.0f green:96.0f/255.0f blue:111.0f/255.0f alpha:1.0f];
 }

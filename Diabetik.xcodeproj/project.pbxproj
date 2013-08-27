@@ -10,6 +10,7 @@
 		530603A4167FCFFA00EFBE8B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530603A3167FCFFA00EFBE8B /* CoreLocation.framework */; };
 		5324AFFD16DE8BE40004A30F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324AFFC16DE8BE30004A30F /* libz.dylib */; };
 		5324D3B3175102730003F257 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324D3B2175102730003F257 /* AudioToolbox.framework */; };
+		532BF5FD17C401260073359B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 532BF5FC17C401260073359B /* Default-568h@2x.png */; };
 		532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EA4177D7DD1000D793F /* CoreText.framework */; };
 		532D0EA8177D7F64000D793F /* HockeyApp-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EA7177D7F64000D793F /* HockeyApp-License.txt */; };
 		532D0EBF177D8156000D793F /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EBB177D8156000D793F /* HockeySDK.framework */; };
@@ -107,7 +108,6 @@
 		533F34BE1773266600AD89E2 /* UAExportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F328D1773266600AD89E2 /* UAExportViewController.m */; };
 		533F34BF1773266600AD89E2 /* UAPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F328F1773266600AD89E2 /* UAPDFDocument.m */; };
 		533F34C01773266600AD89E2 /* UAJournalMonthViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32931773266600AD89E2 /* UAJournalMonthViewCell.m */; };
-		533F34C11773266600AD89E2 /* UAJournalShortcutViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32951773266600AD89E2 /* UAJournalShortcutViewCell.m */; };
 		533F34C21773266600AD89E2 /* UAJournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32971773266600AD89E2 /* UAJournalViewController.m */; };
 		533F34C31773266600AD89E2 /* UASideMenuAccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F329B1773266600AD89E2 /* UASideMenuAccountCell.m */; };
 		533F34C41773266600AD89E2 /* UASideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F329D1773266600AD89E2 /* UASideMenuCell.m */; };
@@ -179,6 +179,7 @@
 		535918A717809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */; };
 		536E965A177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E9657177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */; };
 		536E965B177FA7D900140DF0 /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E9659177FA7D900140DF0 /* UAInsulinCalculatorViewController.m */; };
+		537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 537983AE17CD3F5A00032F3A /* UAShortcutButton.m */; };
 		538DBA78166F830300F0709F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA77166F830300F0709F /* UIKit.framework */; };
 		538DBA7A166F830300F0709F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA79166F830300F0709F /* Foundation.framework */; };
 		538DBA7C166F830300F0709F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA7B166F830300F0709F /* CoreGraphics.framework */; };
@@ -189,6 +190,8 @@
 		5399F55816DBD850007E619B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5399F55716DBD850007E619B /* MapKit.framework */; };
 		539E1CCF17B7FEA10059ED17 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E1CCE17B7FEA10059ED17 /* UIImage+ImageEffects.m */; };
 		539E1CD117B7FEDD0059ED17 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539E1CD017B7FEDD0059ED17 /* Accelerate.framework */; };
+		53A9CFF117C2A0D40076A38C /* CHANGES.md in Resources */ = {isa = PBXBuildFile; fileRef = 53A9CFEB17C2A0D40076A38C /* CHANGES.md */; };
+		53A9CFF317C2A0D40076A38C /* libWasabiSynciOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53A9CFF017C2A0D40076A38C /* libWasabiSynciOS.a */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
@@ -216,6 +219,7 @@
 		530603A3167FCFFA00EFBE8B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5324AFFC16DE8BE30004A30F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5324D3B2175102730003F257 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		532BF5FC17C401260073359B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		532D0EA4177D7DD1000D793F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		532D0EA7177D7F64000D793F /* HockeyApp-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "HockeyApp-License.txt"; sourceTree = "<group>"; };
 		532D0EBB177D8156000D793F /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
@@ -411,8 +415,6 @@
 		533F328F1773266600AD89E2 /* UAPDFDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAPDFDocument.m; sourceTree = "<group>"; };
 		533F32921773266600AD89E2 /* UAJournalMonthViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAJournalMonthViewCell.h; sourceTree = "<group>"; };
 		533F32931773266600AD89E2 /* UAJournalMonthViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAJournalMonthViewCell.m; sourceTree = "<group>"; };
-		533F32941773266600AD89E2 /* UAJournalShortcutViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAJournalShortcutViewCell.h; sourceTree = "<group>"; };
-		533F32951773266600AD89E2 /* UAJournalShortcutViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAJournalShortcutViewCell.m; sourceTree = "<group>"; };
 		533F32961773266600AD89E2 /* UAJournalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAJournalViewController.h; sourceTree = "<group>"; };
 		533F32971773266600AD89E2 /* UAJournalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAJournalViewController.m; sourceTree = "<group>"; };
 		533F329A1773266600AD89E2 /* UASideMenuAccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuAccountCell.h; sourceTree = "<group>"; };
@@ -551,6 +553,8 @@
 		536E9657177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTextFieldViewCell.m; sourceTree = "<group>"; };
 		536E9658177FA7D900140DF0 /* UAInsulinCalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorViewController.h; sourceTree = "<group>"; };
 		536E9659177FA7D900140DF0 /* UAInsulinCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorViewController.m; sourceTree = "<group>"; };
+		537983AD17CD3F5A00032F3A /* UAShortcutButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAShortcutButton.h; sourceTree = "<group>"; };
+		537983AE17CD3F5A00032F3A /* UAShortcutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAShortcutButton.m; sourceTree = "<group>"; };
 		538DBA73166F830300F0709F /* Diabetik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diabetik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		538DBA77166F830300F0709F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		538DBA79166F830300F0709F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -563,6 +567,10 @@
 		539E1CCD17B7FEA10059ED17 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		539E1CCE17B7FEA10059ED17 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		539E1CD017B7FEDD0059ED17 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		53A9CFEB17C2A0D40076A38C /* CHANGES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGES.md; sourceTree = "<group>"; };
+		53A9CFED17C2A0D40076A38C /* WHISyncableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHISyncableObject.h; sourceTree = "<group>"; };
+		53A9CFEE17C2A0D40076A38C /* WHISyncController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WHISyncController.h; sourceTree = "<group>"; };
+		53A9CFF017C2A0D40076A38C /* libWasabiSynciOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWasabiSynciOS.a; sourceTree = "<group>"; };
 		53AE668A178727D800DE66D9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		53B576751709DF02007322EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -580,6 +588,7 @@
 				539E1CD117B7FEDD0059ED17 /* Accelerate.framework in Frameworks */,
 				5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */,
 				533F07431708B71700B7BF55 /* CFNetwork.framework in Frameworks */,
+				53A9CFF317C2A0D40076A38C /* libWasabiSynciOS.a in Frameworks */,
 				532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */,
 				5324D3B3175102730003F257 /* AudioToolbox.framework in Frameworks */,
 				53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */,
@@ -775,6 +784,7 @@
 		533F32211773266600AD89E2 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				53A9CFEA17C2A0D40076A38C /* libWasabiSynciOS */,
 				532D0EC2177D83C6000D793F /* Appirater */,
 				532D0EA6177D7F64000D793F /* HockeyApp */,
 				533F32221773266600AD89E2 /* AFNetworking */,
@@ -1028,6 +1038,7 @@
 		533F32901773266600AD89E2 /* Journal */ = {
 			isa = PBXGroup;
 			children = (
+				537983AC17CD3F5A00032F3A /* UI */,
 				533F32911773266600AD89E2 /* Cells */,
 				533F32961773266600AD89E2 /* UAJournalViewController.h */,
 				533F32971773266600AD89E2 /* UAJournalViewController.m */,
@@ -1040,8 +1051,6 @@
 			children = (
 				533F32921773266600AD89E2 /* UAJournalMonthViewCell.h */,
 				533F32931773266600AD89E2 /* UAJournalMonthViewCell.m */,
-				533F32941773266600AD89E2 /* UAJournalShortcutViewCell.h */,
-				533F32951773266600AD89E2 /* UAJournalShortcutViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -1394,9 +1403,19 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		537983AC17CD3F5A00032F3A /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				537983AD17CD3F5A00032F3A /* UAShortcutButton.h */,
+				537983AE17CD3F5A00032F3A /* UAShortcutButton.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		538DBA68166F830300F0709F = {
 			isa = PBXGroup;
 			children = (
+				532BF5FC17C401260073359B /* Default-568h@2x.png */,
 				53327C3B170DDEC8004FA6D2 /* OAuth2Client.xcodeproj */,
 				533F30271773266500AD89E2 /* Diabetik */,
 				538DBA76166F830300F0709F /* Frameworks */,
@@ -1441,6 +1460,25 @@
 				HYXIFWTDXJPPRRMDCEPMDTJH /* SparkInspector.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		53A9CFEA17C2A0D40076A38C /* libWasabiSynciOS */ = {
+			isa = PBXGroup;
+			children = (
+				53A9CFEB17C2A0D40076A38C /* CHANGES.md */,
+				53A9CFEC17C2A0D40076A38C /* include */,
+				53A9CFF017C2A0D40076A38C /* libWasabiSynciOS.a */,
+			);
+			path = libWasabiSynciOS;
+			sourceTree = "<group>";
+		};
+		53A9CFEC17C2A0D40076A38C /* include */ = {
+			isa = PBXGroup;
+			children = (
+				53A9CFED17C2A0D40076A38C /* WHISyncableObject.h */,
+				53A9CFEE17C2A0D40076A38C /* WHISyncController.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1560,9 +1598,11 @@
 				533F330D1773266600AD89E2 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				53350EC917B6A86300223662 /* Media.xcassets in Resources */,
 				533F34761773266600AD89E2 /* notification.caf in Resources */,
+				532BF5FD17C401260073359B /* Default-568h@2x.png in Resources */,
 				533F34771773266600AD89E2 /* pop-view.caf in Resources */,
 				533F34781773266600AD89E2 /* success.caf in Resources */,
 				533F34791773266600AD89E2 /* tap-significant.caf in Resources */,
+				53A9CFF117C2A0D40076A38C /* CHANGES.md in Resources */,
 				533F347A1773266600AD89E2 /* tap.caf in Resources */,
 				533F34961773266600AD89E2 /* AFNetworking-License.txt in Resources */,
 				533F349B1773266600AD89E2 /* AppSoundEngine-License.txt in Resources */,
@@ -1608,6 +1648,7 @@
 				533F347D1773266600AD89E2 /* UAHelper.m in Sources */,
 				533F34911773266600AD89E2 /* AFHTTPClient.m in Sources */,
 				533F34921773266600AD89E2 /* AFHTTPRequestOperation.m in Sources */,
+				537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */,
 				533F34931773266600AD89E2 /* AFImageRequestOperation.m in Sources */,
 				533F34941773266600AD89E2 /* AFJSONRequestOperation.m in Sources */,
 				533F34951773266600AD89E2 /* AFNetworkActivityIndicatorManager.m in Sources */,
@@ -1651,7 +1692,6 @@
 				533F34BE1773266600AD89E2 /* UAExportViewController.m in Sources */,
 				533F34BF1773266600AD89E2 /* UAPDFDocument.m in Sources */,
 				533F34C01773266600AD89E2 /* UAJournalMonthViewCell.m in Sources */,
-				533F34C11773266600AD89E2 /* UAJournalShortcutViewCell.m in Sources */,
 				533F34C21773266600AD89E2 /* UAJournalViewController.m in Sources */,
 				533F34C31773266600AD89E2 /* UASideMenuAccountCell.m in Sources */,
 				533F34C41773266600AD89E2 /* UASideMenuCell.m in Sources */,
@@ -1802,10 +1842,14 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/OAuth2Client-master/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PROVISIONING_PROFILE = "B3275F26-23E1-4E82-938D-B81D5387DC91";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B3275F26-23E1-4E82-938D-B81D5387DC91";
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = "Beta Release";
@@ -1813,7 +1857,9 @@
 		5359DD0617855DCB00141823 /* Beta Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
@@ -1831,9 +1877,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					/Users/nialgiacomelli/Git/Diabetik/Diabetik/Vendor/libWasabiSynciOS,
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = Diabetik;
 				PROVISIONING_PROFILE = "B3275F26-23E1-4E82-938D-B81D5387DC91";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B3275F26-23E1-4E82-938D-B81D5387DC91";
@@ -1869,10 +1919,14 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/OAuth2Client-master/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PROVISIONING_PROFILE = "B3275F26-23E1-4E82-938D-B81D5387DC91";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B3275F26-23E1-4E82-938D-B81D5387DC91";
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -1896,10 +1950,14 @@
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/OAuth2Client-master/**";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PROVISIONING_PROFILE = "B3275F26-23E1-4E82-938D-B81D5387DC91";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B3275F26-23E1-4E82-938D-B81D5387DC91";
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1907,7 +1965,9 @@
 		538DBAA3166F830300F0709F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1923,10 +1983,14 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					/Users/nialgiacomelli/Git/Diabetik/Diabetik/Vendor/libWasabiSynciOS,
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = Diabetik;
 				PROVISIONING_PROFILE = "B3275F26-23E1-4E82-938D-B81D5387DC91";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B3275F26-23E1-4E82-938D-B81D5387DC91";
@@ -1938,7 +2002,9 @@
 		538DBAA4166F830300F0709F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
@@ -1956,9 +2022,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)\"",
+					"$(SRCROOT)",
+					/Users/nialgiacomelli/Git/Diabetik/Diabetik/Vendor/libWasabiSynciOS,
 				);
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = Diabetik;
 				PROVISIONING_PROFILE = "B3275F26-23E1-4E82-938D-B81D5387DC91";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B3275F26-23E1-4E82-938D-B81D5387DC91";

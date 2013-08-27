@@ -133,7 +133,7 @@
     __weak typeof(self) weakSelf = self;
     
     // Setup our nav bar buttons
-    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconAdd.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
+    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
     [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
     
     // Setup our search bar

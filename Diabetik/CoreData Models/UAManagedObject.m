@@ -178,10 +178,15 @@
 #pragma mark - Helpers
 - (NSString *)generateUniqueID
 {
-    CFUUIDRef theUUID = CFUUIDCreate(NULL);
-    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-    CFRelease(theUUID);
-    return (__bridge_transfer NSString *)string;
+    CFUUIDRef uuid = CFUUIDCreate(kCFAllocatorDefault);
+    NSString *str = (__bridge_transfer NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuid);
+    CFRelease(uuid);
+    return str;
+}
+- (NSString *)guid
+{
+    // Pass on our UUID for Wasabi Sync purposes
+    return self.uuid;
 }
 
 @end

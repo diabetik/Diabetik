@@ -23,7 +23,6 @@
 #import "UAJournalViewController.h"
 #import "UATimelineViewController.h"
 #import "UAJournalMonthViewCell.h"
-#import "UAJournalShortcutViewCell.h"
 #import "UAIntroductionTooltipView.h"
 #import "UAAddEntryModalView.h"
 
@@ -36,6 +35,7 @@
 
 #import "UAEvent.h"
 #import "UAReading.h"
+#import "UAShortcutButton.h"
 
 @interface UAJournalViewController ()
 {
@@ -96,33 +96,38 @@
 {
     [super viewWillAppear:animated];
     
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 40, 35)];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:titleView.frame];
-    imageView.image = [UIImage imageNamed:@"IndexNavBarLogo.png"];
-    [titleView addSubview:imageView];
-    self.navigationItem.titleView = titleView;
-    
     // Setup our table header view
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 34.0f)];
-    headerView.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:246.0f/255.0f blue:245.0f/255.0f alpha:1.0f];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 120.0f)];
+    headerView.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
     headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
-    UILabel *headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(44.0f, 1.0f, headerView.frame.size.width-44.0f, 33.0f)];
-    headerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    headerLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
-    headerLabel.text = [NSLocalizedString(@"Jump to", nil) uppercaseString];
-    headerLabel.font = [UAFont standardDemiBoldFontWithSize:14.0f];
-    [headerView addSubview:headerLabel];
+    CGFloat buttonWidth = floorf(self.view.frame.size.width/3.0f);
     
-    UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, headerView.frame.size.height-0.5f, headerView.frame.size.width, 0.5f)];
-    borderView.backgroundColor = [UIColor colorWithRed:213.0f/255.0f green:216.0f/255.0f blue:215.0f/255.0f alpha:1.0f];
-    borderView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-    [headerView addSubview:borderView];
+    UAShortcutButton *todayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonWidth, 119.0f)];
+    [todayButton setTitle:[NSLocalizedString(@"Today", nil) uppercaseString] forState:UIControlStateNormal];
+    [todayButton setImage:[UIImage imageNamed:@"JournalShortcut7Days"] forState:UIControlStateNormal];
+    [todayButton setTag:0];
+    [todayButton addTarget:self action:@selector(showRelativeTimeline:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:todayButton];
+    
+    UAShortcutButton *sevenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(buttonWidth, 0.0f, buttonWidth, 119.0f)];
+    [sevenDayButton setTitle:[NSLocalizedString(@"Past 7 Days", nil) uppercaseString] forState:UIControlStateNormal];
+    [sevenDayButton setImage:[UIImage imageNamed:@"JournalShortcut7Days"] forState:UIControlStateNormal];
+    [sevenDayButton setTag:7];
+    [sevenDayButton addTarget:self action:@selector(showRelativeTimeline:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:sevenDayButton];
+    
+    UAShortcutButton *fourteenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(buttonWidth*2, 0.0f, buttonWidth, 119.0f)];
+    [fourteenDayButton setTitle:[NSLocalizedString(@"Past 14 days", nil) uppercaseString] forState:UIControlStateNormal];
+    [fourteenDayButton setImage:[UIImage imageNamed:@"JournalShortcut7Days"] forState:UIControlStateNormal];
+    [fourteenDayButton setTag:14];
+    [fourteenDayButton addTarget:self action:@selector(showRelativeTimeline:) forControlEvents:UIControlEventTouchUpInside];
+    [headerView addSubview:fourteenDayButton];
     
     self.tableView.tableHeaderView = headerView;
     
+    // Additional setup
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-    
     [self refreshView];
 }
 - (void)viewDidLoad
@@ -130,11 +135,13 @@
     [super viewDidLoad];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
- 
-    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconAdd.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
+    [self.tableView registerClass:[UAJournalMonthViewCell class] forCellReuseIdentifier:@"UAJournalMonthViewCell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UAJournalSpacerViewCell"];
+    
+    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
     [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
     
-    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconListMenu.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(showSideMenu:)];
+    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconListMenu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleBordered target:self action:@selector(showSideMenu:)];
     [self.navigationItem setLeftBarButtonItem:menuBarButtonItem animated:NO];
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenStarterTooltip])
@@ -243,7 +250,15 @@
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
     UAAppDelegate *delegate = (UAAppDelegate*)[[UIApplication sharedApplication] delegate];
-    //[delegate.viewController showLeftPanel:YES];
+    [delegate.viewController showLeftPanel:YES];
+}
+- (void)showRelativeTimeline:(UAShortcutButton *)sender
+{
+    [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap"];
+    
+    UATimelineViewController *vc = [[UATimelineViewController alloc] initWithMOC:self.moc relativeDays:sender.tag];
+    vc.title = [sender titleForState:UIControlStateNormal];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 - (void)showTips
 {
@@ -259,30 +274,13 @@
 #pragma mark - UITableViewDelegate functions
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [super tableView:aTableView didSelectRowAtIndexPath:indexPath];
-    [aTableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    UATimelineViewController *vc = nil;
-    if(indexPath.section == 0)
+    if(indexPath.row%2 == 0)
     {
-        NSInteger days = 0;
-        NSString *title = NSLocalizedString(@"Today", nil);
-        if(indexPath.row == 1)
-        {
-            days = 7;
-            title = NSLocalizedString(@"Past 7 days", nil);
-        }
-        else if(indexPath.row == 2)
-        {
-            days = 14;
-            title = NSLocalizedString(@"Past 14 days", nil);
-        }
-        vc = [[UATimelineViewController alloc] initWithMOC:self.moc relativeDays:days];
-        vc.title = title;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
-    else
-    {
+        [super tableView:aTableView didSelectRowAtIndexPath:indexPath];
+        [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+        
+        indexPath = [NSIndexPath indexPathForRow:indexPath.row/2 inSection:indexPath.section];
+        
         NSString *key = [[readings allKeys] objectAtIndex:indexPath.row];
         if(key)
         {
@@ -297,78 +295,36 @@
 }
 - (CGFloat)tableView:(UITableView *)aTableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0)
+    if(indexPath.row%2 == 0)
     {
-        return 44.0f;
+        return 270.0f;
     }
-    else
-    {
-        return 168.0f;
-    }
+    
+    return 20.0f;
 }
 
 #pragma mark - UITableViewDataSource functions
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
 {
-    return 2;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    if(section == 0)
+    if(readings)
     {
-        return 3;
-    }
-    else if(section == 1)
-    {
-        if(readings)
-        {
-            return [[readings allKeys] count];
-        }
+        return [[readings allKeys] count]*2;
     }
     
     return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(indexPath.section == 0)
+    if(indexPath.row%2 == 0)
     {
-        UAJournalShortcutViewCell *cell = (UAJournalShortcutViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UAJournalShortcutViewCell"];
-        if (cell == nil)
-        {
-            cell = [[UAJournalShortcutViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UAJournalShortcutViewCell"];
-        }
-        [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        indexPath = [NSIndexPath indexPathForRow:indexPath.row/2 inSection:indexPath.section];
         
-        if(indexPath.row == 0)
-        {
-            cell.textLabel.text = NSLocalizedString(@"Today", nil);
-            cell.imageView.image = [UIImage imageNamed:@"JournalIconToday.png"];
-            cell.imageView.highlightedImage = [UIImage imageNamed:@"JournalIconTodayPressed.png"];
-        }
-        else if(indexPath.row == 1)
-        {
-            cell.textLabel.text = NSLocalizedString(@"Past 7 days", nil);
-            cell.imageView.image = [UIImage imageNamed:@"JournalIconOneWeek.png"];
-            cell.imageView.highlightedImage = [UIImage imageNamed:@"JournalIconOneWeekPressed.png"];
-        }
-        else if(indexPath.row == 2)
-        {
-            cell.textLabel.text = NSLocalizedString(@"Past 14 days", nil);
-            cell.imageView.image = [UIImage imageNamed:@"JournalIconTwoWeeks.png"];
-            cell.imageView.highlightedImage = [UIImage imageNamed:@"JournalIconTwoWeeksPressed.png"];
-        }
-        
-        return cell;
-    }
-    else
-    {
-        UAJournalMonthViewCell *cell = (UAJournalMonthViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UAJournalMonthViewCell"];
-        if (cell == nil)
-        {
-            cell = [[UAJournalMonthViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UAJournalMonthViewCell"];
-        }
-        
+        UAJournalMonthViewCell *cell = (UAJournalMonthViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UAJournalMonthViewCell" forIndexPath:indexPath];
+  
         NSString *key = [[readings allKeys] objectAtIndex:indexPath.row];
         NSDictionary *stats = [readings objectForKey:key];
        
@@ -394,10 +350,20 @@
         [cell setActivityValue:totalMinutes];
         [cell setLowGlucoseValue:[NSNumber numberWithDouble:lowGlucose] withFormatter:valueFormatter];
         [cell setHighGlucoseValue:[NSNumber numberWithDouble:highGlucose] withFormatter:valueFormatter];
-        cell.monthLabel.text = [key uppercaseString];
+        cell.monthLabel.text = key;
         
         return cell;
     }
+    else
+    {
+        UITableViewCell *cell = (UITableViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UAJournalSpacerViewCell" forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        return cell;
+    }
+    
+    return nil;
 }
 
 #pragma mark - UAModalViewDelegate methods

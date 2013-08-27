@@ -52,7 +52,7 @@
 {
     [super viewDidLoad];
     
-    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconAdd.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(addReminder:)];
+    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleBordered target:self action:@selector(addReminder:)];
     [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
 }
 - (void)viewWillAppear:(BOOL)animated

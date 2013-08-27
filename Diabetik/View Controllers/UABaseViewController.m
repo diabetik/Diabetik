@@ -55,7 +55,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"TimelineBackground.png"]];
+    self.view.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -65,15 +65,11 @@
     
     if(!self.navigationItem.leftBarButtonItem && [self.navigationController.viewControllers count] > 1)
     {
-        UIImage *backButtonBG = [[UIImage imageNamed:@"NavBarBtnBack.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 3)];
-        UIImage *backButtonHighlightedBG = [[UIImage imageNamed:@"NavBarBtnBackPressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 3)];
-        
-        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 30)];
-        [backButton setBackgroundImage:backButtonBG forState:UIControlStateNormal];
-        [backButton setBackgroundImage:backButtonHighlightedBG forState:UIControlStateHighlighted];
+        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 13, 30)];
         [backButton setImage:[UIImage imageNamed:@"NavBarIconBack.png"] forState:UIControlStateNormal];
+        [backButton setTitle:self.navigationItem.backBarButtonItem.title forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(handleBack:) forControlEvents:UIControlEventTouchUpInside];
-        [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
+        //[backButton setImageEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
         [backButton setAdjustsImageWhenHighlighted:NO];
         
         UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
@@ -198,7 +194,7 @@
                                                  selector:@selector(keyboardWasHidden:)
                                                      name:UIKeyboardDidHideNotification object:nil];
         
-        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconBack.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
+        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconBack.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
         [self.navigationItem setBackBarButtonItem:backBarButtonItem];
     }
     
