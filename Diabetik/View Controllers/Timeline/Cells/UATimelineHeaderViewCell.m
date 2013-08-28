@@ -32,13 +32,19 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self)
     {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
+        
+        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.0f, self.frame.size.width, 31.0f)];
+        v.backgroundColor = [UIColor whiteColor];
+        [self.contentView addSubview:v];
+        
+        UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineSummaryBackgroundArrow"]];
+        arrow.frame = CGRectMake(self.frame.size.width/2.0f - arrow.image.size.width/2.0f, 41.0f-arrow.image.size.height, arrow.image.size.width, arrow.image.size.height);
+        [self.contentView addSubview:arrow];
         
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40.0f)];
-        _dateLabel.font = [UAFont standardDemiBoldFontWithSize:13.0f];
-        _dateLabel.shadowOffset = CGSizeMake(0, 1);
-        _dateLabel.shadowColor = [UIColor colorWithRed:227.0f/255.0f green:228.0f/255.0f blue:235.0f/255.0f alpha:1.0f];
-        _dateLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        _dateLabel.font = [UAFont standardRegularFontWithSize:14.0f];
+        _dateLabel.textColor = [UIColor colorWithRed:98.0f/255.0f green:102.0f/255.0f blue:102.0f/255.0f alpha:1.0f];
         _dateLabel.textAlignment = NSTextAlignmentCenter;
         _dateLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_dateLabel];
@@ -86,16 +92,7 @@
 #pragma mark - Logic
 - (void)setDate:(NSString *)text
 {
-    _dateLabel.text = [text uppercaseString];
-}
-
-#pragma mark - Rendering
-- (void)drawRect:(CGRect)rect
-{
-    [super drawRect:rect];
-    
-    UIImage *background = [UIImage imageNamed:@"TimelineCardHeaderBackground.png"];
-    [background drawAtPoint:CGPointMake(self.bounds.size.width/2-background.size.width/2, self.bounds.size.height - background.size.height)];
+    _dateLabel.text = text;
 }
 
 @end

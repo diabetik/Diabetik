@@ -50,17 +50,7 @@
     {
         isFooter = NO;
         
-        self.backgroundColor = [UIColor clearColor];
-        
-        UIImageView *background = [[UIImageView alloc] initWithFrame:self.bounds];
-        background.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        background.backgroundColor = [UIColor clearColor];
-        self.backgroundView = background;
-        
-        UIImageView *selectedBackground = [[UIImageView alloc] initWithFrame:self.bounds];
-        selectedBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        selectedBackground.backgroundColor = [UIColor clearColor];
-        self.selectedBackgroundView = selectedBackground;
+        self.backgroundColor = [UIColor whiteColor];
         
         _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20.0f, 15.0f, 15.0f, 15.0f)];
         _iconImageView.image = [UIImage imageNamed:@"TimelineMealIcon.png"];
@@ -157,38 +147,6 @@
     else if(indexPath.row == totalRows-1)
     {
         position = UACellBackgroundViewPositionBottom;
-    }
-    
-    UIImageView *background = (UIImageView *)self.backgroundView;
-    UIImageView *selectedBackground = (UIImageView *)self.selectedBackgroundView;
-    switch(position)
-    {
-        case UACellBackgroundViewPositionTop:
-            if(totalRows > 2)
-            {
-                background.image = [[UIImage imageNamed:@"TimelineCardCellTop.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(43, 159, 1, 159)];
-                selectedBackground.image = [[UIImage imageNamed:@"TimelineCardCellTopPressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(43, 159, 1, 159)];
-            }
-            else
-            {
-                background.image = [[UIImage imageNamed:@"TimelineCardCellTopRounded.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(40, 159, 5, 159)];
-                selectedBackground.image = [[UIImage imageNamed:@"TimelineCardCellTopRoundedPressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(40, 159, 5, 159)];
-            }
-            
-            break;
-        case UACellBackgroundViewPositionMiddle:
-            background.image = [[UIImage imageNamed:@"TimelineCardCellMiddle.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 1, 7)];
-            selectedBackground.image = [[UIImage imageNamed:@"TimelineCardCellMiddlePressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 7, 1, 7)];
-            
-            break;
-        case UACellBackgroundViewPositionBottom:
-            background.image = [[UIImage imageNamed:@"TimelineCardCellBottom.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 6, 14)];
-            selectedBackground.image = [[UIImage imageNamed:@"TimelineCardCellBottomPressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 6, 14)];
-            
-            break;
-        case UACellBackgroundViewPositionSingle:
-            // Not possible
-            break;
     }
 }
 

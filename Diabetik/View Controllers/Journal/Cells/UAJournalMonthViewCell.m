@@ -229,34 +229,36 @@
 {
     if([value doubleValue] > 0)
     {
+        deviationImageView.image = [UIImage imageNamed:@"JournalIconDeviation"];
         deviationLabel.textColor = [UIColor colorWithRed:254.0f/255.0f green:79.0f/255.0f blue:96.0f/255.0f alpha:1.0f];
         deviationLabel.text = [valueFormatter stringFromNumber:value];
-        deviationLabel.alpha = 1.0f;
-        deviationDetailLabel.alpha = 1.0f;
+        deviationDetailLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
     }
     else
     {
+        deviationImageView.image = [UIImage imageNamed:@"JournalIconDeviationInactive"];
         deviationLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
         deviationLabel.text = [valueFormatter stringFromNumber:[NSNumber numberWithDouble:0.0]];
-        deviationLabel.alpha = 0.5f;
-        deviationDetailLabel.alpha = 0.5f;
+        deviationLabel.textColor = [UIColor colorWithRed:223.0f/255.0f green:225.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
+        deviationDetailLabel.textColor = [UIColor colorWithRed:223.0f/255.0f green:225.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
     }
 }
 - (void)setAverageGlucoseValue:(NSNumber *)value withFormatter:(NSNumberFormatter *)valueFormatter
 {
     if([value doubleValue] > 0)
     {
+        glucoseImageView.image = [UIImage imageNamed:@"JournalIconBlood"];
         glucoseLabel.textColor = [UIColor colorWithRed:254.0f/255.0f green:79.0f/255.0f blue:96.0f/255.0f alpha:1.0f];
         glucoseLabel.text = [valueFormatter stringFromNumber:value];
-        glucoseLabel.alpha = 1.0f;
-        glucoseDetailLabel.alpha = 1.0f;
+        glucoseDetailLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
     }
     else
     {
+        glucoseImageView.image = [UIImage imageNamed:@"JournalIconBloodInactive"];
         glucoseLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
         glucoseLabel.text = [valueFormatter stringFromNumber:[NSNumber numberWithDouble:0.0]];
-        glucoseLabel.alpha = 0.5f;
-        glucoseDetailLabel.alpha = 0.5f;        
+        glucoseLabel.textColor = [UIColor colorWithRed:223.0f/255.0f green:225.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
+        glucoseDetailLabel.textColor = [UIColor colorWithRed:223.0f/255.0f green:225.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
     }
 }
 - (void)setLowGlucoseValue:(NSNumber *)value withFormatter:(NSNumberFormatter *)valueFormatter
@@ -291,34 +293,35 @@
 {
     if(value > 0)
     {
+        activityImageView.image = [UIImage imageNamed:@"JournalIconActivity"];
         activityLabel.textColor = [UIColor colorWithRed:113.0f/255.0f green:185.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+        activityDetailLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
         activityLabel.text = [UAHelper formatMinutes:value];
-        activityLabel.alpha = 1.0f;
-        activityDetailLabel.alpha = 1.0f;
     }
     else
     {
+        activityImageView.image = [UIImage imageNamed:@"JournalIconActivityInactive"];
         activityLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
         activityLabel.text = @"00:00";
-        activityLabel.alpha = 0.5f;
-        activityDetailLabel.alpha = 0.5f;
+        activityLabel.textColor = [UIColor colorWithRed:223.0f/255.0f green:225.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
+        activityDetailLabel.textColor = [UIColor colorWithRed:223.0f/255.0f green:225.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
     }
 }
 - (void)setMealValue:(NSNumber *)value withFormatter:(NSNumberFormatter *)valueFormatter
 {
     if([value doubleValue] > 0)
     {
+        mealImageView.image = [UIImage imageNamed:@"JournalIconCarbs"];
         mealLabel.textColor = [UIColor colorWithRed:254.0f/255.0f green:196.0f/255.0f blue:89.0f/255.0f alpha:1.0f];
+        mealDetailLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
         mealLabel.text = [valueFormatter stringFromNumber:value];
-        mealLabel.alpha = 1.0f;
-        mealDetailLabel.alpha = 1.0f;        
     }
     else
     {
-        mealLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
+        mealImageView.image = [UIImage imageNamed:@"JournalIconCarbsInactive"];
+        mealLabel.textColor = [UIColor colorWithRed:223.0f/255.0f green:225.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
+        mealDetailLabel.textColor = [UIColor colorWithRed:223.0f/255.0f green:225.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
         mealLabel.text = @"0";
-        mealLabel.alpha = 0.5f;
-        mealDetailLabel.alpha = 0.5f;
     }
 }
 
