@@ -23,7 +23,7 @@
 
 @class UAAccount;
 @interface UAEvent : UAManagedObject
-@property (nonatomic, retain) NSString *externalUUID;
+@property (nonatomic, retain) NSString *externalGUID;
 @property (nonatomic, retain) NSString *externalSource;
 @property (nonatomic, retain) NSNumber *filterType;
 @property (nonatomic, retain) NSString *name;

@@ -113,7 +113,7 @@
         
         if(!regionAlreadyMonitored)
         {
-            CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:location.coordinate radius:150 identifier:reminder.uuid];
+            CLCircularRegion *region = [[CLCircularRegion alloc] initWithCenter:location.coordinate radius:150 identifier:reminder.guid];
             [self.locationManager startMonitoringForRegion:region];
             [newRegions addObject:region];
         }
@@ -203,7 +203,7 @@
                 notification.alertBody = reminder.message;
                 notification.soundName = @"notification.caf";
                 notification.timeZone = [NSTimeZone defaultTimeZone];
-                notification.userInfo = @{@"ID": reminder.uuid, @"type": reminder.type};
+                notification.userInfo = @{@"ID": reminder.guid, @"type": reminder.type};
                 
                 [[UIApplication sharedApplication] scheduleLocalNotification:notification];
             }
@@ -226,7 +226,7 @@
                 notification.soundName = UILocalNotificationDefaultSoundName;
                 notification.timeZone = [NSTimeZone defaultTimeZone];
                 notification.soundName = @"notification.caf";
-                notification.userInfo = @{@"ID": reminder.uuid, @"type": reminder.type};
+                notification.userInfo = @{@"ID": reminder.guid, @"type": reminder.type};
                 
                 [[UIApplication sharedApplication] scheduleLocalNotification:notification];
             }

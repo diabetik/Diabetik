@@ -48,7 +48,7 @@ NSString *const kRunKeeperBaseURL = @"https://api.runkeeper.com";
                                                           {
                                                               UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
                                                               NXOAuth2Account *newAccount = [aNotification.userInfo objectForKey:NXOAuth2AccountStoreNewAccountUserInfoKey];
-                                                              newAccount.userData = [activeAccount uuid];
+                                                              newAccount.userData = [activeAccount guid];
                                                             
                                                               // Force a sync request
                                                               [self performSyncByForce:YES];
@@ -173,10 +173,10 @@ NSString *const kRunKeeperBaseURL = @"https://api.runkeeper.com";
         
         for(NSDictionary *activity in activities)
         {
-            NSString *uuid = [activity objectForKey:@"uri"];
-            if(uuid)
+            NSString *guid = [activity objectForKey:@"uri"];
+            if(guid)
             {
-                UAActivity *existingEvent = (UAActivity *)[[UAEventController sharedInstance] fetchEventForAccount:account withExternalUUID:[activity objectForKey:@"uri"] inContext:moc];
+                UAActivity *existingEvent = (UAActivity *)[[UAEventController sharedInstance] fetchEventForAccount:account withExternalGUID:[activity objectForKey:@"uri"] inContext:moc];
                 
                 if(existingEvent)
                 {
@@ -189,7 +189,7 @@ NSString *const kRunKeeperBaseURL = @"https://api.runkeeper.com";
                 {
                     NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAActivity" inManagedObjectContext:moc];
                     UAActivity *newEvent = (UAActivity *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
-                    newEvent.externalUUID = uuid;
+                    newEvent.externalGUID = guid;
                     newEvent.name = [activity objectForKey:@"type"];
                     newEvent.minutes = [NSNumber numberWithDouble:[[activity objectForKey:@"duration"] integerValue]/60];
                     newEvent.timestamp = [dateFormatter dateFromString:[activity objectForKey:@"start_time"]];

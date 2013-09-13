@@ -22,7 +22,7 @@
 
 @implementation UAManagedObject
 @synthesize traversed;
-@dynamic uuid;
+@dynamic guid;
 @dynamic modifiedTimestamp, createdTimestamp;
 
 #pragma mark - Setup
@@ -30,7 +30,7 @@
 {
     [super awakeFromInsert];
     
-    self.uuid = [self generateUniqueID];
+    self.guid = [self generateUniqueID];
     self.createdTimestamp = [NSDate date];
 }
 
@@ -144,7 +144,7 @@
 }
 + (UAManagedObject *)createManagedObjectFromDictionaryRepresentation:(NSDictionary *)dict inContext:(NSManagedObjectContext *)context
 {
-    NSString *uuid = [dict objectForKey:@"uuid"];
+    NSString *guid = [dict objectForKey:@"guid"];
     NSString *class = [dict objectForKey:@"class"];
     UAManagedObject *object = nil;
     
@@ -154,7 +154,7 @@
     {
         [request setEntity:entity];
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uuid = %@", uuid];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"guid = %@", guid];
         [request setPredicate:predicate];
         
         // Execute the fetch.
@@ -182,11 +182,6 @@
     NSString *str = (__bridge_transfer NSString *)CFUUIDCreateString(kCFAllocatorDefault, uuid);
     CFRelease(uuid);
     return str;
-}
-- (NSString *)guid
-{
-    // Pass on our UUID for Wasabi Sync purposes
-    return self.uuid;
 }
 
 @end

@@ -24,7 +24,7 @@
 #import "UATag.h"
 
 @implementation UAEvent
-@dynamic externalUUID, externalSource;
+@dynamic externalGUID, externalSource;
 @dynamic filterType;
 @dynamic name, notes;
 @dynamic timestamp, primitiveTimestamp;

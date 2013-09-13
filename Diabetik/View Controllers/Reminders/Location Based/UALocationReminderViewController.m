@@ -165,7 +165,7 @@
 - (void)deleteReminder
 {
     NSError *error = nil;
-    [[UAReminderController sharedInstance] deleteReminderWithID:reminder.uuid error:&error];
+    [[UAReminderController sharedInstance] deleteReminderWithID:reminder.guid error:&error];
     
     if(!error)
     {

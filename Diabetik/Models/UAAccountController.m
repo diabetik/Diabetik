@@ -83,14 +83,14 @@
         UAAccount *preferredAccount = nil;
         
         // If we have a saved 'active' account preference, try to restore it
-        NSString *uuid = [[NSUserDefaults standardUserDefaults] valueForKey:kActiveAccountKey];
-        if(uuid)
+        NSString *guid = [[NSUserDefaults standardUserDefaults] valueForKey:kActiveAccountKey];
+        if(guid)
         {
             NSFetchRequest *request = [[NSFetchRequest alloc] init];
             NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAAccount" inManagedObjectContext:aMOC];
             [request setEntity:entity];
             
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uuid = %@", uuid];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"guid = %@", guid];
             [request setPredicate:predicate];
             
             NSError *error = nil;
@@ -147,11 +147,11 @@
 - (void)setActiveAccount:(UAAccount *)theAccount
 {
     // Make sure this is a newly active account
-    if([_activeAccount.uuid isEqual:theAccount.uuid]) return;
+    if([_activeAccount.guid isEqual:theAccount.guid]) return;
     
     _activeAccount = theAccount;
     
-    [[NSUserDefaults standardUserDefaults] setValue:theAccount.uuid forKey:kActiveAccountKey];
+    [[NSUserDefaults standardUserDefaults] setValue:theAccount.guid forKey:kActiveAccountKey];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSNotificationCenter defaultCenter] postNotificationName:kAccountsSwitchedNotification object:nil];
 }

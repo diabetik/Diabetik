@@ -21,7 +21,6 @@
 #import <Dropbox/Dropbox.h>
 #import "NXOAuth2.h"
 #import "Appirater.h"
-#import "WHISyncController.h"
 
 #import "UAHelper.h"
 #import "UAAppDelegate.h"
@@ -34,13 +33,6 @@
 #import "UAEventController.h"
 
 #import "UAKeyboardController.h"
-
-@interface UAAppDelegate ()
-{
-    WHISyncController *sync;
-}
-
-@end
 
 @implementation UAAppDelegate
 @synthesize managedObjectContext = _managedObjectContext;
@@ -83,27 +75,6 @@
     [Appirater setSignificantEventsUntilPrompt:-1];
     [Appirater setTimeBeforeReminding:2];
     [Appirater setDebug:NO];
-    
-    /*
-    // Setup WasabiSync
-    sync = [WHISyncController globalInstanceWithServerURL:@"http://www.wasabisync.com/"
-                                           contextCreator:^NSManagedObjectContext *
-                               {
-                                   NSManagedObjectContext *moc = nil;
-                                   NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-                                   if (coordinator != nil) {
-                                       moc = [[NSManagedObjectContext alloc] init];
-                                       [moc setPersistentStoreCoordinator:coordinator];
-                                   }
-                                   
-                                   return moc;
-                               }];
-    [sync setAppId:@"com.uglyapps.diabetik"];
-    [sync setApiKey:kWasabiSyncApiKey];
-    [sync load];
-    [sync start];
-    [sync loginWithEmailAddress:@"nial.david.giacomelli@gmail.com" password:@"r0b0tdogpunchmachine" callback:nil];
-    */
     
     // Is this a first run experience?
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasRunBeforeKey])
@@ -274,9 +245,6 @@
 }
 - (void)saveContext
 {
-    // Save our WasabiSync context
-    [sync save];
-    
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
     if (managedObjectContext != nil) {

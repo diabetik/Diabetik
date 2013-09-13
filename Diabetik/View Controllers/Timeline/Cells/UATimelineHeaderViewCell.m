@@ -34,12 +34,16 @@
     {
         self.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
         
-        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.0f, self.frame.size.width, 31.0f)];
-        v.backgroundColor = [UIColor whiteColor];
-        [self.contentView addSubview:v];
+        UIView *statsBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.0f, self.frame.size.width, 31.0f)];
+        statsBackgroundView.backgroundColor = [UIColor whiteColor];
+        [self.contentView addSubview:statsBackgroundView];
+        
+        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.0f, self.frame.size.width, 0.5f)];
+        topBorder.backgroundColor = [UIColor colorWithRed:204.0f/255.0f green:205.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
+        [self.contentView addSubview:topBorder];
         
         UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineSummaryBackgroundArrow"]];
-        arrow.frame = CGRectMake(self.frame.size.width/2.0f - arrow.image.size.width/2.0f, 41.0f-arrow.image.size.height, arrow.image.size.width, arrow.image.size.height);
+        arrow.frame = CGRectMake(self.frame.size.width/2.0f - arrow.image.size.width/2.0f, 41.5f-arrow.image.size.height, arrow.image.size.width, arrow.image.size.height);
         [self.contentView addSubview:arrow];
         
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40.0f)];
@@ -50,8 +54,8 @@
         [self.contentView addSubview:_dateLabel];
         
         UIImageView *glucoseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineCardHeaderIconBloodGlucose.png"]];
-        glucoseImageView.frame = CGRectMake(10.0f + (50 - glucoseImageView.frame.size.width/2), 49.0f, glucoseImageView.frame.size.width, glucoseImageView.frame.size.height);
-        [self.contentView addSubview:glucoseImageView];
+        glucoseImageView.frame = CGRectMake(46.0f, 19.0f, glucoseImageView.frame.size.width, glucoseImageView.frame.size.height);
+        [statsBackgroundView addSubview:glucoseImageView];
         
         _glucoseLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 66.0f, 100.0f, 16.0f)];
         _glucoseLabel.backgroundColor = [UIColor clearColor];

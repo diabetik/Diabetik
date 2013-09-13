@@ -76,7 +76,7 @@
 {
     for (NXOAuth2Account *externalAccount in [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:serviceIdentifier])
     {
-        if([account.uuid isEqualToString:(NSString *)externalAccount.userData])
+        if([account.guid isEqualToString:(NSString *)externalAccount.userData])
         {
             return externalAccount;
         }

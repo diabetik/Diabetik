@@ -217,9 +217,9 @@
     
     return nil;
 }
-- (UAEvent *)fetchEventForAccount:(UAAccount *)account withExternalUUID:(NSString *)uuid inContext:(NSManagedObjectContext *)moc
+- (UAEvent *)fetchEventForAccount:(UAAccount *)account withExternalGUID:(NSString *)guid inContext:(NSManagedObjectContext *)moc
 {
-    NSArray *objects = [self fetchEventsWithPredicate:[NSPredicate predicateWithFormat:@"externalUUID == %@ && account == %@", uuid, account] inContext:moc];
+    NSArray *objects = [self fetchEventsWithPredicate:[NSPredicate predicateWithFormat:@"externalGUID == %@ && account == %@", guid, account] inContext:moc];
     if (objects != nil && [objects count] > 0)
     {
         return [objects objectAtIndex:0];

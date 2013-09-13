@@ -144,7 +144,7 @@
             if([reminder.date isEarlierThanDate:[NSDate date]])
             {
                 NSError *error = nil;
-                [self deleteReminderWithID:reminder.uuid error:&error];
+                [self deleteReminderWithID:reminder.guid error:&error];
                 
                 if(!error)
                 {
@@ -224,7 +224,7 @@
 - (void)setNotificationsForReminder:(UAReminder *)aReminder
 {
     // Cancel all existing registered notifications
-    NSArray *notifications = [self notificationsWithID:[aReminder uuid]];
+    NSArray *notifications = [self notificationsWithID:[aReminder guid]];
     if([notifications count])
     {
         for(UILocalNotification *notification in notifications)
@@ -242,7 +242,7 @@
         notification.soundName = UILocalNotificationDefaultSoundName;
         notification.timeZone = [NSTimeZone defaultTimeZone];
         notification.soundName = @"notification.caf";
-        notification.userInfo = @{@"ID": aReminder.uuid, @"type": aReminder.type};
+        notification.userInfo = @{@"ID": aReminder.guid, @"type": aReminder.type};
         
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     }
@@ -293,7 +293,7 @@
                         notification.timeZone = [NSTimeZone defaultTimeZone];
                         notification.repeatInterval = NSWeekCalendarUnit;
                         notification.soundName = @"notification.caf";
-                        notification.userInfo = @{@"ID": aReminder.uuid, @"type": aReminder.type};
+                        notification.userInfo = @{@"ID": aReminder.guid, @"type": aReminder.type};
                         
                         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
                     }
@@ -335,7 +335,7 @@
 - (UAReminder *)fetchReminderWithID:(NSString *)reminderID
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"UAReminder"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uuid = %@", reminderID];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"guid = %@", reminderID];
     [request setPredicate:predicate];
     
     // Execute the fetch.

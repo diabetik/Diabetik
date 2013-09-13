@@ -206,9 +206,9 @@
     double newTotalCarbs = 0.0;
     if([[selectedMeals allKeys] count])
     {
-        for(NSString *uuid in selectedMeals)
+        for(NSString *guid in selectedMeals)
         {
-            UAMeal *meal = (UAMeal *)[selectedMeals objectForKey:uuid];
+            UAMeal *meal = (UAMeal *)[selectedMeals objectForKey:guid];
             newTotalCarbs += [[meal grams] doubleValue];
         }
     }
@@ -253,13 +253,13 @@
     if(indexPath.section == 1 && indexPath.row > 0)
     {
         UAEvent *event = [latestEvents objectAtIndex:indexPath.row-1];
-        if([selectedMeals objectForKey:event.uuid])
+        if([selectedMeals objectForKey:event.guid])
         {
-            [selectedMeals removeObjectForKey:event.uuid];
+            [selectedMeals removeObjectForKey:event.guid];
         }
         else
         {
-            [selectedMeals setObject:event forKey:event.uuid];
+            [selectedMeals setObject:event forKey:event.guid];
         }
         
         // If we just unticked our last meal, go ahead and reset our total carbs value to 0
@@ -397,7 +397,7 @@
                 cell.textLabel.text = event.name;
             }
             
-            if([selectedMeals objectForKey:event.uuid])
+            if([selectedMeals objectForKey:event.guid])
             {
                 cell.accessoryType = UITableViewCellAccessoryCheckmark;
             }
