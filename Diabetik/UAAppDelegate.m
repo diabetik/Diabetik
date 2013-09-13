@@ -227,6 +227,8 @@
     [[UINavigationBar appearance] setBarTintColor:defaultBarTintColor];
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.0f green:192.0f/255.0f blue:180.0f/255.0f alpha:1.0f]];
     
+    [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]}];
+    
     NSShadow *dropShadow = [[NSShadow alloc] init];
     dropShadow.shadowColor = [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:0.15f];
     dropShadow.shadowOffset = CGSizeMake(0.0f, 1.0f);
