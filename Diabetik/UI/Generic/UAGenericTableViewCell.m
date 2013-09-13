@@ -41,8 +41,8 @@
         self.selectedBackgroundView = selectedBackground;
         
         self.textLabel.backgroundColor = [UIColor clearColor];
-        self.textLabel.textColor = [UIColor colorWithRed:115.0f/255.0f green:127.0f/255.0f blue:123.0f/255.0f alpha:1.0];
-        self.textLabel.font = [UAFont standardDemiBoldFontWithSize:16.0f];
+        self.textLabel.textColor = [UIColor colorWithRed:73.0f/255.0f green:76.0f/255.0f blue:76.0f/255.0f alpha:1.0];
+        self.textLabel.font = [UAFont standardMediumFontWithSize:16.0f];
         self.textLabel.shadowColor = [UIColor whiteColor];
         self.textLabel.shadowOffset = CGSizeMake(0, 1);
         self.textLabel.highlightedTextColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
@@ -84,13 +84,13 @@
 }
 - (void)setAccessoryType:(UITableViewCellAccessoryType)accessoryType
 {
-    if(accessoryType == UITableViewCellAccessoryDisclosureIndicator)
+    /*if(accessoryType == UITableViewCellAccessoryDisclosureIndicator)
     {
         UIImageView *chevronImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Chevron.png"]];
         [chevronImageView setHighlightedImage:[UIImage imageNamed:@"ChevronPressed.png"]];
         self.accessoryView = chevronImageView;
     }
-    else
+    else*/
     {
         [super setAccessoryType:accessoryType];
     }

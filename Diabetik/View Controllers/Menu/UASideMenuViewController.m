@@ -62,7 +62,7 @@
     [super viewDidLoad];
     
     overscrollView = nil;
-    self.view.backgroundColor = [UIColor colorWithRed:250.0f/255.0f green:250.0f/255.0f blue:250.0f/255.0f alpha:1.0f];
+    self.view.backgroundColor = [UIColor colorWithRed:233.0f/255.0f green:235.0f/255.0f blue:235.0f/255.0f alpha:1.0f];
 
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 0.0f)];
     self.tableView.tableHeaderView = headerView;
@@ -89,7 +89,7 @@
         frame.origin.y = -frame.size.height;
         overscrollView = [[UIView alloc] initWithFrame:frame];
         [overscrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-        overscrollView.backgroundColor = [UIColor colorWithRed:243.0f/255.0f green:246.0f/255.0f blue:245.0f/255.0f alpha:1.0f];
+        overscrollView.backgroundColor = [UIColor colorWithRed:233.0f/255.0f green:235.0f/255.0f blue:235.0f/255.0f alpha:1.0f];
         [self.tableView addSubview:overscrollView];
     }
 }
@@ -264,9 +264,9 @@
     CGFloat height = [self tableView:aTableView heightForHeaderInSection:section];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, height-23.0f, aTableView.frame.size.width, height)];
-    view.backgroundColor = [UIColor clearColor];
+    view.backgroundColor = [UIColor colorWithRed:233.0f/255.0f green:235.0f/255.0f blue:235.0f/255.0f alpha:1.0f];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40.0f, height-23.0f, aTableView.frame.size.width, 23.0f)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(40.0f, height-27.0f, aTableView.frame.size.width, 23.0f)];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithRed:122.0f/255.0f green:122.0f/255.0f blue:122.0f/255.0f alpha:1.0f];
     label.text = [[self tableView:aTableView titleForHeaderInSection:section] uppercaseString];
@@ -275,8 +275,16 @@
     //[view addSubview:imageView];
     [view addSubview:label];
     
-    UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, view.bounds.size.height-1.0f, view.bounds.size.width, 1.0f)];
-    bottomBorder.backgroundColor = [UIColor colorWithRed:220.0f/255.0f green:223.0f/255.0f blue:222.0f/255.0f alpha:1.0f];
+    if(section > 0)
+    {
+        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0, 0.0f, view.bounds.size.width, 0.5f)];
+        topBorder.backgroundColor = [UIColor colorWithRed:211.0f/255.0f green:213.0f/255.0f blue:213.0f/255.0f alpha:1.0f];
+        topBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
+        [view addSubview:topBorder];
+    }
+    
+    UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0, view.bounds.size.height-0.5f, view.bounds.size.width, 0.5f)];
+    bottomBorder.backgroundColor = [UIColor colorWithRed:211.0f/255.0f green:213.0f/255.0f blue:213.0f/255.0f alpha:1.0f];
     bottomBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
     [view addSubview:bottomBorder];
     
@@ -288,7 +296,7 @@
     {
         return 65.0f;
     }
-    return 23.0f;
+    return 32.0f;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

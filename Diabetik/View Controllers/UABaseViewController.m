@@ -65,8 +65,8 @@
     
     if(!self.navigationItem.leftBarButtonItem && [self.navigationController.viewControllers count] > 1)
     {
-        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 13, 30)];
-        [backButton setImage:[UIImage imageNamed:@"NavBarIconBack.png"] forState:UIControlStateNormal];
+        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 19, 30)];
+        [backButton setImage:[[UIImage imageNamed:@"NavBarIconBack.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
         [backButton setTitle:self.navigationItem.backBarButtonItem.title forState:UIControlStateNormal];
         [backButton addTarget:self action:@selector(handleBack:) forControlEvents:UIControlEventTouchUpInside];
         //[backButton setImageEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
@@ -194,7 +194,7 @@
                                                  selector:@selector(keyboardWasHidden:)
                                                      name:UIKeyboardDidHideNotification object:nil];
         
-        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconBack.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
+        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconBack.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
         [self.navigationItem setBackBarButtonItem:backBarButtonItem];
     }
     
@@ -231,7 +231,6 @@
 }
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
-    NSLog(@"Keyboard was shown %@", [self class]);
     NSDictionary *info = [aNotification userInfo];
     CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
@@ -249,7 +248,6 @@
 }
 - (void)keyboardWasHidden:(NSNotification*)aNotification
 {
-    NSLog(@"Keyboard was hidden %@", [self class]);
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.navigationController.navigationBar ? 64.0f : 0.0f, 0.0f, 0.0f, 0.0f);
     
     self.tableView.contentInset = contentInsets;

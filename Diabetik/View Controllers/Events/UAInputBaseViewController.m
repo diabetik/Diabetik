@@ -118,6 +118,8 @@
 {
     [super viewWillAppear:animated];
     
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    
     BOOL editMode = self.event ? NO : YES;
     if(!isFirstLoad)
     {
@@ -271,7 +273,6 @@
     {
         [self.autocompleteTagBar showSuggestionsForInput:nil];
     }
-        NSLog(@"TextViewDidChange %@", NSStringFromCGSize(textView.contentSize));
     
     // Update values
     textViewHeight = textView.intrinsicContentSize.height;

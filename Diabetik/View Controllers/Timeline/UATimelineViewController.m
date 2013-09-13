@@ -133,7 +133,7 @@
     __weak typeof(self) weakSelf = self;
     
     // Setup our nav bar buttons
-    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
+    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
     [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
     
     // Setup our search bar
@@ -141,22 +141,17 @@
     searchBar.delegate = self;
     searchBar.showsBookmarkButton = YES;
     
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320, 44.0f)];
-    headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    headerView.backgroundColor = [UIColor redColor];
-    [headerView addSubview:searchBar];
-    
     searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
     self.searchDisplayController.delegate = self;
     //self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
-    self.tableView.tableHeaderView = headerView;
+    self.tableView.tableHeaderView = searchBar;
     
-    [searchBar sizeToFit];
+    //[searchBar sizeToFit];
     [self setSearchBarBehaviour];
     
-    self.tableView.contentOffset = CGPointMake(0.0f, headerView.bounds.size.height);
+    //self.tableView.contentOffset = CGPointMake(0.0f, searchBar.bounds.size.height);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
     self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -184,7 +179,6 @@
             [weakSelf refreshView];
         }
     }];
-    
     settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSettingsChangedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         weakSelf.needsDataRefresh = YES;
         [weakSelf refreshView];
@@ -193,6 +187,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    UIColor *defaultBarTintColor = kDefaultBarTintColor;
+    UIColor *defaultTintColor = kDefaultTintColor;
+    self.navigationController.navigationBar.barTintColor = defaultBarTintColor;
+    self.navigationController.navigationBar.tintColor = defaultTintColor;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(orientationChanged:)
