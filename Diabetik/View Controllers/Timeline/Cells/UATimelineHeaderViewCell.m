@@ -34,18 +34,6 @@
     {
         self.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
         
-        UIView *statsBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.0f, self.frame.size.width, 31.0f)];
-        statsBackgroundView.backgroundColor = [UIColor whiteColor];
-        [self.contentView addSubview:statsBackgroundView];
-        
-        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.0f, self.frame.size.width, 0.5f)];
-        topBorder.backgroundColor = [UIColor colorWithRed:204.0f/255.0f green:205.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
-        [self.contentView addSubview:topBorder];
-        
-        UIImageView *arrow = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineSummaryBackgroundArrow"]];
-        arrow.frame = CGRectMake(self.frame.size.width/2.0f - arrow.image.size.width/2.0f, 41.5f-arrow.image.size.height, arrow.image.size.width, arrow.image.size.height);
-        [self.contentView addSubview:arrow];
-        
         _dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, 40.0f)];
         _dateLabel.font = [UAFont standardRegularFontWithSize:14.0f];
         _dateLabel.textColor = [UIColor colorWithRed:98.0f/255.0f green:102.0f/255.0f blue:102.0f/255.0f alpha:1.0f];
@@ -53,41 +41,58 @@
         _dateLabel.backgroundColor = [UIColor clearColor];
         [self.contentView addSubview:_dateLabel];
         
-        UIImageView *glucoseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineCardHeaderIconBloodGlucose.png"]];
-        glucoseImageView.frame = CGRectMake(46.0f, 19.0f, glucoseImageView.frame.size.width, glucoseImageView.frame.size.height);
-        [statsBackgroundView addSubview:glucoseImageView];
+        UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.0f, self.frame.size.width, 0.5f)];
+        topBorder.backgroundColor = [UIColor colorWithRed:204.0f/255.0f green:205.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
+        [self.contentView addSubview:topBorder];
         
-        _glucoseLabel = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 66.0f, 100.0f, 16.0f)];
+        UIView *overviewContainer = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.5f, self.frame.size.width, 31.0f)];
+        overviewContainer.backgroundColor = [UIColor whiteColor];
+        [self.contentView addSubview:overviewContainer];
+        
+        UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.5f + overviewContainer.bounds.size.height, self.frame.size.width, 0.5f)];
+        bottomBorder.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
+        [self.contentView addSubview:bottomBorder];
+        
+        UIView *leftSeparator = [[UIView alloc] initWithFrame:CGRectMake(101.5f, 41.5f, 0.5f, overviewContainer.bounds.size.height)];
+        leftSeparator.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
+        [self.contentView addSubview:leftSeparator];
+        
+        UIView *rightSeparator = [[UIView alloc] initWithFrame:CGRectMake(213.0f, 41.5f, 0.5f, overviewContainer.bounds.size.height)];
+        rightSeparator.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
+        [self.contentView addSubview:rightSeparator];
+        
+        UIImageView *glucoseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineSummaryIconBlood"]];
+        glucoseImageView.frame = CGRectMake(23.0f, 10.0f, glucoseImageView.frame.size.width, glucoseImageView.frame.size.height);
+        [overviewContainer addSubview:glucoseImageView];
+        
+        _glucoseLabel = [[UILabel alloc] initWithFrame:CGRectMake(38.0f, 9.0f, 100.0f, 16.0f)];
         _glucoseLabel.backgroundColor = [UIColor clearColor];
-        _glucoseLabel.text = @"0.0 avg";
-        _glucoseLabel.font = [UAFont standardMediumFontWithSize:12.0f];
-        _glucoseLabel.textAlignment = NSTextAlignmentCenter;
-        _glucoseLabel.textColor = [UIColor colorWithRed:148.0f/255.0f green:158.0f/255.0f blue:155.0f/255.0f alpha:1.0f];
-        [self.contentView addSubview:_glucoseLabel];
+        _glucoseLabel.text = [NSString stringWithFormat:@"0 %@", [NSLocalizedString(@"Avg.", @"Abbreviation for average") lowercaseString]];
+        _glucoseLabel.font = [UAFont standardMediumFontWithSize:11.0f];
+        _glucoseLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        [overviewContainer addSubview:_glucoseLabel];
         
-        UIImageView *activityImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineCardHeaderIconSummary.png"]];
-        activityImageView.frame = CGRectMake(111.0f + (50 - activityImageView.frame.size.width/2), 49.0f, activityImageView.frame.size.width, activityImageView.frame.size.height);
-        [self.contentView addSubview:activityImageView];
+        UIImageView *activityImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineSummaryIconActivity"]];
+        activityImageView.frame = CGRectMake(136.0f, 10.0f, activityImageView.frame.size.width, activityImageView.frame.size.height);
+        [overviewContainer addSubview:activityImageView];
         
-        _activityLabel = [[UILabel alloc] initWithFrame:CGRectMake(111.0f, 66.0f, 100.0f, 16.0f)];
+        _activityLabel = [[UILabel alloc] initWithFrame:CGRectMake(151.0f, 9.0f, 100.0f, 16.0f)];
         _activityLabel.backgroundColor = [UIColor clearColor];
         _activityLabel.text = @"00:00";
-        _activityLabel.font = [UAFont standardMediumFontWithSize:12.0f];
-        _activityLabel.textAlignment = NSTextAlignmentCenter;
-        _activityLabel.textColor = [UIColor colorWithRed:148.0f/255.0f green:158.0f/255.0f blue:155.0f/255.0f alpha:1.0f];
-        [self.contentView addSubview:_activityLabel];
+        _activityLabel.font = [UAFont standardMediumFontWithSize:11.0f];
+        _activityLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        [overviewContainer addSubview:_activityLabel];
         
-        UIImageView *mealImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineCardHeaderIconMeals.png"]];
-        mealImageView.frame = CGRectMake(211.0f + (50 - mealImageView.frame.size.width/2), 49.0f, mealImageView.frame.size.width, mealImageView.frame.size.height);
-        [self.contentView addSubview:mealImageView];
+        UIImageView *mealImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineSummaryIconCarbs"]];
+        mealImageView.frame = CGRectMake(239.0f, 10.0f, mealImageView.frame.size.width, mealImageView.frame.size.height);
+        [overviewContainer addSubview:mealImageView];
         
-        _mealLabel = [[UILabel alloc] initWithFrame:CGRectMake(211.0f, 66.0f, 100.0f, 16.0f)];
+        _mealLabel = [[UILabel alloc] initWithFrame:CGRectMake(253.0f, 9.0f, 100.0f, 16.0f)];
         _mealLabel.backgroundColor = [UIColor clearColor];
-        _mealLabel.text = @"0 g";
-        _mealLabel.font = [UAFont standardMediumFontWithSize:12.0f];
-        _mealLabel.textAlignment = NSTextAlignmentCenter;
-        _mealLabel.textColor = [UIColor colorWithRed:148.0f/255.0f green:158.0f/255.0f blue:155.0f/255.0f alpha:1.0f];
-        [self.contentView addSubview:_mealLabel];
+        _mealLabel.text = [NSString stringWithFormat:@"0 %@", [NSLocalizedString(@"Carbs", nil) lowercaseString]];
+        _mealLabel.font = [UAFont standardMediumFontWithSize:11.0f];
+        _mealLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        [overviewContainer addSubview:_mealLabel];
     }
     
     return self;

@@ -35,8 +35,8 @@
         textView.scrollEnabled = NO;
         textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         textView.autocorrectionType = UITextAutocorrectionTypeYes;
-        textView.font = [UAFont standardDemiBoldFontWithSize:16.0f];
-        textView.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
+        textView.font = [UAFont standardMediumFontWithSize:16.0f];
+        textView.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
         textView.text = @"";
         
         self.control = textView;

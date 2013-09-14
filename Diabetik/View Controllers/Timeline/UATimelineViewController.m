@@ -147,6 +147,7 @@
     self.searchDisplayController.delegate = self;
     //self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
     self.tableView.tableHeaderView = searchBar;
+    self.tableView.backgroundColor = self.view.backgroundColor;
     
     //[searchBar sizeToFit];
     [self setSearchBarBehaviour];
@@ -192,6 +193,7 @@
     UIColor *defaultTintColor = kDefaultTintColor;
     self.navigationController.navigationBar.barTintColor = defaultBarTintColor;
     self.navigationController.navigationBar.tintColor = defaultTintColor;
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]};
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(orientationChanged:)
@@ -207,12 +209,6 @@
         [self.view addSubview:noEntriesView];
     }
     
-    // Hide our search bar!
-    if([self.tableView contentOffset].y < self.searchDisplayController.searchBar.frame.size.height)
-    {
-        [self.tableView setContentOffset:CGPointMake(0.0f, self.searchDisplayController.searchBar.frame.size.height) animated:NO];
-    }
-
     [self refreshView];
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -485,11 +481,11 @@
             
             if(![UAHelper isBGLevelSafe:[[reading value] doubleValue]])
             {
-                cell.valueLabel.textColor = [UIColor colorWithRed:254.0f/255.0f green:110.0f/255.0f blue:116.0f/255.0f alpha:1.0f];
+                cell.valueLabel.textColor = [UIColor colorWithRed:254.0f/255.0f green:79.0f/255.0f blue:96.0f/255.0f alpha:1.0f];
             }
             else
             {
-                cell.valueLabel.textColor = [UIColor colorWithRed:77.0f/255.0f green:179.0f/255.0f blue:177.0f/255.0f alpha:1.0f];
+                cell.valueLabel.textColor = [UIColor colorWithRed:24.0f/255.0f green:197.0f/255.0f blue:186.0f/255.0f alpha:1.0f];
             }
         }
         else if([object isKindOfClass:[UAMedicine class]])
@@ -536,9 +532,9 @@
         if([stats count] && indexPath.section <= [stats count]-1)
         {
             NSDictionary *section = [stats objectAtIndex:indexPath.section];
-            cell.glucoseLabel.text =  [NSString stringWithFormat:@"%@ avg", [valueFormatter stringFromNumber:section[@"reading"]]];
+            cell.glucoseLabel.text =  [NSString stringWithFormat:@"%@ %@", [valueFormatter stringFromNumber:section[@"reading"]], [NSLocalizedString(@"Avg.", @"Abbreviation for average") lowercaseString]];
             cell.activityLabel.text = [UAHelper formatMinutes:[[section valueForKey:@"activity"] integerValue]];
-            cell.mealLabel.text = [NSString stringWithFormat:@"%@ g", [valueFormatter stringFromNumber:section[@"meal"]]];
+            cell.mealLabel.text = [NSString stringWithFormat:@"%@ %@", [valueFormatter stringFromNumber:section[@"meal"]], [NSLocalizedString(@"Carbs", nil) lowercaseString]];
         }
     }
 }
@@ -612,7 +608,7 @@
         return height;
     }
     
-    return 47.0f + 40.0f;
+    return 73.0f;
 }
 
 #pragma mark - UITableViewDataSource functions

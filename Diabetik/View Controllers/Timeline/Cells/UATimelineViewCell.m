@@ -30,7 +30,9 @@
 @interface UATimelineViewCell ()
 {
     NSDate *date;
-    BOOL isFooter;
+    UACellPosition cellPosition;
+    
+    UIView *bottomBorder;
 }
 @end
 
@@ -48,46 +50,62 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        isFooter = NO;
-        
         self.backgroundColor = [UIColor whiteColor];
         
-        _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20.0f, 15.0f, 15.0f, 15.0f)];
+        _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 13.0f, 16.0f, 16.0f)];
         _iconImageView.image = [UIImage imageNamed:@"TimelineMealIcon.png"];
         _iconImageView.contentMode = UIViewContentModeCenter;
         [self addSubview:_iconImageView];
         
-        _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(89.0f, 15.0f, 175.0f, 17.0f)];
+        _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(96.0f, 13.0f, 175.0f, 19.0f)];
         _descriptionLabel.text = @"Entry description";
         _descriptionLabel.backgroundColor = [UIColor clearColor];
-        _descriptionLabel.font = [UAFont standardDemiBoldFontWithSize:15.0f];
-        _descriptionLabel.textColor = [UIColor colorWithRed:115.0f/255.0f green:128.0f/255.0f blue:123.0f/255.0f alpha:1.0f];
-        _descriptionLabel.highlightedTextColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
+        _descriptionLabel.font = [UAFont standardMediumFontWithSize:16.0f];
+        _descriptionLabel.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
+        _descriptionLabel.highlightedTextColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
         _descriptionLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self addSubview:_descriptionLabel];
         
-        _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(60.0f, 15.0f, 240.0f, 17.0f)];
+        _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(60.0f, 13.0f, 240.0f, 19.0f)];
         _valueLabel.text = @"0.0";
         _valueLabel.backgroundColor = [UIColor clearColor];
         _valueLabel.textAlignment = NSTextAlignmentRight;
-        _valueLabel.font = [UAFont standardDemiBoldFontWithSize:15.0f];
-        _valueLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
-        _valueLabel.highlightedTextColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
+        _valueLabel.font = [UAFont standardRegularFontWithSize:16.0f];
+        _valueLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        _valueLabel.highlightedTextColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
         _valueLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [self addSubview:_valueLabel];
 
-        _timestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(44.0f, 15.0f, 50.0f, 17.0f)];
+        _timestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(43.0f, 13.0f, 50.0f, 19.0f)];
         _timestampLabel.text = @"00:00";
         _timestampLabel.backgroundColor = [UIColor clearColor];
-        _timestampLabel.font = [UAFont standardMediumFontWithSize:15.0f];
-        _timestampLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
-        _timestampLabel.highlightedTextColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
+        _timestampLabel.font = [UAFont standardRegularFontWithSize:16.0f];
+        _timestampLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        _timestampLabel.highlightedTextColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
         [self addSubview:_timestampLabel];
+        
+        bottomBorder = [[UIView alloc] initWithFrame:CGRectZero];
+        [self addSubview:bottomBorder];
     }
     return self;
 }
 
 #pragma mark - Logic
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    if(cellPosition == UACellBackgroundViewPositionBottom)
+    {
+        bottomBorder.backgroundColor = [UIColor colorWithRed:204.0f/255.0f green:205.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
+        bottomBorder.frame = CGRectMake(0.0f, self.bounds.size.height-0.5f, self.bounds.size.width, 0.5f);
+    }
+    else
+    {
+        bottomBorder.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
+        bottomBorder.frame = CGRectMake(44.0f, self.bounds.size.height-0.5f, self.bounds.size.width, 0.5f);
+    }
+}
 - (void)setDate:(NSDate *)aDate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -110,7 +128,7 @@
         {
             if(!self.notesLabel)
             {
-                self.notesLabel = [[UILabel alloc] initWithFrame:CGRectMake(89.0f, 36.0f, 205.0f, 17.0f)];
+                self.notesLabel = [[UILabel alloc] initWithFrame:CGRectMake(96.0f, 36.0f, 205.0f, 17.0f)];
                 self.notesLabel.text = @"Entry description";
                 self.notesLabel.backgroundColor = [UIColor clearColor];
                 self.notesLabel.font = kNotesFont;
@@ -136,18 +154,20 @@
     }
 }
 
-#pragma mark - Logic
+#pragma mark - Setters
 - (void)setCellStyleWithIndexPath:(NSIndexPath *)indexPath andTotalRows:(NSInteger)totalRows
 {
     UACellPosition position = UACellBackgroundViewPositionMiddle;
-    if(indexPath.row == 1)
-    {
-        position = UACellBackgroundViewPositionTop;
-    }
-    else if(indexPath.row == totalRows-1)
+    if(indexPath.row == totalRows-1)
     {
         position = UACellBackgroundViewPositionBottom;
     }
+    else if(indexPath.row == 1)
+    {
+        position = UACellBackgroundViewPositionTop;
+    }
+    
+    cellPosition = position;
 }
 
 #pragma mark - Helpers

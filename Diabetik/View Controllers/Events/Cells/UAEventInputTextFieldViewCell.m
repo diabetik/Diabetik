@@ -34,8 +34,8 @@
         textField.backgroundColor = [UIColor clearColor];
         textField.adjustsFontSizeToFitWidth = NO;
         textField.keyboardType = UIKeyboardTypeAlphabet;
-        textField.font = [UAFont standardDemiBoldFontWithSize:16.0f];
-        textField.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
+        textField.font = [UAFont standardMediumFontWithSize:16.0f];
+        textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
         textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
         textField.text = @"";

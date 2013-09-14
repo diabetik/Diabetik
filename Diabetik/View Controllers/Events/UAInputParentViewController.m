@@ -156,9 +156,10 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBar.barTintColor = [[self targetViewController] barTintColor];
+    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]};
     
     // Setup our table view
-    self.view.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
+    self.view.backgroundColor = [UIColor whiteColor];
     if(!self.keyboardBackingView)
     {
         self.locationButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero];

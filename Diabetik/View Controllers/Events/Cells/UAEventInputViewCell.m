@@ -35,11 +35,11 @@
         self.backgroundView.backgroundColor = [UIColor clearColor];
         
         _label = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 75.0f, 44.0f)];
-        _label.font = [UAFont standardMediumFontWithSize:16.0f];
+        _label.font = [UAFont standardRegularFontWithSize:16.0f];
         _label.textAlignment = NSTextAlignmentRight;
         _label.backgroundColor = [UIColor clearColor];
         _label.text = @" ";
-        _label.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
+        _label.textColor = [UIColor colorWithRed:110.0f/255.0f green:114.0f/255.0f blue:115.0f/255.0f alpha:1.0f];
         _label.adjustsFontSizeToFitWidth = YES;
         _label.minimumScaleFactor = 0.5f;
         [self.contentView addSubview:_label];
