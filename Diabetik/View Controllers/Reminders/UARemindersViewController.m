@@ -69,9 +69,9 @@
     if(!noRemindersView)
     {
         // No entry label
-        noRemindersView = [[UAAlertMessageView alloc] initWithFrame:self.view.frame
-                                                         andTitle:NSLocalizedString(@"No Reminders", nil)
-                                                       andMessage:NSLocalizedString(@"You currently don't have any reminders setup. To add one, tap the + icon.", nil)];
+        noRemindersView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero
+                                                           andTitle:NSLocalizedString(@"No Reminders", nil)
+                                                         andMessage:NSLocalizedString(@"You currently don't have any reminders setup. To add one, tap the + icon.", nil)];
         [self.view addSubview:noRemindersView];
     }
     
@@ -101,6 +101,12 @@
     [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:reminderUpdateNotifier];
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    noRemindersView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height-self.topLayoutGuide.length);
 }
 
 #pragma mark - UI

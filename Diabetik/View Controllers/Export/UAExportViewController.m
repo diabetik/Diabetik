@@ -99,13 +99,19 @@
         [self showTips];
     }
 }
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    noReportsView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height-self.topLayoutGuide.length);
+}
 - (void)refreshView
 {
     reportData = [self fetchEvents];
     
     if(!noReportsView)
     {
-        noReportsView = [[UAAlertMessageView alloc] initWithFrame:self.view.frame
+        noReportsView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero
                                                          andTitle:NSLocalizedString(@"No Reports", nil)
                                                        andMessage:NSLocalizedString(@"You currently don't have any reports to export.", nil)];
         [self.view addSubview:noReportsView];

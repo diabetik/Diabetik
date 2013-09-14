@@ -203,7 +203,7 @@
     // Setup other table styling
     if(!noEntriesView)
     {
-        noEntriesView = [[UAAlertMessageView alloc] initWithFrame:self.view.frame
+        noEntriesView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero
                                                          andTitle:NSLocalizedString(@"No Entries", @"Title of message shown when the user has yet to add any entries to their journal")
                                                        andMessage:NSLocalizedString(@"You currently don't have any entries in your timeline. To add one, tap the + icon.", nil)];
         [self.view addSubview:noEntriesView];
@@ -221,6 +221,12 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];
     [[NSNotificationCenter defaultCenter] removeObserver:applicationResumeNotifier];
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    noEntriesView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height-self.topLayoutGuide.length);
 }
 
 #pragma mark - Logic

@@ -28,12 +28,11 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
+
         self.title = title;
         self.message = message;
         
-        [self setNeedsLayout];
+        [self setNeedsDisplay];
     }
     return self;
 }
@@ -43,7 +42,7 @@
 {
     [super drawRect:rect];
     
-    CGFloat height = 23.0f + 14.0f + 13.0f;
+    CGFloat height = 18.0f + 30.0f;
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [paragraphStyle setAlignment:NSTextAlignmentCenter];
@@ -52,12 +51,12 @@
                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                            attributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:14.0f]}
                                               context:nil];
-    height += textFrame.size.height + 23.0f;
+    height += textFrame.size.height;
     
-    CGRect f = CGRectMake(25.0f, floorf(self.frame.size.height/2-height/2), floorf(self.frame.size.width-50.0f), height);
-    [self.title drawInRect:CGRectMake(f.origin.x+20.0f, f.origin.y + 23.0f, f.size.width-40.0f, 18.0f) withAttributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:16.0f], NSForegroundColorAttributeName:[UIColor colorWithRed:102.0f/255.0f green:102.0f/255.0f blue:102.0f/255.0f alpha:1.0f], NSParagraphStyleAttributeName:paragraphStyle}];
+    CGRect f = CGRectMake(50.0f, floorf(self.frame.size.height/2-height/2), floorf(self.frame.size.width-100.0f), height);
+    [self.title drawInRect:CGRectMake(f.origin.x, f.origin.y, f.size.width, 18.0f) withAttributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:16.0f], NSForegroundColorAttributeName:[UIColor colorWithRed:154.0f/255.0f green:152.0f/255.0f blue:147.0f/255.0f alpha:1.0f], NSParagraphStyleAttributeName:paragraphStyle}];
 
-    [self.message drawInRect:CGRectMake(f.origin.x+20.0f, f.origin.y + 23.0f + 14.0f + 13.0f, f.size.width-45.0f, textFrame.size.height) withAttributes:@{NSFontAttributeName:[UAFont standardMediumFontWithSize:14.0f], NSForegroundColorAttributeName: [UIColor colorWithRed:163.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f], NSParagraphStyleAttributeName:paragraphStyle}];
+    [self.message drawInRect:CGRectMake(f.origin.x, f.origin.y + 30.0f, f.size.width, textFrame.size.height) withAttributes:@{NSFontAttributeName:[UAFont standardMediumFontWithSize:14.0f], NSForegroundColorAttributeName: [UIColor colorWithRed:154.0f/255.0f green:152.0f/255.0f blue:147.0f/255.0f alpha:1.0f], NSParagraphStyleAttributeName:paragraphStyle}];
 }
 
 @end
