@@ -33,10 +33,8 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 6.0f, frame.size.width, 16.0f)];
         _titleLabel.backgroundColor = [UIColor clearColor];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
-        _titleLabel.font = [UAFont standardBoldFontWithSize:16.0f];
-        _titleLabel.shadowColor = [UIColor colorWithRed:26.0f/255.0f green:148.0f/255.0f blue:111.0f/255.0f alpha:1.0];
+        _titleLabel.font = [UAFont standardDemiBoldFontWithSize:16.0f];
         _titleLabel.textColor = [UIColor whiteColor];
-        _titleLabel.shadowOffset = CGSizeMake(0.0f, -1.0f);
         
         _pageControl = [[UANavPageControl alloc] initWithFrame:CGRectMake(0.0f, 25.0f, frame.size.width, 16.0f)];
             

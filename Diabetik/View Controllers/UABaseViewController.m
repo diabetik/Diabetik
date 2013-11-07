@@ -38,7 +38,7 @@
         isVisible = NO;
         isFirstLoad = YES;
         
-        self.automaticallyAdjustsScrollViewInsets = NO;
+        self.automaticallyAdjustsScrollViewInsets = YES;
         
         __weak typeof(self) weakSelf = self;
         accountSwitchNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsSwitchedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -175,8 +175,6 @@
     self = [super initWithNibName:nil bundle:nil];
     if(self)
     {
-        isVisible = NO;
-        isFirstLoad = YES;
         tableStyle = style;
         
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -213,8 +211,8 @@
     self.tableView.backgroundView = nil;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor colorWithRed:189.0f/255.0f green:189.0f/255.0f blue:189.0f/255.0f alpha:1.0f];
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64.0f, 0.0f, 0.0f, 0.0f);
-    self.tableView.contentInset = UIEdgeInsetsMake(64.0f, 0.0f, 0.0f, 0.0f);
+    self.tableView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
     [baseView addSubview:self.tableView];
     
     self.view = baseView;
@@ -222,6 +220,14 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+
+    //self.tableView.contentOffset = CGPointMake(0.0f, 0.0f);
+    self.tableView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
 }
 
 #pragma mark - Logic
@@ -234,13 +240,15 @@
     NSDictionary *info = [aNotification userInfo];
     CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.navigationController.navigationBar ? 64.0f : 0.0f, 0.0f, keyboardSize.height, 0.0f);
+    UIEdgeInsets contentInsets = self.tableView.contentInset;
+    contentInsets.bottom = keyboardSize.height;
     
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;
     
     CGRect aRect = self.view.frame;
     aRect.size.height -= keyboardSize.height;
+    NSLog(@"Keybord shown");
 }
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
@@ -248,7 +256,8 @@
 }
 - (void)keyboardWasHidden:(NSNotification*)aNotification
 {
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(self.navigationController.navigationBar ? 64.0f : 0.0f, 0.0f, 0.0f, 0.0f);
+    UIEdgeInsets contentInsets = self.tableView.contentInset;
+    contentInsets.bottom = 0.0f;
     
     self.tableView.contentInset = contentInsets;
     self.tableView.scrollIndicatorInsets = contentInsets;

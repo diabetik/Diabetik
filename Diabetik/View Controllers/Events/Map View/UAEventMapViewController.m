@@ -34,11 +34,10 @@
 #pragma mark - Setup
 - (id)initWithLocation:(CLLocation *)theLocation
 {
-    self = [super init];
+    self = [super initWithNibName:nil bundle:nil];
     if(self)
     {
         self.title = NSLocalizedString(@"Event Location", @"Geo-location of event");
-        
         location = theLocation;
         pin = [[UAEventMapPin alloc] init];
     }
@@ -62,6 +61,12 @@
     
     mapView.frame = self.view.frame;
     [self positionPin:location];
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    mapView.frame = self.view.bounds;
 }
 
 #pragma mark - Logic

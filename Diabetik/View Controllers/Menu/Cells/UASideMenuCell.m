@@ -34,9 +34,9 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor colorWithRed:69.0f/255.0f green:69.0f/255.0f blue:69.0f/255.0f alpha:1.0f];
         
-        self.textLabel.textColor = [UIColor colorWithRed:92.0f/255.0f green:102.0f/255.0f blue:99.0f/255.0f alpha:1.0f];
+        self.textLabel.textColor = [UIColor  whiteColor];
         self.textLabel.font = [UAFont standardMediumFontWithSize:16.0f];
         self.textLabel.backgroundColor = [UIColor clearColor];
         
@@ -49,8 +49,8 @@
         selectedBackgroundView.backgroundColor = [UIColor colorWithRed:38.0f/255.0f green:38.0f/255.0f blue:38.0f/255.0f alpha:1.0f];
         self.selectedBackgroundView = selectedBackgroundView;
         
-        self.accessoryIcon = [[UIImageView alloc] initWithFrame:CGRectMake(14.0f, 0.0f, 28.0f, self.bounds.size.height)];
-        self.accessoryIcon.contentMode = UIViewContentModeCenter|UIViewContentModeLeft;
+        self.accessoryIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0f, 0.0f, 28.0f, self.bounds.size.height)];
+        self.accessoryIcon.contentMode = UIViewContentModeCenter;
         [self.contentView addSubview:self.accessoryIcon];
         
         self.rightAccessoryIcon = [[UIImageView alloc] initWithFrame:CGRectMake(246.0f, 0.0f, 10.0f, self.bounds.size.height)];
@@ -67,11 +67,10 @@
         [self.contentView addSubview:topBorder];
          */
         
-        bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(40.0f, self.bounds.size.height-1.0f, self.bounds.size.width, 0.5f)];
-        bottomBorder.backgroundColor = [UIColor colorWithRed:225.0f/255.0f green:225.0f/255.0f blue:225.0f/255.0f alpha:1.0f];
+        bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(40.0f, self.bounds.size.height-0.5f, self.bounds.size.width, 0.5f)];
+        bottomBorder.backgroundColor = [UIColor colorWithRed:38.0f/255.0f green:38.0f/255.0f blue:38.0f/255.0f alpha:1.0f];
         bottomBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
         [self.contentView addSubview:bottomBorder];
-
     }
     return self;
 }

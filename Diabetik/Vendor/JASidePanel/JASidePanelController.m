@@ -1049,4 +1049,8 @@ static char ja_kvoContext;
 {
     [self.centerPanel didRotateFromInterfaceOrientation:fromInterfaceOrientation];
 }
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return [self.centerPanel preferredStatusBarStyle];
+}
 @end

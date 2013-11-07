@@ -155,8 +155,11 @@
 {
     [super viewWillAppear:animated];
     
+    self.navigationController.navigationBar.translucent = NO;
     self.navigationController.navigationBar.barTintColor = [[self targetViewController] barTintColor];
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]};
+    
+    [self setNeedsStatusBarAppearanceUpdate];
     
     // Setup our table view
     self.view.backgroundColor = [UIColor whiteColor];
@@ -242,7 +245,7 @@
         self.scrollView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
         self.scrollView.alwaysBounceHorizontal = YES;
         self.scrollView.directionalLockEnabled = YES;
-        self.scrollView.backgroundColor = [UIColor whiteColor];
+        self.scrollView.backgroundColor = [UIColor greenColor];
         [self.view insertSubview:self.scrollView belowSubview:self.keyboardBackingView];
         
         for(UAInputBaseViewController *vc in self.viewControllers)
@@ -304,7 +307,6 @@
         UIColor *defaultBarTintColor = kDefaultBarTintColor;
         [self.navigationController.navigationBar setBarTintColor:defaultBarTintColor];
     }
-    
 }
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -319,6 +321,13 @@
         }
         self.viewControllers = nil;
     }
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    NSLog(@"Layout!");
+    self.scrollView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.view.bounds.size.height - self.keyboardBackingView.bounds.size.height + kAccessoryViewHeight - self.topLayoutGuide.length);
 }
 
 #pragma mark - Logic
@@ -727,6 +736,8 @@
 - (void)scrollViewWillBeginDragging:(UIScrollView *)aScrollView
 {
     originalContentOffset = aScrollView.contentOffset;
+    
+    addEntryBubbleImageView.frame = CGRectMake(self.view.frame.size.width - addEntryBubbleImageView.frame.size.width, self.scrollView.frame.size.height/2.0f - addEntryBubbleImageView.frame.size.height/2.0f, addEntryBubbleImageView.frame.size.width, addEntryBubbleImageView.frame.size.height);
 }
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView
 {
@@ -910,6 +921,12 @@
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait;
+}
+
+#pragma mark - UIViewController methods
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
 }
 
 @end

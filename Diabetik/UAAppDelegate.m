@@ -101,9 +101,10 @@
     [UALocationController sharedInstance];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.tintColor = kDefaultTintColor;
     
     UAJournalViewController *journalViewController = [[UAJournalViewController alloc] initWithMOC:self.managedObjectContext];
-    UANavigationController *navigationController = [[UANavigationController alloc] initWithRootViewController:journalViewController];
+    UATintNavigationController *navigationController = [[UATintNavigationController alloc] initWithRootViewController:journalViewController];
     
     self.viewController = [[JASidePanelController alloc] init];
     self.viewController.leftPanel = [[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext];
@@ -226,7 +227,6 @@
     UIColor *defaultBarTintColor = kDefaultBarTintColor;
     [[UINavigationBar appearance] setBarTintColor:defaultBarTintColor];
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.0f green:192.0f/255.0f blue:180.0f/255.0f alpha:1.0f]];
-    
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]}];
     
     NSShadow *dropShadow = [[NSShadow alloc] init];

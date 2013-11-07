@@ -26,6 +26,7 @@
 #import "UANavSubtitleHeaderView.h"
 #import "UANavPaginationTitleView.h"
 #import "UANavigationController.h"
+#import "UATintNavigationController.h"
 
 // Views
 #import "UABaseViewController.h"

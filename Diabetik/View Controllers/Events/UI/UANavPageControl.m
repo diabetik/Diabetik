@@ -110,28 +110,28 @@
     NSString *filename = @"";
     if([vc isKindOfClass:[UAMedicineInputViewController class]])
     {
-        filename = @"AddEntryPaginationMedicine";
+        filename = @"NavBarIconMedicine";
     }
     else if([vc isKindOfClass:[UANoteInputViewController class]])
     {
-        filename = @"AddEntryPaginationNote";
+        filename = @"NavBarIconNote";
     }
     else if([vc isKindOfClass:[UAMealInputViewController class]])
     {
-        filename = @"AddEntryPaginationMeal";
+        filename = @"NavBarIconMeal";
     }
     else if([vc isKindOfClass:[UABGInputViewController class]])
     {
-        filename = @"AddEntryPaginationBlood";
+        filename = @"NavBarIconBlood";
     }
     else if([vc isKindOfClass:[UAActivityInputViewController class]])
     {
-        filename = @"AddEntryPaginationActivity";
+        filename = @"NavBarIconActivity";
     }
     
     if(page == self.currentPage)
     {
-        return [filename stringByAppendingString:@"Active.png"];
+        return filename;
     }
     else
     {

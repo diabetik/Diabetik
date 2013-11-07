@@ -62,7 +62,7 @@
         _descriptionLabel.backgroundColor = [UIColor clearColor];
         _descriptionLabel.font = [UAFont standardMediumFontWithSize:16.0f];
         _descriptionLabel.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
-        _descriptionLabel.highlightedTextColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        _descriptionLabel.highlightedTextColor = [UIColor blackColor];
         _descriptionLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self addSubview:_descriptionLabel];
         
@@ -72,7 +72,7 @@
         _valueLabel.textAlignment = NSTextAlignmentRight;
         _valueLabel.font = [UAFont standardRegularFontWithSize:16.0f];
         _valueLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-        _valueLabel.highlightedTextColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        _valueLabel.highlightedTextColor = [UIColor blackColor];
         _valueLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [self addSubview:_valueLabel];
 
@@ -81,7 +81,7 @@
         _timestampLabel.backgroundColor = [UIColor clearColor];
         _timestampLabel.font = [UAFont standardRegularFontWithSize:16.0f];
         _timestampLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-        _timestampLabel.highlightedTextColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        _timestampLabel.highlightedTextColor = [UIColor blackColor];
         [self addSubview:_timestampLabel];
         
         bottomBorder = [[UIView alloc] initWithFrame:CGRectZero];

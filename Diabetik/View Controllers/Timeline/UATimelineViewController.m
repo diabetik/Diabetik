@@ -400,6 +400,7 @@
     [searchBar setImage:[UIImage imageNamed:filter ? @"SearchButtonUncollapse.png" : @"SearchButtonCollapse.png"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
     [searchBar setImage:[UIImage imageNamed:filter ? @"SearchButtonUncollapsePressed.png" : @"SearchButtonCollapsePressed.png"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateHighlighted];
     
+    /*
     // Adjust search bar
     for(UIView *subview in searchBar.subviews)
     {
@@ -410,6 +411,7 @@
             textField.rightViewMode = UITextFieldViewModeAlways;
         }
     }
+     */
 }
 
 #pragma mark - UI

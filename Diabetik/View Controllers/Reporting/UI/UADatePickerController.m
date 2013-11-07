@@ -50,6 +50,7 @@
         [self addSubview:_backingView];
         
         _datePicker = [[UIDatePicker alloc] init];
+        _datePicker.backgroundColor = [UIColor whiteColor];
         [_datePicker setDatePickerMode:UIDatePickerModeDate];
         [_datePicker setDate:date];
         [_datePicker setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];

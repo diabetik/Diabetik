@@ -40,5 +40,15 @@
     
     return NO;
 }
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    NSLog(@"Preferred style");
+    if([self.topViewController respondsToSelector:@selector(preferredStatusBarStyle)])
+    {
+        return [self.topViewController preferredStatusBarStyle];
+    }
+    
+    return UIStatusBarStyleDefault;
+}
 
 @end
