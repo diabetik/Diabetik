@@ -195,7 +195,7 @@
     else if(indexPath.row == 1)
     {
         UITextField *textField = (UITextField *)cell.control;
-        textField.placeholder = NSLocalizedString(@"optional", nil);
+        textField.placeholder = NSLocalizedString(@"grams (optional)", @"Amount of carbs in grams (this field is optional)");
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.delegate = self;
         textField.inputView = nil;

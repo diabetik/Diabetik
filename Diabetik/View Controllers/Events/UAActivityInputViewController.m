@@ -165,7 +165,7 @@
     if(indexPath.row == 0)
     {
         UITextField *textField = (UITextField *)cell.control;
-        textField.placeholder = NSLocalizedString(@"Activity", nil);
+        textField.placeholder = NSLocalizedString(@"Activity", @"Activity (physical exercise)");
         textField.text = name;
         textField.autocorrectionType = UITextAutocorrectionTypeYes;
         textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;

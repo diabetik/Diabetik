@@ -26,7 +26,7 @@
 #pragma mark - Transient properties
 - (NSString *)humanReadableName
 {
-    return NSLocalizedString(@"Meal", nil);
+    return NSLocalizedString(@"Food", nil);
 }
 
 @end

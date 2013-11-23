@@ -105,7 +105,7 @@
     
     UAShortcutButton *todayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonWidth, 119.0f)];
     [todayButton setTitle:[NSLocalizedString(@"Today", nil) uppercaseString] forState:UIControlStateNormal];
-    [todayButton setImage:[UIImage imageNamed:@"JournalShortcut7Days"] forState:UIControlStateNormal];
+    [todayButton setImage:[UIImage imageNamed:@"JournalShortcutToday"] forState:UIControlStateNormal];
     [todayButton setTag:0];
     [todayButton addTarget:self action:@selector(showRelativeTimeline:) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:todayButton];
@@ -119,7 +119,7 @@
     
     UAShortcutButton *fourteenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(buttonWidth*2, 0.0f, buttonWidth, 119.0f)];
     [fourteenDayButton setTitle:[NSLocalizedString(@"Past 14 days", nil) uppercaseString] forState:UIControlStateNormal];
-    [fourteenDayButton setImage:[UIImage imageNamed:@"JournalShortcut7Days"] forState:UIControlStateNormal];
+    [fourteenDayButton setImage:[UIImage imageNamed:@"JournalShortcut14Days"] forState:UIControlStateNormal];
     [fourteenDayButton setTag:14];
     [fourteenDayButton addTarget:self action:@selector(showRelativeTimeline:) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:fourteenDayButton];

@@ -152,7 +152,7 @@
         
         activityDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(72.0f, y + 29.0f, self.bounds.size.width-72.0f, 16.0f)];
         activityDetailLabel.backgroundColor = [UIColor whiteColor];
-        activityDetailLabel.text = [NSLocalizedString(@"Activity", @"Label for total amount of activity (physical exercise)") uppercaseString];
+        activityDetailLabel.text = [NSLocalizedString(@"Activity", @"Activity (physical exercise)") uppercaseString];
         activityDetailLabel.font = [UAFont standardMediumFontWithSize:12.0f];
         activityDetailLabel.textAlignment = NSTextAlignmentLeft;
         activityDetailLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
@@ -180,7 +180,7 @@
         
         mealDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(72.0f, y + 29.0f, self.bounds.size.width-72.0f, 16.0f)];
         mealDetailLabel.backgroundColor = [UIColor whiteColor];
-        mealDetailLabel.text = [NSLocalizedString(@"Grams", @"Label for the amount of grams of carbohydrate eaten") uppercaseString];
+        mealDetailLabel.text = [NSLocalizedString(@"Grams", @"Unit of measurement") uppercaseString];
         mealDetailLabel.font = [UAFont standardMediumFontWithSize:12.0f];
         mealDetailLabel.textAlignment = NSTextAlignmentLeft;
         mealDetailLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];

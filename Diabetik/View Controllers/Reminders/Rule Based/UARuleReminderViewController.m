@@ -360,7 +360,7 @@
         }
         else if(indexPath.row == 2)
         {
-            cell.textLabel.text = NSLocalizedString(@"Meal", nil);
+            cell.textLabel.text = NSLocalizedString(@"Food", nil);
             cell.accessoryType = [triggerClassName isEqualToString:@"UAMeal"] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;            
         }
     }

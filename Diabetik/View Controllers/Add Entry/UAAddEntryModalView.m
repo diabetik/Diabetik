@@ -72,14 +72,14 @@
         UAAddEntryModalButton *mealButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(1.0f, 1.0f + height, width, height)];
         [mealButton setTag:2];
         [mealButton setImage:[UIImage imageNamed:@"AddEntryModalMealIcon.png"] forState:UIControlStateNormal];
-        [mealButton setTitle:NSLocalizedString(@"Meal", @"Meal entry type") forState:UIControlStateNormal];
+        [mealButton setTitle:NSLocalizedString(@"Food", @"Food entry type") forState:UIControlStateNormal];
         [mealButton addTarget:self action:@selector(selectedOption:) forControlEvents:UIControlEventTouchUpInside];
         [container addSubview:mealButton];
         
         UAAddEntryModalButton *activityButton = [[UAAddEntryModalButton alloc] initWithFrame:CGRectMake(2.0f + width, 1.0f + height, width, height)];
         [activityButton setTag:3];
         [activityButton setImage:[UIImage imageNamed:@"AddEntryModalActivityIcon.png"] forState:UIControlStateNormal];
-        [activityButton setTitle:NSLocalizedString(@"Activity", @"Activity (physical exercise) entry type") forState:UIControlStateNormal];
+        [activityButton setTitle:NSLocalizedString(@"Activity", @"Activity (physical exercise)") forState:UIControlStateNormal];
         [activityButton addTarget:self action:@selector(selectedOption:) forControlEvents:UIControlEventTouchUpInside];
         [container addSubview:activityButton];
         
