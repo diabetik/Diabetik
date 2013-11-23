@@ -293,8 +293,11 @@
     float height = 0.0;
     if(indexPath.row == 3)
     {
-        CGSize size = [notes sizeWithFont:[UAFont standardDemiBoldFontWithSize:16.0f] constrainedToSize:CGSizeMake(self.view.frame.size.width-85.0f, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-        height = textViewHeight > 0 ? textViewHeight : size.height + 80.0f;
+        CGRect textFrame = [notes boundingRectWithSize:CGSizeMake(self.view.frame.size.width-85.0f, CGFLOAT_MAX)
+                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                   attributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:16.0f]}
+                                                      context:nil];
+        height = textViewHeight > 0 ? textViewHeight : textFrame.size.height + 80.0f;
     }
     else if(indexPath.row == 4)
     {

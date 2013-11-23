@@ -58,10 +58,13 @@
         bottomGradient.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CreditsGradientBottom.png"]];
         [self addSubview:bottomGradient];
         
-        CGSize creditsSize = [credits sizeWithFont:[UAFont standardRegularFontWithSize:16.0f] constrainedToSize:CGSizeMake(225, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-        scrollView.contentSize = CGSizeMake(225, creditsSize.height);
+        CGRect creditsRect = [credits boundingRectWithSize:CGSizeMake(225, CGFLOAT_MAX)
+                                                   options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                attributes:@{NSFontAttributeName:[UAFont standardRegularFontWithSize:16.0f]}
+                                                   context:nil];
+        scrollView.contentSize = CGSizeMake(225, creditsRect.size.height);
         
-        UILabel *creditsLabel = [[UILabel alloc] initWithFrame:CGRectMake(floorf(self.frame.size.width/2 - 225/2), 0, 225, creditsSize.height)];
+        UILabel *creditsLabel = [[UILabel alloc] initWithFrame:CGRectMake(floorf(self.frame.size.width/2 - 225/2), 0, 225, creditsRect.size.height)];
         creditsLabel.backgroundColor = [UIColor clearColor];
         creditsLabel.textColor = [UIColor colorWithRed:115.0f/255.0f green:128.0f/255.0f blue:123.0f/255.0f alpha:1.0f];
         creditsLabel.numberOfLines = 0;

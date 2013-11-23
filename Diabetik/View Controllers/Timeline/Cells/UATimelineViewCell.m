@@ -141,8 +141,12 @@
                 [self addSubview:self.notesLabel];
             }
             
-            CGSize notesSize = [notes sizeWithFont:kNotesFont constrainedToSize:CGSizeMake(205.0f, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-            self.notesLabel.frame = CGRectMake(self.notesLabel.frame.origin.x, self.notesLabel.frame.origin.y, self.notesLabel.frame.size.width, notesSize.height);
+            CGRect notesFrame = [notes boundingRectWithSize:CGSizeMake(205.0f, CGFLOAT_MAX)
+                                                    options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                 attributes:@{NSFontAttributeName:kNotesFont}
+                                                    context:nil];
+            
+            self.notesLabel.frame = CGRectMake(self.notesLabel.frame.origin.x, self.notesLabel.frame.origin.y, self.notesLabel.frame.size.width, notesFrame.size.height);
             self.notesLabel.text = notes;
         }
         else
@@ -178,8 +182,12 @@
     NSString *notes = [data objectForKey:@"notes"];
     if(notes)
     {
-        CGSize notesSize = [notes sizeWithFont:kNotesFont constrainedToSize:CGSizeMake(205.0f, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-        height += notesSize.height+kNotesBottomVerticalPadding - 8.0f;
+        CGRect notesFrame = [notes boundingRectWithSize:CGSizeMake(205.0f, CGFLOAT_MAX)
+                                                options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                             attributes:@{NSFontAttributeName:kNotesFont}
+                                                context:nil];
+        
+        height += notesFrame.size.height+kNotesBottomVerticalPadding - 8.0f;
     }
     
     return height;

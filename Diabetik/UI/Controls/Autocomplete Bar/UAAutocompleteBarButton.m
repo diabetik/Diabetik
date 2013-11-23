@@ -78,7 +78,7 @@
     [super setTitle:title forState:state];
     
     CGFloat padding = 10.0f;
-    CGSize newSize = [title sizeWithFont:self.titleLabel.font];
+    CGSize newSize = [title sizeWithAttributes:@{NSFontAttributeName: self.titleLabel.font}];
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, newSize.width + (padding*2.0f), self.frame.size.height);
 }
 - (void)updateState

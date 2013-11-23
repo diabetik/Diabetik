@@ -1,6 +1,6 @@
 //
 //  MBProgressHUD.h
-//  Version 0.6
+//  Version 0.8
 //  Created by Matej Bukovinski on 2.4.09.
 //
 
@@ -38,6 +38,8 @@ typedef enum {
 	MBProgressHUDModeIndeterminate,
 	/** Progress is shown using a round, pie-chart like, progress view. */
 	MBProgressHUDModeDeterminate,
+	/** Progress is shown using a horizontal progress bar */
+	MBProgressHUDModeDeterminateHorizontalBar,
 	/** Progress is shown using a ring-shaped progress view. */
 	MBProgressHUDModeAnnularDeterminate,
 	/** Shows a custom view */
@@ -342,6 +344,12 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 @property (assign) float margin;
 
+/**
+ * The corner radius for th HUD
+ * Defaults to 10.0
+ */
+@property (assign) float cornerRadius;
+
 /** 
  * Cover the HUD background view with a radial gradient. 
  */
@@ -386,10 +394,20 @@ typedef void (^MBProgressHUDCompletionBlock)();
  */
 @property (MB_STRONG) UIFont* labelFont;
 
-/** 
- * Font to be used for the details label. Set this property if the default is not adequate. 
+/**
+ * Color to be used for the main label. Set this property if the default is not adequate.
+ */
+@property (MB_STRONG) UIColor* labelColor;
+
+/**
+ * Font to be used for the details label. Set this property if the default is not adequate.
  */
 @property (MB_STRONG) UIFont* detailsLabelFont;
+
+/** 
+ * Color to be used for the details label. Set this property if the default is not adequate.
+ */
+@property (MB_STRONG) UIColor* detailsLabelColor;
 
 /** 
  * The progress of the progress indicator, from 0.0 to 1.0. Defaults to 0.0. 
@@ -447,5 +465,36 @@ typedef void (^MBProgressHUDCompletionBlock)();
  * Display mode - NO = round or YES = annular. Defaults to round.
  */
 @property (nonatomic, assign, getter = isAnnular) BOOL annular;
+
+@end
+
+
+/**
+ * A flat bar progress view. 
+ */
+@interface MBBarProgressView : UIView
+
+/**
+ * Progress (0.0 to 1.0)
+ */
+@property (nonatomic, assign) float progress;
+
+/**
+ * Bar border line color.
+ * Defaults to white [UIColor whiteColor].
+ */
+@property (nonatomic, MB_STRONG) UIColor *lineColor;
+
+/**
+ * Bar background color.
+ * Defaults to clear [UIColor clearColor];
+ */
+@property (nonatomic, MB_STRONG) UIColor *progressRemainingColor;
+
+/**
+ * Bar progress color.
+ * Defaults to white [UIColor whiteColor].
+ */
+@property (nonatomic, MB_STRONG) UIColor *progressColor;
 
 @end

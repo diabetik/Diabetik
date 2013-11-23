@@ -174,11 +174,15 @@
     if (self.text)
     {
         [[UIColor colorWithWhite:1 alpha:0.8] set];
-        CGSize s = [self.text sizeWithFont:self.font];
+        CGSize s = [self.text sizeWithAttributes:@{NSFontAttributeName: self.font}];
         CGFloat yOffset = (roundedRect.size.height - s.height) / 2;
         CGRect textRect = CGRectMake(roundedRect.origin.x, yOffset, roundedRect.size.width, s.height);
         
-        [self.text drawInRect:textRect withFont:self.font lineBreakMode:NSLineBreakByWordWrapping alignment:NSTextAlignmentCenter];
+        NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+        [paragraphStyle setAlignment:NSTextAlignmentCenter];
+        [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+        
+        [self.text drawInRect:textRect withAttributes:@{NSFontAttributeName: self.font, NSParagraphStyleAttributeName: paragraphStyle}];
     }
 }
 

@@ -46,6 +46,7 @@
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [paragraphStyle setAlignment:NSTextAlignmentCenter];
+    [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
     
     CGRect textFrame = [self.message boundingRectWithSize:CGSizeMake(self.frame.size.width-90.0f, CGFLOAT_MAX)
                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)

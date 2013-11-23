@@ -53,10 +53,12 @@
 {
     UIGraphicsBeginPDFPageWithInfo(self.pageFrame, nil);
     
+    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [paragraphStyle setAlignment:NSTextAlignmentCenter];
+    [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
+    
     [[NSString stringWithFormat:@"%d", self.pageCount] drawInRect:CGRectMake(self.pageFrame.origin.x, self.pageFrame.origin.y + self.pageFrame.size.height - 32.0f, self.pageFrame.size.width, 32.0f)
-                                                         withFont:[UAFont standardDemiBoldFontWithSize:10.0f]
-                                                    lineBreakMode:NSLineBreakByClipping
-                                                        alignment:NSTextAlignmentCenter];
+                                                   withAttributes:@{NSFontAttributeName: [UAFont standardDemiBoldFontWithSize:10.0f], NSParagraphStyleAttributeName: paragraphStyle}];
     
     self.pageCount ++;
 }
@@ -156,8 +158,12 @@
         
         for(NSString *data in row)
         {
-            CGSize cellSize = [data sizeWithFont:font constrainedToSize:CGSizeMake(columnSize-kTableCellPadding*2, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-            if(cellSize.height > height) height = cellSize.height+kTableCellPadding*2;
+            CGRect textFrame = [data boundingRectWithSize:CGSizeMake(columnSize-kTableCellPadding*2, CGFLOAT_MAX)
+                                                  options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                               attributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:16.0f]}
+                                                  context:nil];
+            
+            if(textFrame.size.height > height) height = textFrame.size.height+kTableCellPadding*2;
         }
     }
     
@@ -167,10 +173,13 @@
       atPosition:(CGPoint)position
         withFont:(UIFont *)font
 {
-    CGSize textSize = [string sizeWithFont:font constrainedToSize:CGSizeMake(CGRectGetMaxX(self.contentFrame) - position.x, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-    CGRect textFrame = CGRectMake(position.x, position.y, textSize.width, textSize.height);
+    CGRect textFrame = [string boundingRectWithSize:CGSizeMake(CGRectGetMaxX(self.contentFrame) - position.x, CGFLOAT_MAX)
+                                            options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                         attributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:16.0f]}
+                                            context:nil];
+    CGRect renderFrame = CGRectMake(position.x, position.y, textFrame.size.width, textFrame.size.height);
     
-    [self drawText:string inRect:textFrame withFont:font alignment:NSTextAlignmentLeft lineBreakMode:NSLineBreakByWordWrapping];
+    [self drawText:string inRect:renderFrame withFont:font alignment:NSTextAlignmentLeft lineBreakMode:NSLineBreakByWordWrapping];
 }
 - (void)drawText:(NSString *)string
           inRect:(CGRect)rect
@@ -191,7 +200,11 @@
     }
     
     // Render our text
-    [string drawInRect:rect withFont:font lineBreakMode:lineBreakMode alignment:alignment];
+    NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [paragraphStyle setAlignment:alignment];
+    [paragraphStyle setLineBreakMode:lineBreakMode];
+    
+    [string drawInRect:rect withAttributes:@{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle}];
     
     self.currentY += rect.size.height;
 }

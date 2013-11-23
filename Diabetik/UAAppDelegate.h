@@ -29,7 +29,7 @@
 #import "UAAccount.h"
 #import "UASyncController.h"
 
-@interface UAAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate>
+@interface UAAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate, BITHockeyManagerDelegate>
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) JASidePanelController *viewController;
