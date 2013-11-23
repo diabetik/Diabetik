@@ -70,7 +70,7 @@
     [super viewWillAppear:animated];
     
     // Add our search bar
-    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 38)];
+    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 44.0f)];
     searchBar.delegate = self;
     [self.view addSubview:searchBar];
     [searchBar sizeToFit];
@@ -87,6 +87,12 @@
     {
         [self positionPin:location];
     }
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    searchBar.frame = CGRectMake(0, self.topLayoutGuide.length, self.view.frame.size.width, 44.0f);
 }
 
 #pragma mark - Logic

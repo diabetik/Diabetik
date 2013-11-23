@@ -104,7 +104,7 @@
     self.window.tintColor = kDefaultTintColor;
     
     UAJournalViewController *journalViewController = [[UAJournalViewController alloc] initWithMOC:self.managedObjectContext];
-    UATintNavigationController *navigationController = [[UATintNavigationController alloc] initWithRootViewController:journalViewController];
+    UANavigationController *navigationController = [[UANavigationController alloc] initWithRootViewController:journalViewController];
     
     self.viewController = [[JASidePanelController alloc] init];
     self.viewController.leftPanel = [[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext];
@@ -229,18 +229,13 @@
     [[UINavigationBar appearance] setTintColor:[UIColor colorWithRed:0.0f green:192.0f/255.0f blue:180.0f/255.0f alpha:1.0f]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]}];
     
-    NSShadow *dropShadow = [[NSShadow alloc] init];
-    dropShadow.shadowColor = [UIColor colorWithRed:0.0f/255.0f green:0.0f/255.0f blue:0.0f/255.0f alpha:0.15f];
-    dropShadow.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    
     // UISwitch
     [[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:22.0f/255.0f green:211.0f/255.0f blue:160.0f/255.0f alpha:1.0f]];
     
     // UISegmentedControl
     attributes = @{
                    NSFontAttributeName: [UAFont standardDemiBoldFontWithSize:13.0f],
-                   NSShadowAttributeName: dropShadow,
-                   NSForegroundColorAttributeName: [UIColor whiteColor]
+                   NSForegroundColorAttributeName: [UIColor colorWithRed:22.0f/255.0f green:211.0f/255.0f blue:160.0f/255.0f alpha:1.0f]
                    };
     [[UISegmentedControl appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
     [[UISegmentedControl appearance] setTintColor:[UIColor colorWithRed:22.0f/255.0f green:211.0f/255.0f blue:160.0f/255.0f alpha:1.0f]];

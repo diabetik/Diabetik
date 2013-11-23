@@ -380,6 +380,16 @@ static char ja_kvoContext;
         self.leftPanel.view.frame = frame;
     }
 }
+- (void)_layoutStatusBar {
+    
+    NSString *key = [[NSString alloc] initWithData:[NSData dataWithBytes:(unsigned char []){0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x42, 0x61, 0x72} length:9] encoding:NSASCIIStringEncoding];
+    id object = [UIApplication sharedApplication];
+    UIView *statusBar;
+    if ([object respondsToSelector:NSSelectorFromString(key)]) {
+        statusBar = [object valueForKey:key];
+    }
+    statusBar.transform = CGAffineTransformMakeTranslation(self.centerPanelContainer.frame.origin.x, self.centerPanelContainer.frame.origin.y);
+}
 
 #pragma mark - Panels
 
@@ -521,6 +531,7 @@ static char ja_kvoContext;
         CGRect frame = _centerPanelRestingFrame;
         frame.origin.x += [self _correctMovement:translate.x];
         self.centerPanelContainer.frame = frame;
+        
         //self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
         
         // if center panel has focus, make sure correct side panel is revealed
@@ -542,6 +553,8 @@ static char ja_kvoContext;
         } else if (sender.state == UIGestureRecognizerStateCancelled) {
             [self _undoPan];
         }
+        
+        [self _layoutStatusBar];
     }
 }
 
@@ -580,6 +593,8 @@ static char ja_kvoContext;
             [self _showRightPanel:YES bounce:NO];
 		}
     }
+    
+    [self _layoutStatusBar];
 }
 
 #pragma mark - Tap Gesture
@@ -738,6 +753,8 @@ static char ja_kvoContext;
         if (self.style == JASidePanelMultipleActive) {
             [self _layoutSideContainers:NO duration:0.0f];
         }
+        
+        [self _layoutStatusBar];
     } completion:^(BOOL finished) {
         if (shouldBounce) {
             // make sure correct panel is displayed under the bounce
@@ -755,10 +772,14 @@ static char ja_kvoContext;
                 self.centerPanelContainer.frame = bounceFrame;
                 //self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
                 
+                [self _layoutStatusBar];
+                
             } completion:^(__unused BOOL finished2) {
                 [UIView animateWithDuration:self.bounceDuration delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{
                     self.centerPanelContainer.frame = _centerPanelRestingFrame;
                     //self.leftPanelContainer.frame = CGRectMake(self.centerPanelContainer.frame.origin.x - self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.frame.origin.y, self.leftPanelContainer.bounds.size.width, self.leftPanelContainer.bounds.size.height);
+                    
+                    [self _layoutStatusBar];
                     
                 } completion:completion];
             }];

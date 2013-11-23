@@ -32,6 +32,7 @@
         self.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
         self.titleLabel.font = [UAFont standardMediumFontWithSize:15.0f];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        
         [self setTitleColor:[UIColor colorWithRed:143.0f/255.0f green:153.0f/255.0f blue:150.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor colorWithRed:119.0f/255.0f green:127.0f/255.0f blue:125.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         self.imageView.contentMode = UIViewContentModeCenter;
@@ -46,7 +47,7 @@
     [super layoutSubviews];
     
     self.imageView.frame = CGRectMake(floorf(self.bounds.size.width/2-self.imageView.image.size.width/2), floorf(self.bounds.size.height/2 - self.imageView.image.size.height/2)-kLabelSpacing, self.imageView.image.size.width, self.imageView.image.size.height);
-    self.titleLabel.frame = CGRectMake(0.0f, floorf(self.frame.size.height/2 + kLabelSpacing), self.frame.size.width, 16.0f);
+    self.titleLabel.frame = CGRectMake(0.0f, floorf(self.frame.size.height/2 + kLabelSpacing), self.frame.size.width, 18.0f);
 }
 - (void)setHighlighted:(BOOL)highlighted
 {

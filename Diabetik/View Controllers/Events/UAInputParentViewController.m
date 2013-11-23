@@ -245,7 +245,7 @@
         self.scrollView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
         self.scrollView.alwaysBounceHorizontal = YES;
         self.scrollView.directionalLockEnabled = YES;
-        self.scrollView.backgroundColor = [UIColor greenColor];
+        self.scrollView.backgroundColor = [UIColor clearColor];
         [self.view insertSubview:self.scrollView belowSubview:self.keyboardBackingView];
         
         for(UAInputBaseViewController *vc in self.viewControllers)
@@ -282,9 +282,13 @@
     {
         __weak typeof(self) weakSelf = self;
         UAUIHintView *hintView = [[UAUIHintView alloc] initWithFrame:self.scrollView.frame text:NSLocalizedString(@"Drag left to add additional entries", nil) presentationCallback:^{
-            weakSelf.scrollView.alpha = 0.25f;
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            strongSelf.scrollView.alpha = 0.25f;
         } dismissCallback:^{
-            weakSelf.scrollView.alpha = 1.0f;
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            strongSelf.scrollView.alpha = 1.0f;
         }];
         [self.view addSubview:hintView];
         [hintView present];
@@ -326,7 +330,6 @@
 {
     [super viewWillLayoutSubviews];
     
-    NSLog(@"Layout!");
     self.scrollView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.view.bounds.size.height - self.keyboardBackingView.bounds.size.height + kAccessoryViewHeight - self.topLayoutGuide.length);
 }
 

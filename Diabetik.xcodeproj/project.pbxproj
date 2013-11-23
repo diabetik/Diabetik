@@ -195,7 +195,6 @@
 		53D5C4FF184132B50000CB86 /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4DC184132B50000CB86 /* AppiraterLocalizable.strings */; };
 		53D5C500184132B50000CB86 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4DE184132B50000CB86 /* CHANGELOG.md */; };
 		53D5C501184132B50000CB86 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4F3184132B50000CB86 /* README.md */; };
-		53E33B2B1806F7DB002BF649 /* UATintNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E33B2A1806F7DB002BF649 /* UATintNavigationController.m */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
 		53FF442617B54E450047B6A5 /* UASideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FF442517B54E450047B6A5 /* UASideMenuController.m */; };
@@ -581,8 +580,6 @@
 		53D5C4FA184132B50000CB86 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/AppiraterLocalizable.strings; sourceTree = "<group>"; };
 		53D5C4FB184132B50000CB86 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/AppiraterLocalizable.strings"; sourceTree = "<group>"; };
 		53D5C4FC184132B50000CB86 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AppiraterLocalizable.strings"; sourceTree = "<group>"; };
-		53E33B291806F7DB002BF649 /* UATintNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATintNavigationController.h; sourceTree = "<group>"; };
-		53E33B2A1806F7DB002BF649 /* UATintNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATintNavigationController.m; sourceTree = "<group>"; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		53FF442417B54E450047B6A5 /* UASideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuController.h; sourceTree = "<group>"; };
@@ -1316,8 +1313,6 @@
 			children = (
 				533F354D17736C5500AD89E2 /* UANavigationController.h */,
 				533F354E17736C5500AD89E2 /* UANavigationController.m */,
-				53E33B291806F7DB002BF649 /* UATintNavigationController.h */,
-				53E33B2A1806F7DB002BF649 /* UATintNavigationController.m */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -1711,7 +1706,6 @@
 				533F34D11773266600AD89E2 /* UABloodGlucoseChartViewController.m in Sources */,
 				533F34D21773266600AD89E2 /* UACarbsChartViewController.m in Sources */,
 				533F34D31773266600AD89E2 /* UAChartViewController.m in Sources */,
-				53E33B2B1806F7DB002BF649 /* UATintNavigationController.m in Sources */,
 				533F34D41773266600AD89E2 /* UALeastSquareFitCalculator.m in Sources */,
 				533F34D51773266600AD89E2 /* UAScatterChartViewController.m in Sources */,
 				533F34D61773266600AD89E2 /* UAReportPreviewView.m in Sources */,

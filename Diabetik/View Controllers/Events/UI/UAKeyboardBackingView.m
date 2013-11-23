@@ -44,18 +44,20 @@
         self.backgroundColor = [UIColor clearColor];//[UIColor colorWithRed:36.0f/255.0f green:36.0f/255.0f blue:36.0f/255.0f alpha:1.0f];
         self.buttons = theButtons;
         
+        /*
         UIImageView *accessoryBackgroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AccessoryViewBackground.png"]];
         accessoryBackgroundImageView.backgroundColor = [UIColor clearColor];
         accessoryBackgroundImageView.frame = CGRectMake(0.0f, 0.0f, self.frame.size.width, kAccessoryViewHeight);
         accessoryBackgroundImageView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
         [self addSubview:accessoryBackgroundImageView];
+        */
         
         _controlContainer = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width - 77.0f, 0.0f, 72.0f, kAccessoryViewHeight)];
         _controlContainer.backgroundColor = [UIColor clearColor];
         [self addSubview:_controlContainer];
         
         UIView *backingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kAccessoryViewHeight, frame.size.width, frame.size.height)];
-        backingView.backgroundColor = [UIColor colorWithRed:36.0f/255.0f green:36.0f/255.0f blue:36.0f/255.0f alpha:1.0f];
+        backingView.backgroundColor = [UIColor whiteColor];
         [self addSubview:backingView];
         
         _keyboardToggleButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 8.0f, 69.0f, 33.0f)];
@@ -84,9 +86,11 @@
             [self addSubview:button];
         }
         
+        /*
         UIImageView *shadowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AddEntryKeyboardShadow.png"]];
         shadowImageView.frame = CGRectMake(0.0f, _controlContainer.frame.size.height, self.frame.size.width, 4.0f);
         [self addSubview:shadowImageView];
+        */
         
         [self setNeedsLayout];
     }

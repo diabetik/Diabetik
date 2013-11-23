@@ -30,7 +30,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
+        self.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
         self.titleLabel.font = [UAFont standardDemiBoldFontWithSize:13.0f];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -64,11 +64,11 @@
     
     if(highlighted)
     {
-        self.backgroundColor = [UIColor colorWithRed:36.0f/255.0f green:36.0f/255.0f blue:36.0f/255.0f alpha:1.0f];
+        self.backgroundColor = [UIColor whiteColor];
     }
     else
     {
-        self.backgroundColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
+        self.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
     }
 }
 - (void)setEnabled:(BOOL)enabled

@@ -113,21 +113,11 @@
 }
 - (BOOL)isPresentedModally
 {
-    BOOL isModal = ((self.presentedViewController && self.presentedViewController == self) ||
+    BOOL isModal = ((self.presentingViewController && self.presentingViewController.presentedViewController == self) ||
                     //or if I have a navigation controller, check if its parent modal view controller is self navigation controller
-                    ( self.navigationController && self.navigationController.presentedViewController && self.navigationController.presentedViewController == self.navigationController) ||
+                    (self.navigationController && self.navigationController.presentingViewController && self.navigationController.presentingViewController.presentedViewController) ||
                     //or if the parent of my UITabBarController is also a UITabBarController class, then there is no way to do that, except by using a modal presentation
                     [[[self tabBarController] parentViewController] isKindOfClass:[UITabBarController class]]);
-    
-    if (!isModal && [self respondsToSelector:@selector(presentingViewController)]) {
-        
-        isModal = ((self.presentedViewController && self.presentedViewController == self) ||
-                   //or if I have a navigation controller, check if its parent modal view controller is self navigation controller
-                   (self.navigationController && self.navigationController.presentedViewController && self.navigationController.presentedViewController == self.navigationController) ||
-                   //or if the parent of my UITabBarController is also a UITabBarController class, then there is no way to do that, except by using a modal presentation
-                   [[[self tabBarController] presentingViewController] isKindOfClass:[UITabBarController class]]);
-        
-    }
     
     return isModal;
 }

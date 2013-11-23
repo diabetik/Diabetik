@@ -30,7 +30,7 @@
     if (self)
     {
         UANotesTextView *textView = [[UANotesTextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.contentView.frame.size.width, self.contentView.frame.size.height)];
-        textView.backgroundColor = [UIColor clearColor];
+        textView.backgroundColor = [UIColor redColor];
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         textView.scrollEnabled = NO;
         textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;

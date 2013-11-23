@@ -296,7 +296,7 @@
 {
     if(section == 0)
     {
-        return 65.0f;
+        return 45.0f;
     }
     return 32.0f;
 }

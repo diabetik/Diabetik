@@ -275,7 +275,7 @@
     }
     
     // Update values
-    textViewHeight = textView.intrinsicContentSize.height;
+    textViewHeight = textView.contentSize.height;
     notes = textView.text;
     
     // Finally, update our tableview
