@@ -109,7 +109,7 @@
             if(indexPath.row == 0)
             {
                 cell.textLabel.text = NSLocalizedString(@"Unlink Dropbox account", nil);
-                cell.detailTextLabel.text = [[account info] email];
+                cell.detailTextLabel.text = [[account info] displayName];
             }
         }
     }

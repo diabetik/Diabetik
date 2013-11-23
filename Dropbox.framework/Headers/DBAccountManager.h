@@ -4,9 +4,6 @@
 
 @class DBAccount;
 
-/** A generic block type used for observing changes throughout the Sync API */
-typedef void (^DBObserver)();
-
 /** An observer for the <linkedAccount> property */
 typedef void (^DBAccountManagerObserver)(DBAccount *account);
 
@@ -20,8 +17,7 @@ typedef void (^DBAccountManagerObserver)(DBAccount *account);
 /** @name Creating an account manager */
 
 /** Create a new account manager with your app's app key and secret. You can register your app or
- find your key at the [apps](https://www.dropbox.com/developers/apps) page. Note that right now only
- apps with the App Folder permission can use the Sync API. */
+ find your key at the [apps](https://www.dropbox.com/developers/apps) page. */
 - (id)initWithAppKey:(NSString *)key secret:(NSString *)secret;
 
 /** A convenient place to store your app's account manager. */
@@ -39,9 +35,9 @@ typedef void (^DBAccountManagerObserver)(DBAccount *account);
  */
 - (void)linkFromController:(UIViewController *)rootController;
 
-/** You must call this method in your app delegate's 
+/** You must call this method in your app delegate's
  `-application:openURL:sourceApplication:annotation:` method in order to complete the link process.
- 
+
  @returns The [account](DBAccount) object if the link was successful, or `nil` if the user
  cancelled.
  */
@@ -50,21 +46,30 @@ typedef void (^DBAccountManagerObserver)(DBAccount *account);
 
 /** @name Getting the current state */
 
-/** The currently linked account, or `nil` if there are no accounts currently linked. */
+/** The currently linked account, or `nil` if there are no accounts currently linked.
+
+ If your app needs to link multiple accounts at the same time, you should always use the
+ <linkedAccounts> property. */
 @property (nonatomic, readonly) DBAccount *linkedAccount;
+
+/** All currently linked accounts, or `nil` if there are no accounts currently linked.
+
+ The accounts are ordered from the least recently to the most recently linked. */
+@property (nonatomic, readonly) NSArray *linkedAccounts;
 
 
 /** @name Watching for changes */
 
 /** Add `block` as an observer to get called whenever a new account is linked or an existing
- account is unlinked.
+ account is unlinked. The observer will be called regardless of whether the account was
+ unlinked using `-[DBAccount unlink]` or by the user on the Dropbox website.
 
  @param observer this is only used as a handle to unregister blocks with the <removeObserver:> method.
  */
 - (void)addObserver:(id)observer block:(DBAccountManagerObserver)block;
 
 /** Use this method to remove all blocks associated with `observer`.
- 
+
  @param observer the same value you provided to the <addObserver:block:> method.
  */
 - (void)removeObserver:(id)observer;

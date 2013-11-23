@@ -1,15 +1,16 @@
 /* Copyright (c) 2012 Dropbox, Inc. All rights reserved. */
 
+/** Possible values for [DBFileStatus state]. */
 typedef enum {
-	DBFileStateDownloading,
-	DBFileStateIdle,
-	DBFileStateUploading,
+    DBFileStateDownloading,
+    DBFileStateIdle,
+    DBFileStateUploading,
 } DBFileState;
 
 
-/** The file status object exposes information about the file's current sync status, including
- whether it's cached, if it's uploading or downloading, and if it's uploading or downloading the
- progress of that transfer */
+/** The file status object exposes information about the file's current sync status,
+ including whether it's cached, if it's uploading or downloading, and the progress
+ of an upload or download. */
 
 @interface DBFileStatus : NSObject
 

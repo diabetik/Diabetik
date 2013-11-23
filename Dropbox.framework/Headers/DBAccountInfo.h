@@ -4,10 +4,15 @@
 /** Information about a user's account. */
 @interface DBAccountInfo : NSObject
 
-/** The user's name. */
+/** The recommended string to display to identify an account.
+
+ This is "userName" if `orgName` is `nil`, otherwise it's "userName (orgName)". */
 @property (nonatomic, readonly) NSString *displayName;
 
-/** The user's email address, if available. */
-@property (nonatomic, readonly) NSString *email;
+/** The user's name. */
+@property (nonatomic, readonly) NSString *userName;
+
+/** The user's organization's name if available, or `nil` otherwise. */
+@property (nonatomic, readonly) NSString *orgName;
 
 @end

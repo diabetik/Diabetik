@@ -14,16 +14,12 @@
 		532BF5FD17C401260073359B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 532BF5FC17C401260073359B /* Default-568h@2x.png */; };
 		532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EA4177D7DD1000D793F /* CoreText.framework */; };
 		532D0EA8177D7F64000D793F /* HockeyApp-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EA7177D7F64000D793F /* HockeyApp-License.txt */; };
-		532D0EBF177D8156000D793F /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EBB177D8156000D793F /* HockeySDK.framework */; };
-		532D0EC0177D8156000D793F /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EBD177D8156000D793F /* HockeySDK.xcconfig */; };
-		532D0EC1177D8156000D793F /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EBE177D8156000D793F /* HockeySDKResources.bundle */; };
 		532D0EE5177D83C6000D793F /* Appirater.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D0EC5177D83C6000D793F /* Appirater.m */; };
 		532D0EE6177D83C6000D793F /* Appirater.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EC6177D83C6000D793F /* Appirater.podspec */; };
 		532D0EE7177D83C6000D793F /* AppiraterLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EC8177D83C6000D793F /* AppiraterLocalizable.strings */; };
 		53327C46170DDED3004FA6D2 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53327C43170DDEC9004FA6D2 /* libOAuth2Client.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		53350EC917B6A86300223662 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53350EC817B6A86300223662 /* Media.xcassets */; };
 		53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */; };
-		533F07411708B70500B7BF55 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07401708B70500B7BF55 /* Dropbox.framework */; };
 		533F07431708B71700B7BF55 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07421708B71700B7BF55 /* CFNetwork.framework */; };
 		533F07451708B72300B7BF55 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07441708B72300B7BF55 /* SystemConfiguration.framework */; };
 		533F32E91773266600AD89E2 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F302A1773266500AD89E2 /* NSDate+Extension.m */; };
@@ -144,10 +140,6 @@
 		533F34E21773266600AD89E2 /* UATimelineTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32E41773266600AD89E2 /* UATimelineTableHeaderView.m */; };
 		533F34E31773266600AD89E2 /* UATimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32E61773266600AD89E2 /* UATimelineViewController.m */; };
 		533F34E41773266600AD89E2 /* UABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32E81773266600AD89E2 /* UABaseViewController.m */; };
-		533F350917732C8700AD89E2 /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 533F350517732C8700AD89E2 /* Nunito-Bold.ttf */; };
-		533F350A17732C8700AD89E2 /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 533F350617732C8700AD89E2 /* Nunito-Light.ttf */; };
-		533F350B17732C8700AD89E2 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 533F350717732C8700AD89E2 /* Nunito-Regular.ttf */; };
-		533F350C17732C8700AD89E2 /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F350817732C8700AD89E2 /* ShinobiCharts.framework */; };
 		533F352317736C0600AD89E2 /* UAAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351217736C0600AD89E2 /* UAAccountController.m */; };
 		533F352417736C0600AD89E2 /* UABackupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351417736C0600AD89E2 /* UABackupController.m */; };
 		533F352517736C0600AD89E2 /* UAEventController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351617736C0600AD89E2 /* UAEventController.m */; };
@@ -192,6 +184,15 @@
 		539E1CCF17B7FEA10059ED17 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E1CCE17B7FEA10059ED17 /* UIImage+ImageEffects.m */; };
 		539E1CD117B7FEDD0059ED17 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539E1CD017B7FEDD0059ED17 /* Accelerate.framework */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
+		53D5C4C2184129840000CB86 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C1184129840000CB86 /* Dropbox.framework */; };
+		53D5C4C8184129EB0000CB86 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C4184129EB0000CB86 /* HockeySDK.framework */; };
+		53D5C4C9184129EB0000CB86 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4C6184129EB0000CB86 /* HockeySDK.xcconfig */; };
+		53D5C4CA184129EB0000CB86 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4C7184129EB0000CB86 /* HockeySDKResources.bundle */; };
+		53D5C4D1184129FC0000CB86 /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4CD184129FC0000CB86 /* Nunito-Bold.ttf */; };
+		53D5C4D2184129FC0000CB86 /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4CE184129FC0000CB86 /* Nunito-Light.ttf */; };
+		53D5C4D3184129FC0000CB86 /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4CF184129FC0000CB86 /* Nunito-Regular.ttf */; };
+		53D5C4D4184129FC0000CB86 /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4D0184129FC0000CB86 /* ShinobiCharts.framework */; };
+		53D5C4D618412A720000CB86 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4D518412A720000CB86 /* libc++.dylib */; };
 		53E33B2B1806F7DB002BF649 /* UATintNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E33B2A1806F7DB002BF649 /* UATintNavigationController.m */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
@@ -224,9 +225,6 @@
 		532BF5FC17C401260073359B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		532D0EA4177D7DD1000D793F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		532D0EA7177D7F64000D793F /* HockeyApp-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "HockeyApp-License.txt"; sourceTree = "<group>"; };
-		532D0EBB177D8156000D793F /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
-		532D0EBD177D8156000D793F /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
-		532D0EBE177D8156000D793F /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		532D0EC4177D83C6000D793F /* Appirater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Appirater.h; sourceTree = "<group>"; };
 		532D0EC5177D83C6000D793F /* Appirater.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Appirater.m; sourceTree = "<group>"; };
 		532D0EC6177D83C6000D793F /* Appirater.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Appirater.podspec; sourceTree = "<group>"; };
@@ -260,7 +258,6 @@
 		53327C3B170DDEC8004FA6D2 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = "OAuth2Client-master/OAuth2Client.xcodeproj"; sourceTree = "<group>"; };
 		53350EC817B6A86300223662 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		533F07401708B70500B7BF55 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
 		533F07421708B71700B7BF55 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		533F07441708B72300B7BF55 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		533F30291773266500AD89E2 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
@@ -486,10 +483,6 @@
 		533F32E61773266600AD89E2 /* UATimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATimelineViewController.m; sourceTree = "<group>"; };
 		533F32E71773266600AD89E2 /* UABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UABaseViewController.h; sourceTree = "<group>"; };
 		533F32E81773266600AD89E2 /* UABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UABaseViewController.m; sourceTree = "<group>"; };
-		533F350517732C8700AD89E2 /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Bold.ttf"; sourceTree = "<group>"; };
-		533F350617732C8700AD89E2 /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Light.ttf"; sourceTree = "<group>"; };
-		533F350717732C8700AD89E2 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
-		533F350817732C8700AD89E2 /* ShinobiCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiCharts.framework; sourceTree = "<group>"; };
 		533F350F17736A9D00AD89E2 /* UACredentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UACredentials.h; sourceTree = "<group>"; };
 		533F351117736C0600AD89E2 /* UAAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAccountController.h; sourceTree = "<group>"; };
 		533F351217736C0600AD89E2 /* UAAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAccountController.m; sourceTree = "<group>"; };
@@ -571,6 +564,15 @@
 		539E1CD017B7FEDD0059ED17 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		53AE668A178727D800DE66D9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		53B576751709DF02007322EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		53D5C4C1184129840000CB86 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
+		53D5C4C4184129EB0000CB86 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
+		53D5C4C6184129EB0000CB86 /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
+		53D5C4C7184129EB0000CB86 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
+		53D5C4CD184129FC0000CB86 /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Bold.ttf"; sourceTree = "<group>"; };
+		53D5C4CE184129FC0000CB86 /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Light.ttf"; sourceTree = "<group>"; };
+		53D5C4CF184129FC0000CB86 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		53D5C4D0184129FC0000CB86 /* ShinobiCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiCharts.framework; sourceTree = "<group>"; };
+		53D5C4D518412A720000CB86 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		53E33B291806F7DB002BF649 /* UATintNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATintNavigationController.h; sourceTree = "<group>"; };
 		53E33B2A1806F7DB002BF649 /* UATintNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATintNavigationController.m; sourceTree = "<group>"; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -585,16 +587,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53D5C4D618412A720000CB86 /* libc++.dylib in Frameworks */,
 				539E1CD117B7FEDD0059ED17 /* Accelerate.framework in Frameworks */,
 				5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */,
 				533F07431708B71700B7BF55 /* CFNetwork.framework in Frameworks */,
 				532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */,
+				53D5C4D4184129FC0000CB86 /* ShinobiCharts.framework in Frameworks */,
 				5324D3B3175102730003F257 /* AudioToolbox.framework in Frameworks */,
 				53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */,
 				53B576761709DF02007322EF /* MessageUI.framework in Frameworks */,
 				533F07451708B72300B7BF55 /* SystemConfiguration.framework in Frameworks */,
 				538FF35316FB115E002B4FC9 /* Accounts.framework in Frameworks */,
 				538FF35116FB1152002B4FC9 /* Social.framework in Frameworks */,
+				53D5C4C2184129840000CB86 /* Dropbox.framework in Frameworks */,
 				538DBA7C166F830300F0709F /* CoreGraphics.framework in Frameworks */,
 				53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */,
 				53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */,
@@ -604,11 +609,9 @@
 				530603A4167FCFFA00EFBE8B /* CoreLocation.framework in Frameworks */,
 				538DBA78166F830300F0709F /* UIKit.framework in Frameworks */,
 				538DBA7A166F830300F0709F /* Foundation.framework in Frameworks */,
+				53D5C4C8184129EB0000CB86 /* HockeySDK.framework in Frameworks */,
 				538DBA7E166F830300F0709F /* CoreData.framework in Frameworks */,
-				533F07411708B70500B7BF55 /* Dropbox.framework in Frameworks */,
 				53327C46170DDED3004FA6D2 /* libOAuth2Client.a in Frameworks */,
-				533F350C17732C8700AD89E2 /* ShinobiCharts.framework in Frameworks */,
-				532D0EBF177D8156000D793F /* HockeySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,24 +624,6 @@
 				532D0EA7177D7F64000D793F /* HockeyApp-License.txt */,
 			);
 			path = HockeyApp;
-			sourceTree = "<group>";
-		};
-		532D0EBA177D8156000D793F /* HockeySDK.embeddedframework */ = {
-			isa = PBXGroup;
-			children = (
-				532D0EBB177D8156000D793F /* HockeySDK.framework */,
-				532D0EBC177D8156000D793F /* Resources */,
-			);
-			path = HockeySDK.embeddedframework;
-			sourceTree = "<group>";
-		};
-		532D0EBC177D8156000D793F /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				532D0EBD177D8156000D793F /* HockeySDK.xcconfig */,
-				532D0EBE177D8156000D793F /* HockeySDKResources.bundle */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		532D0EC2177D83C6000D793F /* Appirater */ = {
@@ -1226,25 +1211,6 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		533F350317732C8700AD89E2 /* ShinobiCharts.embeddedframework */ = {
-			isa = PBXGroup;
-			children = (
-				533F350417732C8700AD89E2 /* Resources */,
-				533F350817732C8700AD89E2 /* ShinobiCharts.framework */,
-			);
-			path = ShinobiCharts.embeddedframework;
-			sourceTree = "<group>";
-		};
-		533F350417732C8700AD89E2 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				533F350517732C8700AD89E2 /* Nunito-Bold.ttf */,
-				533F350617732C8700AD89E2 /* Nunito-Light.ttf */,
-				533F350717732C8700AD89E2 /* Nunito-Regular.ttf */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		533F351017736C0600AD89E2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1435,17 +1401,18 @@
 		538DBA76166F830300F0709F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53D5C4D518412A720000CB86 /* libc++.dylib */,
+				53D5C4CB184129FC0000CB86 /* ShinobiCharts.embeddedframework */,
+				53D5C4C3184129EB0000CB86 /* HockeySDK.embeddedframework */,
+				53D5C4C1184129840000CB86 /* Dropbox.framework */,
 				539E1CD017B7FEDD0059ED17 /* Accelerate.framework */,
 				5354083817B7B90A008C64A4 /* StoreKit.framework */,
-				532D0EBA177D8156000D793F /* HockeySDK.embeddedframework */,
-				533F350317732C8700AD89E2 /* ShinobiCharts.embeddedframework */,
 				532D0EA4177D7DD1000D793F /* CoreText.framework */,
 				5324D3B2175102730003F257 /* AudioToolbox.framework */,
 				53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */,
 				53B576751709DF02007322EF /* MessageUI.framework */,
 				533F07441708B72300B7BF55 /* SystemConfiguration.framework */,
 				533F07421708B71700B7BF55 /* CFNetwork.framework */,
-				533F07401708B70500B7BF55 /* Dropbox.framework */,
 				538FF35216FB115E002B4FC9 /* Accounts.framework */,
 				538FF35016FB1152002B4FC9 /* Social.framework */,
 				53E59BFC16E91A85001B5ECD /* Security.framework */,
@@ -1461,6 +1428,43 @@
 				HYXIFWTDXJPPRRMDCEPMDTJH /* SparkInspector.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		53D5C4C3184129EB0000CB86 /* HockeySDK.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				53D5C4C4184129EB0000CB86 /* HockeySDK.framework */,
+				53D5C4C5184129EB0000CB86 /* Resources */,
+			);
+			path = HockeySDK.embeddedframework;
+			sourceTree = "<group>";
+		};
+		53D5C4C5184129EB0000CB86 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				53D5C4C6184129EB0000CB86 /* HockeySDK.xcconfig */,
+				53D5C4C7184129EB0000CB86 /* HockeySDKResources.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		53D5C4CB184129FC0000CB86 /* ShinobiCharts.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				53D5C4CC184129FC0000CB86 /* Resources */,
+				53D5C4D0184129FC0000CB86 /* ShinobiCharts.framework */,
+			);
+			path = ShinobiCharts.embeddedframework;
+			sourceTree = "<group>";
+		};
+		53D5C4CC184129FC0000CB86 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				53D5C4CD184129FC0000CB86 /* Nunito-Bold.ttf */,
+				53D5C4CE184129FC0000CB86 /* Nunito-Light.ttf */,
+				53D5C4CF184129FC0000CB86 /* Nunito-Regular.ttf */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1570,9 +1574,12 @@
 				533F33001773266600AD89E2 /* Localizable.strings in Resources */,
 				533F33041773266600AD89E2 /* OpenSans-Bold.ttf in Resources */,
 				533F33051773266600AD89E2 /* OpenSans-BoldItalic.ttf in Resources */,
+				53D5C4CA184129EB0000CB86 /* HockeySDKResources.bundle in Resources */,
 				533F33061773266600AD89E2 /* OpenSans-ExtraBold.ttf in Resources */,
 				533F33071773266600AD89E2 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 				533F33081773266600AD89E2 /* OpenSans-Italic.ttf in Resources */,
+				53D5C4D3184129FC0000CB86 /* Nunito-Regular.ttf in Resources */,
+				53D5C4C9184129EB0000CB86 /* HockeySDK.xcconfig in Resources */,
 				533F33091773266600AD89E2 /* OpenSans-Light.ttf in Resources */,
 				533F330A1773266600AD89E2 /* OpenSans-LightItalic.ttf in Resources */,
 				533F330B1773266600AD89E2 /* OpenSans-Regular.ttf in Resources */,
@@ -1589,13 +1596,10 @@
 				533F349B1773266600AD89E2 /* AppSoundEngine-License.txt in Resources */,
 				533F349E1773266600AD89E2 /* JASidePanel-License.txt in Resources */,
 				533F34A11773266600AD89E2 /* MBProgressHUD-License.txt in Resources */,
+				53D5C4D1184129FC0000CB86 /* Nunito-Bold.ttf in Resources */,
 				533F34C71773266600AD89E2 /* UALocationReminderMapView.xib in Resources */,
-				533F350917732C8700AD89E2 /* Nunito-Bold.ttf in Resources */,
-				533F350A17732C8700AD89E2 /* Nunito-Light.ttf in Resources */,
-				533F350B17732C8700AD89E2 /* Nunito-Regular.ttf in Resources */,
+				53D5C4D2184129FC0000CB86 /* Nunito-Light.ttf in Resources */,
 				532D0EA8177D7F64000D793F /* HockeyApp-License.txt in Resources */,
-				532D0EC0177D8156000D793F /* HockeySDK.xcconfig in Resources */,
-				532D0EC1177D8156000D793F /* HockeySDKResources.bundle in Resources */,
 				532D0EE6177D83C6000D793F /* Appirater.podspec in Resources */,
 				532D0EE7177D83C6000D793F /* AppiraterLocalizable.strings in Resources */,
 			);
@@ -1848,9 +1852,12 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/ShinobiCharts.embeddedframework\"",
-					"\"$(SRCROOT)/HockeySDK.embeddedframework\"",
-					"\"$(SRCROOT)\"",
+					"\\\\\\\"$(SRCROOT)/ShinobiCharts.embeddedframework\\\\\\\"",
+					"\\\\\\\"$(SRCROOT)/HockeySDK.embeddedframework\\\\\\\"",
+					"$(SRCROOT)",
+					/Users/nialgiacomelli/Git/Diabetik,
+					/Users/nialgiacomelli/Git/Diabetik/HockeySDK.embeddedframework,
+					/Users/nialgiacomelli/Git/Diabetik/ShinobiCharts.embeddedframework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
@@ -1955,9 +1962,12 @@
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/ShinobiCharts.embeddedframework\"",
-					"\"$(SRCROOT)/HockeySDK.embeddedframework\"",
-					"\"$(SRCROOT)\"",
+					"\\\\\\\"$(SRCROOT)/ShinobiCharts.embeddedframework\\\\\\\"",
+					"\\\\\\\"$(SRCROOT)/HockeySDK.embeddedframework\\\\\\\"",
+					"$(SRCROOT)",
+					/Users/nialgiacomelli/Git/Diabetik,
+					/Users/nialgiacomelli/Git/Diabetik/HockeySDK.embeddedframework,
+					/Users/nialgiacomelli/Git/Diabetik/ShinobiCharts.embeddedframework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
@@ -1993,9 +2003,12 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/ShinobiCharts.embeddedframework\"",
-					"\"$(SRCROOT)/HockeySDK.embeddedframework\"",
-					"\"$(SRCROOT)\"",
+					"\\\\\\\"$(SRCROOT)/ShinobiCharts.embeddedframework\\\\\\\"",
+					"\\\\\\\"$(SRCROOT)/HockeySDK.embeddedframework\\\\\\\"",
+					"$(SRCROOT)",
+					/Users/nialgiacomelli/Git/Diabetik,
+					/Users/nialgiacomelli/Git/Diabetik/HockeySDK.embeddedframework,
+					/Users/nialgiacomelli/Git/Diabetik/ShinobiCharts.embeddedframework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
