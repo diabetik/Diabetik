@@ -42,7 +42,6 @@
 }
 - (UIStatusBarStyle)preferredStatusBarStyle
 {
-    NSLog(@"Preferred style");
     if([self.topViewController respondsToSelector:@selector(preferredStatusBarStyle)])
     {
         return [self.topViewController preferredStatusBarStyle];

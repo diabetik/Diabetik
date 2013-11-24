@@ -238,7 +238,6 @@
     
     CGRect aRect = self.view.frame;
     aRect.size.height -= keyboardSize.height;
-    NSLog(@"Keybord shown");
 }
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
