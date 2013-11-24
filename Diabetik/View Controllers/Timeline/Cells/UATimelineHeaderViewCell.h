@@ -19,12 +19,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UATimelineStatView.h"
 
 @interface UATimelineHeaderViewCell : UITableViewCell
 @property (nonatomic, retain) UILabel *dateLabel;
-@property (nonatomic, retain) UILabel *glucoseLabel;
-@property (nonatomic, retain) UILabel *activityLabel;
-@property (nonatomic, retain) UILabel *mealLabel;
+
+@property (nonatomic, retain) UATimelineStatView *glucoseStatView;
+@property (nonatomic, retain) UATimelineStatView *activityStatView;
+@property (nonatomic, retain) UATimelineStatView *mealStatView;
 
 // Logic
 - (void)setDate:(NSString *)text;

@@ -199,6 +199,7 @@
 		53F78ED818422B5B006736F5 /* TGRImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F78ED218422B5B006736F5 /* TGRImageViewController.xib */; };
 		53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED418422B5B006736F5 /* TGRImageZoomAnimationController.m */; };
 		53F78EDA18422B5B006736F5 /* UIImage+AspectFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED618422B5B006736F5 /* UIImage+AspectFit.m */; };
+		53F78EE018425634006736F5 /* UATimelineStatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78EDF18425634006736F5 /* UATimelineStatView.m */; };
 		53FF442617B54E450047B6A5 /* UASideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FF442517B54E450047B6A5 /* UASideMenuController.m */; };
 /* End PBXBuildFile section */
 
@@ -587,6 +588,8 @@
 		53F78ED418422B5B006736F5 /* TGRImageZoomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGRImageZoomAnimationController.m; sourceTree = "<group>"; };
 		53F78ED518422B5B006736F5 /* UIImage+AspectFit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AspectFit.h"; sourceTree = "<group>"; };
 		53F78ED618422B5B006736F5 /* UIImage+AspectFit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AspectFit.m"; sourceTree = "<group>"; };
+		53F78EDE18425634006736F5 /* UATimelineStatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATimelineStatView.h; sourceTree = "<group>"; };
+		53F78EDF18425634006736F5 /* UATimelineStatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATimelineStatView.m; sourceTree = "<group>"; };
 		53FF442417B54E450047B6A5 /* UASideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuController.h; sourceTree = "<group>"; };
 		53FF442517B54E450047B6A5 /* UASideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuController.m; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
@@ -1192,6 +1195,8 @@
 			children = (
 				533F32DF1773266600AD89E2 /* UATimelineHeaderViewCell.h */,
 				533F32E01773266600AD89E2 /* UATimelineHeaderViewCell.m */,
+				53F78EDE18425634006736F5 /* UATimelineStatView.h */,
+				53F78EDF18425634006736F5 /* UATimelineStatView.m */,
 				533F32E11773266600AD89E2 /* UATimelineViewCell.h */,
 				533F32E21773266600AD89E2 /* UATimelineViewCell.m */,
 			);
@@ -1764,6 +1769,7 @@
 				533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */,
 				533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */,
 				536E965A177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */,
+				53F78EE018425634006736F5 /* UATimelineStatView.m in Sources */,
 				536E965B177FA7D900140DF0 /* UAInsulinCalculatorViewController.m in Sources */,
 				535918A717809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel in Sources */,
 			);

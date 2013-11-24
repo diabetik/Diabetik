@@ -22,9 +22,9 @@
 
 @implementation UATimelineHeaderViewCell
 @synthesize dateLabel = _dateLabel;
-@synthesize glucoseLabel = _glucoseLabel;
-@synthesize activityLabel = _activityLabel;
-@synthesize mealLabel = _mealLabel;
+@synthesize glucoseStatView = _glucoseStatView;
+@synthesize activityStatView = _activityStatView;
+@synthesize mealStatView = _mealStatView;
 
 #pragma mark - Setup
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -53,46 +53,28 @@
         bottomBorder.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:bottomBorder];
         
-        UIView *leftSeparator = [[UIView alloc] initWithFrame:CGRectMake(101.5f, 41.5f, 0.5f, overviewContainer.bounds.size.height)];
+        UIView *leftSeparator = [[UIView alloc] initWithFrame:CGRectMake(106.0f, 41.5f, 0.5f, overviewContainer.bounds.size.height)];
         leftSeparator.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:leftSeparator];
         
-        UIView *rightSeparator = [[UIView alloc] initWithFrame:CGRectMake(213.0f, 41.5f, 0.5f, overviewContainer.bounds.size.height)];
+        UIView *rightSeparator = [[UIView alloc] initWithFrame:CGRectMake(212.0f, 41.5f, 0.5f, overviewContainer.bounds.size.height)];
         rightSeparator.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
         [self.contentView addSubview:rightSeparator];
         
-        UIImageView *glucoseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineSummaryIconBlood"]];
-        glucoseImageView.frame = CGRectMake(23.0f, 10.0f, glucoseImageView.frame.size.width, glucoseImageView.frame.size.height);
-        [overviewContainer addSubview:glucoseImageView];
+        _glucoseStatView = [[UATimelineStatView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 105.0f, overviewContainer.bounds.size.height)];
+        [_glucoseStatView setText:[NSString stringWithFormat:@"0 %@", [NSLocalizedString(@"Avg.", @"Abbreviation for average") lowercaseString]]];
+        [_glucoseStatView setImage:[UIImage imageNamed:@"TimelineSummaryIconBlood"]];
+        [overviewContainer addSubview:_glucoseStatView];
         
-        _glucoseLabel = [[UILabel alloc] initWithFrame:CGRectMake(38.0f, 9.0f, 100.0f, 16.0f)];
-        _glucoseLabel.backgroundColor = [UIColor clearColor];
-        _glucoseLabel.text = [NSString stringWithFormat:@"0 %@", [NSLocalizedString(@"Avg.", @"Abbreviation for average") lowercaseString]];
-        _glucoseLabel.font = [UAFont standardMediumFontWithSize:11.0f];
-        _glucoseLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-        [overviewContainer addSubview:_glucoseLabel];
-        
-        UIImageView *activityImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineSummaryIconActivity"]];
-        activityImageView.frame = CGRectMake(136.0f, 10.0f, activityImageView.frame.size.width, activityImageView.frame.size.height);
-        [overviewContainer addSubview:activityImageView];
-        
-        _activityLabel = [[UILabel alloc] initWithFrame:CGRectMake(151.0f, 9.0f, 100.0f, 16.0f)];
-        _activityLabel.backgroundColor = [UIColor clearColor];
-        _activityLabel.text = @"00:00";
-        _activityLabel.font = [UAFont standardMediumFontWithSize:11.0f];
-        _activityLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-        [overviewContainer addSubview:_activityLabel];
-        
-        UIImageView *mealImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"TimelineSummaryIconCarbs"]];
-        mealImageView.frame = CGRectMake(239.0f, 10.0f, mealImageView.frame.size.width, mealImageView.frame.size.height);
-        [overviewContainer addSubview:mealImageView];
-        
-        _mealLabel = [[UILabel alloc] initWithFrame:CGRectMake(253.0f, 9.0f, 100.0f, 16.0f)];
-        _mealLabel.backgroundColor = [UIColor clearColor];
-        _mealLabel.text = [NSString stringWithFormat:@"0 %@", [NSLocalizedString(@"Carbs", nil) lowercaseString]];
-        _mealLabel.font = [UAFont standardMediumFontWithSize:11.0f];
-        _mealLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-        [overviewContainer addSubview:_mealLabel];
+        _activityStatView = [[UATimelineStatView alloc] initWithFrame:CGRectMake(107.0f, 0.0f, 105.0f, overviewContainer.bounds.size.height)];
+        [_activityStatView setText:@"00:00"];
+        [_activityStatView setImage:[UIImage imageNamed:@"TimelineSummaryIconActivity"]];
+        [overviewContainer addSubview:_activityStatView];
+   
+        _mealStatView = [[UATimelineStatView alloc] initWithFrame:CGRectMake(213.0f, 0.0f, 105.0f, overviewContainer.bounds.size.height)];
+        [_mealStatView setText:[NSString stringWithFormat:@"0 %@", [NSLocalizedString(@"Carbs", nil) lowercaseString]]];
+        [_mealStatView setImage:[UIImage imageNamed:@"TimelineSummaryIconCarbs"]];
+        [overviewContainer addSubview:_mealStatView];
     }
     
     return self;

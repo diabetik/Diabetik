@@ -536,9 +536,9 @@
         if([stats count] && indexPath.section <= [stats count]-1)
         {
             NSDictionary *section = [stats objectAtIndex:indexPath.section];
-            cell.glucoseLabel.text =  [NSString stringWithFormat:@"%@ %@", [valueFormatter stringFromNumber:section[@"reading"]], [NSLocalizedString(@"Avg.", @"Abbreviation for average") lowercaseString]];
-            cell.activityLabel.text = [UAHelper formatMinutes:[[section valueForKey:@"activity"] integerValue]];
-            cell.mealLabel.text = [NSString stringWithFormat:@"%@ %@", [valueFormatter stringFromNumber:section[@"meal"]], [NSLocalizedString(@"Carbs", nil) lowercaseString]];
+            [cell.glucoseStatView setText:[NSString stringWithFormat:@"%@ %@", [valueFormatter stringFromNumber:section[@"reading"]], [NSLocalizedString(@"Avg.", @"Abbreviation for average") lowercaseString]]];
+            [cell.activityStatView setText:[UAHelper formatMinutes:[[section valueForKey:@"activity"] integerValue]]];
+            [cell.mealStatView setText:[NSString stringWithFormat:@"%@ %@", [valueFormatter stringFromNumber:section[@"meal"]], [NSLocalizedString(@"Carbs", nil) lowercaseString]]];
         }
     }
 }
