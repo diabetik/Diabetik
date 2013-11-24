@@ -24,6 +24,7 @@
 
 @implementation UAKeyboardBackingViewButton
 @synthesize activityIndicatorView = _activityIndicatorView;
+@synthesize fullsizeImageView = _fullsizeImageView;
 
 #pragma mark - Setup
 - (id)initWithFrame:(CGRect)frame
@@ -44,6 +45,11 @@
         _activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:_activityIndicatorView];
         
+        _fullsizeImageView = [[UIImageView alloc] initWithFrame:frame];
+        _fullsizeImageView.contentMode = UIViewContentModeScaleAspectFill;
+        _fullsizeImageView.clipsToBounds = YES;
+        [self addSubview:_fullsizeImageView];
+        
         self.imageView.contentMode = UIViewContentModeCenter;
         self.adjustsImageWhenHighlighted = NO;
     }
@@ -54,6 +60,8 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
+    _fullsizeImageView.frame = self.bounds;
     
     self.imageView.frame = CGRectMake(floorf(self.frame.size.width/2-self.imageView.image.size.width/2), floorf(self.frame.size.height/2 - (self.imageView.image.size.height)), self.imageView.image.size.width, self.imageView.image.size.height);
     self.titleLabel.frame = CGRectMake(0.0f, floorf(self.frame.size.height/2 + kLabelSpacing), self.frame.size.width, 16.0f);

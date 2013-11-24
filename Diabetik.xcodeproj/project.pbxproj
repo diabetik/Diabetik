@@ -82,8 +82,6 @@
 		533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32611773266600AD89E2 /* UAEventInputTextFieldViewCell.m */; };
 		533F34AB1773266600AD89E2 /* UAEventInputTextViewViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32631773266600AD89E2 /* UAEventInputTextViewViewCell.m */; };
 		533F34AC1773266600AD89E2 /* UAEventInputViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32651773266600AD89E2 /* UAEventInputViewCell.m */; };
-		533F34AD1773266600AD89E2 /* UAImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32681773266600AD89E2 /* UAImageScrollView.m */; };
-		533F34AE1773266600AD89E2 /* UAImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F326A1773266600AD89E2 /* UAImageViewController.m */; };
 		533F34AF1773266600AD89E2 /* UAEventMapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F326D1773266600AD89E2 /* UAEventMapPin.m */; };
 		533F34B01773266600AD89E2 /* UAEventMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F326F1773266600AD89E2 /* UAEventMapViewController.m */; };
 		533F34B11773266600AD89E2 /* UAActivityInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32711773266600AD89E2 /* UAActivityInputViewController.m */; };
@@ -197,6 +195,10 @@
 		53D5C501184132B50000CB86 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4F3184132B50000CB86 /* README.md */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
+		53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED118422B5B006736F5 /* TGRImageViewController.m */; };
+		53F78ED818422B5B006736F5 /* TGRImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F78ED218422B5B006736F5 /* TGRImageViewController.xib */; };
+		53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED418422B5B006736F5 /* TGRImageZoomAnimationController.m */; };
+		53F78EDA18422B5B006736F5 /* UIImage+AspectFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED618422B5B006736F5 /* UIImage+AspectFit.m */; };
 		53FF442617B54E450047B6A5 /* UASideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FF442517B54E450047B6A5 /* UASideMenuController.m */; };
 /* End PBXBuildFile section */
 
@@ -345,10 +347,6 @@
 		533F32631773266600AD89E2 /* UAEventInputTextViewViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputTextViewViewCell.m; sourceTree = "<group>"; };
 		533F32641773266600AD89E2 /* UAEventInputViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputViewCell.h; sourceTree = "<group>"; };
 		533F32651773266600AD89E2 /* UAEventInputViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputViewCell.m; sourceTree = "<group>"; };
-		533F32671773266600AD89E2 /* UAImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAImageScrollView.h; sourceTree = "<group>"; };
-		533F32681773266600AD89E2 /* UAImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAImageScrollView.m; sourceTree = "<group>"; };
-		533F32691773266600AD89E2 /* UAImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAImageViewController.h; sourceTree = "<group>"; };
-		533F326A1773266600AD89E2 /* UAImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAImageViewController.m; sourceTree = "<group>"; };
 		533F326C1773266600AD89E2 /* UAEventMapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventMapPin.h; sourceTree = "<group>"; };
 		533F326D1773266600AD89E2 /* UAEventMapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventMapPin.m; sourceTree = "<group>"; };
 		533F326E1773266600AD89E2 /* UAEventMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventMapViewController.h; sourceTree = "<group>"; };
@@ -582,6 +580,13 @@
 		53D5C4FC184132B50000CB86 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AppiraterLocalizable.strings"; sourceTree = "<group>"; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		53F78ED018422B5B006736F5 /* TGRImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGRImageViewController.h; sourceTree = "<group>"; };
+		53F78ED118422B5B006736F5 /* TGRImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGRImageViewController.m; sourceTree = "<group>"; };
+		53F78ED218422B5B006736F5 /* TGRImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TGRImageViewController.xib; sourceTree = "<group>"; };
+		53F78ED318422B5B006736F5 /* TGRImageZoomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGRImageZoomAnimationController.h; sourceTree = "<group>"; };
+		53F78ED418422B5B006736F5 /* TGRImageZoomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGRImageZoomAnimationController.m; sourceTree = "<group>"; };
+		53F78ED518422B5B006736F5 /* UIImage+AspectFit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+AspectFit.h"; sourceTree = "<group>"; };
+		53F78ED618422B5B006736F5 /* UIImage+AspectFit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AspectFit.m"; sourceTree = "<group>"; };
 		53FF442417B54E450047B6A5 /* UASideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuController.h; sourceTree = "<group>"; };
 		53FF442517B54E450047B6A5 /* UASideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuController.m; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
@@ -762,6 +767,7 @@
 		533F32211773266600AD89E2 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				53F78ECF18422B5B006736F5 /* Vertigo */,
 				53D5C4D7184132B50000CB86 /* Appirater */,
 				532D0EA6177D7F64000D793F /* HockeyApp */,
 				533F32221773266600AD89E2 /* AFNetworking */,
@@ -927,7 +933,6 @@
 			children = (
 				533F327E1773266600AD89E2 /* UI */,
 				533F325F1773266600AD89E2 /* Cells */,
-				533F32661773266600AD89E2 /* Image View */,
 				533F326B1773266600AD89E2 /* Map View */,
 				533F32701773266600AD89E2 /* UAActivityInputViewController.h */,
 				533F32711773266600AD89E2 /* UAActivityInputViewController.m */,
@@ -958,17 +963,6 @@
 				533F32651773266600AD89E2 /* UAEventInputViewCell.m */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		533F32661773266600AD89E2 /* Image View */ = {
-			isa = PBXGroup;
-			children = (
-				533F32671773266600AD89E2 /* UAImageScrollView.h */,
-				533F32681773266600AD89E2 /* UAImageScrollView.m */,
-				533F32691773266600AD89E2 /* UAImageViewController.h */,
-				533F326A1773266600AD89E2 /* UAImageViewController.m */,
-			);
-			path = "Image View";
 			sourceTree = "<group>";
 		};
 		533F326B1773266600AD89E2 /* Map View */ = {
@@ -1472,6 +1466,20 @@
 			path = Appirater;
 			sourceTree = "<group>";
 		};
+		53F78ECF18422B5B006736F5 /* Vertigo */ = {
+			isa = PBXGroup;
+			children = (
+				53F78ED018422B5B006736F5 /* TGRImageViewController.h */,
+				53F78ED118422B5B006736F5 /* TGRImageViewController.m */,
+				53F78ED218422B5B006736F5 /* TGRImageViewController.xib */,
+				53F78ED318422B5B006736F5 /* TGRImageZoomAnimationController.h */,
+				53F78ED418422B5B006736F5 /* TGRImageZoomAnimationController.m */,
+				53F78ED518422B5B006736F5 /* UIImage+AspectFit.h */,
+				53F78ED618422B5B006736F5 /* UIImage+AspectFit.m */,
+			);
+			path = Vertigo;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1598,6 +1606,7 @@
 				533F330D1773266600AD89E2 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				53350EC917B6A86300223662 /* Media.xcassets in Resources */,
 				533F34761773266600AD89E2 /* notification.caf in Resources */,
+				53F78ED818422B5B006736F5 /* TGRImageViewController.xib in Resources */,
 				532BF5FD17C401260073359B /* Default-568h@2x.png in Resources */,
 				533F34771773266600AD89E2 /* pop-view.caf in Resources */,
 				53D5C500184132B50000CB86 /* CHANGELOG.md in Resources */,
@@ -1623,10 +1632,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */,
 				533F32E91773266600AD89E2 /* NSDate+Extension.m in Sources */,
 				533F32EA1773266600AD89E2 /* NSString+Extension.m in Sources */,
 				533F32F41773266600AD89E2 /* UAAccount.m in Sources */,
 				533F32F51773266600AD89E2 /* UAActivity.m in Sources */,
+				53F78EDA18422B5B006736F5 /* UIImage+AspectFit.m in Sources */,
 				533F32F61773266600AD89E2 /* UAEvent.m in Sources */,
 				533F32F71773266600AD89E2 /* UAManagedObject.m in Sources */,
 				533F32F81773266600AD89E2 /* UAMeal.m in Sources */,
@@ -1667,11 +1678,10 @@
 				533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */,
 				533F34AB1773266600AD89E2 /* UAEventInputTextViewViewCell.m in Sources */,
 				533F34AC1773266600AD89E2 /* UAEventInputViewCell.m in Sources */,
-				533F34AD1773266600AD89E2 /* UAImageScrollView.m in Sources */,
-				533F34AE1773266600AD89E2 /* UAImageViewController.m in Sources */,
 				533F34AF1773266600AD89E2 /* UAEventMapPin.m in Sources */,
 				533F34B01773266600AD89E2 /* UAEventMapViewController.m in Sources */,
 				533F34B11773266600AD89E2 /* UAActivityInputViewController.m in Sources */,
+				53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */,
 				533F34B21773266600AD89E2 /* UABGInputViewController.m in Sources */,
 				53FF442617B54E450047B6A5 /* UASideMenuController.m in Sources */,
 				533F34B31773266600AD89E2 /* UAInputBaseViewController.m in Sources */,

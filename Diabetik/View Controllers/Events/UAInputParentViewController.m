@@ -22,7 +22,6 @@
 #import "UAKeyboardController.h"
 #import "UAInputParentViewController.h"
 #import "UAEventMapViewController.h"
-#import "UAImageViewController.h"
 #import "UAReminderController.h"
 
 #import "UAMedicineInputViewController.h"
@@ -682,11 +681,16 @@
     {
         [self.photoButton setTitle:NSLocalizedString(@"View Photo", nil) forState:UIControlStateNormal];
         [self.keyboardBackingView.photoIndicatorImageView setImage:[UIImage imageNamed:@"KeyboardDismissPhotoActive.png"]];
+        
+        UIImage *photo = [[UAMediaController sharedInstance] imageWithFilename:targetVC.currentPhotoPath];
+        self.photoButton.fullsizeImageView.image = photo;
     }
     else
     {
         [self.photoButton setTitle:NSLocalizedString(@"Add Photo", nil) forState:UIControlStateNormal];
         [self.keyboardBackingView.photoIndicatorImageView setImage:[UIImage imageNamed:@"KeyboardDismissPhotoInactive.png"]];
+        
+        self.photoButton.fullsizeImageView.image = nil;
     }
 }
 - (void)updateNavigationBar

@@ -18,6 +18,9 @@
 //  limitations under the License.
 //
 
+#import "TGRImageViewController.h"
+#import "TGRImageZoomAnimationController.h"
+
 #import "UABaseViewController.h"
 #import "UAInputParentViewController.h"
 #import "UAUI.h"
@@ -39,7 +42,7 @@
 #define kGeoTagAlertViewTag 1
 
 @class UAInputParentViewController;
-@interface UAInputBaseViewController : UABaseTableViewController <CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UAAutocompleteBarDelegate>
+@interface UAInputBaseViewController : UABaseTableViewController <CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UAAutocompleteBarDelegate, UIViewControllerTransitioningDelegate>
 {
 @protected
     UAInputParentViewController *parentVC;

@@ -22,5 +22,6 @@
 
 @interface UAKeyboardBackingViewButton : UIButton
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
+@property (nonatomic, retain) UIImageView *fullsizeImageView;
 
 @end

@@ -21,7 +21,6 @@
 #import "UAInputBaseViewController.h"
 #import "UALocationController.h"
 #import "UAEventMapViewController.h"
-#import "UAImageViewController.h"
 
 @implementation UAInputBaseViewController
 @synthesize event = _event;
@@ -450,21 +449,22 @@
                 UIImage *image = [[UAMediaController sharedInstance] imageWithFilename:self.currentPhotoPath];
                 if(image)
                 {
-                    /*UAImageViewController *vc = [[UAImageViewController alloc] initWithImage:image];
-                    vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-                    vc.modalPresentationStyle = UIModalPresentationFormSheet;
-                    [self.parentViewController.parentViewController presentViewController:vc animated:YES completion:^{
-                        // STUB
-                    }];*/
+                    TGRImageViewController *viewController = [[TGRImageViewController alloc] initWithImage:image];
+                    // Don't forget to set ourselves as the transition delegate
+                    viewController.transitioningDelegate = self;
                     
+                    [self presentViewController:viewController animated:YES completion:nil];
+                    
+                    /*
                     CGRect originalButtonFrame = [(UAInputParentViewController *)self.parentViewController photoButton].frame;
-                    CGRect photoButtonFrame = [[(UAInputParentViewController *)self.parentViewController keyboardBackingView] convertRect:originalButtonFrame toView:self.parentViewController.parentViewController.view];
+                    CGRect photoButtonFrame = [[(UAInputParentViewController *)self.parentViewController keyboardBackingView] convertRect:originalButtonFrame toView:self.parentViewController.view];
                     UAImageViewController *vc = [[UAImageViewController alloc] initWithImage:image];
-                    [self.parentViewController.parentViewController addChildViewController:vc];
-                    [self.parentViewController.parentViewController.view addSubview:vc.view];
+                    [self.parentViewController addChildViewController:vc];
+                    [self.parentViewController.view addSubview:vc.view];
                     [vc presentFromRect:photoButtonFrame];
                     
                     [vc didMoveToParentViewController:self.parentViewController.parentViewController];
+                    */
                 }
             }
             else if(buttonIndex == 2)
@@ -503,6 +503,26 @@
         }
     }
 }
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    if ([presented isKindOfClass:TGRImageViewController.class]) {
+        
+        UIImageView *imageView = [[(UAInputParentViewController *)self.parentViewController photoButton] fullsizeImageView];
+        
+        return [[TGRImageZoomAnimationController alloc] initWithReferenceImageView:imageView];
+    }
+    return nil;
+}
+
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    if ([dismissed isKindOfClass:TGRImageViewController.class]) {
+        
+        UIImageView *imageView = [[(UAInputParentViewController *)self.parentViewController photoButton] fullsizeImageView];
+        return [[TGRImageZoomAnimationController alloc] initWithReferenceImageView:imageView];
+    }
+    return nil;
+}
+
 
 #pragma mark - UINavigationControllerDelegate
 - (void)navigationController:(UINavigationController *)navigationController
