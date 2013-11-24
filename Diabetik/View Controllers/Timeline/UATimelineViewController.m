@@ -889,7 +889,7 @@
         self.reportsVC.delegate = self;
         self.reportsVC.view.frame = self.parentViewController.view.frame;
         
-        [self presentViewController:self.reportsVC animated:YES completion:nil];
+        [self presentViewController:self.reportsVC animated:NO completion:nil];
     }
 }
 

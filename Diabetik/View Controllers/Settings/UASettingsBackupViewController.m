@@ -50,15 +50,13 @@
 {
     [super viewWillAppear:animated];
     
-    UILabel *warningLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width-20.0f, 0.0f)];
+    UILabel *warningLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width-40.0f, 0.0f)];
     warningLabel.numberOfLines = 0;
     warningLabel.textAlignment = NSTextAlignmentCenter;
     warningLabel.backgroundColor = [UIColor clearColor];
-    warningLabel.font = [UAFont standardDemiBoldFontWithSize:14.0f];
+    warningLabel.font = [UAFont standardRegularFontWithSize:14.0f];
     warningLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
     warningLabel.text = NSLocalizedString(@"Restoring from backup will never delete existing data. If identical records are found the existing version will be overwritten. We advise backup restoration only be used when absolutely necessary.", nil);
-    warningLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    warningLabel.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.6f];
     [warningLabel sizeToFit];
     
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, warningLabel.frame.size.height)];

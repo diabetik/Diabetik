@@ -20,7 +20,7 @@
         [self addSubview:self.imageView];
         
         self.textLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-        self.textLabel.font = [UAFont standardMediumFontWithSize:11.0f];
+        self.textLabel.font = [UAFont standardMediumFontWithSize:12.0f];
         self.textLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
         [self addSubview:self.textLabel];
     }

@@ -92,6 +92,8 @@
     if([[chartData objectForKey:@"data"] count])
     {
         self.chart = [[ShinobiChart alloc] initWithFrame:self.view.bounds];
+        
+        [self.chart applyTheme:[SChartDarkTheme new]];
         self.chart.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.chart.clipsToBounds = NO;
         self.chart.datasource = self;
@@ -152,19 +154,6 @@
     
     if(seriesIndex == 0)
     {
-        SChartBandSeries *bandSeries = [SChartBandSeries new];
-        
-        SChartBandSeriesStyle *style = [[SChartBandSeriesStyle alloc] init];
-        style.lineWidth = [NSNumber numberWithDouble:1.0f];
-        style.lineColorLow = [UIColor colorWithRed:199.0f/255.0f green:217.0f/255.0f blue:211.0f/255.0f alpha:1.0f];
-        style.lineColorHigh = [UIColor colorWithRed:199.0f/255.0f green:217.0f/255.0f blue:211.0f/255.0f alpha:1.0f];
-        style.areaColorNormal = [UIColor colorWithRed:199.0f/255.0f green:217.0f/255.0f blue:211.0f/255.0f alpha:1.0f];
-        bandSeries.style = style;
-        
-        series = bandSeries;
-    }
-    else if(seriesIndex == 1)
-    {
         SChartLineSeries *lineSeries = [[SChartLineSeries alloc] init];
         lineSeries.selectionMode = SChartSelectionPoint;
         lineSeries.togglePointSelection = YES;
@@ -189,7 +178,7 @@
         lineSeries.style = style;
         series = lineSeries;
     }
-    else if(seriesIndex == 2)
+    else if(seriesIndex == 1)
     {
         SChartLineSeries *lineSeries = [[SChartLineSeries alloc] init];
         
@@ -201,13 +190,28 @@
         
         series = lineSeries;
     }
+    else if(seriesIndex == 2)
+    {
+        SChartBandSeries *bandSeries = [SChartBandSeries new];
+        
+        UIColor *color = [UIColor colorWithRed:24.0f/255.0f green:197.0f/255.0f blue:186.0f/255.0f alpha:0.85f];
+        
+        SChartBandSeriesStyle *style = [[SChartBandSeriesStyle alloc] init];
+        style.lineWidth = [NSNumber numberWithDouble:1.0f];
+        style.lineColorLow = color;
+        style.lineColorHigh = color;
+        style.areaColorNormal = color;
+        bandSeries.style = style;
+        
+        series = bandSeries;
+    }
     
     return series;
 }
 - (int)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(int)seriesIndex
 {
     NSInteger dataPoints = [[chartData objectForKey:@"data"] count];
-    if(seriesIndex == 2)
+    if(seriesIndex == 1)
     {
         return 2;
     }
@@ -223,27 +227,11 @@
     
     if(seriesIndex == 0)
     {
-        NSInteger userUnit = [UAHelper userBGUnit];
-        
-        double min = [[[NSUserDefaults standardUserDefaults] valueForKey:kMinHealthyBGKey] doubleValue];
-        double max = [[[NSUserDefaults standardUserDefaults] valueForKey:kMaxHealthyBGKey] doubleValue];
-        
-        NSNumber *minimumHealthy = (min < lowestReading && lowestReading < max) ? [NSNumber numberWithDouble:lowestReading] : [[NSUserDefaults standardUserDefaults] valueForKey:kMinHealthyBGKey];
-        NSNumber *healthyRangeMin = [UAHelper convertBGValue:minimumHealthy fromUnit:BGTrackingUnitMMO toUnit:userUnit];
-        NSNumber *healthyRangeMax = [UAHelper convertBGValue:[[NSUserDefaults standardUserDefaults] valueForKey:kMaxHealthyBGKey] fromUnit:BGTrackingUnitMMO toUnit:userUnit];
-        
-        [multiPoint.yValues setValue:healthyRangeMin forKey:@"Low"];        
-        [multiPoint.yValues setValue:healthyRangeMax forKey:@"High"];
-        
-        return multiPoint;
-    }
-    else if(seriesIndex == 1)
-    {
         multiPoint.yValue = reading.value;
         
         return multiPoint;
     }
-    else if(seriesIndex == 2)
+    else if(seriesIndex == 1)
     {
         UAReading *reading = nil;
         if(dataIndex == 0)
@@ -260,6 +248,23 @@
         
         return multiPoint;
     }
+    else if(seriesIndex == 2)
+    {
+        NSInteger userUnit = [UAHelper userBGUnit];
+        
+        double min = [[[NSUserDefaults standardUserDefaults] valueForKey:kMinHealthyBGKey] doubleValue];
+        double max = [[[NSUserDefaults standardUserDefaults] valueForKey:kMaxHealthyBGKey] doubleValue];
+        
+        NSNumber *minimumHealthy = (min < lowestReading && lowestReading < max) ? [NSNumber numberWithDouble:lowestReading] : [[NSUserDefaults standardUserDefaults] valueForKey:kMinHealthyBGKey];
+        NSNumber *healthyRangeMin = [UAHelper convertBGValue:minimumHealthy fromUnit:BGTrackingUnitMMO toUnit:userUnit];
+        NSNumber *healthyRangeMax = [UAHelper convertBGValue:[[NSUserDefaults standardUserDefaults] valueForKey:kMaxHealthyBGKey] fromUnit:BGTrackingUnitMMO toUnit:userUnit];
+        
+        [multiPoint.yValues setValue:healthyRangeMin forKey:@"Low"];
+        [multiPoint.yValues setValue:healthyRangeMax forKey:@"High"];
+        
+        return multiPoint;
+    }
+    
     return nil;
 }
 
