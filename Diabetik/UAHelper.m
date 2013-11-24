@@ -39,6 +39,17 @@
     
     return value;
 }
++ (NSNumberFormatter *)glucoseNumberFormatter
+{
+    static dispatch_once_t pred;
+    static NSNumberFormatter *formatter = nil;
+    dispatch_once(&pred, ^{
+        formatter = [[NSNumberFormatter alloc] init];
+    });
+    [formatter setMaximumFractionDigits:[UAHelper userBGUnit] == BGTrackingUnitMG ? 0 : 2];
+    
+    return formatter;
+}
 
 #pragma mark - Converts
 + (NSNumber *)convertBGValue:(NSNumber *)value fromUnit:(NSInteger)fromUnit toUnit:(NSInteger)toUnit

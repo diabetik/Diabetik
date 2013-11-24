@@ -33,9 +33,6 @@
 #define kIconTag 6
 
 @interface UAMedicineInputViewController ()
-{
-    NSNumberFormatter *valueFormatter;
-}
 @end
 
 @implementation UAMedicineInputViewController
@@ -51,9 +48,6 @@
     if (self)
     {
         self.title = NSLocalizedString(@"Add Medicine", nil);
-        
-        valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:3];
     }
     return self;
 }
@@ -64,8 +58,7 @@
     {
         self.title = NSLocalizedString(@"Edit Medicine", nil);
         
-        valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:3];
+        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
         
         _medicine = (UAMedicine *)aEvent;
         _type = [self.medicine.type integerValue];
@@ -170,6 +163,7 @@
 {
     [self.view endEditing:YES];
     
+    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
     UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccountInContext:self.moc];
     if(activeAccount)
     {

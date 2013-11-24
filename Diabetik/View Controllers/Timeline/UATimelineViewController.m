@@ -54,7 +54,6 @@
     NSDate *fromDate;
     NSDate *toDate;
     NSDateFormatter *dateFormatter;
-    NSNumberFormatter *valueFormatter;
     BOOL allowReportRotation;
     BOOL isShowingChart;
     
@@ -95,8 +94,6 @@
         [self setDateRangeForRelativeDays:days];
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"d MMMM yyyy"];
-        valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:3];
         
         _relativeDays = days;
         _needsDataRefresh = NO;
@@ -117,8 +114,6 @@
         
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"d MMMM yyyy"];
-        valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:3];
         
         _relativeDays = -1;
         _needsDataRefresh = NO;
@@ -428,6 +423,7 @@
 }
 - (void)configureCell:(UITableViewCell *)aCell forTableview:(UITableView *)aTableView atIndexPath:(NSIndexPath *)indexPath
 {
+    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
     if([[aCell class] isEqual:[UATimelineViewCell class]])
     {
         indexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];

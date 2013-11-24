@@ -41,7 +41,6 @@
 {
     NSDictionary *readings;
     NSDateFormatter *dateFormatter;
-    NSNumberFormatter *valueFormatter;
     
     id settingsChangeNotifier;
     id coredataChangeNotifier;
@@ -72,8 +71,6 @@
         
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MMMM yyyy"];
-        valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:3];
         
         // Notifications
         coredataChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextObjectsDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -319,6 +316,8 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+    
     if(indexPath.row%2 == 0)
     {
         indexPath = [NSIndexPath indexPathForRow:indexPath.row/2 inSection:indexPath.section];

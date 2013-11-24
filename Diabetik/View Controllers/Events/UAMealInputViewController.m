@@ -26,7 +26,6 @@
 @interface UAMealInputViewController ()
 {
     UITextField *nameTextField;
-    NSNumberFormatter *valueFormatter;
     
     NSString *name;
     double grams;
@@ -47,9 +46,6 @@
     {
         self.title = NSLocalizedString(@"Add a Meal", nil);
         
-        valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:3];
-        
         _type = 0;
         grams = 0;
     }
@@ -61,9 +57,6 @@
     if(self)
     {
         self.title = NSLocalizedString(@"Edit Meal", nil);
-        
-        valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:3];
         
         meal = (UAMeal *)aEvent;
         name = meal.name;
@@ -175,6 +168,7 @@
     [cell setDrawsBorder:YES];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
     if(indexPath.row == 0)
     {
         UITextField *textField = (UITextField *)cell.control;
@@ -259,6 +253,8 @@
     {
         if(grams > 0)
         {
+            NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+            
             return [NSString stringWithFormat:NSLocalizedString(@"Yum! I just ate %@ with %@ grams and recorded it with Diabetik", nil), name, [valueFormatter stringFromNumber:[NSNumber numberWithDouble:grams]]];
         }
         else
@@ -275,6 +271,8 @@
     {
         if(grams > 0)
         {
+            NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+            
             return [NSString stringWithFormat:NSLocalizedString(@"Yum! I just ate %@ with %@ grams and recorded it with @diabetikapp", nil), name, [valueFormatter stringFromNumber:[NSNumber numberWithDouble:grams]]];
         }
         else
@@ -374,6 +372,8 @@
     }
     else if(textField.tag == 1)
     {
+        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+        
         grams = [[valueFormatter numberFromString:textField.text] doubleValue];
     }
 }

@@ -43,7 +43,6 @@
     OrderedDictionary *reportData;
     NSMutableDictionary *selectedMonths;
     UAAlertMessageView *noReportsView;
-    NSNumberFormatter *valueFormatter;
     
     BOOL exportPDF, exportCSV;
     
@@ -69,9 +68,6 @@
         
         timeFormatter = [[NSDateFormatter alloc] init];
         [timeFormatter setTimeStyle:NSDateFormatterMediumStyle];
-        
-        valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:3];
 
         reportData = nil;
         selectedMonths = [[NSMutableDictionary alloc] init];
@@ -420,6 +416,8 @@
 }
 - (NSData *)generateCSVData
 {
+    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+    
     NSString *data = @"Month,Glucose Avg.,Total Activity,Total Grams,Glucose (Lowest),Glucose (Highest),Glucose (Avg. Deviation)";
     for(NSString *month in reportData)
     {
@@ -488,6 +486,7 @@
 - (NSData *)generatePDFData
 {
     UAAccount *account = [[UAAccountController sharedInstance] activeAccount];
+    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
     
     UAPDFDocument *pdfDocument = [[UAPDFDocument alloc] init];
     [pdfDocument setDelegate:self];

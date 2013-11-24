@@ -33,7 +33,7 @@
         self.titleLabel.font = [UAFont standardMediumFontWithSize:15.0f];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         
-        [self setTitleColor:[UIColor colorWithRed:143.0f/255.0f green:153.0f/255.0f blue:150.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
+        //[self setTitleColor:[UIColor colorWithRed:143.0f/255.0f green:153.0f/255.0f blue:150.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [self setTitleColor:[UIColor colorWithRed:119.0f/255.0f green:127.0f/255.0f blue:125.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         self.imageView.contentMode = UIViewContentModeCenter;
         self.adjustsImageWhenHighlighted = NO;

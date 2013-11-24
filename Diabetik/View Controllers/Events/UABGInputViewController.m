@@ -32,8 +32,6 @@
     NSString *mgValue;
     NSString *mmoValue;
     
-    NSNumberFormatter *valueFormatter;
-    
     UAReading *reading;
 }
 @end
@@ -47,9 +45,6 @@
     if (self) {
         self.title = NSLocalizedString(@"Add a Reading", @"Add blood glucose reading");
         value = @"";
-        
-        valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:3];
     }
     return self;
 }
@@ -60,11 +55,8 @@
     {
         self.title = NSLocalizedString(@"Edit Reading", @"Edit blood glucose reading");
         
+        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
         reading = (UAReading *)aEvent;
-        
-        valueFormatter = [[NSNumberFormatter alloc] init];
-        [valueFormatter setMaximumFractionDigits:3];
-        
         mmoValue = [valueFormatter stringFromNumber:reading.mmoValue];
         mgValue = [valueFormatter stringFromNumber:reading.mgValue];
         
@@ -118,6 +110,7 @@
     [self.view endEditing:YES];
 
     // Convert our input into the right units
+    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
     NSInteger unitSetting = [[NSUserDefaults standardUserDefaults] integerForKey:kBGTrackingUnitKey];
     if(unitSetting == BGTrackingUnitMG)
     {

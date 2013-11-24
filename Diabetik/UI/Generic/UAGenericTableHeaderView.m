@@ -32,9 +32,9 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _label = [[UILabel alloc] initWithFrame:CGRectMake(16.0f, frame.size.height-24.0f, frame.size.width-40.0f, 14.0f)];
+        _label = [[UILabel alloc] initWithFrame:CGRectMake(16.0f, frame.size.height-24.0f, frame.size.width-40.0f, 16.0f)];
         _label.backgroundColor = [UIColor clearColor];
-        _label.font = [UAFont standardDemiBoldFontWithSize:12.0f];
+        _label.font = [UAFont standardDemiBoldFontWithSize:14.0f];
         _label.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
         
         [self addSubview:_label];
