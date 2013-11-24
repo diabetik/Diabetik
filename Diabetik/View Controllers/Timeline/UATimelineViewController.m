@@ -158,10 +158,8 @@
     footerLabel.text = NSLocalizedString(@"Rotate to view reports", nil);
     footerLabel.textAlignment = NSTextAlignmentCenter;
     footerLabel.backgroundColor = [UIColor clearColor];
-    footerLabel.font = [UAFont standardDemiBoldFontWithSize:14.0f];
+    footerLabel.font = [UAFont standardRegularFontWithSize:14.0f];
     footerLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-    footerLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
-    footerLabel.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.6f];
     footerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     [footerView addSubview:footerLabel];
     self.tableView.tableFooterView = footerView;
