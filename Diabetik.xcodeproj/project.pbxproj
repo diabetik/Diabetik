@@ -196,8 +196,8 @@
 		53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED418422B5B006736F5 /* TGRImageZoomAnimationController.m */; };
 		53F78EDA18422B5B006736F5 /* UIImage+AspectFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED618422B5B006736F5 /* UIImage+AspectFit.m */; };
 		53F78EE018425634006736F5 /* UATimelineStatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78EDF18425634006736F5 /* UATimelineStatView.m */; };
-		53F78EE218426FA9006736F5 /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F78EE118426FA9006736F5 /* ShinobiCharts.framework */; };
 		53F78EE41842700D006736F5 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F78EE31842700C006736F5 /* libstdc++.6.0.9.dylib */; };
+		53F78EE618427791006736F5 /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F78EE518427791006736F5 /* ShinobiCharts.framework */; };
 		53FF442617B54E450047B6A5 /* UASideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FF442517B54E450047B6A5 /* UASideMenuController.m */; };
 /* End PBXBuildFile section */
 
@@ -584,8 +584,8 @@
 		53F78ED618422B5B006736F5 /* UIImage+AspectFit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+AspectFit.m"; sourceTree = "<group>"; };
 		53F78EDE18425634006736F5 /* UATimelineStatView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATimelineStatView.h; sourceTree = "<group>"; };
 		53F78EDF18425634006736F5 /* UATimelineStatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATimelineStatView.m; sourceTree = "<group>"; };
-		53F78EE118426FA9006736F5 /* ShinobiCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiCharts.framework; sourceTree = "<group>"; };
 		53F78EE31842700C006736F5 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
+		53F78EE518427791006736F5 /* ShinobiCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiCharts.framework; sourceTree = "<group>"; };
 		53FF442417B54E450047B6A5 /* UASideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuController.h; sourceTree = "<group>"; };
 		53FF442517B54E450047B6A5 /* UASideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuController.m; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
@@ -602,6 +602,7 @@
 				5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */,
 				533F07431708B71700B7BF55 /* CFNetwork.framework in Frameworks */,
 				532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */,
+				53F78EE618427791006736F5 /* ShinobiCharts.framework in Frameworks */,
 				5324D3B3175102730003F257 /* AudioToolbox.framework in Frameworks */,
 				53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */,
 				53B576761709DF02007322EF /* MessageUI.framework in Frameworks */,
@@ -618,7 +619,6 @@
 				530603A4167FCFFA00EFBE8B /* CoreLocation.framework in Frameworks */,
 				538DBA78166F830300F0709F /* UIKit.framework in Frameworks */,
 				538DBA7A166F830300F0709F /* Foundation.framework in Frameworks */,
-				53F78EE218426FA9006736F5 /* ShinobiCharts.framework in Frameworks */,
 				53D5C4C8184129EB0000CB86 /* HockeySDK.framework in Frameworks */,
 				538DBA7E166F830300F0709F /* CoreData.framework in Frameworks */,
 				53327C46170DDED3004FA6D2 /* libOAuth2Client.a in Frameworks */,
@@ -1388,8 +1388,8 @@
 		538DBA76166F830300F0709F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53F78EE518427791006736F5 /* ShinobiCharts.framework */,
 				53F78EE31842700C006736F5 /* libstdc++.6.0.9.dylib */,
-				53F78EE118426FA9006736F5 /* ShinobiCharts.framework */,
 				53D5C4D518412A720000CB86 /* libc++.dylib */,
 				53D5C4C3184129EB0000CB86 /* HockeySDK.embeddedframework */,
 				53D5C4C1184129840000CB86 /* Dropbox.framework */,
