@@ -47,7 +47,7 @@
         [self.contentView addSubview:_nameTextField];
         
         _metadataLabel = [[UILabel alloc] initWithFrame:CGRectMake(80.0f, 28.0f, 210.0f, 44.0f)];
-        _metadataLabel.font = [UAFont standardMediumFontWithSize:14.0f];
+        _metadataLabel.font = [UAFont standardRegularFontWithSize:14.0f];
         _metadataLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
         _metadataLabel.adjustsFontSizeToFitWidth = NO;
         _metadataLabel.textAlignment = NSTextAlignmentLeft;

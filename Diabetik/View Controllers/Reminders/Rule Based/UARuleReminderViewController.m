@@ -342,6 +342,8 @@
         cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UAReminderCell"];
     }
     [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
+    cell.textLabel.font = [UAFont standardRegularFontWithSize:16.0f];
+    cell.textLabel.textColor = [UIColor colorWithRed:110.0f/255.0f green:114.0f/255.0f blue:115.0f/255.0f alpha:1.0f];
     
     if(indexPath.section == 0)
     {
@@ -400,8 +402,8 @@
             textField.adjustsFontSizeToFitWidth = NO;
             textField.keyboardType = UIKeyboardTypeAlphabet;
             textField.textAlignment = NSTextAlignmentRight;
-            textField.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
-            textField.font = [UAFont standardDemiBoldFontWithSize:16.0f];
+            textField.font = [UAFont standardMediumFontWithSize:16.0f];
+            textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             textField.autocorrectionType = UITextAutocorrectionTypeNo;
             textField.tag = 0;
             cell.accessoryView = textField;
@@ -431,8 +433,8 @@
             textField.adjustsFontSizeToFitWidth = NO;
             textField.keyboardType = UIKeyboardTypeDefault;
             textField.textAlignment = NSTextAlignmentRight;
-            textField.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
-            textField.font = [UAFont standardDemiBoldFontWithSize:16.0f];
+            textField.font = [UAFont standardMediumFontWithSize:16.0f];
+            textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             textField.autocorrectionType = UITextAutocorrectionTypeDefault;
             textField.tag = 1;
             cell.accessoryView = textField;
@@ -456,8 +458,8 @@
             textField.adjustsFontSizeToFitWidth = NO;
             textField.keyboardType = UIKeyboardTypeDecimalPad;
             textField.textAlignment = NSTextAlignmentRight;
-            textField.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
-            textField.font = [UAFont standardDemiBoldFontWithSize:16.0f];
+            textField.font = [UAFont standardMediumFontWithSize:16.0f];
+            textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             textField.tag = 2;
             cell.accessoryView = textField;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;

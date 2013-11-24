@@ -37,10 +37,10 @@
         self.backgroundColor = [UIColor colorWithRed:69.0f/255.0f green:69.0f/255.0f blue:69.0f/255.0f alpha:1.0f];
         
         self.textLabel.textColor = [UIColor  whiteColor];
-        self.textLabel.font = [UAFont standardMediumFontWithSize:16.0f];
+        self.textLabel.font = [UAFont standardRegularFontWithSize:16.0f];
         self.textLabel.backgroundColor = [UIColor clearColor];
         
-        self.detailTextLabel.font = [UAFont standardMediumFontWithSize:12.0f];
+        self.detailTextLabel.font = [UAFont standardRegularFontWithSize:12.0f];
         self.detailTextLabel.backgroundColor = [UIColor clearColor];
         self.detailTextLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
         self.detailTextLabel.highlightedTextColor = [UIColor whiteColor];

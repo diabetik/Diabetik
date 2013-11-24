@@ -254,6 +254,9 @@
     }
     [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     
+    cell.textLabel.font = [UAFont standardRegularFontWithSize:16.0f];
+    cell.textLabel.textColor = [UIColor colorWithRed:110.0f/255.0f green:114.0f/255.0f blue:115.0f/255.0f alpha:1.0f];
+    
     cell.accessoryView = nil;
     cell.accessoryType = UITableViewCellAccessoryNone;
     
@@ -273,8 +276,8 @@
             textField.adjustsFontSizeToFitWidth = NO;
             textField.keyboardType = UIKeyboardTypeAlphabet;
             textField.textAlignment = NSTextAlignmentRight;
-            textField.font = [UAFont standardDemiBoldFontWithSize:16.0f];
-            textField.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
+            textField.font = [UAFont standardMediumFontWithSize:16.0f];
+            textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             cell.accessoryView = textField;
         }
         else if(indexPath.row == 1)
@@ -292,9 +295,9 @@
                 UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
                 label.backgroundColor = [UIColor clearColor];
                 label.text = location ? locationName : NSLocalizedString(@"No location", nil);
-                label.textColor = location ? [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f] : [UIColor lightGrayColor];
                 label.textAlignment = NSTextAlignmentRight;
-                label.font = [UAFont standardDemiBoldFontWithSize:16.0f];
+                label.font = [UAFont standardMediumFontWithSize:16.0f];
+                label.textColor = location ? [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f] : [UIColor lightGrayColor];
                 cell.accessoryView = label;
             }
         }

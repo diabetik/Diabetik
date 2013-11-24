@@ -30,7 +30,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
-        self.titleLabel.font = [UAFont standardMediumFontWithSize:15.0f];
+        self.titleLabel.font = [UAFont standardRegularFontWithSize:15.0f];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         
         //[self setTitleColor:[UIColor colorWithRed:143.0f/255.0f green:153.0f/255.0f blue:150.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];

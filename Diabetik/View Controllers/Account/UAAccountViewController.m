@@ -357,8 +357,8 @@
             inputLabel.text = [dateFormatter stringFromDate:dob];
             inputLabel.textAlignment = NSTextAlignmentRight;
             inputLabel.delegate = self;
-            inputLabel.font = [UAFont standardDemiBoldFontWithSize:16.0f];
-            inputLabel.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
+            inputLabel.font = [UAFont standardRegularFontWithSize:16.0f];
+            inputLabel.textColor =  [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             cell.accessoryView = inputLabel;
             
             UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];

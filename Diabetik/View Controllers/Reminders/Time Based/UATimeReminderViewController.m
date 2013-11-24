@@ -287,6 +287,8 @@
         cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UAReminderCell"];
     }
     [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
+    cell.textLabel.font = [UAFont standardRegularFontWithSize:16.0f];
+    cell.textLabel.textColor = [UIColor colorWithRed:110.0f/255.0f green:114.0f/255.0f blue:115.0f/255.0f alpha:1.0f];
     
     if(indexPath.section == 0)
     {
@@ -304,8 +306,8 @@
             textField.adjustsFontSizeToFitWidth = NO;
             textField.keyboardType = UIKeyboardTypeAlphabet;
             textField.textAlignment = NSTextAlignmentRight;
-            textField.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
-            textField.font = [UAFont standardDemiBoldFontWithSize:16.0f];
+            textField.font = [UAFont standardMediumFontWithSize:16.0f];
+            textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             cell.accessoryView = textField;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
@@ -317,8 +319,8 @@
             inputLabel.text = [timeFormatter stringFromDate:date];
             inputLabel.textAlignment = NSTextAlignmentRight;
             inputLabel.delegate = self;
-            inputLabel.font = [UAFont standardDemiBoldFontWithSize:16.0f];
-            inputLabel.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
+            inputLabel.font = [UAFont standardMediumFontWithSize:16.0f];
+            inputLabel.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             cell.accessoryView = inputLabel;
             
             UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];
@@ -354,8 +356,8 @@
                 inputLabel.text = [dateFormatter stringFromDate:date];
                 inputLabel.textAlignment = NSTextAlignmentRight;
                 inputLabel.delegate = self;
-                inputLabel.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
-                inputLabel.font = [UAFont standardDemiBoldFontWithSize:16.0f];
+                inputLabel.font = [UAFont standardMediumFontWithSize:16.0f];
+                inputLabel.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
                 cell.accessoryView = inputLabel;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;                
                 
@@ -373,9 +375,8 @@
                 label.text = [[UAReminderController sharedInstance] formattedRepeatingDaysWithFlags:days];
                 label.backgroundColor = [UIColor clearColor];
                 label.textAlignment = NSTextAlignmentRight;
-                label.textColor = [UIColor colorWithRed:114.0f/255.0f green:118.0f/255.0f blue:121.0f/255.0f alpha:1.0f];
-                label.highlightedTextColor = [UIColor whiteColor];                
-                label.font = [UAFont standardDemiBoldFontWithSize:16.0f];
+                label.font = [UAFont standardMediumFontWithSize:16.0f];
+                label.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
                 
                 cell.accessoryView = label;
                 cell.selectionStyle = UITableViewCellSelectionStyleBlue;
