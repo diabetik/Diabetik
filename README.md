@@ -17,7 +17,7 @@ Getting started
 The production Xcode project has been provided as-is with the following exceptions:
 
 1. Diabetik makes use of [Shinobi Charts](http://www.shinobicontrols.com/shinobicharts/), a proprietary charting framework that cannot legally be redistributed. As such, developers wishing to compile the Diabetik source code will need to download a trial version of the framework.
-2. Certain private credentials have been stripped from the public codebase to ensure they remain secure. Placeholder credentials can be found in the UACredentials.h header file.
+2. Certain private credentials have been stripped from the public codebase to ensure they remain secure. Placeholder credentials can be found in the UACredentials-Example.h header file. Rename it UACredentials.h before compiling the project.
 
 Legal stuff
 ===========

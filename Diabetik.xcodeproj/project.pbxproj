@@ -473,7 +473,6 @@
 		533F32E61773266600AD89E2 /* UATimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATimelineViewController.m; sourceTree = "<group>"; };
 		533F32E71773266600AD89E2 /* UABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UABaseViewController.h; sourceTree = "<group>"; };
 		533F32E81773266600AD89E2 /* UABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UABaseViewController.m; sourceTree = "<group>"; };
-		533F350F17736A9D00AD89E2 /* UACredentials.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UACredentials.h; sourceTree = "<group>"; };
 		533F351117736C0600AD89E2 /* UAAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAccountController.h; sourceTree = "<group>"; };
 		533F351217736C0600AD89E2 /* UAAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAccountController.m; sourceTree = "<group>"; };
 		533F351317736C0600AD89E2 /* UABackupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UABackupController.h; sourceTree = "<group>"; };
@@ -562,6 +561,7 @@
 		539E1CD017B7FEDD0059ED17 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		539E9FA2184B8C22009803D1 /* UITextView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Extension.h"; sourceTree = "<group>"; };
 		539E9FA3184B8C22009803D1 /* UITextView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Extension.m"; sourceTree = "<group>"; };
+		539E9FA7184BAA20009803D1 /* UACredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACredentials.h; sourceTree = "<group>"; };
 		53AE668A178727D800DE66D9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		53B576751709DF02007322EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		53BAD21D1847FF3B007F2977 /* UAMenuAccountSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMenuAccountSelectionView.h; sourceTree = "<group>"; };
@@ -726,7 +726,7 @@
 				533F31EC1773266600AD89E2 /* UAAppDelegate.h */,
 				533F31ED1773266600AD89E2 /* UAAppDelegate.m */,
 				533F31EE1773266600AD89E2 /* UACommon.h */,
-				533F350F17736A9D00AD89E2 /* UACredentials.h */,
+				539E9FA7184BAA20009803D1 /* UACredentials.h */,
 				533F31EF1773266600AD89E2 /* UAHelper.h */,
 				533F31F01773266600AD89E2 /* UAHelper.m */,
 				533F30641773266500AD89E2 /* Resources */,
