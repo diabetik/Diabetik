@@ -15,6 +15,7 @@
 {
     [super layoutSubviews];
     
+    CGFloat indent = 16.0f;
     if(self.imageView.image)
     {
         self.imageView.contentMode = UIViewContentModeScaleToFill;
@@ -22,14 +23,16 @@
         self.imageView.layer.cornerRadius = 15.0f;
         self.imageView.layer.masksToBounds = YES;
         
-        CGRect textLabelFrame = self.textLabel.frame;
-        textLabelFrame.origin.x = 55.0f;
-        self.textLabel.frame = textLabelFrame;
-        
-        UIEdgeInsets customSeparatorInset = self.separatorInset;
-        customSeparatorInset.left = 55.0f;
-        self.separatorInset = customSeparatorInset;
+        indent = 55.0f;
     }
+    
+    CGRect textLabelFrame = self.textLabel.frame;
+    textLabelFrame.origin.x = indent;
+    self.textLabel.frame = textLabelFrame;
+    
+    UIEdgeInsets customSeparatorInset = self.separatorInset;
+    customSeparatorInset.left = indent;
+    self.separatorInset = customSeparatorInset;
 }
 
 @end
