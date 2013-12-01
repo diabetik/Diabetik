@@ -57,7 +57,7 @@
         [self addSubview:_controlContainer];
         
         UIView *backingView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, kAccessoryViewHeight, frame.size.width, frame.size.height)];
-        backingView.backgroundColor = [UIColor whiteColor];
+        backingView.backgroundColor = [UIColor colorWithRed:226.0f/255.0f green:236.0f/255.0f blue:233.0f/255.0f alpha:1.0f];
         [self addSubview:backingView];
         
         _keyboardToggleButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 8.0f, 69.0f, 33.0f)];

@@ -21,9 +21,10 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 
+#import "REFrostedViewController.h"
+
 #import "UAUI.h"
 #import "UABackupController.h"
-#import "JASidePanelController.h"
 #import "UASideMenuController.h"
 
 #import "UAAccount.h"
@@ -32,7 +33,7 @@
 @interface UAAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate, BITHockeyManagerDelegate>
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CLLocationManager *locationManager;
-@property (strong, nonatomic) JASidePanelController *viewController;
+@property (strong, nonatomic) REFrostedViewController *viewController;
 @property (strong, nonatomic) UABackupController *backupController;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

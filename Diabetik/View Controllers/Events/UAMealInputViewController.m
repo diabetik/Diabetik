@@ -322,11 +322,7 @@
     float height = 0.0;
     if(indexPath.row == 3)
     {
-        CGRect textFrame = [notes boundingRectWithSize:CGSizeMake(self.view.frame.size.width-85.0f, CGFLOAT_MAX)
-                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                            attributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:16.0f]}
-                                               context:nil];
-        height = textViewHeight > 0 ? textViewHeight : textFrame.size.height + 80.0f;
+        height = textViewHeight;
     }
     else if(indexPath.row == 4)
     {

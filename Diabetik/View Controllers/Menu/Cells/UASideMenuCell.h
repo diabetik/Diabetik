@@ -20,12 +20,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UASideMenuCell : UITableViewCell
-@property (nonatomic, strong) UILabel *label;
+@interface UASideMenuCell : UAGenericTableViewCell
 @property (nonatomic, strong) UIImageView *accessoryIcon;
-@property (nonatomic, strong) UIImageView *rightAccessoryIcon;
 
-// Logic
-- (void)showBottomBorder:(BOOL)state;
 
 @end

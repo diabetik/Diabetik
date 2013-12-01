@@ -165,20 +165,24 @@
     if(!self.keyboardBackingView)
     {
         self.locationButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero];
+        [self.locationButton setTitleColor:[UIColor colorWithRed:254.0f/255.0f green:196.0f/255.0f blue:89.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [self.locationButton setImage:[UIImage imageNamed:@"AddEntryKeyboardLocation.png"] forState:UIControlStateNormal];
         [self.locationButton addTarget:self action:@selector(presentGeotagOptions:) forControlEvents:UIControlEventTouchUpInside];
         
         self.photoButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero];
+        [self.photoButton setTitleColor:[UIColor colorWithRed:186.0f/255.0f green:125.0f/255.0f blue:255.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [self.photoButton setImage:[UIImage imageNamed:@"AddEntryKeyboardPhoto.png"] forState:UIControlStateNormal];
         [self.photoButton setTitle:NSLocalizedString(@"Add Photo", nil) forState:UIControlStateNormal];
         [self.photoButton addTarget:self action:@selector(presentMediaOptions:) forControlEvents:UIControlEventTouchUpInside];
         
         UAKeyboardBackingViewButton *reminderButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero];
+        [reminderButton setTitleColor:[UIColor colorWithRed:103.0f/255.0f green:230.0f/255.0f blue:156.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [reminderButton setImage:[UIImage imageNamed:@"AddEntryKeyboardReminders.png"] forState:UIControlStateNormal];
         [reminderButton setTitle:NSLocalizedString(@"Add Reminder", nil) forState:UIControlStateNormal];
         [reminderButton addTarget:self action:@selector(presentAddReminder:) forControlEvents:UIControlEventTouchUpInside];
         
         UAKeyboardBackingViewButton *tweetButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero];
+        [tweetButton setTitleColor:[UIColor colorWithRed:41.0f/255.0f green:183.0f/255.0f blue:239.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [tweetButton setImage:[UIImage imageNamed:@"AddEntryKeyboardTweet.png"] forState:UIControlStateNormal];
         [tweetButton setTitle:NSLocalizedString(@"Tweet", @"A button allowing users to post an entry on Twitter") forState:UIControlStateNormal];
         [tweetButton addTarget:self action:@selector(presentTweetComposer:) forControlEvents:UIControlEventTouchUpInside];
@@ -198,6 +202,7 @@
         [tweetButton setEnabled:enableTwitterButton];        
         
         UAKeyboardBackingViewButton *likeButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero];
+        [likeButton setTitleColor:[UIColor colorWithRed:99.0f/255.0f green:122.0f/255.0f blue:170.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [likeButton setImage:[UIImage imageNamed:@"AddEntryKeyboardLike.png"] forState:UIControlStateNormal];
         [likeButton setTitle:NSLocalizedString(@"Like", @"A button allowing users to 'Like' an entry on Facebook") forState:UIControlStateNormal];
         [likeButton addTarget:self action:@selector(presentFacebookComposer:) forControlEvents:UIControlEventTouchUpInside];
@@ -217,6 +222,7 @@
         [likeButton setEnabled:enableFacebookButton];
         
         UAKeyboardBackingViewButton *deleteButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero];
+        [deleteButton setTitleColor:[UIColor colorWithRed:254.0f/255.0f green:79.0f/255.0f blue:96.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [deleteButton setImage:[UIImage imageNamed:@"AddEntryKeyboardTrash.png"] forState:UIControlStateNormal];
         [deleteButton setTitle:NSLocalizedString(@"Delete Entry", nil) forState:UIControlStateNormal];
         [deleteButton addTarget:self action:@selector(deleteEvent:) forControlEvents:UIControlEventTouchUpInside];

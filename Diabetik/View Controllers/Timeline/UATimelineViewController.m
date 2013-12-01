@@ -20,7 +20,6 @@
 
 #import "NSDate+Extension.h"
 #import "NSString+Extension.h"
-#import "UIViewController+JASidePanel.h"
 
 #import "UAAppDelegate.h"
 #import "UATimelineViewController.h"
@@ -125,8 +124,6 @@
 {
     [super viewDidLoad];
     
-    __weak typeof(self) weakSelf = self;
-    
     // Setup our nav bar buttons
     UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
     [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
@@ -134,7 +131,6 @@
     // Setup our search bar
     searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
     searchBar.delegate = self;
-    searchBar.showsBookmarkButton = YES;
     
     searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     self.searchDisplayController.searchResultsDelegate = self;
@@ -144,9 +140,6 @@
     self.tableView.tableHeaderView = searchBar;
     self.tableView.backgroundColor = self.view.backgroundColor;
     
-    //[searchBar sizeToFit];
-    [self setSearchBarBehaviour];
-    
     //self.tableView.contentOffset = CGPointMake(0.0f, searchBar.bounds.size.height);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
@@ -154,7 +147,7 @@
     
     // Footer view
     UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-    UILabel *footerLabel = [[UILabel alloc] initWithFrame:footerView.bounds];
+    UILabel *footerLabel = [[UILabel alloc] initWithFrame:footerView.frame];
     footerLabel.text = NSLocalizedString(@"Rotate to view reports", nil);
     footerLabel.textAlignment = NSTextAlignmentCenter;
     footerLabel.backgroundColor = [UIColor clearColor];
@@ -164,18 +157,24 @@
     [footerView addSubview:footerLabel];
     self.tableView.tableFooterView = footerView;
     
+    __weak typeof(self) weakSelf = self;
+    
     // Notifications
     applicationResumeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:@"applicationResumed" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        if(weakSelf.relativeDays > -1)
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        if(strongSelf.relativeDays > -1)
         {
-            weakSelf.needsDataRefresh = YES;
-            [weakSelf setDateRangeForRelativeDays:weakSelf.relativeDays];
-            [weakSelf refreshView];
+            strongSelf.needsDataRefresh = YES;
+            [strongSelf setDateRangeForRelativeDays:strongSelf.relativeDays];
+            [strongSelf refreshView];
         }
     }];
     settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSettingsChangedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        weakSelf.needsDataRefresh = YES;
-        [weakSelf refreshView];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        strongSelf.needsDataRefresh = YES;
+        [strongSelf refreshView];
     }];
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -387,25 +386,6 @@
     _needsDataRefresh = YES;
     [self refreshView];
 }
-- (void)setSearchBarBehaviour
-{
-    BOOL filter = [[NSUserDefaults standardUserDefaults] boolForKey:kFilterSearchResultsKey];
-    [searchBar setImage:[UIImage imageNamed:filter ? @"SearchButtonUncollapse.png" : @"SearchButtonCollapse.png"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateNormal];
-    [searchBar setImage:[UIImage imageNamed:filter ? @"SearchButtonUncollapsePressed.png" : @"SearchButtonCollapsePressed.png"] forSearchBarIcon:UISearchBarIconBookmark state:UIControlStateHighlighted];
-    
-    /*
-    // Adjust search bar
-    for(UIView *subview in searchBar.subviews)
-    {
-        if([subview isKindOfClass:[UITextField class]])
-        {
-            UITextField *textField = (UITextField*)subview;
-            textField.clearButtonMode = UITextFieldViewModeNever;
-            textField.rightViewMode = UITextFieldViewModeAlways;
-        }
-    }
-     */
-}
 
 #pragma mark - UI
 - (void)addEvent:(id)sender
@@ -468,8 +448,7 @@
             UAMeal *meal = (UAMeal *)object;
             cell.valueLabel.text = [valueFormatter stringFromNumber:[meal grams]];
             cell.valueLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconFood.png"];
-            cell.iconImageView.highlightedImage =  [UIImage imageNamed:@"TimelineIconFoodPressed.png"];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconMeal.png"];
             cell.descriptionLabel.text = [meal name];
         }
         else if([object isKindOfClass:[UAReading class]])
@@ -479,7 +458,6 @@
             cell.descriptionLabel.text = NSLocalizedString(@"Blood glucose level", nil);
             cell.valueLabel.text = [valueFormatter stringFromNumber:[reading value]];
             cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconBlood.png"];
-            cell.iconImageView.highlightedImage =  [UIImage imageNamed:@"TimelineIconBloodPressed.png"];            
             
             if(![UAHelper isBGLevelSafe:[[reading value] doubleValue]])
             {
@@ -497,7 +475,6 @@
             cell.valueLabel.text = [valueFormatter stringFromNumber:[medicine amount]];
             cell.valueLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
             cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconMedicine.png"];
-            cell.iconImageView.highlightedImage =  [UIImage imageNamed:@"TimelineIconMedicinePressed.png"]; 
             cell.descriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", [medicine name], [[UAEventController sharedInstance] medicineTypeHR:[[medicine type] integerValue]]];
         }
         else if([object isKindOfClass:[UAActivity class]])
@@ -506,7 +483,6 @@
             
             cell.descriptionLabel.text = [activity name];
             cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconActivity.png"];
-            cell.iconImageView.highlightedImage =  [UIImage imageNamed:@"TimelineIconActivityPressed.png"];             
             cell.valueLabel.text = [UAHelper formatMinutes:[[activity minutes] doubleValue]];
             cell.valueLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
         }
@@ -514,7 +490,6 @@
         {
             UANote *note = (UANote *)object;
             cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconNote.png"];
-            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconNotePressed.png"]; 
             cell.descriptionLabel.text = [note name];
         }
         [cell setMetaData:[self metaDataForTableView:aTableView cellAtIndexPath:indexPath]];
@@ -553,9 +528,7 @@
         if(vc)
         {
             UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-            [self presentViewController:nvc animated:YES completion:^{
-                // STUB
-            }];
+            [self presentViewController:nvc animated:YES completion:nil];
         }
     }
 }
@@ -652,7 +625,7 @@
     }
     else
     {
-        cell = (UATimelineViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UATimelineHeaderViewCell"];
+        cell = (UATimelineHeaderViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UATimelineHeaderViewCell"];
         if (cell == nil)
         {
             cell = [[UATimelineHeaderViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UATimelineHeaderViewCell"];
@@ -691,41 +664,55 @@
     }
     return @"";
 }
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return ![[tableView cellForRowAtIndexPath:indexPath] isKindOfClass:[UATimelineHeaderViewCell class]];
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        indexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
+        
+        NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        NSError *error = nil;
+        if(object)
+        {
+            [self.moc deleteObject:object];
+            [self.moc save:&error];
+            
+            [self refreshView];
+        }
+        
+        // Turn off the UITableView's edit mode to avoid having it 'freeze'
+        tableView.editing = NO;
+        
+        if(error)
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                message:[NSString stringWithFormat:NSLocalizedString(@"There was an error while trying to delete this event: %@", nil), [error localizedDescription]]
+                                                               delegate:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }
+    }
+}
 
 #pragma mark - UISearchBarDelegate functions
 - (void)searchBarCancelButtonClicked:(UISearchBar *)aSearchBar
 {
     [self.searchDisplayController setActive:NO animated:YES];
 }
-- (void)searchBarBookmarkButtonClicked:(UISearchBar *)aSearchBar
-{
-    [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
-    
-    BOOL filter = [[NSUserDefaults standardUserDefaults] boolForKey:kFilterSearchResultsKey];
-    [[NSUserDefaults standardUserDefaults] setBool:!filter forKey:kFilterSearchResultsKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    if(self.searchDisplayController.isActive)
-    {
-        [self performSearchWithText:aSearchBar.text];
-        [self.searchDisplayController.searchResultsTableView reloadData];
-    }
-    
-    [self setSearchBarBehaviour];
-}
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
     [self performSearchWithText:searchText];
-    [self setSearchBarBehaviour];
 }
 
 #pragma mark - UISearchDisplayDelegate functions
 - (void)searchDisplayController:(UISearchDisplayController *)controller willShowSearchResultsTableView:(UITableView *)tableView
 {
     // Background view
-    UIView *backgroundView = [[UIView alloc] initWithFrame:tableView.frame];
-    backgroundView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"TimelineBackground.png"]];
-    controller.searchResultsTableView.backgroundView = backgroundView;
     controller.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // Footer view
@@ -797,7 +784,7 @@
             break;
             
         case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
             break;
             
         case NSFetchedResultsChangeUpdate:

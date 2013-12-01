@@ -89,9 +89,7 @@
 {
     if([self isPresentedModally] && [self.navigationController.viewControllers count] <= 1)
     {
-        [self dismissViewControllerAnimated:YES completion:^{
-            // STUB
-        }];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
     else
     {
@@ -120,6 +118,18 @@
                     [[[self tabBarController] parentViewController] isKindOfClass:[UITabBarController class]]);
     
     return isModal;
+}
+- (void)panGestureRecognized:(UIPanGestureRecognizer *)sender
+{
+    [self.frostedViewController panGestureRecognized:sender];
+}
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if([self.navigationController.viewControllers count] <= 1)
+    {
+        return YES;
+    }
+    return NO;
 }
 - (void)didSwitchUserAccount
 {
@@ -201,8 +211,6 @@
     self.tableView.backgroundView = nil;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor colorWithRed:189.0f/255.0f green:189.0f/255.0f blue:189.0f/255.0f alpha:1.0f];
-    self.tableView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
     [baseView addSubview:self.tableView];
     
     self.view = baseView;
@@ -210,6 +218,18 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    self.tableView.delegate = nil;
+    self.tableView.dataSource = nil;
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    edgePanGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
+    edgePanGestureRecognizer.edges = UIRectEdgeLeft;
+    edgePanGestureRecognizer.delegate = self;
+    [self.view addGestureRecognizer:edgePanGestureRecognizer];
 }
 - (void)viewWillLayoutSubviews
 {

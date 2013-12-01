@@ -247,7 +247,8 @@
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
     UAAppDelegate *delegate = (UAAppDelegate*)[[UIApplication sharedApplication] delegate];
-    [delegate.viewController showLeftPanel:YES];
+    //[delegate.viewController showLeftPanel:YES];
+    [delegate.viewController presentMenuViewController];
 }
 - (void)showRelativeTimeline:(UAShortcutButton *)sender
 {
@@ -368,16 +369,9 @@
 #pragma mark - UAModalViewDelegate methods
 - (void)willDisplayModalView:(UAModalView *)aModal
 {
-    // Disable swipe gesture
-    JASidePanelController *sidePanel = (JASidePanelController *)[self sidePanelController];
-    sidePanel.disablePanGesture = YES;
 }
 - (void)didDismissModalView:(UAModalView *)aModal
 {
-    // Re-enable swipe gesture
-    JASidePanelController *sidePanel = (JASidePanelController *)[self sidePanelController];
-    sidePanel.disablePanGesture = NO;
-    
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenStarterTooltip];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

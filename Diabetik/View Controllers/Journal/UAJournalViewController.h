@@ -22,7 +22,6 @@
 #import "OrderedDictionary.h"
 
 #import "UABaseViewController.h"
-#import "UIViewController+JASidePanel.h"
 #import "UAAddEntryModalView.h"
 
 @interface UAJournalViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UAModalViewDelegate, UAAddEntryModalDelegate>

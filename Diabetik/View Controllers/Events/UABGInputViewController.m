@@ -209,6 +209,7 @@
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.delegate = self;
         textField.inputView = nil;
+        textField.keyboardAppearance = UIKeyboardAppearanceDark;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Value", nil)];
     }
@@ -314,9 +315,7 @@
     float height = 0.0;
     if(indexPath.row == 2)
     {
-        CGSize size = [notes boundingRectWithSize:CGSizeMake(self.view.frame.size.width-85.0f, CGFLOAT_MAX) options:NSStringDrawingUsesDeviceMetrics attributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:16.0f]} context:nil].size;
-        //CGSize size = [notes sizeWithFont:[UAFont standardDemiBoldFontWithSize:16.0f] constrainedToSize:CGSizeMake(self.view.frame.size.width-85.0f, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping];
-        height = textViewHeight > 0 ? textViewHeight : size.height + 80.0f;
+        height = textViewHeight;
     }
     else if(indexPath.row == 3)
     {

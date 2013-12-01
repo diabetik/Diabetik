@@ -274,18 +274,14 @@
     }
     
     // Update values
-    textViewHeight = textView.contentSize.height;
     notes = textView.text;
     
     // Finally, update our tableview
     [UIView setAnimationsEnabled:NO];
     [self.tableView beginUpdates];
+    textViewHeight = [textView height];
     [self.tableView endUpdates];
     [UIView setAnimationsEnabled:YES];
-    
-    //NSIndexPath *indexPath = [self.tableView indexPathForCell:(UAEventInputViewCell *)[[textView superview] superview]];
-    //[self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionBottom animated:NO];
-    //[self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:textView.tag inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 #pragma mark - UITextFieldDelegate

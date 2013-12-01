@@ -22,7 +22,7 @@
 #import "UATimelineViewCell.h"
 #import "UAMediaController.h"
 
-#define kNotesFont [UAFont standardMediumFontWithSize:13.0f]
+#define kNotesFont [UAFont standardRegularFontWithSize:13.0f]
 #define kNotesBottomVerticalPadding 13.0f
 #define kBottomVerticalPadding 12.0f
 #define kHorizontalMargin 8.0f
@@ -62,7 +62,7 @@
         _descriptionLabel.backgroundColor = [UIColor clearColor];
         _descriptionLabel.font = [UAFont standardMediumFontWithSize:16.0f];
         _descriptionLabel.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
-        _descriptionLabel.highlightedTextColor = [UIColor blackColor];
+        _descriptionLabel.highlightedTextColor = [UIColor whiteColor];
         _descriptionLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self addSubview:_descriptionLabel];
         
@@ -72,7 +72,7 @@
         _valueLabel.textAlignment = NSTextAlignmentRight;
         _valueLabel.font = [UAFont standardRegularFontWithSize:16.0f];
         _valueLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-        _valueLabel.highlightedTextColor = [UIColor blackColor];
+        _valueLabel.highlightedTextColor = [UIColor whiteColor];
         _valueLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [self addSubview:_valueLabel];
 
@@ -81,7 +81,7 @@
         _timestampLabel.backgroundColor = [UIColor clearColor];
         _timestampLabel.font = [UAFont standardRegularFontWithSize:16.0f];
         _timestampLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-        _timestampLabel.highlightedTextColor = [UIColor blackColor];
+        _timestampLabel.highlightedTextColor = [UIColor whiteColor];
         [self addSubview:_timestampLabel];
         
         bottomBorder = [[UIView alloc] initWithFrame:CGRectZero];
@@ -133,7 +133,7 @@
                 self.notesLabel.backgroundColor = [UIColor clearColor];
                 self.notesLabel.font = kNotesFont;
                 self.notesLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:171.0f/255.0f alpha:1.0f];
-                self.notesLabel.highlightedTextColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
+                self.notesLabel.highlightedTextColor = [UIColor whiteColor];
                 self.notesLabel.shadowOffset = CGSizeMake(0.0f, 0.0f);
                 self.notesLabel.numberOfLines = 0;
                 self.notesLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -146,7 +146,7 @@
                                                  attributes:@{NSFontAttributeName:kNotesFont}
                                                     context:nil];
             
-            self.notesLabel.frame = CGRectMake(self.notesLabel.frame.origin.x, self.notesLabel.frame.origin.y, self.notesLabel.frame.size.width, notesFrame.size.height);
+            self.notesLabel.frame = CGRectMake(ceilf(self.notesLabel.frame.origin.x), ceilf(self.notesLabel.frame.origin.y), ceilf(self.notesLabel.frame.size.width), ceilf(notesFrame.size.height));
             self.notesLabel.text = notes;
         }
         else

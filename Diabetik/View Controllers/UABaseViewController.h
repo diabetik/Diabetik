@@ -21,15 +21,14 @@
 #import <UIKit/UIKit.h>
 #import "UAUI.h"
 #import "UAHelper.h"
-#import "JASidePanelController.h"
-#import "UIViewController+JASidePanel.h"
 
-@interface UABaseViewController : UIViewController
+@interface UABaseViewController : UIViewController <UIGestureRecognizerDelegate>
 {
     BOOL isVisible;
     BOOL isFirstLoad;
     
     id accountSwitchNotifier;
+    UIScreenEdgePanGestureRecognizer *edgePanGestureRecognizer;
 }
 @property (nonatomic, retain) NSManagedObjectContext *moc;
 @property (nonatomic, retain) UIView *activeField;
@@ -42,6 +41,7 @@
 - (void)handleBack:(id)sender;
 - (BOOL)isPresentedModally;
 - (void)didSwitchUserAccount;
+- (void)panGestureRecognized:(UIPanGestureRecognizer *)sender;
 
 // Helpers
 - (UIView *)dismissableView;

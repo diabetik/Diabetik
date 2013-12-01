@@ -71,7 +71,7 @@
         _monthLabel.backgroundColor = [UIColor whiteColor];
         _monthLabel.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
         _monthLabel.font = [UAFont standardRegularFontWithSize:21.0f];
-        _monthLabel.highlightedTextColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
+        _monthLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:_monthLabel];
         
         UIView *monthBorder = [[UIView alloc] initWithFrame:CGRectMake(20.0f, 44.0f, self.frame.size.width-20.0f, 0.5f)];
@@ -96,6 +96,7 @@
         glucoseLabel.font = [UAFont standardRegularFontWithSize:18.0f];
         glucoseLabel.textAlignment = NSTextAlignmentLeft;
         glucoseLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
+        glucoseLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:glucoseLabel];
         
         glucoseDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(72.0f, y + 29.0f, self.bounds.size.width-72.0f, 16.0f)];
@@ -104,6 +105,7 @@
         glucoseDetailLabel.font = [UAFont standardMediumFontWithSize:12.0f];
         glucoseDetailLabel.textAlignment = NSTextAlignmentLeft;
         glucoseDetailLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
+        glucoseDetailLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:glucoseDetailLabel];
         
         highGlucoseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"JournalIconBloodHigh"]];
@@ -116,6 +118,7 @@
         highGlucoseDetailLabel.font = [UAFont standardRegularFontWithSize:13.0f];
         highGlucoseDetailLabel.textAlignment = NSTextAlignmentLeft;
         highGlucoseDetailLabel.textColor = [UIColor colorWithRed:254.0f/255.0f green:79.0f/255.0f blue:96.0f/255.0f alpha:1.0f];
+        highGlucoseDetailLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:highGlucoseDetailLabel];
         
         lowGlucoseImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"JournalIconBloodLow"]];
@@ -128,6 +131,7 @@
         lowGlucoseDetailLabel.font = [UAFont standardRegularFontWithSize:13.0f];
         lowGlucoseDetailLabel.textAlignment = NSTextAlignmentLeft;
         lowGlucoseDetailLabel.textColor = [UIColor colorWithRed:0.0f/255.0f green:192.0f/255.0f blue:180.0f/255.0f alpha:1.0f];
+        lowGlucoseDetailLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:lowGlucoseDetailLabel];
         
         UIView *horizontalBorder = [[UIView alloc] initWithFrame:CGRectMake(72.0f, y + 52.0f, self.frame.size.width-72.0f, 0.5f)];
@@ -148,6 +152,7 @@
         activityLabel.font = [UAFont standardRegularFontWithSize:18.0f];
         activityLabel.textAlignment = NSTextAlignmentLeft;
         activityLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
+        activityLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:activityLabel];
         
         activityDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(72.0f, y + 29.0f, self.bounds.size.width-72.0f, 16.0f)];
@@ -156,6 +161,7 @@
         activityDetailLabel.font = [UAFont standardMediumFontWithSize:12.0f];
         activityDetailLabel.textAlignment = NSTextAlignmentLeft;
         activityDetailLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
+        activityDetailLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:activityDetailLabel];
         
         horizontalBorder = [[UIView alloc] initWithFrame:CGRectMake(72.0f, y + 52.0f, self.frame.size.width-72.0f, 0.5f)];
@@ -176,6 +182,7 @@
         mealLabel.font = [UAFont standardRegularFontWithSize:18.0f];
         mealLabel.textAlignment = NSTextAlignmentLeft;
         mealLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
+        mealLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:mealLabel];
         
         mealDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(72.0f, y + 29.0f, self.bounds.size.width-72.0f, 16.0f)];
@@ -184,6 +191,7 @@
         mealDetailLabel.font = [UAFont standardMediumFontWithSize:12.0f];
         mealDetailLabel.textAlignment = NSTextAlignmentLeft;
         mealDetailLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
+        mealDetailLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:mealDetailLabel];
         
         horizontalBorder = [[UIView alloc] initWithFrame:CGRectMake(72.0f, y + 52.0f, self.frame.size.width-72.0f, 0.5f)];
@@ -204,6 +212,7 @@
         deviationLabel.font = [UAFont standardRegularFontWithSize:18.0f];
         deviationLabel.textAlignment = NSTextAlignmentLeft;
         deviationLabel.textColor = [UIColor colorWithRed:134.0f/255.0f green:143.0f/255.0f blue:140.0f/255.0f alpha:1.0f];
+        deviationLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:deviationLabel];
         
         deviationDetailLabel = [[UILabel alloc] initWithFrame:CGRectMake(72.0f, y + 29.0f, self.bounds.size.width-72.0f, 16.0f)];
@@ -212,6 +221,7 @@
         deviationDetailLabel.font = [UAFont standardMediumFontWithSize:12.0f];
         deviationDetailLabel.textAlignment = NSTextAlignmentLeft;
         deviationDetailLabel.textColor = [UIColor colorWithRed:157.0f/255.0f green:163.0f/255.0f blue:163.0f/255.0f alpha:1.0f];
+        deviationDetailLabel.highlightedTextColor = [UIColor whiteColor];
         [self.contentView addSubview:deviationDetailLabel];
     }
     
@@ -324,5 +334,10 @@
         mealLabel.text = @"0";
     }
 }
-
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    [super setHighlighted:highlighted animated:animated];
+    
+    mealImageView.tintColor = [UIColor redColor];
+}
 @end

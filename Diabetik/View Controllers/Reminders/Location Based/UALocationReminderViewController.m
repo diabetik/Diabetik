@@ -170,7 +170,6 @@
     if(!error)
     {
         [[UALocationController sharedInstance] setupLocationMonitoringForApplicableReminders];
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
         
         [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];

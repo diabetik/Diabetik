@@ -20,7 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UATimelineViewCell : UITableViewCell
+@interface UATimelineViewCell : UAGenericTableViewCell
 @property (nonatomic, retain) UIImageView *iconImageView;
 @property (nonatomic, retain) NSDictionary *metadata;
 @property (nonatomic, retain) UILabel *descriptionLabel;

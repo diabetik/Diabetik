@@ -31,17 +31,15 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
+        self.backgroundColor = [UIColor whiteColor];
         self.titleLabel.font = [UAFont standardDemiBoldFontWithSize:13.0f];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel.adjustsFontSizeToFitWidth = YES;
         self.titleLabel.minimumScaleFactor = 0.5f;
         
-        [self setTitleColor:[UIColor colorWithRed:148.0f/255.0f green:148.0f/255.0f blue:148.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
-        
         _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:frame];
         _activityIndicatorView.hidesWhenStopped = YES;
-        _activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+        _activityIndicatorView.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
         _activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:_activityIndicatorView];
         
@@ -72,11 +70,11 @@
     
     if(highlighted)
     {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor colorWithRed:226.0f/255.0f green:236.0f/255.0f blue:233.0f/255.0f alpha:1.0f];
     }
     else
     {
-        self.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
+        self.backgroundColor = [UIColor whiteColor];
     }
 }
 - (void)setEnabled:(BOOL)enabled
@@ -85,11 +83,13 @@
     
     if(enabled)
     {
-        [self setTitleColor:[UIColor colorWithRed:148.0f/255.0f green:148.0f/255.0f blue:148.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
+        self.titleLabel.alpha = 1.0f;
+        self.imageView.alpha = 1.0f;
     }
     else
     {
-        [self setTitleColor:[UIColor colorWithRed:97.0f/255.0f green:97.0f/255.0f blue:97.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
+        self.imageView.alpha = 0.25f;
+        self.titleLabel.alpha = 0.5f;
     }
 }
 

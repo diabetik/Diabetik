@@ -41,7 +41,6 @@
 - (void)setDateRangeForRelativeDays:(NSInteger)days;
 - (void)performSearchWithText:(NSString *)searchText;
 - (void)calculateSectionStats;
-- (void)setSearchBarBehaviour;
 
 // UI
 - (void)addEvent:(id)sender;

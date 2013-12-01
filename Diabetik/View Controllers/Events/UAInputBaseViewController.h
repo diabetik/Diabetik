@@ -20,6 +20,7 @@
 
 #import "TGRImageViewController.h"
 #import "TGRImageZoomAnimationController.h"
+#import "UITextView+Extension.h"
 
 #import "UABaseViewController.h"
 #import "UAInputParentViewController.h"

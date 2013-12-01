@@ -107,17 +107,8 @@
     UAJournalViewController *journalViewController = [[UAJournalViewController alloc] initWithMOC:self.managedObjectContext];
     UANavigationController *navigationController = [[UANavigationController alloc] initWithRootViewController:journalViewController];
     
-    self.viewController = [[JASidePanelController alloc] init];
-    self.viewController.leftPanel = [[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext];
-    self.viewController.centerPanel = navigationController;
-    self.viewController.rightPanel = nil;
-    self.viewController.panningLimitedToTopViewController = NO;
-
-    /*
-    self.viewController = [[UASideMenuController alloc] initWithNibName:nil bundle:nil];
-    self.viewController.leftPanel = [[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext];
-    self.viewController.centerPanel = navigationController;
-    */
+    self.viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext]];
+    self.viewController.liveBlur = YES;
     
     [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];

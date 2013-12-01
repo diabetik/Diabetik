@@ -85,17 +85,25 @@
         
         // Ditch out of the edit view if the reminder we're editing is removed
         reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            NSArray *existingReminders = [[UAReminderController sharedInstance] fetchAllReminders];
             
+            NSArray *existingReminders = [[UAReminderController sharedInstance] fetchAllReminders];
+
             BOOL reminderStillExists = NO;
-            for(UAReminder *existingReminder in [existingReminders objectAtIndex:kReminderTypeDate])
+            for(NSArray *reminders in existingReminders)
             {
-                if([existingReminder isEqual:reminder])
+                for(UAReminder *existingReminder in reminders)
                 {
-                    reminderStillExists = YES;
+                    if([existingReminder isEqual:reminder])
+                    {
+                        reminderStillExists = YES;
+                    }
                 }
             }
-            if(!reminderStillExists) [self handleBack:self];
+            
+            if(!reminderStillExists)
+            {
+                [self handleBack:self withSound:NO];
+            }
         }];
     }
     return self;
@@ -157,6 +165,8 @@
                 NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:self.moc];
                 newReminder = (UAReminder *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
                 newReminder.created = [NSDate date];
+                
+                NSLog(@"Creating new reminder");
             }
             newReminder.message = message;
             newReminder.date = notificationDate;
@@ -213,7 +223,9 @@
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
         [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
-        [self handleBack:self withSound:NO];
+        
+        // We don't have to pop our view controller here because this is handled automatically when editing
+        // a deleted reminder (see the notification responder in the initWithReminder method)
     }
     else
     {

@@ -28,8 +28,4 @@
 // Setup
 - (id)initWithMOC:(NSManagedObjectContext *)aMOC;
 
-// UI
-- (void)toggleSmartInput:(UISwitch *)sender;
-- (void)toggleSounds:(UISwitch *)sender;
-
 @end

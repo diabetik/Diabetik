@@ -749,6 +749,8 @@
 #pragma mar - UITableViewDelegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    
     if(indexPath.section == 0)
     {
         NSArray *keys = [reportData allKeys];

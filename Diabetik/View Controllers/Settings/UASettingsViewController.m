@@ -29,12 +29,18 @@
 #import "UASettingsBackupViewController.h"
 #import "UASettingsLicensesViewController.h"
 
+#import "UASettingsViewCell.h"
 #import "UAHelper.h"
 #import "UAReading.h"
 
-#define kMedicationReminderAlertTag 1
-#define kGeofenceReminderSwitchTag 0
-#define kUseSmartInputTag 1
+@interface UASettingsViewController ()
+
+// UI
+- (void)toggleSmartInput:(UISwitch *)sender;
+- (void)toggleSounds:(UISwitch *)sender;
+- (void)toggleSearchResultCollapse:(UISwitch *)sender;
+
+@end
 
 @implementation UASettingsViewController
 @synthesize moc = _moc;
@@ -83,6 +89,10 @@
     [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:kUseSoundsKey];
     [[VKRSAppSoundPlayer sharedInstance] setSoundsEnabled:[sender isOn]];
 }
+- (void)toggleSearchResultCollapse:(UISwitch *)sender
+{
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:kFilterSearchResultsKey];
+}
 
 #pragma mark - UITableViewDataSource methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
@@ -93,7 +103,7 @@
 {
     if(section == 0)
     {
-        return 3;
+        return 4;
     }
     else if(section == 1)
     {
@@ -139,10 +149,10 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UAGenericTableViewCell *cell = (UAGenericTableViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
+    UASettingsViewCell *cell = (UASettingsViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
     if (cell == nil)
     {
-        cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UASettingCell"];
+        cell = [[UASettingsViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UASettingCell"];
     }
     [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     
@@ -156,7 +166,6 @@
             cell.textLabel.text = NSLocalizedString(@"Smart input", @"A settings switch to control the Smart Input feature");
             
             UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
-            switchControl.tag = kUseSmartInputTag;
             [switchControl addTarget:self action:@selector(toggleSmartInput:) forControlEvents:UIControlEventTouchUpInside];
             cell.accessoryView = switchControl;
             
@@ -167,13 +176,22 @@
             cell.textLabel.text = NSLocalizedString(@"Sounds", @"A settings switch to control application sounds");
             
             UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
-            switchControl.tag = kUseSmartInputTag;
             [switchControl addTarget:self action:@selector(toggleSounds:) forControlEvents:UIControlEventTouchUpInside];
             cell.accessoryView = switchControl;
             
             [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kUseSoundsKey]];
         }
         else if(indexPath.row == 2)
+        {
+            cell.textLabel.text = NSLocalizedString(@"Collapse search results", @"A setting asking whether or not results should be collapsed when searching occurs");
+            
+            UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
+            [switchControl addTarget:self action:@selector(toggleSearchResultCollapse:) forControlEvents:UIControlEventTouchUpInside];
+            cell.accessoryView = switchControl;
+            
+            [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kFilterSearchResultsKey]];
+        }
+        else if(indexPath.row == 3)
         {
             cell.textLabel.text = NSLocalizedString(@"Glucose settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -191,7 +209,9 @@
             UAAccount *account = [[[UAAccountController sharedInstance] accounts] objectAtIndex:indexPath.row];
             if(account)
             {
+                UIImage *avatar = [[UAMediaController sharedInstance] imageWithFilename:account.photoPath];
                 cell.textLabel.text = account.name;
+                cell.imageView.image = avatar ? avatar : [UIImage imageNamed:@"DefaultAvatar"];
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             }
         }
@@ -236,7 +256,7 @@
     
     if(indexPath.section == 0)
     {
-        if(indexPath.row == 2)
+        if(indexPath.row == 3)
         {
             UASettingsGlucoseViewController *vc = [[UASettingsGlucoseViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];

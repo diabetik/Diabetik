@@ -409,9 +409,11 @@
             cell.accessoryView = textField;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            [autocompleteBar removeFromSuperview];            
-            UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-            accessoryView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"GenericAccessoryViewBackground.png"]];
+            [autocompleteBar removeFromSuperview];
+            
+            UIInputView *accessoryView = [[UIInputView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f) inputViewStyle:UIInputViewStyleDefault];
+            //UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+            //accessoryView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"GenericAccessoryViewBackground.png"]];
             autocompleteBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width, accessoryView.frame.size.height);
             [accessoryView addSubview:autocompleteBar];
             textField.inputAccessoryView = accessoryView;
@@ -439,10 +441,6 @@
             textField.tag = 1;
             cell.accessoryView = textField;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-            accessoryView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"GenericAccessoryViewBackground.png"]];
-            textField.inputAccessoryView = accessoryView;
         }
         else if(indexPath.row == 1)
         {
@@ -540,7 +538,7 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *newValue = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)[[textField superview] superview]];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)[[[textField superview] superview] superview]];
 
     if(indexPath.section == 1 && indexPath.row == 1)
     {
@@ -554,7 +552,7 @@
     [autocompleteBar showSuggestionsForInput:nil];
     [autocompleteBar fetchSuggestions];
     
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)textField.superview.superview];
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)textField.superview.superview.superview];
     self.activeControlIndexPath = indexPath;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField

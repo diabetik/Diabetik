@@ -20,7 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UAJournalMonthViewCell : UITableViewCell
+@interface UAJournalMonthViewCell : UAGenericTableViewCell
 @property (nonatomic, strong) UILabel *monthLabel;
 
 // Accessors

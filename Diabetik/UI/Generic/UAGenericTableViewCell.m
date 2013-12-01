@@ -37,21 +37,20 @@
         
         UIImageView *selectedBackground = [[UIImageView alloc] initWithFrame:self.bounds];
         selectedBackground.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        selectedBackground.backgroundColor = [UIColor colorWithRed:225.0f/255.0f green:225.0f/255.0f blue:225.0f/255.0f alpha:1.0f];
+        selectedBackground.backgroundColor = [UIColor colorWithRed:22.0f/255.0f green:211.0f/255.0f blue:160.0f/255.0f alpha:1.0f];
         self.selectedBackgroundView = selectedBackground;
         
         self.textLabel.backgroundColor = [UIColor clearColor];
         self.textLabel.textColor = [UIColor colorWithRed:73.0f/255.0f green:76.0f/255.0f blue:76.0f/255.0f alpha:1.0];
         self.textLabel.font = [UAFont standardRegularFontWithSize:16.0f];
-        self.textLabel.shadowColor = [UIColor whiteColor];
-        self.textLabel.shadowOffset = CGSizeMake(0, 1);
-        self.textLabel.highlightedTextColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
+        self.textLabel.highlightedTextColor = [UIColor whiteColor];
         self.textLabel.adjustsFontSizeToFitWidth = YES;
         self.textLabel.minimumScaleFactor = 0.5f;
         
         self.detailTextLabel.font = [UAFont standardRegularFontWithSize:13.0f];
         self.detailTextLabel.backgroundColor = [UIColor clearColor];
-        self.detailTextLabel.highlightedTextColor = [UIColor colorWithRed:46.0f/255.0f green:46.0f/255.0f blue:46.0f/255.0f alpha:1.0f];
+        self.detailTextLabel.textColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
+        self.detailTextLabel.highlightedTextColor = [UIColor whiteColor];
     }
     return self;
 }
@@ -82,19 +81,6 @@
         }
     }
 }
-- (void)setAccessoryType:(UITableViewCellAccessoryType)accessoryType
-{
-    /*if(accessoryType == UITableViewCellAccessoryDisclosureIndicator)
-    {
-        UIImageView *chevronImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Chevron.png"]];
-        [chevronImageView setHighlightedImage:[UIImage imageNamed:@"ChevronPressed.png"]];
-        self.accessoryView = chevronImageView;
-    }
-    else*/
-    {
-        [super setAccessoryType:accessoryType];
-    }
-}
 - (void)setAccessoryView:(UIView *)controlView
 {
     self.accessoryControl = controlView;
@@ -113,31 +99,5 @@
     {
         [super setAccessoryView:controlView];
     }
-}
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
-{
-    if(highlighted)
-    {
-        self.textLabel.shadowColor = [UIColor clearColor];
-    }
-    else
-    {
-        self.textLabel.shadowColor = [UIColor whiteColor];
-    }
-    
-    [super setHighlighted:highlighted animated:animated];
-}
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    if(selected)
-    {
-        self.textLabel.shadowColor = [UIColor clearColor];
-    }
-    else
-    {
-        self.textLabel.shadowColor = [UIColor whiteColor];
-    }
-    
-    [super setSelected:selected animated:animated];
 }
 @end

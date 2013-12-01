@@ -30,13 +30,13 @@
     if (self)
     {
         UANotesTextView *textView = [[UANotesTextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.contentView.frame.size.width, self.contentView.frame.size.height)];
-        textView.backgroundColor = [UIColor redColor];
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         textView.scrollEnabled = NO;
         textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         textView.autocorrectionType = UITextAutocorrectionTypeYes;
         textView.font = [UAFont standardMediumFontWithSize:16.0f];
         textView.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
+        textView.keyboardAppearance = UIKeyboardAppearanceLight;
         textView.text = @"";
         
         self.control = textView;

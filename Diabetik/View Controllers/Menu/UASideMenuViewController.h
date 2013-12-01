@@ -20,8 +20,6 @@
 
 #import <UIKit/UIKit.h>
 #import "UAModalView.h"
-#import "UIViewController+JASidePanel.h"
-#import "JASidePanelController.h"
 
 @interface UASideMenuViewController : UABaseTableViewController <UAModalViewDelegate>
 

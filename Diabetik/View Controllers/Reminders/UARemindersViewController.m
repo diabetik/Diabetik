@@ -20,7 +20,6 @@
 
 #import "UARemindersViewController.h"
 #import "UARemindersTooltipView.h"
-#import "JASidePanelController.h"
 
 @interface UARemindersViewController ()
 {
@@ -58,12 +57,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-    __weak typeof(self) weakSelf = self;
-    reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        weakSelf.reminders = [[UAReminderController sharedInstance] reminders];
-        [weakSelf.tableView reloadData];
-    }];
+
     _rules = [[UAReminderController sharedInstance] fetchAllReminderRules];
     
     if(!noRemindersView)
@@ -90,6 +84,14 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    __weak typeof(self) weakSelf = self;
+    reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        strongSelf.reminders = [[UAReminderController sharedInstance] reminders];
+        [strongSelf.tableView reloadData];
+    }];
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenReminderTooltip])
     {
@@ -213,12 +215,29 @@
         cell.detailTextLabel.text = nil;
     }
     
+    switch(adjustedSection)
+    {
+        case kReminderTypeDate:
+            cell.imageView.image = [UIImage imageNamed:@"ListMenuIconTimeReminder.png"];
+            break;
+        case kReminderTypeRepeating:
+            cell.imageView.image = [UIImage imageNamed:@"ListMenuIconDateReminder.png"];
+            break;
+        case kReminderTypeLocation:
+            cell.imageView.image = [UIImage imageNamed:@"ListMenuIconLocationReminder.png"];
+            break;
+        default:
+            cell.imageView.image = nil;
+            break;
+    }
+    
     return cell;
 }
 
 #pragma mark - UITableViewDelegate methods
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [super tableView:aTableView didSelectRowAtIndexPath:indexPath];
     [aTableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSInteger adjustedSection = [self adjustedSectionForSection:indexPath.section];

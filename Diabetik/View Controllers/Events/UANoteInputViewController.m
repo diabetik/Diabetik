@@ -195,7 +195,7 @@
         UANotesTextView *textView = (UANotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
-        textViewHeight = textView.intrinsicContentSize.height;
+        textViewHeight = textView.contentSize.height;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
         self.autocompleteTagBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height);
@@ -252,12 +252,7 @@
     float height = 0.0;
     if(indexPath.row == 2)
     {
-        CGRect textFrame = [notes boundingRectWithSize:CGSizeMake(self.view.frame.size.width-85.0f, CGFLOAT_MAX)
-                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                            attributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:16.0f]}
-                                               context:nil];
-        
-        height = textViewHeight > 0 ? textViewHeight : textFrame.size.height + 80.0f;
+        height = textViewHeight;
     }
     
     if(height < 44.0f) height = 44.0f;
