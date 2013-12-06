@@ -21,14 +21,16 @@
 #import <UIKit/UIKit.h>
 
 @interface UATimelineViewCell : UAGenericTableViewCell
-@property (nonatomic, retain) UIImageView *iconImageView;
-@property (nonatomic, retain) NSDictionary *metadata;
-@property (nonatomic, retain) UILabel *descriptionLabel;
-@property (nonatomic, retain) UILabel *valueLabel;
-@property (nonatomic, retain) UILabel *timestampLabel;
-@property (nonatomic, retain) UILabel *notesLabel;
+@property (nonatomic, strong) UIImageView *iconImageView;
+@property (nonatomic, strong) NSDictionary *metadata;
+@property (nonatomic, strong) UIImageView *photoImageView;
+@property (nonatomic, strong) UILabel *descriptionLabel;
+@property (nonatomic, strong) UILabel *valueLabel;
+@property (nonatomic, strong) UILabel *timestampLabel;
+@property (nonatomic, strong) UILabel *notesLabel;
 
 // Logic
+- (void)setPhotoImage:(UIImage *)image;
 - (void)setMetaData:(NSDictionary *)data;
 - (void)setDate:(NSDate *)aDate;
 - (void)setCellStyleWithIndexPath:(NSIndexPath *)indexPath andTotalRows:(NSInteger)totalRows;

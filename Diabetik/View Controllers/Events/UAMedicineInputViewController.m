@@ -286,22 +286,22 @@
         UASuggestionBar *suggestionBar = [[UASuggestionBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height)];
         [accessoryView.contentView addSubview:suggestionBar];
         
-        UAAutocompleteBarButton *units = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 10.0f, 0.0f, 29.0f)];
+        UAAutocompleteBarButton *units = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 12.0f, 0.0f, 27.0f)];
         [units setTitle:NSLocalizedString(@"units", nil) forState:UIControlStateNormal];
         [units addTarget:self action:@selector(selectType:) forControlEvents:UIControlEventTouchUpInside];
         [units setTag:kMedicineTypeUnits];
         
-        UAAutocompleteBarButton *mg = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 10.0f, 0.0f, 29.0f)];
+        UAAutocompleteBarButton *mg = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 12.0f, 0.0f, 27.0f)];
         [mg setTitle:NSLocalizedString(@"mg", nil) forState:UIControlStateNormal];
         [mg addTarget:self action:@selector(selectType:) forControlEvents:UIControlEventTouchUpInside];
         [mg setTag:kMedicineTypeMG];
         
-        UAAutocompleteBarButton *pills = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 10.0f, 0.0f, 29.0f)];
+        UAAutocompleteBarButton *pills = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 12.0f, 0.0f, 27.0f)];
         [pills setTitle:NSLocalizedString(@"pills", nil) forState:UIControlStateNormal];
         [pills addTarget:self action:@selector(selectType:) forControlEvents:UIControlEventTouchUpInside];
         [pills setTag:kMedicineTypePills];
         
-        UAAutocompleteBarButton *puffs = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 10.0f, 0.0f, 29.0f)];
+        UAAutocompleteBarButton *puffs = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 12.0f, 0.0f, 27.0f)];
         [puffs setTitle:NSLocalizedString(@"puffs", nil) forState:UIControlStateNormal];
         [puffs addTarget:self action:@selector(selectType:) forControlEvents:UIControlEventTouchUpInside];
         [puffs setTag:kMedicineTypePuffs];

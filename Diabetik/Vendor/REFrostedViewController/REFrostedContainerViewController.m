@@ -52,6 +52,7 @@
 {
     [super viewDidLoad];
     self.backgroundViews = [NSMutableArray array];
+    
     for (NSInteger i = 0; i < 4; i++) {
         UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectNull];
         backgroundView.backgroundColor = [UIColor blackColor];
@@ -194,12 +195,19 @@
     }
 }
 
+
 - (void)hide
+{
+	[self hideWithCompletitionHandler:^{}];
+}
+
+- (void)hideWithCompletitionHandler:(void(^)(void))completition
 {
     void (^completionHandler)(void) = ^{
         if ([self.frostedViewController.delegate conformsToProtocol:@protocol(REFrostedViewControllerDelegate)] && [self.frostedViewController.delegate respondsToSelector:@selector(frostedViewController:didHideMenuViewController:)]) {
             [self.frostedViewController.delegate frostedViewController:self.frostedViewController didHideMenuViewController:self.frostedViewController.menuViewController];
         }
+		completition();		
     };
     
     if ([self.frostedViewController.delegate conformsToProtocol:@protocol(REFrostedViewControllerDelegate)] && [self.frostedViewController.delegate respondsToSelector:@selector(frostedViewController:willHideMenuViewController:)]) {

@@ -50,7 +50,10 @@
 }
 
 #pragma mark - Logic
-- (void)saveImage:(UIImage *)image withFilename:(NSString *)filename success:(void (^)(void))successCallback failure:(void (^)(NSError *))failureCallback
+- (void)saveImage:(UIImage *)image
+     withFilename:(NSString *)filename
+          success:(void (^)(void))successCallback
+          failure:(void (^)(NSError *))failureCallback
 {
     dispatch_async( dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -94,7 +97,9 @@
         });
     });
 }
-- (void)deleteImageWithFilename:(NSString *)filename success:(void (^)(void))successCallback failure:(void (^)(NSError *))failureCallback
+- (void)deleteImageWithFilename:(NSString *)filename
+                        success:(void (^)(void))successCallback
+                        failure:(void (^)(NSError *))failureCallback
 {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     if([paths count])
@@ -140,9 +145,44 @@
     
     return nil;
 }
+- (void)imageWithFilenameAsync:(NSString *)filename
+                       success:(void (^)(UIImage *))successCallback
+                       failure:(void (^)(void))failureCallback
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        if([strongSelf.cache objectForKey:filename])
+        {
+            if(successCallback) successCallback([strongSelf.cache objectForKey:filename]);
+            return;
+        }
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        if([paths count])
+        {
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSString *imagePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"/Images/%@.jpg", filename]];
+            
+            UIImage *image = [UIImage imageWithContentsOfFile:imagePath];
+            if(image)
+            {
+                [strongSelf.cache setObject:image forKey:filename];
+                
+                if(successCallback) successCallback(image);
+                return;
+            }
+        }
+        
+        if(failureCallback) failureCallback();
+    });
+}
 
 #pragma mark - Helpers
-- (UIImage *)resizeImage:(UIImage *)image toSize:(CGSize)newSize
+- (UIImage *)resizeImage:(UIImage *)image
+                  toSize:(CGSize)newSize
 {
     UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];

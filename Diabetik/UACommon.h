@@ -99,6 +99,7 @@ static NSString * const kHasSeenExportTooltip = @"kHasSeenExportTooltip";
 static NSString * const kHasSeenAddDragUIHint = @"kHasSeenAddDragUIHint";
 static NSString * const kFilterSearchResultsKey = @"kFilterSearchResultsKey";
 static NSString * const kReportsDefaultKey = @"kReportsDefaultKey";
+static NSString * const kShowInlineImages = @"kShowInlineImages";
 
 static NSString * const kSettingsChangedNotification = @"kSettingsChangedNotification";
 static NSString * const kActiveAccountKey = @"kActiveAccountKey";

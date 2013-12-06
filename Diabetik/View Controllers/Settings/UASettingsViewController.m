@@ -24,6 +24,7 @@
 
 #import "UASettingsViewController.h"
 #import "UASettingsGlucoseViewController.h"
+#import "UASettingsTimelineViewController.h"
 #import "UASettingsDropboxViewController.h"
 #import "UASettingsRunKeeperViewController.h"
 #import "UASettingsBackupViewController.h"
@@ -38,7 +39,6 @@
 // UI
 - (void)toggleSmartInput:(UISwitch *)sender;
 - (void)toggleSounds:(UISwitch *)sender;
-- (void)toggleSearchResultCollapse:(UISwitch *)sender;
 
 @end
 
@@ -88,10 +88,6 @@
 {
     [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:kUseSoundsKey];
     [[VKRSAppSoundPlayer sharedInstance] setSoundsEnabled:[sender isOn]];
-}
-- (void)toggleSearchResultCollapse:(UISwitch *)sender
-{
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:kFilterSearchResultsKey];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -183,13 +179,8 @@
         }
         else if(indexPath.row == 2)
         {
-            cell.textLabel.text = NSLocalizedString(@"Collapse search results", @"A setting asking whether or not results should be collapsed when searching occurs");
-            
-            UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
-            [switchControl addTarget:self action:@selector(toggleSearchResultCollapse:) forControlEvents:UIControlEventTouchUpInside];
-            cell.accessoryView = switchControl;
-            
-            [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kFilterSearchResultsKey]];
+            cell.textLabel.text = NSLocalizedString(@"Timeline settings", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         else if(indexPath.row == 3)
         {
@@ -256,7 +247,12 @@
     
     if(indexPath.section == 0)
     {
-        if(indexPath.row == 3)
+        if(indexPath.row == 2)
+        {
+            UASettingsTimelineViewController *vc = [[UASettingsTimelineViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if(indexPath.row == 3)
         {
             UASettingsGlucoseViewController *vc = [[UASettingsGlucoseViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];

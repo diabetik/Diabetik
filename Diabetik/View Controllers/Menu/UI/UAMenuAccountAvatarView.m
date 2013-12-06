@@ -17,8 +17,8 @@
     if(self)
     {
         self.contentMode = UIViewContentModeScaleAspectFit;
-        //imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.layer.cornerRadius = 25.0f;
+        self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        self.layer.cornerRadius = 35.0f;
         self.layer.masksToBounds = YES;
         self.layer.borderColor = [UIColor whiteColor].CGColor;
         self.layer.borderWidth = 2.0f;

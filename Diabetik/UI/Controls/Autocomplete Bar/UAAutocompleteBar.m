@@ -47,7 +47,7 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
         self.suggestions = nil;
         
-        tagButton = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(10.0f, 10.0f, 40.0f, 29.0f)];
+        tagButton = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(10.0f, 12.0f, 40.0f, 27.0f)];
         [tagButton setImage:[UIImage imageNamed:@"AccessoryViewIconTag.png"] forState:UIControlStateNormal];
         [tagButton addTarget:self action:@selector(addTag:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:tagButton];
@@ -102,7 +102,7 @@
             NSString *lowercaseSuggestions = [suggestion lowercaseString];
             if([lowercaseSuggestions hasPrefix:lowercaseInput] && ![lowercaseSuggestions isEqualToString:lowercaseInput])
             {
-                UAAutocompleteBarButton *button = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(x, 10.0f, 0.0f, 29.0f)];
+                UAAutocompleteBarButton *button = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(x, 12.0f, 0.0f, 27.0f)];
                 [button setTitle:suggestion forState:UIControlStateNormal];
                 [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 

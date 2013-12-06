@@ -96,8 +96,7 @@
     self.tableView.backgroundView = nil;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.separatorColor = [UIColor colorWithRed:10.0f/255.0f green:10.0f/255.0f blue:10.0f/255.0f alpha:0.12f];
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(64.0f, 0, kAccessoryViewHeight, 0);
-    self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 48.0f, 0.0f);
+    
     [baseView addSubview:self.tableView];
     
     self.view = baseView;
@@ -126,6 +125,13 @@
     }
     
     [self didBecomeActive:editMode];
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, kAccessoryViewHeight, 0.0f);
+    self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, kAccessoryViewHeight, 0.0f);
 }
 
 #pragma mark - Logic

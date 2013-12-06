@@ -10,18 +10,18 @@
 		530603A4167FCFFA00EFBE8B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530603A3167FCFFA00EFBE8B /* CoreLocation.framework */; };
 		531026521849135E001C5766 /* UAMenuAccountAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 531026511849135E001C5766 /* UAMenuAccountAvatarView.m */; };
 		5310265618491F4F001C5766 /* UADragMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5310265518491F4F001C5766 /* UADragMenuViewController.m */; };
+		531D4D81184D372800ABAEC3 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D76184D372800ABAEC3 /* RECommonFunctions.m */; };
+		531D4D82184D372800ABAEC3 /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D78184D372800ABAEC3 /* REFrostedContainerViewController.m */; };
+		531D4D83184D372800ABAEC3 /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D7A184D372800ABAEC3 /* REFrostedViewController.m */; };
+		531D4D84184D372800ABAEC3 /* UIImage+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D7C184D372800ABAEC3 /* UIImage+REFrostedViewController.m */; };
+		531D4D85184D372800ABAEC3 /* UIView+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D7E184D372800ABAEC3 /* UIView+REFrostedViewController.m */; };
+		531D4D86184D372800ABAEC3 /* UIViewController+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D80184D372800ABAEC3 /* UIViewController+REFrostedViewController.m */; };
 		5324AFFD16DE8BE40004A30F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324AFFC16DE8BE30004A30F /* libz.dylib */; };
 		5324D3B3175102730003F257 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324D3B2175102730003F257 /* AudioToolbox.framework */; };
 		5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */; };
 		532BF5FD17C401260073359B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 532BF5FC17C401260073359B /* Default-568h@2x.png */; };
 		532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EA4177D7DD1000D793F /* CoreText.framework */; };
 		532D0EA8177D7F64000D793F /* HockeyApp-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EA7177D7F64000D793F /* HockeyApp-License.txt */; };
-		5331B69618479BC60006B457 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331B68B18479BC60006B457 /* RECommonFunctions.m */; };
-		5331B69718479BC60006B457 /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331B68D18479BC60006B457 /* REFrostedContainerViewController.m */; };
-		5331B69818479BC60006B457 /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331B68F18479BC60006B457 /* REFrostedViewController.m */; };
-		5331B69918479BC60006B457 /* UIImage+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331B69118479BC60006B457 /* UIImage+REFrostedViewController.m */; };
-		5331B69A18479BC60006B457 /* UIView+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331B69318479BC60006B457 /* UIView+REFrostedViewController.m */; };
-		5331B69B18479BC60006B457 /* UIViewController+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5331B69518479BC60006B457 /* UIViewController+REFrostedViewController.m */; };
 		53327C46170DDED3004FA6D2 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53327C43170DDEC9004FA6D2 /* libOAuth2Client.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		53350EC917B6A86300223662 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53350EC817B6A86300223662 /* Media.xcassets */; };
 		53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */; };
@@ -168,6 +168,7 @@
 		533F356C17736C5500AD89E2 /* UAExportTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355617736C5500AD89E2 /* UAExportTooltipView.m */; };
 		533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355817736C5500AD89E2 /* UAIntroductionTooltipView.m */; };
 		533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */; };
+		534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */; };
 		5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5354083817B7B90A008C64A4 /* StoreKit.framework */; };
 		535918A717809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */; };
 		536E965A177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E9657177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */; };
@@ -180,16 +181,13 @@
 		538FF35116FB1152002B4FC9 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538FF35016FB1152002B4FC9 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		538FF35316FB115E002B4FC9 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538FF35216FB115E002B4FC9 /* Accounts.framework */; };
 		53949907184A98B400FF20D1 /* UASettingsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53949906184A98B400FF20D1 /* UASettingsViewCell.m */; };
-		5394990F184AB37600FF20D1 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5394990A184AB37600FF20D1 /* RECommonFunctions.m */; };
-		53949910184AB37600FF20D1 /* RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5394990C184AB37600FF20D1 /* RESideMenu.m */; };
-		53949911184AB37600FF20D1 /* UIViewController+RESideMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5394990E184AB37600FF20D1 /* UIViewController+RESideMenu.m */; };
 		5399308A16852640002F208D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5399308916852640002F208D /* QuartzCore.framework */; };
 		5399F55816DBD850007E619B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5399F55716DBD850007E619B /* MapKit.framework */; };
 		539E1CCF17B7FEA10059ED17 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E1CCE17B7FEA10059ED17 /* UIImage+ImageEffects.m */; };
 		539E1CD117B7FEDD0059ED17 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539E1CD017B7FEDD0059ED17 /* Accelerate.framework */; };
 		539E9FA4184B8C22009803D1 /* UITextView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E9FA3184B8C22009803D1 /* UITextView+Extension.m */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
-		53BAD21F1847FF3B007F2977 /* UAMenuAccountSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BAD21E1847FF3B007F2977 /* UAMenuAccountSelectionView.m */; };
+		53BAD21F1847FF3B007F2977 /* UASideMenuHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BAD21E1847FF3B007F2977 /* UASideMenuHeaderView.m */; };
 		53D5C4C2184129840000CB86 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C1184129840000CB86 /* Dropbox.framework */; };
 		53D5C4C8184129EB0000CB86 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C4184129EB0000CB86 /* HockeySDK.framework */; };
 		53D5C4C9184129EB0000CB86 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4C6184129EB0000CB86 /* HockeySDK.xcconfig */; };
@@ -209,7 +207,6 @@
 		53F78EE018425634006736F5 /* UATimelineStatView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78EDF18425634006736F5 /* UATimelineStatView.m */; };
 		53F78EE41842700D006736F5 /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F78EE31842700C006736F5 /* libstdc++.6.0.9.dylib */; };
 		53F78EE618427791006736F5 /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F78EE518427791006736F5 /* ShinobiCharts.framework */; };
-		53FF442617B54E450047B6A5 /* UASideMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FF442517B54E450047B6A5 /* UASideMenuController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -235,6 +232,18 @@
 		531026511849135E001C5766 /* UAMenuAccountAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMenuAccountAvatarView.m; sourceTree = "<group>"; };
 		5310265418491F4F001C5766 /* UADragMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UADragMenuViewController.h; sourceTree = "<group>"; };
 		5310265518491F4F001C5766 /* UADragMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UADragMenuViewController.m; sourceTree = "<group>"; };
+		531D4D75184D372800ABAEC3 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
+		531D4D76184D372800ABAEC3 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
+		531D4D77184D372800ABAEC3 /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedContainerViewController.h; sourceTree = "<group>"; };
+		531D4D78184D372800ABAEC3 /* REFrostedContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REFrostedContainerViewController.m; sourceTree = "<group>"; };
+		531D4D79184D372800ABAEC3 /* REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedViewController.h; sourceTree = "<group>"; };
+		531D4D7A184D372800ABAEC3 /* REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REFrostedViewController.m; sourceTree = "<group>"; };
+		531D4D7B184D372800ABAEC3 /* UIImage+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+REFrostedViewController.h"; sourceTree = "<group>"; };
+		531D4D7C184D372800ABAEC3 /* UIImage+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+REFrostedViewController.m"; sourceTree = "<group>"; };
+		531D4D7D184D372800ABAEC3 /* UIView+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+REFrostedViewController.h"; sourceTree = "<group>"; };
+		531D4D7E184D372800ABAEC3 /* UIView+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+REFrostedViewController.m"; sourceTree = "<group>"; };
+		531D4D7F184D372800ABAEC3 /* UIViewController+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+REFrostedViewController.h"; sourceTree = "<group>"; };
+		531D4D80184D372800ABAEC3 /* UIViewController+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+REFrostedViewController.m"; sourceTree = "<group>"; };
 		5324AFFC16DE8BE30004A30F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5324D3B2175102730003F257 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5326A32417CFB74900B5F4A2 /* Diabetik_1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diabetik_1.2.xcdatamodel; sourceTree = "<group>"; };
@@ -242,18 +251,6 @@
 		532BF5FC17C401260073359B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		532D0EA4177D7DD1000D793F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		532D0EA7177D7F64000D793F /* HockeyApp-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "HockeyApp-License.txt"; sourceTree = "<group>"; };
-		5331B68A18479BC60006B457 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
-		5331B68B18479BC60006B457 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
-		5331B68C18479BC60006B457 /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedContainerViewController.h; sourceTree = "<group>"; };
-		5331B68D18479BC60006B457 /* REFrostedContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REFrostedContainerViewController.m; sourceTree = "<group>"; };
-		5331B68E18479BC60006B457 /* REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedViewController.h; sourceTree = "<group>"; };
-		5331B68F18479BC60006B457 /* REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REFrostedViewController.m; sourceTree = "<group>"; };
-		5331B69018479BC60006B457 /* UIImage+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+REFrostedViewController.h"; sourceTree = "<group>"; };
-		5331B69118479BC60006B457 /* UIImage+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+REFrostedViewController.m"; sourceTree = "<group>"; };
-		5331B69218479BC60006B457 /* UIView+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+REFrostedViewController.h"; sourceTree = "<group>"; };
-		5331B69318479BC60006B457 /* UIView+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+REFrostedViewController.m"; sourceTree = "<group>"; };
-		5331B69418479BC60006B457 /* UIViewController+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+REFrostedViewController.h"; sourceTree = "<group>"; };
-		5331B69518479BC60006B457 /* UIViewController+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+REFrostedViewController.m"; sourceTree = "<group>"; };
 		53327C3B170DDEC8004FA6D2 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = "OAuth2Client-master/OAuth2Client.xcodeproj"; sourceTree = "<group>"; };
 		53350EC817B6A86300223662 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -530,6 +527,8 @@
 		533F355917736C5500AD89E2 /* UARemindersTooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARemindersTooltipView.h; sourceTree = "<group>"; };
 		533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARemindersTooltipView.m; sourceTree = "<group>"; };
 		533F355B17736C5500AD89E2 /* UAUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAUI.h; sourceTree = "<group>"; };
+		534617511852828E00ED4B6D /* UASettingsTimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsTimelineViewController.h; sourceTree = "<group>"; };
+		534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsTimelineViewController.m; sourceTree = "<group>"; };
 		5354083817B7B90A008C64A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_2_to_1.1.xcmappingmodel; sourceTree = SOURCE_ROOT; };
 		536E964B177F5A3800140DF0 /* Diabetik_1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diabetik_1.1.xcdatamodel; sourceTree = "<group>"; };
@@ -548,12 +547,6 @@
 		538FF35216FB115E002B4FC9 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		53949905184A98B400FF20D1 /* UASettingsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsViewCell.h; sourceTree = "<group>"; };
 		53949906184A98B400FF20D1 /* UASettingsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsViewCell.m; sourceTree = "<group>"; };
-		53949909184AB37600FF20D1 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
-		5394990A184AB37600FF20D1 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
-		5394990B184AB37600FF20D1 /* RESideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESideMenu.h; sourceTree = "<group>"; };
-		5394990C184AB37600FF20D1 /* RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESideMenu.m; sourceTree = "<group>"; };
-		5394990D184AB37600FF20D1 /* UIViewController+RESideMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RESideMenu.h"; sourceTree = "<group>"; };
-		5394990E184AB37600FF20D1 /* UIViewController+RESideMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RESideMenu.m"; sourceTree = "<group>"; };
 		5399308916852640002F208D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5399F55716DBD850007E619B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		539E1CCD17B7FEA10059ED17 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -564,8 +557,8 @@
 		539E9FA7184BAA20009803D1 /* UACredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACredentials.h; sourceTree = "<group>"; };
 		53AE668A178727D800DE66D9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		53B576751709DF02007322EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		53BAD21D1847FF3B007F2977 /* UAMenuAccountSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMenuAccountSelectionView.h; sourceTree = "<group>"; };
-		53BAD21E1847FF3B007F2977 /* UAMenuAccountSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMenuAccountSelectionView.m; sourceTree = "<group>"; };
+		53BAD21D1847FF3B007F2977 /* UASideMenuHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuHeaderView.h; sourceTree = "<group>"; };
+		53BAD21E1847FF3B007F2977 /* UASideMenuHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuHeaderView.m; sourceTree = "<group>"; };
 		53D5C4C1184129840000CB86 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
 		53D5C4C4184129EB0000CB86 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		53D5C4C6184129EB0000CB86 /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
@@ -620,8 +613,6 @@
 		53F78EDF18425634006736F5 /* UATimelineStatView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATimelineStatView.m; sourceTree = "<group>"; };
 		53F78EE31842700C006736F5 /* libstdc++.6.0.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.0.9.dylib"; path = "usr/lib/libstdc++.6.0.9.dylib"; sourceTree = SDKROOT; };
 		53F78EE518427791006736F5 /* ShinobiCharts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShinobiCharts.framework; sourceTree = "<group>"; };
-		53FF442417B54E450047B6A5 /* UASideMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuController.h; sourceTree = "<group>"; };
-		53FF442517B54E450047B6A5 /* UASideMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuController.m; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -671,31 +662,31 @@
 			path = "Drag Menu";
 			sourceTree = "<group>";
 		};
+		531D4D74184D372800ABAEC3 /* REFrostedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				531D4D75184D372800ABAEC3 /* RECommonFunctions.h */,
+				531D4D76184D372800ABAEC3 /* RECommonFunctions.m */,
+				531D4D77184D372800ABAEC3 /* REFrostedContainerViewController.h */,
+				531D4D78184D372800ABAEC3 /* REFrostedContainerViewController.m */,
+				531D4D79184D372800ABAEC3 /* REFrostedViewController.h */,
+				531D4D7A184D372800ABAEC3 /* REFrostedViewController.m */,
+				531D4D7B184D372800ABAEC3 /* UIImage+REFrostedViewController.h */,
+				531D4D7C184D372800ABAEC3 /* UIImage+REFrostedViewController.m */,
+				531D4D7D184D372800ABAEC3 /* UIView+REFrostedViewController.h */,
+				531D4D7E184D372800ABAEC3 /* UIView+REFrostedViewController.m */,
+				531D4D7F184D372800ABAEC3 /* UIViewController+REFrostedViewController.h */,
+				531D4D80184D372800ABAEC3 /* UIViewController+REFrostedViewController.m */,
+			);
+			path = REFrostedViewController;
+			sourceTree = "<group>";
+		};
 		532D0EA6177D7F64000D793F /* HockeyApp */ = {
 			isa = PBXGroup;
 			children = (
 				532D0EA7177D7F64000D793F /* HockeyApp-License.txt */,
 			);
 			path = HockeyApp;
-			sourceTree = "<group>";
-		};
-		5331B68918479BC60006B457 /* REFrostedViewController */ = {
-			isa = PBXGroup;
-			children = (
-				5331B68A18479BC60006B457 /* RECommonFunctions.h */,
-				5331B68B18479BC60006B457 /* RECommonFunctions.m */,
-				5331B68C18479BC60006B457 /* REFrostedContainerViewController.h */,
-				5331B68D18479BC60006B457 /* REFrostedContainerViewController.m */,
-				5331B68E18479BC60006B457 /* REFrostedViewController.h */,
-				5331B68F18479BC60006B457 /* REFrostedViewController.m */,
-				5331B69018479BC60006B457 /* UIImage+REFrostedViewController.h */,
-				5331B69118479BC60006B457 /* UIImage+REFrostedViewController.m */,
-				5331B69218479BC60006B457 /* UIView+REFrostedViewController.h */,
-				5331B69318479BC60006B457 /* UIView+REFrostedViewController.m */,
-				5331B69418479BC60006B457 /* UIViewController+REFrostedViewController.h */,
-				5331B69518479BC60006B457 /* UIViewController+REFrostedViewController.m */,
-			);
-			path = REFrostedViewController;
 			sourceTree = "<group>";
 		};
 		53327C3C170DDEC8004FA6D2 /* Products */ = {
@@ -831,8 +822,7 @@
 		533F32211773266600AD89E2 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				53949908184AB37600FF20D1 /* RESideMenu */,
-				5331B68918479BC60006B457 /* REFrostedViewController */,
+				531D4D74184D372800ABAEC3 /* REFrostedViewController */,
 				53F78ECF18422B5B006736F5 /* Vertigo */,
 				53D5C4D7184132B50000CB86 /* Appirater */,
 				532D0EA6177D7F64000D793F /* HockeyApp */,
@@ -1220,6 +1210,8 @@
 				533F32D41773266600AD89E2 /* UASettingsDropboxViewController.m */,
 				533F32D51773266600AD89E2 /* UASettingsGlucoseViewController.h */,
 				533F32D61773266600AD89E2 /* UASettingsGlucoseViewController.m */,
+				534617511852828E00ED4B6D /* UASettingsTimelineViewController.h */,
+				534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */,
 				533F32D71773266600AD89E2 /* UASettingsLicensesViewController.h */,
 				533F32D81773266600AD89E2 /* UASettingsLicensesViewController.m */,
 				533F32D91773266600AD89E2 /* UASettingsRunKeeperViewController.h */,
@@ -1291,8 +1283,6 @@
 				533F354C17736C5500AD89E2 /* Navigation */,
 				533F354F17736C5500AD89E2 /* Tooltips */,
 				533F355B17736C5500AD89E2 /* UAUI.h */,
-				53FF442417B54E450047B6A5 /* UASideMenuController.h */,
-				53FF442517B54E450047B6A5 /* UASideMenuController.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1483,24 +1473,11 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
-		53949908184AB37600FF20D1 /* RESideMenu */ = {
-			isa = PBXGroup;
-			children = (
-				53949909184AB37600FF20D1 /* RECommonFunctions.h */,
-				5394990A184AB37600FF20D1 /* RECommonFunctions.m */,
-				5394990B184AB37600FF20D1 /* RESideMenu.h */,
-				5394990C184AB37600FF20D1 /* RESideMenu.m */,
-				5394990D184AB37600FF20D1 /* UIViewController+RESideMenu.h */,
-				5394990E184AB37600FF20D1 /* UIViewController+RESideMenu.m */,
-			);
-			path = RESideMenu;
-			sourceTree = "<group>";
-		};
 		53BAD21C1847FECB007F2977 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				53BAD21D1847FF3B007F2977 /* UAMenuAccountSelectionView.h */,
-				53BAD21E1847FF3B007F2977 /* UAMenuAccountSelectionView.m */,
+				53BAD21D1847FF3B007F2977 /* UASideMenuHeaderView.h */,
+				53BAD21E1847FF3B007F2977 /* UASideMenuHeaderView.m */,
 				531026501849135E001C5766 /* UAMenuAccountAvatarView.h */,
 				531026511849135E001C5766 /* UAMenuAccountAvatarView.m */,
 			);
@@ -1703,7 +1680,6 @@
 			files = (
 				53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */,
 				533F32E91773266600AD89E2 /* NSDate+Extension.m in Sources */,
-				5331B69918479BC60006B457 /* UIImage+REFrostedViewController.m in Sources */,
 				533F32EA1773266600AD89E2 /* NSString+Extension.m in Sources */,
 				533F32F41773266600AD89E2 /* UAAccount.m in Sources */,
 				533F32F51773266600AD89E2 /* UAActivity.m in Sources */,
@@ -1713,7 +1689,6 @@
 				533F32F81773266600AD89E2 /* UAMeal.m in Sources */,
 				533F32F91773266600AD89E2 /* UAMedicine.m in Sources */,
 				533F32FA1773266600AD89E2 /* UANote.m in Sources */,
-				5331B69A18479BC60006B457 /* UIView+REFrostedViewController.m in Sources */,
 				533F32FB1773266600AD89E2 /* UAReading.m in Sources */,
 				533F32FC1773266600AD89E2 /* UAReminder.m in Sources */,
 				533F32FD1773266600AD89E2 /* UAReminderRule.m in Sources */,
@@ -1732,13 +1707,13 @@
 				533F34951773266600AD89E2 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				533F34971773266600AD89E2 /* AFPropertyListRequestOperation.m in Sources */,
 				533F34981773266600AD89E2 /* AFURLConnectionOperation.m in Sources */,
-				53949911184AB37600FF20D1 /* UIViewController+RESideMenu.m in Sources */,
 				533F34991773266600AD89E2 /* AFXMLRequestOperation.m in Sources */,
 				533F349A1773266600AD89E2 /* UIImageView+AFNetworking.m in Sources */,
 				533F349C1773266600AD89E2 /* VKRSAppSoundPlayer.m in Sources */,
 				531026521849135E001C5766 /* UAMenuAccountAvatarView.m in Sources */,
 				533F349D1773266600AD89E2 /* VKRSSound.m in Sources */,
 				533F34A21773266600AD89E2 /* MBProgressHUD.m in Sources */,
+				531D4D83184D372800ABAEC3 /* REFrostedViewController.m in Sources */,
 				533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */,
 				533F34A41773266600AD89E2 /* UIImage+Resize.m in Sources */,
 				533F34A51773266600AD89E2 /* UAAccountDetailsCell.m in Sources */,
@@ -1754,13 +1729,11 @@
 				533F34B11773266600AD89E2 /* UAActivityInputViewController.m in Sources */,
 				53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */,
 				533F34B21773266600AD89E2 /* UABGInputViewController.m in Sources */,
-				53FF442617B54E450047B6A5 /* UASideMenuController.m in Sources */,
 				533F34B31773266600AD89E2 /* UAInputBaseViewController.m in Sources */,
 				53D5C4FD184132B50000CB86 /* Appirater.m in Sources */,
-				5394990F184AB37600FF20D1 /* RECommonFunctions.m in Sources */,
 				533F34B41773266600AD89E2 /* UAInputParentViewController.m in Sources */,
+				531D4D84184D372800ABAEC3 /* UIImage+REFrostedViewController.m in Sources */,
 				533F34B51773266600AD89E2 /* UAMealInputViewController.m in Sources */,
-				53949910184AB37600FF20D1 /* RESideMenu.m in Sources */,
 				533F34B61773266600AD89E2 /* UAMedicineInputViewController.m in Sources */,
 				533F34B71773266600AD89E2 /* UANoteInputViewController.m in Sources */,
 				533F34B81773266600AD89E2 /* UAKeyboardAccessoryView.m in Sources */,
@@ -1777,7 +1750,6 @@
 				533F34C31773266600AD89E2 /* UASideMenuAccountCell.m in Sources */,
 				533F34C41773266600AD89E2 /* UASideMenuCell.m in Sources */,
 				533F34C51773266600AD89E2 /* UASideMenuViewController.m in Sources */,
-				5331B69818479BC60006B457 /* REFrostedViewController.m in Sources */,
 				533F34C61773266600AD89E2 /* UALocationMapPin.m in Sources */,
 				533F34C81773266600AD89E2 /* UALocationReminderMapViewController.m in Sources */,
 				533F34C91773266600AD89E2 /* UALocationReminderViewController.m in Sources */,
@@ -1795,6 +1767,7 @@
 				533F34D41773266600AD89E2 /* UALeastSquareFitCalculator.m in Sources */,
 				533F34D51773266600AD89E2 /* UAScatterChartViewController.m in Sources */,
 				533F34D61773266600AD89E2 /* UAReportPreviewView.m in Sources */,
+				531D4D86184D372800ABAEC3 /* UIViewController+REFrostedViewController.m in Sources */,
 				533F34D71773266600AD89E2 /* UAReportsViewController.m in Sources */,
 				533F34D81773266600AD89E2 /* UADateButton.m in Sources */,
 				533F34D91773266600AD89E2 /* UADatePickerController.m in Sources */,
@@ -1807,11 +1780,10 @@
 				533F34DE1773266600AD89E2 /* UASettingsRunKeeperViewController.m in Sources */,
 				533F34DF1773266600AD89E2 /* UASettingsViewController.m in Sources */,
 				533F34E01773266600AD89E2 /* UATimelineHeaderViewCell.m in Sources */,
-				5331B69718479BC60006B457 /* REFrostedContainerViewController.m in Sources */,
 				533F34E11773266600AD89E2 /* UATimelineViewCell.m in Sources */,
 				533F34E21773266600AD89E2 /* UATimelineTableHeaderView.m in Sources */,
 				533F34E31773266600AD89E2 /* UATimelineViewController.m in Sources */,
-				53BAD21F1847FF3B007F2977 /* UAMenuAccountSelectionView.m in Sources */,
+				53BAD21F1847FF3B007F2977 /* UASideMenuHeaderView.m in Sources */,
 				533F34E41773266600AD89E2 /* UABaseViewController.m in Sources */,
 				533F352317736C0600AD89E2 /* UAAccountController.m in Sources */,
 				533F352417736C0600AD89E2 /* UABackupController.m in Sources */,
@@ -1827,20 +1799,22 @@
 				533F355D17736C5500AD89E2 /* UAAutocompleteBarButton.m in Sources */,
 				533F355E17736C5500AD89E2 /* UASuggestionBar.m in Sources */,
 				533F355F17736C5500AD89E2 /* UADeleteButton.m in Sources */,
+				531D4D81184D372800ABAEC3 /* RECommonFunctions.m in Sources */,
 				533F356017736C5500AD89E2 /* UAInputLabel.m in Sources */,
 				533F356117736C5500AD89E2 /* UASlider.m in Sources */,
 				533F356217736C5500AD89E2 /* UAGenericTableHeaderView.m in Sources */,
 				533F356317736C5500AD89E2 /* UAGenericTableViewCell.m in Sources */,
 				533F356417736C5500AD89E2 /* UAMinimalistButton.m in Sources */,
+				531D4D82184D372800ABAEC3 /* REFrostedContainerViewController.m in Sources */,
 				533F356517736C5500AD89E2 /* UAAlertMessageView.m in Sources */,
 				533F356617736C5500AD89E2 /* UAFont.m in Sources */,
+				534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */,
 				533F356717736C5500AD89E2 /* UANavSubtitleHeaderView.m in Sources */,
 				533F356817736C5500AD89E2 /* UAUIHintView.m in Sources */,
 				533F356917736C5500AD89E2 /* UANavigationController.m in Sources */,
 				533F356A17736C5500AD89E2 /* UAModalView.m in Sources */,
-				5331B69618479BC60006B457 /* RECommonFunctions.m in Sources */,
-				5331B69B18479BC60006B457 /* UIViewController+REFrostedViewController.m in Sources */,
 				533F356B17736C5500AD89E2 /* UACreditsTooltipView.m in Sources */,
+				531D4D85184D372800ABAEC3 /* UIView+REFrostedViewController.m in Sources */,
 				533F356C17736C5500AD89E2 /* UAExportTooltipView.m in Sources */,
 				533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */,
 				533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */,

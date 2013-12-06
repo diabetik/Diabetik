@@ -34,7 +34,7 @@
 
 #import "UASideMenuCell.h"
 #import "UASideMenuAccountCell.h"
-#import "UAMenuAccountSelectionView.h"
+#import "UASideMenuHeaderView.h"
 
 @interface UASideMenuViewController ()
 {
@@ -60,12 +60,17 @@
 {
     [super viewDidLoad];
     
-    UAMenuAccountSelectionView *accountSelectionView = [[UAMenuAccountSelectionView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 150.0f)];
+    UASideMenuHeaderView *headerView = [[UASideMenuHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 115.0f)];
     
-    self.tableView.tableHeaderView = accountSelectionView;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.tableHeaderView = headerView;
+    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.opaque = NO;
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.backgroundView = nil;
+    self.tableView.tableFooterView = [UIView new];
+    self.tableView.separatorColor = [UIColor colorWithWhite:0.0f alpha:0.08f];
+    
+    self.view.backgroundColor = [UIColor clearColor];
     
     // Notifications
     accountUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -74,6 +79,13 @@
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self.tableView reloadData];
     }];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.tableView.backgroundView = nil;
+    self.tableView.backgroundColor = [UIColor clearColor];
 }
 - (void)dealloc
 {
@@ -239,7 +251,7 @@
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, height-23.0f, aTableView.frame.size.width, height)];
     view.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.08f];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(45.0f, 0.0f, aTableView.frame.size.width, height)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(43.0f, 0.0f, aTableView.frame.size.width, height)];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor colorWithWhite:0.0f alpha:0.3f];
     label.text = [[self tableView:aTableView titleForHeaderInSection:section] uppercaseString];
@@ -254,7 +266,7 @@
 {
     if(section == 0) return 0.0f;
     
-    return 36.0f;
+    return 18.0f;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

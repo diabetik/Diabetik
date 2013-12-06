@@ -48,6 +48,10 @@
         self.accessoryIcon = [[UIImageView alloc] initWithFrame:CGRectMake(8.0f, 0.0f, 28.0f, self.bounds.size.height)];
         self.accessoryIcon.contentMode = UIViewContentModeCenter;
         [self.contentView addSubview:self.accessoryIcon];
+        
+        UIEdgeInsets customSeparatorInset = self.separatorInset;
+        customSeparatorInset.left = 0.0f;
+        self.separatorInset = customSeparatorInset;
     }
     return self;
 }

@@ -68,8 +68,8 @@
         // Setup notifications
         __weak typeof(self) weakSelf = self;
         accountSwitchNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsSwitchedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            
-            [weakSelf setupView];
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf setupView];
         }];
         settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSignificantSettingsChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
             [weakSelf setupView];

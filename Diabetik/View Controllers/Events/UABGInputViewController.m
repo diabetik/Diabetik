@@ -209,7 +209,6 @@
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.delegate = self;
         textField.inputView = nil;
-        textField.keyboardAppearance = UIKeyboardAppearanceDark;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Value", nil)];
     }

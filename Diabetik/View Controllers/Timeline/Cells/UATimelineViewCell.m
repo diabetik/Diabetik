@@ -27,6 +27,9 @@
 #define kBottomVerticalPadding 12.0f
 #define kHorizontalMargin 8.0f
 
+#define kInlinePhotoHeight 150.0f
+#define kInlinePhotoInset 5.0f
+
 @interface UATimelineViewCell ()
 {
     NSDate *date;
@@ -39,6 +42,7 @@
 @implementation UATimelineViewCell
 @synthesize iconImageView = _iconImageView;
 @synthesize metadata = _metadata;
+@synthesize photoImageView = _photoImageView;
 @synthesize descriptionLabel = _descriptionLabel;
 @synthesize valueLabel = _valueLabel;
 @synthesize timestampLabel = _timestampLabel;
@@ -55,7 +59,7 @@
         _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 13.0f, 16.0f, 16.0f)];
         _iconImageView.image = [UIImage imageNamed:@"TimelineMealIcon.png"];
         _iconImageView.contentMode = UIViewContentModeCenter;
-        [self addSubview:_iconImageView];
+        [self.contentView addSubview:_iconImageView];
         
         _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(96.0f, 13.0f, 175.0f, 19.0f)];
         _descriptionLabel.text = @"Entry description";
@@ -64,7 +68,7 @@
         _descriptionLabel.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
         _descriptionLabel.highlightedTextColor = [UIColor whiteColor];
         _descriptionLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [self addSubview:_descriptionLabel];
+        [self.contentView addSubview:_descriptionLabel];
         
         _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(60.0f, 13.0f, 240.0f, 19.0f)];
         _valueLabel.text = @"0.0";
@@ -74,7 +78,7 @@
         _valueLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
         _valueLabel.highlightedTextColor = [UIColor whiteColor];
         _valueLabel.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        [self addSubview:_valueLabel];
+        [self.contentView addSubview:_valueLabel];
 
         _timestampLabel = [[UILabel alloc] initWithFrame:CGRectMake(43.0f, 13.0f, 50.0f, 19.0f)];
         _timestampLabel.text = @"00:00";
@@ -82,10 +86,10 @@
         _timestampLabel.font = [UAFont standardRegularFontWithSize:16.0f];
         _timestampLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
         _timestampLabel.highlightedTextColor = [UIColor whiteColor];
-        [self addSubview:_timestampLabel];
+        [self.contentView addSubview:_timestampLabel];
         
         bottomBorder = [[UIView alloc] initWithFrame:CGRectZero];
-        [self addSubview:bottomBorder];
+        [self.contentView addSubview:bottomBorder];
     }
     return self;
 }
@@ -105,6 +109,18 @@
         bottomBorder.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
         bottomBorder.frame = CGRectMake(44.0f, self.bounds.size.height-0.5f, self.bounds.size.width, 0.5f);
     }
+    
+    if(self.photoImageView)
+    {
+        self.photoImageView.frame = CGRectMake(kInlinePhotoInset, self.contentView.bounds.size.height-(kInlinePhotoHeight+kInlinePhotoInset), self.contentView.bounds.size.width-(kInlinePhotoInset*2.0f), kInlinePhotoHeight-kInlinePhotoInset);
+    }
+}
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    
+    [self.notesLabel removeFromSuperview], self.notesLabel = nil;
+    [self setPhotoImage:nil];
 }
 - (void)setDate:(NSDate *)aDate
 {
@@ -153,12 +169,41 @@
         {
             [self.notesLabel removeFromSuperview], self.notesLabel = nil;
         }
-        
+
         [self setNeedsDisplay];
     }
 }
 
 #pragma mark - Setters
+- (void)setPhotoImage:(UIImage *)image
+{
+    if(!image)
+    {
+        if(self.photoImageView)
+        {
+            [self.photoImageView removeFromSuperview], self.photoImageView = nil;
+        }
+        return;
+    }
+    
+    if(!self.photoImageView)
+    {
+        self.photoImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+        self.photoImageView.contentMode = UIViewContentModeScaleAspectFill;
+        self.photoImageView.clipsToBounds = YES;
+        self.photoImageView.layer.cornerRadius = 4;
+        [self.contentView addSubview:self.photoImageView];
+    }
+    self.photoImageView.image = image;
+    
+    [self setNeedsLayout];
+}
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    [super setHighlighted:highlighted animated:animated];
+    
+    bottomBorder.hidden = highlighted;
+}
 - (void)setCellStyleWithIndexPath:(NSIndexPath *)indexPath andTotalRows:(NSInteger)totalRows
 {
     UACellPosition position = UACellBackgroundViewPositionMiddle;
@@ -188,6 +233,15 @@
                                                 context:nil];
         
         height += notesFrame.size.height+kNotesBottomVerticalPadding - 8.0f;
+    }
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:kShowInlineImages])
+    {
+        NSString *photoPath = [data valueForKey:@"photoPath"];
+        if(photoPath)
+        {
+            height += kInlinePhotoHeight + kInlinePhotoInset;
+        }
     }
     
     return height;

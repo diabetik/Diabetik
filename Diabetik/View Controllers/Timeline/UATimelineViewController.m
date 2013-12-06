@@ -433,6 +433,7 @@
             cell.timestampLabel.alpha = 0.35f;
             cell.descriptionLabel.alpha = 0.35f;
             cell.notesLabel.alpha = 0.35f;
+            cell.photoImageView.alpha = 0.35f;
         }
         else
         {
@@ -441,6 +442,7 @@
             cell.timestampLabel.alpha = 1.0f;
             cell.descriptionLabel.alpha = 1.0f;
             cell.notesLabel.alpha = 1.0f;
+            cell.photoImageView.alpha = 1.0f;
         }
         
         if([object isKindOfClass:[UAMeal class]])
@@ -492,7 +494,22 @@
             cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconNote.png"];
             cell.descriptionLabel.text = [note name];
         }
-        [cell setMetaData:[self metaDataForTableView:aTableView cellAtIndexPath:indexPath]];
+        
+        NSDictionary *metadata = [self metaDataForTableView:aTableView cellAtIndexPath:indexPath];
+        [cell setMetaData:metadata];
+        
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kShowInlineImages] && metadata[@"photoPath"])
+        {
+            [[UAMediaController sharedInstance] imageWithFilenameAsync:metadata[@"photoPath"] success:^(UIImage *image) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [cell setPhotoImage:image];
+                });
+            } failure:nil];
+        }
+        else
+        {
+            [cell setPhotoImage:nil];
+        }
         
         NSDate *date = (NSDate *)[object valueForKey:@"timestamp"];
         [cell setDate:date];

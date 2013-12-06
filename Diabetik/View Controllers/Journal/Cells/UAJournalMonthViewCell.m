@@ -54,8 +54,6 @@
     
     if(self)
     {
-        self.backgroundColor = [UIColor whiteColor];
-
         UIView *cellTopBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width, 0.5f)];
         cellTopBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         cellTopBorder.backgroundColor = [UIColor colorWithRed:204.0f/255.0f green:205.0f/255.0f blue:205.0f/255.0f alpha:1.0f];

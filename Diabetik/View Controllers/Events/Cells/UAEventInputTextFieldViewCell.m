@@ -38,7 +38,6 @@
         textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
         textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
-        textField.keyboardAppearance = UIKeyboardAppearanceDark;
         textField.text = @"";
         
         self.control = textField;

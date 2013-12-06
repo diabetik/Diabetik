@@ -108,7 +108,12 @@
     UANavigationController *navigationController = [[UANavigationController alloc] initWithRootViewController:journalViewController];
     
     self.viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext]];
-    self.viewController.liveBlur = YES;
+    self.viewController.direction = REFrostedViewControllerDirectionLeft;
+    self.viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
+    self.viewController.liveBlur = NO;
+    self.viewController.limitMenuViewSize = YES;
+    self.viewController.blurSaturationDeltaFactor = 1.0f;
+    self.viewController.blurRadius = 6.0f;
     
     [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
@@ -203,11 +208,12 @@
     
     [[NSUserDefaults standardUserDefaults] registerDefaults:@{
                                          kBGTrackingUnitKey: [NSNumber numberWithInt:([countryCode isEqualToString:@"US"]) ? BGTrackingUnitMG : BGTrackingUnitMMO],
-                                           kMinHealthyBGKey: [NSNumber numberWithInteger:4],
-                                           kMaxHealthyBGKey: [NSNumber numberWithInteger:7],
+                                           kMinHealthyBGKey: @4,
+                                           kMaxHealthyBGKey: @7,
      
-                                          kUseSmartInputKey: [NSNumber numberWithBool:YES],
-                                              kUseSoundsKey: [NSNumber numberWithBool:YES]
+                                          kUseSmartInputKey: @YES,
+                                              kUseSoundsKey: @YES,
+                                          kShowInlineImages: @YES
      }];
     
     

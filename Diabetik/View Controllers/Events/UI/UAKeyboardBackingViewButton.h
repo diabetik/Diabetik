@@ -21,7 +21,13 @@
 #import <UIKit/UIKit.h>
 
 @interface UAKeyboardBackingViewButton : UIButton
-@property (nonatomic, retain) UIActivityIndicatorView *activityIndicatorView;
-@property (nonatomic, retain) UIImageView *fullsizeImageView;
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
+@property (nonatomic, strong) UIImageView *fullsizeImageView;
+
+@property (nonatomic, strong) UIColor *highlightColor;
+@property (nonatomic, strong) UIColor *textColor;
+
+// Setup
+- (id)initWithFrame:(CGRect)frame textColor:(UIColor *)aTextColor highlightColor:(UIColor *)aHighlightColor;
 
 @end
