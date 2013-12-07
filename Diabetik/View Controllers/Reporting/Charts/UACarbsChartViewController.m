@@ -53,55 +53,52 @@
     OrderedDictionary *dictionary = [OrderedDictionary dictionary];
     for(UAEvent *event in theData)
     {
+        if([event.timestamp isEarlierThanDate:minDate]) minDate = event.timestamp;
+        if([event.timestamp isLaterThanDate:maxDate]) maxDate = event.timestamp;
+        
+        NSMutableDictionary *data = nil;
+        NSString *key = [dateFormatter stringFromDate:event.timestamp];
+        if(!(data = [dictionary objectForKey:key]))
+        {
+            data = [NSMutableDictionary dictionaryWithDictionary:@{@"date": event.timestamp, @"morningTotal": [NSNumber numberWithDouble:0.0], @"afternoonTotal": [NSNumber numberWithDouble:0.0], @"eveningTotal": [NSNumber numberWithDouble:0.0], @"readingsTotal": [NSNumber numberWithDouble:0.0], @"readingsCount": [NSNumber numberWithInteger:0]}];
+        }
+        
         if([event isKindOfClass:[UAMeal class]])
         {
-            if([event.timestamp isEarlierThanDate:minDate]) minDate = event.timestamp;
-            if([event.timestamp isLaterThanDate:maxDate]) maxDate = event.timestamp;
+            NSInteger hour = [event.timestamp hour];
+            enum TimeOfDay timePeriod = Morning;
             
-            NSMutableDictionary *data = nil;
-            NSString *key = [dateFormatter stringFromDate:event.timestamp];
-            if(!(data = [dictionary objectForKey:key]))
+            // Morning 4AM - 11AM
+            if(hour >= 4 && hour <= 10)
             {
-                data = [NSMutableDictionary dictionaryWithDictionary:@{@"date": event.timestamp, @"morningTotal": [NSNumber numberWithDouble:0.0], @"afternoonTotal": [NSNumber numberWithDouble:0.0], @"eveningTotal": [NSNumber numberWithDouble:0.0], @"readingsTotal": [NSNumber numberWithDouble:0.0], @"readingsCount": [NSNumber numberWithInteger:0]}];
+                timePeriod = Morning;
+            }
+            // Afternoon 11AM - 4PM
+            else if(hour > 10 && hour <= 16)
+            {
+                timePeriod = Afternoon;
+            }
+            // Evening 5PM - 4AM
+            else
+            {
+                timePeriod = Evening;
             }
             
-            if([event isKindOfClass:[UAMeal class]])
-            {
-                NSInteger hour = [event.timestamp hour];
-                enum TimeOfDay timePeriod = Morning;
-                
-                // Morning 4AM - 11AM
-                if(hour >= 4 && hour <= 10)
-                {
-                    timePeriod = Morning;
-                }
-                // Afternoon 11AM - 4PM
-                else if(hour > 10 && hour <= 16)
-                {
-                    timePeriod = Afternoon;
-                }
-                // Evening 5PM - 4AM
-                else
-                {
-                    timePeriod = Evening;
-                }
-                
-                UAMeal *meal = (UAMeal *)event;
-                if(timePeriod == Morning) [data setObject:[NSNumber numberWithDouble:[[data objectForKey:@"morningTotal"] doubleValue] + [meal.grams doubleValue]] forKey:@"morningTotal"];
-                if(timePeriod == Afternoon) [data setObject:[NSNumber numberWithDouble:[[data objectForKey:@"afternoonTotal"] doubleValue] + [meal.grams doubleValue]] forKey:@"afternoonTotal"];
-                if(timePeriod == Evening) [data setObject:[NSNumber numberWithDouble:[[data objectForKey:@"eveningTotal"] doubleValue] + [meal.grams doubleValue]] forKey:@"eveningTotal"];
-            }
-            else if([event isKindOfClass:[UAReading class]])
-            {
-                UAReading *reading = (UAReading *)event;
-                [data setObject:[NSNumber numberWithDouble:[[data objectForKey:@"readingsCount"] integerValue] + 1] forKey:@"readingsCount"];
-                [data setObject:[NSNumber numberWithDouble:[[data objectForKey:@"readingsTotal"] doubleValue] + [reading.value doubleValue]] forKey:@"readingsTotal"];
-            }
-            
-            [dictionary setObject:data forKey:key];
+            UAMeal *meal = (UAMeal *)event;
+            if(timePeriod == Morning) [data setObject:[NSNumber numberWithDouble:[[data objectForKey:@"morningTotal"] doubleValue] + [meal.grams doubleValue]] forKey:@"morningTotal"];
+            if(timePeriod == Afternoon) [data setObject:[NSNumber numberWithDouble:[[data objectForKey:@"afternoonTotal"] doubleValue] + [meal.grams doubleValue]] forKey:@"afternoonTotal"];
+            if(timePeriod == Evening) [data setObject:[NSNumber numberWithDouble:[[data objectForKey:@"eveningTotal"] doubleValue] + [meal.grams doubleValue]] forKey:@"eveningTotal"];
         }
+        else if([event isKindOfClass:[UAReading class]])
+        {
+            UAReading *reading = (UAReading *)event;
+            [data setObject:[NSNumber numberWithDouble:[[data objectForKey:@"readingsCount"] integerValue] + 1] forKey:@"readingsCount"];
+            [data setObject:[NSNumber numberWithDouble:[[data objectForKey:@"readingsTotal"] doubleValue] + [reading.value doubleValue]] forKey:@"readingsTotal"];
+        }
+        
+        [dictionary setObject:data forKey:key];
     }
-    
+
     trendline = [[UALineFitCalculator alloc] init];
     double x = 0;
     for(NSString *key in dictionary)
@@ -162,6 +159,7 @@
         self.chart.borderThickness = [NSNumber numberWithDouble:1.0f];
         self.chart.gesturePinchAspectLock = YES;
         self.chart.crosshair = [[UAChartLineCrosshair alloc] initWithChart:self.chart];
+        [self.chart applyTheme:[SChartLightTheme new]];
         
         //Double tap can either reset zoom or zoom in
         self.chart.gestureDoubleTapResetsZoom = YES;
@@ -198,12 +196,12 @@
 {
     return 4;
 }
-- (SChartSeries*)sChart:(ShinobiChart *)chart seriesAtIndex:(int)seriesIndex
+- (SChartSeries*)sChart:(ShinobiChart *)chart seriesAtIndex:(NSInteger)seriesIndex
 {
     if(seriesIndex < 3)
     {
         SChartColumnSeries *barSeries = [SChartColumnSeries new];
-        barSeries.stackIndex = [NSNumber numberWithInteger:0];
+        //barSeries.stackIndex = [NSNumber numberWithInteger:seriesIndex];
         return barSeries;
     }
     else if(seriesIndex == 3)
@@ -217,19 +215,31 @@
         lineSeries.style = style;
         return lineSeries;
     }
+    else if(seriesIndex == 4)
+    {
+        SChartLineSeries *lineSeries = [[SChartLineSeries alloc] init];
+        
+        SChartLineSeriesStyle *style = [[SChartLineSeriesStyle alloc] init];
+        style.showFill = NO;
+        style.lineColor = [UIColor colorWithRed:186.0f/255.0f green:125.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+        
+        lineSeries.style = style;
+        return lineSeries;
+    }
     
     return nil;
 }
-- (int)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(int)seriesIndex
+- (int)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(NSInteger)seriesIndex
 {
     NSInteger dataPoints = [[chartData objectForKey:@"data"] count];
     if(seriesIndex == 3 && dataPoints > 1)
     {
         return 2;
     }
+    
     return dataPoints;
 }
-- (id<SChartData>)sChart:(ShinobiChart *)chart dataPointAtIndex:(int)dataIndex forSeriesAtIndex:(int)seriesIndex
+- (id<SChartData>)sChart:(ShinobiChart *)chart dataPointAtIndex:(NSInteger)dataIndex forSeriesAtIndex:(NSInteger)seriesIndex
 {
     SChartDataPoint *point = [[SChartDataPoint alloc] init];
     
@@ -252,13 +262,13 @@
     {
         if(dataIndex == 0)
         {
-            point.yValue = [NSNumber numberWithDouble:[trendline projectedYValueForX:[[chartData objectForKey:@"data"] count]-1]];
             point.xValue = [chartData objectForKey:@"minDate"];
+            point.yValue = [NSNumber numberWithDouble:[trendline projectedYValueForX:[[chartData objectForKey:@"data"] count]-1]];
         }
         else
         {
-            point.yValue = [NSNumber numberWithDouble:[trendline projectedYValueForX:0]];
             point.xValue = [chartData objectForKey:@"maxDate"];
+            point.yValue = [NSNumber numberWithDouble:[trendline projectedYValueForX:0]];
         }
     }
     else if(seriesIndex == 4)
@@ -268,7 +278,7 @@
     
     return point;
 }
-- (SChartAxis *)sChart:(ShinobiChart *)chart yAxisForSeriesAtIndex:(int)seriesIndex
+- (SChartAxis *)sChart:(ShinobiChart *)chart yAxisForSeriesAtIndex:(NSInteger)seriesIndex
 {
     if(seriesIndex == 4)
     {

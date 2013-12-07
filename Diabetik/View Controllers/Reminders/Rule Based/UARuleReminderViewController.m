@@ -465,17 +465,17 @@
             UASuggestionBar *suggestionBar = [[UASuggestionBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
             suggestionBar.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"GenericAccessoryViewBackground.png"]];
             
-            UAAutocompleteBarButton *minutes = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(10.0f, 12.0f, 70.0f, 27.0f)];
+            UAAutocompleteBarButton *minutes = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(10.0f, 9.0f, 70.0f, 27.0f)];
             [minutes setTitle:NSLocalizedString(@"Minutes", nil) forState:UIControlStateNormal];
             [minutes addTarget:self action:@selector(selectIntervalType:) forControlEvents:UIControlEventTouchUpInside];
             [minutes setTag:kMinuteIntervalType];
             
-            UAAutocompleteBarButton *hours = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(83.0f, 12.0f, 60.0f, 27.0f)];
+            UAAutocompleteBarButton *hours = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(83.0f, 9.0f, 60.0f, 27.0f)];
             [hours setTitle:NSLocalizedString(@"Hours", nil) forState:UIControlStateNormal];
             [hours addTarget:self action:@selector(selectIntervalType:) forControlEvents:UIControlEventTouchUpInside];
             [hours setTag:kHourIntervalType];
             
-            UAAutocompleteBarButton *days = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(146.0f, 12.0f, 50.0f, 27.0f)];
+            UAAutocompleteBarButton *days = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(146.0f, 9.0f, 50.0f, 27.0f)];
             [days setTitle:NSLocalizedString(@"Days", nil) forState:UIControlStateNormal];
             [days addTarget:self action:@selector(selectIntervalType:) forControlEvents:UIControlEventTouchUpInside];
             [days setTag:kDayIntervalType];

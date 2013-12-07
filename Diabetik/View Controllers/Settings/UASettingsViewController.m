@@ -305,5 +305,21 @@
         }
     }
 }
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 0)
+    {
+        if(indexPath.row >= 2 && indexPath.row <= 3)
+        {
+            return YES;
+        }
+        else
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
 
 @end

@@ -161,6 +161,7 @@
     if(chartInfo)
     {
         Class chartClass = (Class)[chartInfo objectForKey:@"class"];
+        
         UAChartViewController *chartVC = [(UAChartViewController *)[chartClass alloc] initWithData:reportData];
         chartVC.view.frame = self.view.bounds;
         

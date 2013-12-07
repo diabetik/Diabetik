@@ -77,7 +77,7 @@
 }
 - (BOOL)hasEnoughDataToShowChart
 {
-    if([[chartData objectForKey:@"data"] count])
+    if([[chartData objectForKey:@"data"] count] >= 2)
     {
         return YES;
     }
@@ -93,7 +93,6 @@
     {
         self.chart = [[ShinobiChart alloc] initWithFrame:self.view.bounds];
         
-        [self.chart applyTheme:[SChartDarkTheme new]];
         self.chart.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.chart.clipsToBounds = NO;
         self.chart.datasource = self;
@@ -105,6 +104,7 @@
         self.chart.borderThickness = [NSNumber numberWithDouble:1.0f];
         self.chart.gesturePinchAspectLock = YES;
         self.chart.crosshair = [[UAChartLineCrosshair alloc] initWithChart:self.chart];
+        [self.chart applyTheme:[SChartLightTheme new]];
         
         //Double tap can either reset zoom or zoom in
         self.chart.gestureDoubleTapResetsZoom = YES;

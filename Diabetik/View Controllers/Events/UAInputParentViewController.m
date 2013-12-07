@@ -196,18 +196,7 @@
         [tweetButton setTitle:NSLocalizedString(@"Tweet", @"A button allowing users to post an entry on Twitter") forState:UIControlStateNormal];
         [tweetButton addTarget:self action:@selector(presentTweetComposer:) forControlEvents:UIControlEventTouchUpInside];
         
-        BOOL enableTwitterButton = YES;
-        if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0") || !NSClassFromString(@"SLComposeViewController"))
-        {
-            enableTwitterButton = NO;            
-        }
-        else
-        {
-            if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
-            {
-                enableTwitterButton = NO;
-            }
-        }
+        BOOL enableTwitterButton = [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter];
         [tweetButton setEnabled:enableTwitterButton];        
         
         UAKeyboardBackingViewButton *likeButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero
@@ -219,18 +208,7 @@
         [likeButton setTitle:NSLocalizedString(@"Like", @"A button allowing users to 'Like' an entry on Facebook") forState:UIControlStateNormal];
         [likeButton addTarget:self action:@selector(presentFacebookComposer:) forControlEvents:UIControlEventTouchUpInside];
         
-        BOOL enableFacebookButton = YES;
-        if(!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0") || !NSClassFromString(@"SLComposeViewController"))
-        {
-            enableFacebookButton = NO;
-        }
-        else
-        {
-            if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook])
-            {
-                enableFacebookButton = NO;
-            }
-        }
+        BOOL enableFacebookButton = [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook];
         [likeButton setEnabled:enableFacebookButton];
         
         UAKeyboardBackingViewButton *deleteButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero
@@ -764,7 +742,7 @@
 {
     originalContentOffset = aScrollView.contentOffset;
     
-    addEntryBubbleImageView.frame = CGRectMake(self.view.frame.size.width - addEntryBubbleImageView.frame.size.width, self.scrollView.frame.size.height/2.0f - addEntryBubbleImageView.frame.size.height/2.0f, addEntryBubbleImageView.frame.size.width, addEntryBubbleImageView.frame.size.height);
+    addEntryBubbleImageView.frame = CGRectMake(self.view.bounds.size.width - addEntryBubbleImageView.frame.size.width, self.scrollView.frame.size.height/2.0f - addEntryBubbleImageView.frame.size.height/2.0f, addEntryBubbleImageView.frame.size.width, addEntryBubbleImageView.frame.size.height);
 }
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView
 {

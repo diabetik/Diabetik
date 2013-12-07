@@ -56,7 +56,7 @@
     {
         self.backgroundColor = [UIColor whiteColor];
         
-        _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 13.0f, 16.0f, 16.0f)];
+        _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 15.0f, 16.0f, 16.0f)];
         _iconImageView.image = [UIImage imageNamed:@"TimelineMealIcon.png"];
         _iconImageView.contentMode = UIViewContentModeCenter;
         [self.contentView addSubview:_iconImageView];

@@ -47,11 +47,11 @@
         [self setBackgroundImage:highlightedBG forState:UIControlStateSelected];
         [self setBackgroundImage:highlightedBG forState:UIControlStateHighlighted | UIControlStateSelected];
         
-        self.labelColor = [UIColor colorWithRed:115.0f/255.0f green:127.0f/255.0f blue:123.0f/255.0f alpha:1.0f];
+        self.labelColor = [UIColor colorWithRed:34.0f/255.0f green:34.0f/255.0f blue:34.0f/255.0f alpha:1.0f];
         self.labelSelectedColor = [UIColor colorWithRed:18.0f/255.0f green:185.0f/255.0f blue:139.0f/255.0f alpha:1.0f];
         //self.backgroundColor = [UIColor clearColor];
-        self.titleLabel.font = [UAFont standardDemiBoldFontWithSize:14.0f];
-        self.titleLabel.shadowOffset = CGSizeMake(0, 1);
+        self.titleLabel.font = [UAFont standardRegularFontWithSize:14.0f];
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
         
         [self setAdjustsImageWhenHighlighted:NO];
         [self setTitleShadowColor:[UIColor colorWithWhite:1.0f alpha:0.6f] forState:UIControlStateNormal];

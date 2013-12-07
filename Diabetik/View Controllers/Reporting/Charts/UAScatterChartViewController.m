@@ -73,6 +73,7 @@
         self.chart.borderThickness = [NSNumber numberWithDouble:1.0f];
         self.chart.gesturePinchAspectLock = YES;
         self.chart.legend.hidden = YES;
+        [self.chart applyTheme:[SChartLightTheme new]];
         
         [self.view insertSubview:self.chart belowSubview:closeButton];
     }

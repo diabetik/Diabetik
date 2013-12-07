@@ -1153,7 +1153,6 @@
 				533F32C81773266600AD89E2 /* UAReportPreviewView.m */,
 				533F32C91773266600AD89E2 /* UAReportsViewController.h */,
 				533F32CA1773266600AD89E2 /* UAReportsViewController.m */,
-				533F32CB1773266600AD89E2 /* UI */,
 			);
 			path = Reporting;
 			sourceTree = "<group>";
@@ -1161,6 +1160,7 @@
 		533F32B51773266600AD89E2 /* Charts */ = {
 			isa = PBXGroup;
 			children = (
+				533F32CB1773266600AD89E2 /* UI */,
 				533F32B61773266600AD89E2 /* Style */,
 				533F32BB1773266600AD89E2 /* UAAvgBloodGlucoseChartViewController.h */,
 				533F32BC1773266600AD89E2 /* UAAvgBloodGlucoseChartViewController.m */,
@@ -1197,7 +1197,8 @@
 				533F32CE1773266600AD89E2 /* UADatePickerController.h */,
 				533F32CF1773266600AD89E2 /* UADatePickerController.m */,
 			);
-			path = UI;
+			name = UI;
+			path = ../UI;
 			sourceTree = "<group>";
 		};
 		533F32D01773266600AD89E2 /* Settings */ = {
@@ -1932,13 +1933,11 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\"$(SRCROOT)/ShinobiCharts.embeddedframework\\\\\\\"",
-					"\\\\\\\"$(SRCROOT)/HockeySDK.embeddedframework\\\\\\\"",
+					"\"$(SRCROOT)/ShinobiCharts.embeddedframework\"",
+					"\"$(SRCROOT)/HockeySDK.embeddedframework\"",
 					"$(SRCROOT)",
-					/Users/nialgiacomelli/Git/Diabetik,
-					/Users/nialgiacomelli/Git/Diabetik/HockeySDK.embeddedframework,
-					/Users/nialgiacomelli/Git/Diabetik/ShinobiCharts.embeddedframework,
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "";
@@ -1948,7 +1947,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					/Users/nialgiacomelli/Git/Diabetik/Diabetik/Vendor/libWasabiSynciOS,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2042,12 +2040,9 @@
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\"$(SRCROOT)/ShinobiCharts.embeddedframework\\\\\\\"",
-					"\\\\\\\"$(SRCROOT)/HockeySDK.embeddedframework\\\\\\\"",
+					"\"$(SRCROOT)/ShinobiCharts.embeddedframework\"",
+					"\"$(SRCROOT)/HockeySDK.embeddedframework\"",
 					"$(SRCROOT)",
-					/Users/nialgiacomelli/Git/Diabetik,
-					/Users/nialgiacomelli/Git/Diabetik/HockeySDK.embeddedframework,
-					/Users/nialgiacomelli/Git/Diabetik/ShinobiCharts.embeddedframework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
@@ -2057,7 +2052,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					/Users/nialgiacomelli/Git/Diabetik/Diabetik/Vendor/libWasabiSynciOS,
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -2083,12 +2077,9 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\\\\\"$(SRCROOT)/ShinobiCharts.embeddedframework\\\\\\\"",
-					"\\\\\\\"$(SRCROOT)/HockeySDK.embeddedframework\\\\\\\"",
+					"\"$(SRCROOT)/ShinobiCharts.embeddedframework\"",
+					"\"$(SRCROOT)/HockeySDK.embeddedframework\"",
 					"$(SRCROOT)",
-					/Users/nialgiacomelli/Git/Diabetik,
-					/Users/nialgiacomelli/Git/Diabetik/HockeySDK.embeddedframework,
-					/Users/nialgiacomelli/Git/Diabetik/ShinobiCharts.embeddedframework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
@@ -2099,7 +2090,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
-					/Users/nialgiacomelli/Git/Diabetik/Diabetik/Vendor/libWasabiSynciOS,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",

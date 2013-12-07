@@ -171,6 +171,7 @@
         }
     }
     
+    cell.tintColor = nil;
     cell.detailTextLabel.text = nil;
     if(indexPath.section == 0)
     {
@@ -192,27 +193,32 @@
         if(indexPath.row == 0)
         {
             cell.textLabel.text = NSLocalizedString(@"Journal", nil);
-            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconJournal.png"];
+            cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconJournal.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            cell.tintColor = [UIColor colorWithRed:120.0f/255.0f green:217.0f/255.0f blue:115.0f/255.0f alpha:1.0f];
         }
         else if(indexPath.row == 1)
         {
             cell.textLabel.text = NSLocalizedString(@"Reminders", nil);
-            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders.png"];
+            cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconReminders.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            cell.tintColor = [UIColor colorWithRed:71.0f/255.0f green:179.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
         }
         else if(indexPath.row == 2)
         {
             cell.textLabel.text = NSLocalizedString(@"Export", @"Menu item to take users to the export screen");
-            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconExport.png"];
+            cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconExport.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            cell.tintColor = [UIColor colorWithRed:230.0f/255.0f green:123.0f/255.0f blue:122.0f/255.0f alpha:1.0f];
         }
         else if(indexPath.row == 3)
         {
             cell.textLabel.text = NSLocalizedString(@"Credits", @"Menu item to show users the application credits");
-            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconCredits.png"];
+            cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconCredits.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            cell.tintColor = [UIColor colorWithRed:230.0f/255.0f green:179.0f/255.0f blue:11.0f/255.0f alpha:1.0f];
         }
         else if(indexPath.row == 4)
         {
             cell.textLabel.text = NSLocalizedString(@"Settings", nil);
-            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconSettings.png"];
+            cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconSettings.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+            cell.tintColor = [UIColor colorWithRed:158.0f/255.0f green:122.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
         }
     }
     else if(indexPath.section == 2)
@@ -222,17 +228,18 @@
         {
             cell.textLabel.text = reminder.message;
             cell.detailTextLabel.text = [[UAReminderController sharedInstance] detailForReminder:reminder];
+            cell.tintColor = [UIColor colorWithRed:71.0f/255.0f green:179.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
             
             switch([reminder.type integerValue])
             {
                 case kReminderTypeDate:
-                    cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconTimeReminder.png"];
+                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconTimeReminder.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                     break;
                 case kReminderTypeRepeating:
-                    cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconDateReminder.png"];
+                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconDateReminder.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                     break;
                 case kReminderTypeLocation:
-                    cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconLocationReminder.png"];
+                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconLocationReminder.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                     break;
             }
         }

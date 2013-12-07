@@ -58,7 +58,7 @@
     [super layoutSubviews];
     
     self.borderView.frame = CGRectMake(0, self.frame.size.height-1.0f, self.frame.size.width, 1.0f);
-    self.control.frame = CGRectMake(85.0f, 0.0f, self.frame.size.width-85.0f, self.frame.size.height);
+    self.control.frame = CGRectMake(85.0f, 0.0f, self.frame.size.width-95.0f, self.frame.size.height);
 }
 - (void)setControl:(UIView *)aControl
 {

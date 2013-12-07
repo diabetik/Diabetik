@@ -28,7 +28,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 0.0f, self.contentView.frame.size.width-10.0f, self.contentView.frame.size.height)];
+        UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 0.0f, self.contentView.bounds.size.width-20.0f, self.contentView.frame.size.height)];
         textField.borderStyle = UITextBorderStyleNone;
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         textField.backgroundColor = [UIColor clearColor];

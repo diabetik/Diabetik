@@ -29,7 +29,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        UANotesTextView *textView = [[UANotesTextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.contentView.frame.size.width, self.contentView.frame.size.height)];
+        UANotesTextView *textView = [[UANotesTextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.contentView.bounds.size.width, self.contentView.bounds.size.height)];
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         textView.scrollEnabled = NO;
         textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
@@ -49,7 +49,7 @@
 {
     [super layoutSubviews];
     
-    self.control.frame = CGRectMake(78.0f, 0.0f, self.frame.size.width-78.0f, self.frame.size.height);
+    self.control.frame = CGRectMake(78.0f, 0.0f, self.frame.size.width-88.0f, self.frame.size.height);
 }
 
 @end

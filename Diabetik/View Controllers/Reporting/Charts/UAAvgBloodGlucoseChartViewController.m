@@ -142,6 +142,7 @@
         self.chart.borderThickness = [NSNumber numberWithDouble:1.0f];
         self.chart.gesturePinchAspectLock = YES;
         self.chart.crosshair = [[UAChartLineCrosshair alloc] initWithChart:self.chart];
+        [self.chart applyTheme:[SChartLightTheme new]];
         
         //Double tap can either reset zoom or zoom in
         self.chart.gestureDoubleTapResetsZoom = YES;
