@@ -34,12 +34,10 @@
 
 // Logic
 - (void)addReminder:(id)sender;
-- (void)deleteReminder;
 
 // UI
 - (void)changeDate:(UIDatePicker *)sender;
 - (void)changeTime:(UIDatePicker *)sender;
 - (void)changeType:(UISegmentedControl *)sender;
-- (void)triggerDeleteEvent:(id)sender;
 
 @end

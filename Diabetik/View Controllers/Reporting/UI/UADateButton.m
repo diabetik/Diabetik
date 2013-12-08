@@ -33,8 +33,8 @@
         [self setAdjustsImageWhenHighlighted:NO];
         [[self titleLabel] setFont:[UAFont standardDemiBoldFontWithSize:14.0f]];
         [self setTitleColor:[UIColor colorWithRed:115.0f/255.0f green:127.0f/255.0f blue:123.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
-        [self setBackgroundImage:[[UIImage imageNamed:@"ReportDateButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(13.0f, 13.0f, 14.0f, 13.0f)] forState:UIControlStateNormal];
-        [self setBackgroundImage:[[UIImage imageNamed:@"ReportDateButtonPressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(13.0f, 13.0f, 14.0f, 13.0f)] forState:UIControlStateHighlighted];
+        [self setBackgroundImage:[[UIImage imageNamed:@"ReportsDateButton.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(13.0f, 13.0f, 14.0f, 13.0f)] forState:UIControlStateNormal];
+        [self setBackgroundImage:[[UIImage imageNamed:@"ReportsDateButtonPressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(13.0f, 13.0f, 14.0f, 13.0f)] forState:UIControlStateHighlighted];
     }
     return self;
 }

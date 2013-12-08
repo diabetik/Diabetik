@@ -89,18 +89,6 @@
     
     UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconSave.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addAccount:)];
     [self.navigationItem setRightBarButtonItem:saveBarButtonItem animated:NO];
-    
-    if(account)
-    {
-        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 74.0f)];
-        footerView.autoresizesSubviews = UIViewAutoresizingFlexibleWidth;
-        UADeleteButton *deleteButton = [[UADeleteButton alloc] initWithFrame:CGRectMake(11, 15, self.tableView.frame.size.width-22.0f, 44.0f)];
-        [deleteButton setTitle:NSLocalizedString(@"Delete Account", nil) forState:UIControlStateNormal];
-        [deleteButton addTarget:self action:@selector(triggerDeleteEvent:) forControlEvents:UIControlEventTouchUpInside];
-        [footerView addSubview:deleteButton];
-        
-        self.tableView.tableFooterView = footerView;
-    }
 }
 
 #pragma mark - Logic
@@ -162,74 +150,6 @@
         [alertView show];
     }
 }
-- (void)deleteAccount
-{
-    if([[[UAAccountController sharedInstance] accounts] count] > 1)
-    {
-        NSError *error = nil;
-        
-        // If the account we're trying to delete is our currently active account, try to select another
-        UAAccount *newPreferredAccount = nil;
-        BOOL isActiveAccount = [[[UAAccountController sharedInstance] activeAccount] isEqual:account];
-        if(isActiveAccount)
-        {
-            for(UAAccount *existingAccount in [[UAAccountController sharedInstance] accounts])
-            {
-                if(![existingAccount isEqual:account])
-                {
-                    newPreferredAccount = existingAccount;
-                    break;
-                }
-            }
-            
-            if(newPreferredAccount)
-            {
-                [[UAAccountController sharedInstance] setActiveAccount:newPreferredAccount];
-            }
-        }
-        
-        if(!isActiveAccount || newPreferredAccount)
-        {
-            [self.moc deleteObject:account];
-            [self.moc save:&error];
-            
-            if(!error)
-            {
-                [[NSNotificationCenter defaultCenter] postNotificationName:kAccountsUpdatedNotification object:nil];
-                
-                [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
-                [self handleBack:self withSound:NO];
-            }
-            else
-            {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"There was an error while trying to delete this account: %@", nil), [error localizedDescription]]
-                                                                   delegate:nil
-                                                          cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                          otherButtonTitles:nil];
-                [alertView show];
-            }
-        }
-        else
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                message:NSLocalizedString(@"There was an error while trying to establish the new default account", nil)
-                                                               delegate:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
-        }
-    }
-    else
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                            message:NSLocalizedString(@"This is your only account. Please create another before trying to delete this one", nil)
-                                                           delegate:nil
-                                                  cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
-}
 
 #pragma mark - UI
 - (void)changeDOB:(UIDatePicker *)sender
@@ -269,20 +189,6 @@
 - (void)changeGender:(UISegmentedControl *)sender
 {
     gender = [sender selectedSegmentIndex];
-}
-- (void)triggerDeleteEvent:(id)sender
-{
-    [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
-    
-    [self.view endEditing:YES];
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Account", nil)
-                                                        message:NSLocalizedString(@"Are you sure you'd like to delete this account? All associated entries will be permanently deleted", nil)
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"No", nil)
-                                              otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
-    alertView.tag = 99;
-    [alertView show];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -333,6 +239,11 @@
             UAAccountDetailsCell *detailsCell = (UAAccountDetailsCell *)cell;
             
             UIImage *avatar = [[UAMediaController sharedInstance] imageWithFilename:currentAvatarPhotoPath];
+            if(!avatar)
+            {
+                avatar = [UIImage imageNamed:@"DefaultAvatar"];
+            }
+            
             [detailsCell.avatarButton setImage:avatar forState:UIControlStateNormal];
             [detailsCell.avatarButton addTarget:self action:@selector(changeAvatar:) forControlEvents:UIControlEventTouchUpInside];
             detailsCell.nameTextField.text = name;
@@ -376,15 +287,6 @@
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [aTableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(buttonIndex == 1)
-    {
-        [self deleteAccount];
-    }
 }
 
 #pragma mark - UITextFieldDelegate methods

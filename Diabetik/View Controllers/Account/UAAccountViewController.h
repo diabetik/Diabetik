@@ -33,6 +33,5 @@
 - (void)changeDOB:(UIDatePicker *)sender;
 - (void)changeAvatar:(id)sender;
 - (void)changeGender:(UISegmentedControl *)sender;
-- (void)triggerDeleteEvent:(id)sender;
 
 @end

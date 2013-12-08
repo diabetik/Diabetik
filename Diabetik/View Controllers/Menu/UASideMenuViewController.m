@@ -181,7 +181,7 @@
             UIImage *avatar = [[UAMediaController sharedInstance] imageWithFilename:account.photoPath];
             if(!avatar)
             {
-                avatar = [UIImage imageNamed:@"DefaultAvatar.png"];
+                avatar = [UIImage imageNamed:@"DefaultAvatar"];
             }
             
             cell.textLabel.text = account.name;
@@ -233,13 +233,19 @@
             switch([reminder.type integerValue])
             {
                 case kReminderTypeDate:
-                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconTimeReminder.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconTimeReminder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                     break;
                 case kReminderTypeRepeating:
-                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconDateReminder.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconDateReminder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
                     break;
                 case kReminderTypeLocation:
-                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconLocationReminder.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconLocationReminder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    break;
+                case kReminderTypeRule:
+                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconRuleReminder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    break;
+                default:
+                    cell.accessoryIcon.image = nil;
                     break;
             }
         }

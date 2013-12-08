@@ -27,9 +27,6 @@
 - (id)initWithMOC:(NSManagedObjectContext *)aMOC;
 - (id)initWithReminderRule:(UAReminderRule *)rule andMOC:(NSManagedObjectContext *)aMOC;
 
-// Logic
-- (void)deleteReminderRule;
-
 // UI
 - (void)addTrigger:(id)sender;
 - (void)selectIntervalType:(UIButton *)sender;

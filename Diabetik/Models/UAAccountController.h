@@ -32,6 +32,7 @@
 // Logic
 - (void)cacheAccounts;
 - (NSArray *)fetchAllAccountsInContext:(NSManagedObjectContext *)aMOC;
+- (BOOL)deleteAccount:(UAAccount *)theAccount error:(NSError **)error;
 
 - (UAAccount *)activeAccount;
 - (UAAccount *)activeAccountInContext:(NSManagedObjectContext *)moc;

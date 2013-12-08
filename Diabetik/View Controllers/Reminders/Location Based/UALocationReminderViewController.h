@@ -33,7 +33,6 @@
 
 // Logic
 - (void)addReminder:(id)sender;
-- (void)deleteReminder;
 - (void)geolocateUser;
 
 @end

@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "DefaultAvatar.png"
+      "filename" : "ReportsDateButton.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "DefaultAvatar@2x.png"
+      "filename" : "ReportsDateButton@2x.png"
     }
   ],
   "info" : {

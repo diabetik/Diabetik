@@ -122,18 +122,7 @@
     UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconSave.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(addReminder:)];
     [self.navigationItem setRightBarButtonItem:saveBarButtonItem animated:NO];
 
-    // Setup our delete button
-    if(reminder)
-    {
-        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 74.0f)];
-        UADeleteButton *deleteButton = [[UADeleteButton alloc] initWithFrame:CGRectMake(11, 15, self.tableView.frame.size.width-22.0f, 44.0f)];
-        [deleteButton setTitle:NSLocalizedString(@"Delete Reminder", nil) forState:UIControlStateNormal];
-        [deleteButton addTarget:self action:@selector(triggerDeleteEvent:) forControlEvents:UIControlEventTouchUpInside];
-        [footerView addSubview:deleteButton];
-        
-        self.tableView.tableFooterView = footerView;
-    }
-    else
+    if(!reminder)
     {
         [self.tableView reloadData];
         
@@ -165,8 +154,6 @@
                 NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:self.moc];
                 newReminder = (UAReminder *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
                 newReminder.created = [NSDate date];
-                
-                NSLog(@"Creating new reminder");
             }
             newReminder.message = message;
             newReminder.date = notificationDate;
@@ -214,29 +201,6 @@
         [alertView show];
     }
 }
-- (void)deleteReminder
-{
-    NSError *error = nil;
-    [[UAReminderController sharedInstance] deleteReminderWithID:reminder.guid error:&error];
-    
-    if(!error)
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
-        [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
-        
-        // We don't have to pop our view controller here because this is handled automatically when editing
-        // a deleted reminder (see the notification responder in the initWithReminder method)
-    }
-    else
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                            message:NSLocalizedString(@"We were unable to delete your reminder for the following reason: %@", [error localizedDescription])
-                                                           delegate:nil
-                                                  cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                  otherButtonTitles:nil];
-        [alertView show];
-    }
-}
 
 #pragma mark - UI
 - (void)changeDate:(UIDatePicker *)sender
@@ -260,19 +224,6 @@
 {
     type = [sender selectedSegmentIndex] == 1 ? kReminderTypeDate : kReminderTypeRepeating;
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
-}
-- (void)triggerDeleteEvent:(id)sender
-{
-    [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
-    
-    [self.view endEditing:YES];
-    
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Reminder", nil)
-                                                        message:NSLocalizedString(@"Are you sure you'd like to delete this reminder?", nil)
-                                                       delegate:self
-                                              cancelButtonTitle:NSLocalizedString(@"No", nil)
-                                              otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
-    [alertView show];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -462,15 +413,6 @@
 {
     UIDatePicker *datePicker = (UIDatePicker *)inputLabel.inputView;
     [datePicker setDate:date];
-}
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(buttonIndex == 1)
-    {
-        [self deleteReminder];
-    }
 }
 
 @end

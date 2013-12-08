@@ -65,7 +65,7 @@
     UIImage *avatar = [[UAMediaController sharedInstance] imageWithFilename:account.photoPath];
     if(!avatar)
     {
-        avatar = [UIImage imageNamed:@"DefaultAvatar.png"];
+        avatar = [UIImage imageNamed:@"DefaultAvatar"];
     }
     
     imageView.image = avatar;

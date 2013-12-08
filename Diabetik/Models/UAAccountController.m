@@ -155,6 +155,58 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[NSNotificationCenter defaultCenter] postNotificationName:kAccountsSwitchedNotification object:nil];
 }
+- (BOOL)deleteAccount:(UAAccount *)theAccount error:(NSError **)error
+{
+    if([[self accounts] count] > 1)
+    {
+        // If the account we're trying to delete is our currently active account, try to select another
+        UAAccount *newPreferredAccount = nil;
+        BOOL isActiveAccount = [[self activeAccount] isEqual:theAccount];
+        if(isActiveAccount)
+        {
+            for(UAAccount *existingAccount in [self accounts])
+            {
+                if(![existingAccount isEqual:theAccount])
+                {
+                    newPreferredAccount = existingAccount;
+                    break;
+                }
+            }
+            
+            if(newPreferredAccount)
+            {
+                [self setActiveAccount:newPreferredAccount];
+            }
+        }
+        
+        if(!isActiveAccount || newPreferredAccount)
+        {
+            [self.moc deleteObject:theAccount];
+            [self.moc save:&*error];
+            
+            if(!*error)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kAccountsUpdatedNotification object:nil];
+                
+                return YES;
+            }
+            else
+            {
+                *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey:[*error localizedDescription]}];
+            }
+        }
+        else
+        {
+            *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"There was an error while trying to establish the new default account", nil)}];
+        }
+    }
+    else
+    {
+        *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"This is your only account. Please create another before trying to delete this one", nil)}];
+    }
+    
+    return NO;
+}
 - (NSArray *)fetchAllAccountsInContext:(NSManagedObjectContext *)aMOC
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];

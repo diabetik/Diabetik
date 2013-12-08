@@ -167,6 +167,8 @@
         if(!*error)
         {
             [self deleteNotificationsWithID:reminderID];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
         }
     }
 }
@@ -217,6 +219,11 @@
     {
         [self.moc deleteObject:reminderRule];
         [self.moc save:*&error];
+        
+        if(!*error)
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+        }
     }
 }
 

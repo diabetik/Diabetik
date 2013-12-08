@@ -305,6 +305,47 @@
         }
     }
 }
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 1)
+    {
+        UAAccount *account = [[[UAAccountController sharedInstance] accounts] objectAtIndex:indexPath.row];
+        if(account)
+        {
+            NSError *error = nil;
+            [[UAAccountController sharedInstance] deleteAccount:account error:&error];
+            
+            if(!error)
+            {
+                [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
+                
+                [tableView beginUpdates];
+                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [tableView endUpdates];
+            }
+            else
+            {
+                [tableView setEditing:NO animated:YES];
+                
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"There was an error while trying to delete this account: %@", nil), [error localizedDescription]]
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            }
+        }
+    }
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(indexPath.section == 1 && indexPath.row < [self tableView:tableView numberOfRowsInSection:indexPath.section]-1)
+    {
+        return YES;
+    }
+    
+    return NO;
+}
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if(indexPath.section == 0)

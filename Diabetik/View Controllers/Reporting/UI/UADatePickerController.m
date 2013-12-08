@@ -60,39 +60,33 @@
         _pickerView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         [self addSubview:_pickerView];
         
-        CGRect pickerFrame = CGRectMake(floorf(self.bounds.size.width/2.0f - 300.0f/2.0f), floorf(self.bounds.size.height/2.0f - 247.0f/2.0f), 300.0f, 247.0f);
-        self.containerView = [[UIView alloc] initWithFrame:CGRectMake(pickerFrame.origin.x, pickerFrame.origin.y, 300.0f, 247.0f)];
-        self.containerView.transform = CGAffineTransformMakeScale(1.0f, 1.0f);
+        CGRect pickerFrame = CGRectMake(floorf(self.bounds.size.width/2.0f - 338.0f/2.0f), floorf(self.bounds.size.height/2.0f - 247.0f/2.0f), 338.0f, 247.0f);
+        self.containerView = [[UIView alloc] initWithFrame:CGRectMake(pickerFrame.origin.x, pickerFrame.origin.y, 338.0f, 247.0f)];
         self.containerView.clipsToBounds = YES;
         self.containerView.layer.masksToBounds = YES;
+        self.containerView.backgroundColor = [UIColor whiteColor];
+        self.containerView.layer.cornerRadius = 5;
         [_containerView addSubview:_datePicker];
         [_pickerView addSubview:_containerView];
         
-        UIImageView *pickerMaskView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"ReportDatePickerBackground.png"]];
+        UIView *pickerMaskView = [[UIImageView alloc] initWithImage:nil];//[UIImage imageNamed:@"ReportDatePickerBackground.png"]];
         pickerMaskView.frame = CGRectMake(floorf(self.bounds.size.width/2.0f - 338.0f/2.0f), floorf(self.bounds.size.height/2.0f - 247.0f/2.0f), 338.0f, 247.0f);
-        [self.pickerView addSubview:pickerMaskView];
+        pickerMaskView.backgroundColor = [UIColor whiteColor];
+        pickerMaskView.layer.cornerRadius = 5;
+        //[self.pickerView addSubview:pickerMaskView];
         
-        UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(floorf(pickerMaskView.frame.origin.x + 17.0f), floorf(pickerMaskView.frame.origin.y + pickerMaskView.frame.size.height - (41.0f + 19.0f)), 150.0f, 41.0f)];
-        [[cancelButton titleLabel] setFont:[UAFont standardDemiBoldFontWithSize:15.0f]];        
+        UIButton *cancelButton = [[UIButton alloc] initWithFrame:CGRectMake(floorf(pickerFrame.origin.x + 17.0f), floorf(pickerFrame.origin.y + pickerFrame.size.height - (41.0f + 19.0f)), 150.0f, 41.0f)];
+        [[cancelButton titleLabel] setFont:[UAFont standardMediumFontWithSize:19.0f]];
         [cancelButton setTitle:NSLocalizedString(@"Cancel", nil) forState:UIControlStateNormal];
-        [cancelButton setTitleColor:[UIColor colorWithRed:115.0f/255.0f green:127.0f/255.0f blue:123.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
+        [cancelButton setTitleColor:[UIColor colorWithRed:115.0f/255.0f green:115.0f/255.0f blue:115.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [cancelButton setAdjustsImageWhenHighlighted:NO];
-        [cancelButton setTitleShadowColor:[UIColor colorWithWhite:1.0f alpha:0.6f] forState:UIControlStateNormal];
-        [[cancelButton titleLabel] setShadowOffset:CGSizeMake(0.0f, 1.0f)];
-        [cancelButton setBackgroundImage:[[UIImage imageNamed:@"ReportButtonCancel.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4.0f, 0.0f, 4.0f)] forState:UIControlStateNormal];
-        [cancelButton setBackgroundImage:[[UIImage imageNamed:@"ReportButtonCancelPressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4.0f, 0.0f, 4.0f)] forState:UIControlStateHighlighted];
         [cancelButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
         [self.pickerView addSubview:cancelButton];
         
-        UIButton *doneButton = [[UIButton alloc] initWithFrame:CGRectMake(floorf(pickerMaskView.frame.origin.x + pickerMaskView.frame.size.width - 150.0f - 17.0f), floorf(pickerMaskView.frame.origin.y + pickerMaskView.frame.size.height - (41.0f + 19.0f)), 150.0f, 41.0f)];
-        [[doneButton titleLabel] setFont:[UAFont standardDemiBoldFontWithSize:15.0f]];
-        [doneButton setAdjustsImageWhenHighlighted:NO];        
-        [doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [doneButton setTitleShadowColor:[UIColor colorWithRed:26.0f/255.0f green:148.0f/255.0f blue:111.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
-        [[doneButton titleLabel] setShadowOffset:CGSizeMake(0.0f, -1.0f)];
+        UIButton *doneButton = [[UIButton alloc] initWithFrame:CGRectMake(floorf(pickerFrame.origin.x + pickerFrame.size.width - 150.0f - 17.0f), floorf(pickerFrame.origin.y + pickerFrame.size.height - (41.0f + 19.0f)), 150.0f, 41.0f)];
+        [[doneButton titleLabel] setFont:[UAFont standardMediumFontWithSize:19.0f]];
+        [doneButton setTitleColor:[UIColor colorWithRed:0.0f green:192.0f/255.0f blue:180.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [doneButton setTitle:NSLocalizedString(@"Done", nil) forState:UIControlStateNormal];
-        [doneButton setBackgroundImage:[[UIImage imageNamed:@"ReportButtonDone.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4.0f, 0.0f, 4.0f)] forState:UIControlStateNormal];
-        [doneButton setBackgroundImage:[[UIImage imageNamed:@"ReportButtonDonePressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 4.0f, 0.0f, 4.0f)] forState:UIControlStateHighlighted];
         [doneButton addTarget:self action:@selector(selectDate) forControlEvents:UIControlEventTouchUpInside];
         [self.pickerView addSubview:doneButton];
     }

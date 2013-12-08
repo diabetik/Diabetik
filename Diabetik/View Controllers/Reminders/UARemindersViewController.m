@@ -58,28 +58,17 @@
 {
     [super viewWillAppear:animated];
 
-    _rules = [[UAReminderController sharedInstance] fetchAllReminderRules];
-    
     if(!noRemindersView)
     {
         // No entry label
         noRemindersView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero
                                                            andTitle:NSLocalizedString(@"No Reminders", nil)
                                                          andMessage:NSLocalizedString(@"You currently don't have any reminders setup. To add one, tap the + icon.", nil)];
+        [noRemindersView setHidden:YES];
         [self.view addSubview:noRemindersView];
     }
     
-    _reminders = [[UAReminderController sharedInstance] reminders];
-    if((_reminders && [_reminders count]) || (_rules && [_rules count]))
-    {
-        [noRemindersView setHidden:YES];
-    }
-    else
-    {
-        [noRemindersView setHidden:NO];
-    }
-    
-    [self.tableView reloadData];
+    [self updateView];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -89,8 +78,7 @@
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        strongSelf.reminders = [[UAReminderController sharedInstance] reminders];
-        [strongSelf.tableView reloadData];
+        [strongSelf updateView];
     }];
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenReminderTooltip])
@@ -112,6 +100,23 @@
 }
 
 #pragma mark - UI
+- (void)updateView
+{
+    _rules = [[UAReminderController sharedInstance] fetchAllReminderRules];
+    _reminders = [[UAReminderController sharedInstance] fetchAllReminders];
+ 
+    if((_reminders && [_reminders count]) || (_rules && [_rules count]))
+    {
+        [noRemindersView setHidden:YES];
+    }
+    else
+    {
+        [noRemindersView setHidden:NO];
+    }
+    
+    [self.tableView setEditing:NO];
+    [self.tableView reloadData];
+}
 - (void)addReminder:(id)sender
 {
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
@@ -218,13 +223,16 @@
     switch(adjustedSection)
     {
         case kReminderTypeDate:
-            cell.imageView.image = [UIImage imageNamed:@"ListMenuIconTimeReminder.png"];
+            cell.imageView.image = [UIImage imageNamed:@"ListMenuIconTimeReminder"];
             break;
         case kReminderTypeRepeating:
-            cell.imageView.image = [UIImage imageNamed:@"ListMenuIconDateReminder.png"];
+            cell.imageView.image = [UIImage imageNamed:@"ListMenuIconDateReminder"];
             break;
         case kReminderTypeLocation:
-            cell.imageView.image = [UIImage imageNamed:@"ListMenuIconLocationReminder.png"];
+            cell.imageView.image = [UIImage imageNamed:@"ListMenuIconLocationReminder"];
+            break;
+        case kReminderTypeRule:
+            cell.imageView.image = [UIImage imageNamed:@"ListMenuIconRuleReminder"];
             break;
         default:
             cell.imageView.image = nil;
@@ -263,6 +271,41 @@
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        NSInteger adjustedSection = [self adjustedSectionForSection:indexPath.section];
+        
+        NSError *error = nil;
+        if(adjustedSection == kReminderTypeRule)
+        {
+            UAReminderRule *rule = (UAReminderRule *)[_rules objectAtIndex:indexPath.row];
+            [[UAReminderController sharedInstance] deleteReminderRule:rule error:&error];
+        }
+        else
+        {
+            UAReminder *reminder = (UAReminder *)[[_reminders objectAtIndex:adjustedSection] objectAtIndex:indexPath.row];
+            [[UAReminderController sharedInstance] deleteReminderWithID:reminder.guid error:&error];
+        }
+        
+        if(!error)
+        {
+            [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
+            [self updateView];
+        }
+        else
+        {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                message:NSLocalizedString(@"We were unable to delete your reminder rule for the following reason: %@", [error localizedDescription])
+                                                               delegate:nil
+                                                      cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                      otherButtonTitles:nil];
+            [alertView show];
+        }
+        
+    }
+}
 
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -296,20 +339,10 @@
 #pragma mark - UAModalViewDelegate methods
 - (void)willDisplayModalView:(UAModalView *)aModal
 {
-    /*
-    // Disable swipe gesture
-    JASidePanelController *sidePanel = (JASidePanelController *)[self sidePanelController];
-    sidePanel.disablePanGesture = YES;
-    */
+    // STUB
 }
 - (void)didDismissModalView:(UAModalView *)aModal
 {
-    /*
-    // Re-enable swipe gesture
-    JASidePanelController *sidePanel = (JASidePanelController *)[self sidePanelController];
-    sidePanel.disablePanGesture = NO;
-    */
-    
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenReminderTooltip];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }

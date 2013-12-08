@@ -112,8 +112,8 @@
     self.viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
     self.viewController.liveBlur = NO;
     self.viewController.limitMenuViewSize = YES;
-    self.viewController.blurSaturationDeltaFactor = 1.0f;
-    self.viewController.blurRadius = 6.0f;
+    self.viewController.blurSaturationDeltaFactor = 0.25f;
+    self.viewController.blurRadius = 10.0f;
     
     [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];

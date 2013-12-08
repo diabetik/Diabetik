@@ -95,18 +95,18 @@
     }
     [self.view addSubview:pageControl];
     
-    CGFloat y = 25.0f;
+    CGFloat y = 35.0f;
     
     dateRangeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y, 300.0f, 18.0f)];
     dateRangeLabel.backgroundColor = [UIColor clearColor];
-    dateRangeLabel.textColor = [UIColor colorWithRed:115.0f/255.0f green:127.0f/255.0f blue:123.0f/255.0f alpha:1.0f];
+    dateRangeLabel.textColor = [UIColor colorWithRed:128.0f/255.0f green:128.0f/255.0f blue:128.0f/255.0f alpha:1.0f];
     dateRangeLabel.font = [UAFont standardDemiBoldFontWithSize:14.0f];
     dateRangeLabel.text = NSLocalizedString(@"Reporting events between", nil);
     [self.view addSubview:dateRangeLabel];
     
     dateRangeToLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y, 300.0f, 18.0f)];
     dateRangeToLabel.backgroundColor = [UIColor clearColor];
-    dateRangeToLabel.textColor = [UIColor colorWithRed:115.0f/255.0f green:127.0f/255.0f blue:123.0f/255.0f alpha:1.0f];
+    dateRangeToLabel.textColor = [UIColor colorWithRed:128.0f/255.0f green:128.0f/255.0f blue:128.0f/255.0f alpha:1.0f];
     dateRangeToLabel.font = [UAFont standardDemiBoldFontWithSize:14.0f];
     dateRangeToLabel.text = NSLocalizedString(@"and", nil);
     [self.view addSubview:dateRangeToLabel];
@@ -133,7 +133,7 @@
         [scrollView addSubview:reportPreview];
     }
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ReportsBackground.png"]];
+    self.view.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -142,13 +142,13 @@
     CGFloat x = 0.0f;
     for(UIView *view in scrollView.subviews)
     {
-        view.frame = CGRectMake(x + (self.view.bounds.size.width/2.0f - 304.0f/2.0f), self.view.bounds.size.height/2.0f - 154.0f/2.0f, 304.0f, 154.0f);
+        view.frame = CGRectMake(x + (self.view.bounds.size.width/2.0f - 300.0f/2.0f), self.view.bounds.size.height/2.0f - 151.0f/2.0f, 300.0f, 151.0f);
         
         x += self.view.bounds.size.width;
     }
     
     scrollView.contentSize = CGSizeMake(self.view.bounds.size.width*[reports count], self.view.bounds.size.height);
-    pageControl.frame = CGRectMake(0.0f, self.view.bounds.size.height - 45.0f, self.view.bounds.size.width, 25.0f);
+    pageControl.frame = CGRectMake(0.0f, self.view.bounds.size.height - 55.0f, self.view.bounds.size.width, 25.0f);
     
     NSInteger reportKey = [[NSUserDefaults standardUserDefaults] integerForKey:kReportsDefaultKey];
     if(reportKey < 0) reportKey = 0;
