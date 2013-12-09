@@ -41,7 +41,7 @@
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.delegate = self;
         
-        NSInteger numPages = 4;
+        NSInteger numPages = 3;
         
         // Setup pages
         for(int i = 0; i < numPages; i++)
@@ -55,12 +55,9 @@
         
         pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height-60, self.frame.size.width, 60)];
         pageControl.numberOfPages = numPages;
+        pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:18.0f/255.0f green:185.0f/255.0f blue:139.0f/255.0f alpha:1.0f];
+        pageControl.pageIndicatorTintColor = [UIColor colorWithRed:18.0f/255.0f green:185.0f/255.0f blue:139.0f/255.0f alpha:0.25f];
         
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-        {
-            pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:18.0f/255.0f green:185.0f/255.0f blue:139.0f/255.0f alpha:1.0f];
-            pageControl.pageIndicatorTintColor = [UIColor colorWithRed:18.0f/255.0f green:185.0f/255.0f blue:139.0f/255.0f alpha:0.25f];
-        }
         [self addSubview:pageControl];
     }
     return self;
@@ -107,11 +104,6 @@
     }
     else if(index == 2)
     {
-        header.text = NSLocalizedString(@"Your new journal", nil);
-        content.text = NSLocalizedString(@"We've set you up with a new journal. You're welcome to create as many as you'd like.\n\nCheck out the settings screen to manage additional accounts.", nil);
-    }
-    else if(index == 3)
-    {
         header.text = NSLocalizedString(@"Stay safe", nil);
         content.text = NSLocalizedString(@"Diabetik cannot and will not advise you with regards to medical care.\n\nIf you have questions or concerns regarding the state of your health please see a medical professional.", nil);
     }
@@ -131,9 +123,9 @@
     int page = floor((sender.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     
     // Dismissing the modal if we scroll past the end
-    if(page > 3)
+    if(page > 2)
     {
-        page = 3;
+        page = 2;
         UAModalView *modalView = (UAModalView *)[[[self superview] superview] superview];
         [modalView dismiss];
     }

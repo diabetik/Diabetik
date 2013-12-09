@@ -41,7 +41,6 @@
 #import "UASuggestionBar.h"
 
 // Buttons
-#import "UADeleteButton.h"
 #import "UAAutocompleteBarButton.h"
 
 // Cells

@@ -147,7 +147,6 @@
 		533F355C17736C5500AD89E2 /* UAAutocompleteBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353017736C5500AD89E2 /* UAAutocompleteBar.m */; };
 		533F355D17736C5500AD89E2 /* UAAutocompleteBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353217736C5500AD89E2 /* UAAutocompleteBarButton.m */; };
 		533F355E17736C5500AD89E2 /* UASuggestionBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353517736C5500AD89E2 /* UASuggestionBar.m */; };
-		533F355F17736C5500AD89E2 /* UADeleteButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353717736C5500AD89E2 /* UADeleteButton.m */; };
 		533F356017736C5500AD89E2 /* UAInputLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353917736C5500AD89E2 /* UAInputLabel.m */; };
 		533F356117736C5500AD89E2 /* UASlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353B17736C5500AD89E2 /* UASlider.m */; };
 		533F356217736C5500AD89E2 /* UAGenericTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353E17736C5500AD89E2 /* UAGenericTableHeaderView.m */; };
@@ -480,8 +479,6 @@
 		533F353217736C5500AD89E2 /* UAAutocompleteBarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAutocompleteBarButton.m; sourceTree = "<group>"; };
 		533F353417736C5500AD89E2 /* UASuggestionBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASuggestionBar.h; sourceTree = "<group>"; };
 		533F353517736C5500AD89E2 /* UASuggestionBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASuggestionBar.m; sourceTree = "<group>"; };
-		533F353617736C5500AD89E2 /* UADeleteButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UADeleteButton.h; sourceTree = "<group>"; };
-		533F353717736C5500AD89E2 /* UADeleteButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UADeleteButton.m; sourceTree = "<group>"; };
 		533F353817736C5500AD89E2 /* UAInputLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInputLabel.h; sourceTree = "<group>"; };
 		533F353917736C5500AD89E2 /* UAInputLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInputLabel.m; sourceTree = "<group>"; };
 		533F353A17736C5500AD89E2 /* UASlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASlider.h; sourceTree = "<group>"; };
@@ -1248,8 +1245,6 @@
 			children = (
 				533F352E17736C5500AD89E2 /* Autocomplete Bar */,
 				533F353317736C5500AD89E2 /* Suggestion Bar */,
-				533F353617736C5500AD89E2 /* UADeleteButton.h */,
-				533F353717736C5500AD89E2 /* UADeleteButton.m */,
 				533F353817736C5500AD89E2 /* UAInputLabel.h */,
 				533F353917736C5500AD89E2 /* UAInputLabel.m */,
 				533F353A17736C5500AD89E2 /* UASlider.h */,
@@ -1750,7 +1745,6 @@
 				533F355C17736C5500AD89E2 /* UAAutocompleteBar.m in Sources */,
 				533F355D17736C5500AD89E2 /* UAAutocompleteBarButton.m in Sources */,
 				533F355E17736C5500AD89E2 /* UASuggestionBar.m in Sources */,
-				533F355F17736C5500AD89E2 /* UADeleteButton.m in Sources */,
 				531D4D81184D372800ABAEC3 /* RECommonFunctions.m in Sources */,
 				533F356017736C5500AD89E2 /* UAInputLabel.m in Sources */,
 				533F356117736C5500AD89E2 /* UASlider.m in Sources */,

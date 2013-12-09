@@ -38,7 +38,6 @@
 
 #import "UAKeyboardAccessoryView.h"
 #import "UAKeyboardBackingView.h"
-#import "UADeleteButton.h"
 #import "UAAutocompleteBar.h"
 
 @class UAInputBaseViewController;

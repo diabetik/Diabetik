@@ -20,6 +20,7 @@
 
 #import <Dropbox/Dropbox.h>
 #import "UABackupController.h"
+#import "UAEventController.h"
 #import "UAAppDelegate.h"
 
 @interface UABackupController ()
@@ -45,17 +46,19 @@
 #pragma mark - Logic
 - (void)backupToDropbox:(void (^)(NSError *))completionCallback
 {
-    /*
     [self.moc performBlock:^{
         
         NSError *error = nil;
         NSMutableArray *representations = [NSMutableArray array];
-        NSArray *accounts = [[UAAccountController sharedInstance] fetchAllAccountsInContext:self.moc];
-    
-        for(UAAccount *account in accounts)
+        
+        NSArray *events = [[UAEventController sharedInstance] fetchEventsWithPredicate:nil inContext:self.moc];
+        if(events)
         {
-            NSDictionary *representation = [account dictionaryRepresentation];
-            [representations addObject:representation];
+            for(UAEvent *event in events)
+            {
+                NSDictionary *representation = [event dictionaryRepresentation];
+                [representations addObject:representation];
+            }
         }
         
         if([representations count])
@@ -89,7 +92,6 @@
             completionCallback(error);
         });
     }];
-    */
 }
 - (void)restoreFromBackup:(void (^)(NSError *))completionCallback
 {
