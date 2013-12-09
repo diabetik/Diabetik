@@ -176,6 +176,7 @@
 		538FF35316FB115E002B4FC9 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538FF35216FB115E002B4FC9 /* Accounts.framework */; };
 		53949907184A98B400FF20D1 /* UASettingsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53949906184A98B400FF20D1 /* UASettingsViewCell.m */; };
 		539664D018563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 539664CF18563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel */; };
+		539664D21856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 539664D11856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel */; };
 		5399308A16852640002F208D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5399308916852640002F208D /* QuartzCore.framework */; };
 		5399F55816DBD850007E619B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5399F55716DBD850007E619B /* MapKit.framework */; };
 		539E1CCF17B7FEA10059ED17 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E1CCE17B7FEA10059ED17 /* UIImage+ImageEffects.m */; };
@@ -532,6 +533,7 @@
 		53949906184A98B400FF20D1 /* UASettingsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsViewCell.m; sourceTree = "<group>"; };
 		539664CE185639D100AD1842 /* Diabetik_1.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Diabetik_1.3.xcdatamodel; sourceTree = "<group>"; };
 		539664CF18563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_1.2_to_1.3.xcmappingmodel; sourceTree = "<group>"; };
+		539664D11856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_1.1_to_1.3.xcmappingmodel; sourceTree = "<group>"; };
 		5399308916852640002F208D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5399F55716DBD850007E619B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		539E1CCD17B7FEA10059ED17 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -695,6 +697,7 @@
 				533F305D1773266500AD89E2 /* Diabetik.xcdatamodeld */,
 				539664CF18563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel */,
 				535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */,
+				539664D11856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel */,
 				5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */,
 				533F30591773266500AD89E2 /* Localizable.strings */,
 				533F305B1773266500AD89E2 /* Diabetik-Info.plist */,
@@ -1672,6 +1675,7 @@
 				533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */,
 				533F34AB1773266600AD89E2 /* UAEventInputTextViewViewCell.m in Sources */,
 				533F34AC1773266600AD89E2 /* UAEventInputViewCell.m in Sources */,
+				539664D21856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel in Sources */,
 				533F34AF1773266600AD89E2 /* UAEventMapPin.m in Sources */,
 				533F34B01773266600AD89E2 /* UAEventMapViewController.m in Sources */,
 				533F34B11773266600AD89E2 /* UAActivityInputViewController.m in Sources */,
