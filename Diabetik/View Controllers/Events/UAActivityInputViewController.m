@@ -67,17 +67,7 @@
 {
     if(name && [name length])
     {
-        if([self.date compare:[NSDate date]] == NSOrderedAscending)
-        {
-            UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccountInContext:self.moc];
-            if(!activeAccount)
-            {
-                NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-                [errorInfo setValue:NSLocalizedString(@"We were unable to save your activity. Please try again!", nil) forKey:NSLocalizedDescriptionKey];
-                return [NSError errorWithDomain:kErrorDomain code:0 userInfo:errorInfo];
-            }
-        }
-        else
+        if([self.date compare:[NSDate date]] != NSOrderedAscending)
         {
             NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
             [errorInfo setValue:NSLocalizedString(@"You cannot enter an event in the future", nil) forKey:NSLocalizedDescriptionKey];
@@ -97,50 +87,43 @@
 {
     [self.view endEditing:YES];
 
-    UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccountInContext:self.moc];
-    if(activeAccount)
+    if(!activity)
     {
-        if(!activity)
-        {
-            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAActivity" inManagedObjectContext:self.moc];
-            activity = (UAActivity *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-            activity.filterType = [NSNumber numberWithInteger:ActivityFilterType];
-            activity.account = activeAccount;
-        }
-        activity.name = name;
-        activity.timestamp = self.date;
-        activity.minutes = [NSNumber numberWithDouble:[minutes doubleValue]];
-        
-        if(!notes.length) notes = nil;
-        activity.notes = notes;
-        
-        // Save our geotag data
-        if(![self.lat isEqual:activity.lat] || ![self.lon isEqual:activity.lon])
-        {
-            activity.lat = self.lat;
-            activity.lon = self.lon;
-        }
-        
-        // Save our photo
-        if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:activity.photoPath])
-        {
-            // If a photo already exists for this entry remove it now
-            if(activity.photoPath)
-            {
-                [[UAMediaController sharedInstance] deleteImageWithFilename:activity.photoPath success:nil failure:nil];
-            }
-            
-            activity.photoPath = self.currentPhotoPath;
-        }
-        
-        NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
-        [[UATagController sharedInstance] assignTags:tags toEvent:activity];
-        
-        [self.moc save:&*error];
-        return activity;
+        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAActivity" inManagedObjectContext:self.moc];
+        activity = (UAActivity *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
+        activity.filterType = [NSNumber numberWithInteger:ActivityFilterType];
+    }
+    activity.name = name;
+    activity.timestamp = self.date;
+    activity.minutes = [NSNumber numberWithDouble:[minutes doubleValue]];
+    
+    if(!notes.length) notes = nil;
+    activity.notes = notes;
+    
+    // Save our geotag data
+    if(![self.lat isEqual:activity.lat] || ![self.lon isEqual:activity.lon])
+    {
+        activity.lat = self.lat;
+        activity.lon = self.lon;
     }
     
-    return nil;
+    // Save our photo
+    if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:activity.photoPath])
+    {
+        // If a photo already exists for this entry remove it now
+        if(activity.photoPath)
+        {
+            [[UAMediaController sharedInstance] deleteImageWithFilename:activity.photoPath success:nil failure:nil];
+        }
+        
+        activity.photoPath = self.currentPhotoPath;
+    }
+    
+    NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
+    [[UATagController sharedInstance] assignTags:tags toEvent:activity];
+    
+    [self.moc save:&*error];
+    return activity;
 }
 
 // UI
@@ -313,7 +296,7 @@
     }
     else
     {
-        return [[UATagController sharedInstance] fetchAllTagsForAccount:[[UAAccountController sharedInstance] activeAccount]];
+        return [[UATagController sharedInstance] fetchAllTags];
     }
     
     return nil;

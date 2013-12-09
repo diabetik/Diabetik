@@ -19,7 +19,6 @@
 //
 
 #import "UAInsulinCalculatorViewController.h"
-#import "UAAccountController.h"
 #import "UAEventController.h"
 
 #import "UAMeal.h"
@@ -156,11 +155,10 @@
 #pragma mark - Logic
 - (void)setupView
 {
-    UAAccount *account = [[UAAccountController sharedInstance] activeAccount];
-    
     latestEvents = nil;    
     [selectedMeals removeAllObjects];
     
+    /*
     // Set some default values
     if([UAHelper userBGUnit] == BGTrackingUnitMMO)
     {
@@ -178,7 +176,7 @@
     
     // Fetch our latest glucose reading to try to pre-determine glucose reading
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"account == %@ && filterType == %d && timestamp >= %@", account, ReadingFilterType, [NSDate dateWithHoursBeforeNow:24]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterType == %d && timestamp >= %@", ReadingFilterType, [NSDate dateWithHoursBeforeNow:24]];
     if(predicate)
     {
         // Take our latest blood glucose reading
@@ -191,7 +189,7 @@
     }
     
     // Fetch a list of previous meals over the past 24 hours
-    predicate = [NSPredicate predicateWithFormat:@"account == %@ && filterType == %d && timestamp >= %@", account, MealFilterType, [NSDate dateWithHoursBeforeNow:24]];
+    predicate = [NSPredicate predicateWithFormat:@"filterType == %d && timestamp >= %@", MealFilterType, [NSDate dateWithHoursBeforeNow:24]];
     if(predicate)
     {
         latestEvents = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate inContext:_moc];
@@ -199,6 +197,7 @@
     
     // Update our UI
     [[self tableView] reloadData];
+     */
 }
 - (void)recalculate
 {

@@ -59,17 +59,7 @@
 {
     if(notes && [notes length])
     {
-        if([self.date compare:[NSDate date]] == NSOrderedAscending)
-        {
-            UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
-            if(!activeAccount)
-            {
-                NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-                [errorInfo setValue:NSLocalizedString(@"We were unable to save your note", nil) forKey:NSLocalizedDescriptionKey];
-                return [NSError errorWithDomain:kErrorDomain code:0 userInfo:errorInfo];
-            }
-        }
-        else
+        if([self.date compare:[NSDate date]] != NSOrderedAscending)
         {
             NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
             [errorInfo setValue:NSLocalizedString(@"You cannot enter an event in the future", nil) forKey:NSLocalizedDescriptionKey];
@@ -88,55 +78,48 @@
 - (UAEvent *)saveEvent:(NSError **)error
 {
     [self.view endEditing:YES];
-    
-    UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
-    if(activeAccount)
+
+    if(!title || ![title length])
     {
-        if(!title || ![title length])
-        {
-            title = NSLocalizedString(@"Note", nil);
-        }
-        
-        if(!note)
-        {
-            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UANote" inManagedObjectContext:self.moc];
-            note = (UANote *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-            note.filterType = [NSNumber numberWithInteger:NoteFilterType];
-            note.account = activeAccount;
-        }
-        note.name = title;
-        note.timestamp = self.date;
-        
-        if(!notes.length) notes = nil;
-        note.notes = notes;
-        
-        // Save our geotag data
-        if(![self.lat isEqual:note.lat] || ![self.lon isEqual:note.lon])
-        {
-            note.lat = self.lat;
-            note.lon = self.lon;
-        }
-        
-        // Save our photo
-        if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:note.photoPath])
-        {
-            // If a photo already exists for this entry remove it now
-            if(note.photoPath)
-            {
-                [[UAMediaController sharedInstance] deleteImageWithFilename:note.photoPath success:nil failure:nil];
-            }
-            
-            note.photoPath = self.currentPhotoPath;
-        }
-        
-        NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
-        [[UATagController sharedInstance] assignTags:tags toEvent:note];
-        
-        [self.moc save:&*error];
-        return note;
+        title = NSLocalizedString(@"Note", nil);
     }
     
-    return nil;
+    if(!note)
+    {
+        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UANote" inManagedObjectContext:self.moc];
+        note = (UANote *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
+        note.filterType = [NSNumber numberWithInteger:NoteFilterType];
+    }
+    note.name = title;
+    note.timestamp = self.date;
+    
+    if(!notes.length) notes = nil;
+    note.notes = notes;
+    
+    // Save our geotag data
+    if(![self.lat isEqual:note.lat] || ![self.lon isEqual:note.lon])
+    {
+        note.lat = self.lat;
+        note.lon = self.lon;
+    }
+    
+    // Save our photo
+    if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:note.photoPath])
+    {
+        // If a photo already exists for this entry remove it now
+        if(note.photoPath)
+        {
+            [[UAMediaController sharedInstance] deleteImageWithFilename:note.photoPath success:nil failure:nil];
+        }
+        
+        note.photoPath = self.currentPhotoPath;
+    }
+    
+    NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
+    [[UATagController sharedInstance] assignTags:tags toEvent:note];
+    
+    [self.moc save:&*error];
+    return note;
 }
 
 #pragma mark - UI
@@ -273,7 +256,7 @@
 #pragma mark - UAAutocompleteBarDelegate methods
 - (NSArray *)suggestionsForAutocompleteBar:(UAAutocompleteBar *)theAutocompleteBar
 {
-    return [[UATagController sharedInstance] fetchAllTagsForAccount:[[UAAccountController sharedInstance] activeAccount]];
+    return [[UATagController sharedInstance] fetchAllTags];
 }
 
 @end

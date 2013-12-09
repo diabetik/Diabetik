@@ -268,7 +268,7 @@
 - (void)performSearchWithText:(NSString *)searchText
 {
     NSArray *tags = [[UATagController sharedInstance] fetchTokensInString:searchText withPrefix:@""];
-    NSArray *existingTags = [[UATagController sharedInstance] fetchExistingTagsWithStrings:tags forAccount:[[UAAccountController sharedInstance] activeAccount]];
+    NSArray *existingTags = [[UATagController sharedInstance] fetchExistingTagsWithStrings:tags];
     
     NSString *term = [searchText lowercaseString];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name BEGINSWITH[cd] %@", term];
@@ -836,7 +836,7 @@
 #pragma mark - Helpers
 - (NSPredicate *)timelinePredicate
 {
-    return [NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@ && account = %@", fromDate, toDate, [[UAAccountController sharedInstance] activeAccount]];
+    return [NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@", fromDate, toDate];
 }
 - (NSDictionary *)metaDataForTableView:(UITableView *)tableView cellAtIndexPath:(NSIndexPath *)indexPath
 {

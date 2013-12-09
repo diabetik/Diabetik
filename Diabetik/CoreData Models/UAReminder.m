@@ -19,8 +19,6 @@
 //
 
 #import "UAReminder.h"
-#import "UAAccount.h"
-
 
 @implementation UAReminder
 

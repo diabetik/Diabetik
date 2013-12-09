@@ -19,8 +19,6 @@
 //
 
 #import "UAAppDelegate.h"
-#import "UAAccountController.h"
-#import "UAAccountViewController.h"
 
 #import "UASettingsViewController.h"
 #import "UASettingsGlucoseViewController.h"
@@ -93,7 +91,7 @@
 #pragma mark - UITableViewDataSource methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
 {
-    return 4;
+    return 3;
 }
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
@@ -101,11 +99,7 @@
     {
         return 4;
     }
-    else if(section == 1)
-    {
-        return [[[UAAccountController sharedInstance] accounts] count]+1;
-    }
-    else if(section == 3)
+    else if(section == 2)
     {
         return 1;
     }
@@ -120,13 +114,9 @@
     }
     else if(section == 1)
     {
-        return NSLocalizedString(@"Accounts", nil);
-    }
-    else if(section == 2)
-    {
         return NSLocalizedString(@"Backup & Sync", @"Backup & sync settings section title");
     }
-    else if(section == 3)
+    else if(section == 2)
     {
         return NSLocalizedString(@"Other", @"Settings section for miscellaneous information");
     }
@@ -190,25 +180,6 @@
     }
     else if(indexPath.section == 1)
     {
-        cell.accessoryView = nil;
-        if(indexPath.row == [self tableView:aTableView numberOfRowsInSection:indexPath.section]-1)
-        {
-            cell.textLabel.text = NSLocalizedString(@"Add account", nil);
-        }
-        else
-        {
-            UAAccount *account = [[[UAAccountController sharedInstance] accounts] objectAtIndex:indexPath.row];
-            if(account)
-            {
-                UIImage *avatar = [[UAMediaController sharedInstance] imageWithFilename:account.photoPath];
-                cell.textLabel.text = account.name;
-                cell.imageView.image = avatar ? avatar : [UIImage imageNamed:@"DefaultAvatar"];
-                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            }
-        }
-    }
-    else if(indexPath.section == 2)
-    {
         if(indexPath.row == 0)
         {
             cell.imageView.image = [UIImage imageNamed:@"diabetik-small-icon.png"];
@@ -228,7 +199,7 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
-    else if(indexPath.section == 3)
+    else if(indexPath.section == 2)
     {
         if(indexPath.row == 0)
         {
@@ -260,26 +231,6 @@
     }
     else if(indexPath.section == 1)
     {
-        if(indexPath.row == [self tableView:aTableView numberOfRowsInSection:indexPath.section]-1)
-        {
-            UAAccountViewController *vc = [[UAAccountViewController alloc] initWithMOC:self.moc];
-            UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-            [self.navigationController presentViewController:nvc animated:YES completion:^{
-                // STUB
-            }];
-        }
-        else
-        {
-            UAAccount *account = [[[UAAccountController sharedInstance] accounts] objectAtIndex:indexPath.row];
-            if(account)
-            {
-                UAAccountViewController *vc = [[UAAccountViewController alloc] initWithAccount:account andMOC:self.moc];
-                [self.navigationController pushViewController:vc animated:YES];
-            }
-        }
-    }
-    else if(indexPath.section == 2)
-    {
         if(indexPath.row == 0)
         {
             UASettingsBackupViewController *vc = [[UASettingsBackupViewController alloc] initWithMOC:self.moc];
@@ -296,7 +247,7 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
-    else if(indexPath.section == 3)
+    else if(indexPath.section == 2)
     {
         if(indexPath.row == 0)
         {
@@ -304,47 +255,6 @@
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
-}
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if(indexPath.section == 1)
-    {
-        UAAccount *account = [[[UAAccountController sharedInstance] accounts] objectAtIndex:indexPath.row];
-        if(account)
-        {
-            NSError *error = nil;
-            [[UAAccountController sharedInstance] deleteAccount:account error:&error];
-            
-            if(!error)
-            {
-                [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
-                
-                [tableView beginUpdates];
-                [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-                [tableView endUpdates];
-            }
-            else
-            {
-                [tableView setEditing:NO animated:YES];
-                
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"There was an error while trying to delete this account: %@", nil), [error localizedDescription]]
-                                                                   delegate:nil
-                                                          cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                          otherButtonTitles:nil];
-                [alertView show];
-            }
-        }
-    }
-}
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if(indexPath.section == 1 && indexPath.row < [self tableView:tableView numberOfRowsInSection:indexPath.section]-1)
-    {
-        return YES;
-    }
-    
-    return NO;
 }
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {

@@ -133,17 +133,7 @@
 {
     if(self.amount && [self.amount length] && self.name && [self.name length])
     {
-        if([self.date compare:[NSDate date]] == NSOrderedAscending)
-        {
-            UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
-            if(!activeAccount)
-            {
-                NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-                [errorInfo setValue:NSLocalizedString(@"We were unable to save your meal", nil) forKey:NSLocalizedDescriptionKey];
-                return [NSError errorWithDomain:kErrorDomain code:0 userInfo:errorInfo];
-            }
-        }
-        else
+        if([self.date compare:[NSDate date]] != NSOrderedAscending)
         {
             NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
             [errorInfo setValue:NSLocalizedString(@"You cannot enter an event in the future", nil) forKey:NSLocalizedDescriptionKey];
@@ -164,51 +154,45 @@
     [self.view endEditing:YES];
     
     NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
-    UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccountInContext:self.moc];
-    if(activeAccount)
+
+    if(!self.medicine)
     {
-        if(!self.medicine)
-        {
-            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAMedicine" inManagedObjectContext:self.moc];
-            self.medicine = (UAMedicine *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-            self.medicine.filterType = [NSNumber numberWithInteger:MedicineFilterType];
-            self.medicine.account = activeAccount;
-        }
-        self.medicine.amount = [valueFormatter numberFromString:self.amount];
-        self.medicine.name = self.name;
-        self.medicine.timestamp = self.date;
-        self.medicine.type = [NSNumber numberWithInt:self.type];
-        
-        if(!notes.length) notes = nil;
-        self.medicine.notes = notes;
-        
-        // Save our geotag data
-        if(![self.lat isEqual:self.medicine.lat] || ![self.lon isEqual:self.medicine.lon])
-        {
-            self.medicine.lat = self.lat;
-            self.medicine.lon = self.lon;
-        }
-        
-        // Save our photo
-        if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:self.medicine.photoPath])
-        {
-            // If a photo already exists for this entry remove it now
-            if(self.medicine.photoPath)
-            {
-                [[UAMediaController sharedInstance] deleteImageWithFilename:self.medicine.photoPath success:nil failure:nil];
-            }
-            
-            self.medicine.photoPath = self.currentPhotoPath;
-        }
-        
-        NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
-        [[UATagController sharedInstance] assignTags:tags toEvent:self.medicine];
-        
-        [self.moc save:&*error];
-        return self.medicine;
+        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAMedicine" inManagedObjectContext:self.moc];
+        self.medicine = (UAMedicine *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
+        self.medicine.filterType = [NSNumber numberWithInteger:MedicineFilterType];
+    }
+    self.medicine.amount = [valueFormatter numberFromString:self.amount];
+    self.medicine.name = self.name;
+    self.medicine.timestamp = self.date;
+    self.medicine.type = [NSNumber numberWithInt:self.type];
+    
+    if(!notes.length) notes = nil;
+    self.medicine.notes = notes;
+    
+    // Save our geotag data
+    if(![self.lat isEqual:self.medicine.lat] || ![self.lon isEqual:self.medicine.lon])
+    {
+        self.medicine.lat = self.lat;
+        self.medicine.lon = self.lon;
     }
     
-    return nil;
+    // Save our photo
+    if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:self.medicine.photoPath])
+    {
+        // If a photo already exists for this entry remove it now
+        if(self.medicine.photoPath)
+        {
+            [[UAMediaController sharedInstance] deleteImageWithFilename:self.medicine.photoPath success:nil failure:nil];
+        }
+        
+        self.medicine.photoPath = self.currentPhotoPath;
+    }
+    
+    NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
+    [[UATagController sharedInstance] assignTags:tags toEvent:self.medicine];
+    
+    [self.moc save:&*error];
+    return self.medicine;
 }
 - (void)selectType:(UIButton *)sender
 {
@@ -449,7 +433,7 @@
     }
     else
     {
-        return [[UATagController sharedInstance] fetchAllTagsForAccount:[[UAAccountController sharedInstance] activeAccount]];
+        return [[UATagController sharedInstance] fetchAllTags];
     }
     
     return nil;

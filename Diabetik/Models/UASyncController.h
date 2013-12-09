@@ -20,7 +20,6 @@
 
 #import <Foundation/Foundation.h>
 #import "UARunKeeperClient.h"
-#import "UAAccount.h"
 
 @class UARunKeeperClient;
 @interface UASyncController : NSObject
@@ -31,6 +30,6 @@
 
 // Logic
 - (void)requestExternalSyncByForce:(BOOL)force;
-- (id)externalAccountForServiceIdentifier:(NSString *)serviceIdentifier withAccount:(UAAccount *)account;
+- (id)externalAccountForServiceIdentifier:(NSString *)serviceIdentifier;
 
 @end

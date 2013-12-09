@@ -19,7 +19,6 @@
 //
 
 #import "UAAppDelegate.h"
-#import "UAAccountController.h"
 #import "UAReminderController.h"
 #import "UAMediaController.h"
 
@@ -112,13 +111,9 @@
 {
     if(section == 0)
     {
-        return NSLocalizedString(@"Accounts", nil);
-    }
-    else if(section == 1)
-    {
         return NSLocalizedString(@"Menu", @"The section header for generic menu items");
     }
-    else if(section == 2)
+    else if(section == 1)
     {
         return NSLocalizedString(@"Reminders", nil);
     }
@@ -127,21 +122,17 @@
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if([[[UAReminderController sharedInstance] reminders] count]) return 3;
+    if([[[UAReminderController sharedInstance] reminders] count]) return 2;
     
-    return 2;
+    return 1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(section == 0)
     {
-        return [[[UAAccountController sharedInstance] accounts] count];
-    }
-    else if(section == 1)
-    {
         return 5;
     }
-    else if(section == 2)
+    else if(section == 1)
     {
         return [[[UAReminderController sharedInstance] ungroupedReminders] count];
     }
@@ -151,17 +142,12 @@
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *cellIdentifier = @"UASideMenuCell";
-    if(indexPath.section == 0) cellIdentifier = @"UASideMenuAccountCell";
-    if(indexPath.section == 2) cellIdentifier = @"UASideMenuReminderCell";
+    if(indexPath.section == 1) cellIdentifier = @"UASideMenuReminderCell";
     
     UASideMenuCell *cell = (UASideMenuCell *)[aTableView dequeueReusableCellWithIdentifier:cellIdentifier];
     if (cell == nil)
     {
-        if(indexPath.section == 0)
-        {
-            cell = [[UASideMenuAccountCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UASideMenuAccountCell"];
-        }
-        else if(indexPath.section == 2)
+        if(indexPath.section == 1)
         {
             cell = [[UASideMenuCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UASideMenuReminderCell"];
         }
@@ -174,21 +160,6 @@
     cell.tintColor = nil;
     cell.detailTextLabel.text = nil;
     if(indexPath.section == 0)
-    {
-        UAAccount *account = [[[UAAccountController sharedInstance] accounts] objectAtIndex:indexPath.row];
-        if(account)
-        {
-            UIImage *avatar = [[UAMediaController sharedInstance] imageWithFilename:account.photoPath];
-            if(!avatar)
-            {
-                avatar = [UIImage imageNamed:@"DefaultAvatar"];
-            }
-            
-            cell.textLabel.text = account.name;
-            cell.accessoryIcon.image = avatar;
-        }
-    }
-    else if(indexPath.section == 1)
     {
         if(indexPath.row == 0)
         {
@@ -221,7 +192,7 @@
             cell.tintColor = [UIColor colorWithRed:158.0f/255.0f green:122.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
         }
     }
-    else if(indexPath.section == 2)
+    else if(indexPath.section == 1)
     {
         UAReminder *reminder = [[[UAReminderController sharedInstance] ungroupedReminders] objectAtIndex:indexPath.row];
         if(reminder)
@@ -302,15 +273,6 @@
     
     if(indexPath.section == 0)
     {
-        UAAccount *account = [[[UAAccountController sharedInstance] accounts] objectAtIndex:indexPath.row];
-        if(account)
-        {
-            [[UAAccountController sharedInstance] setActiveAccount:account];
-            [aTableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-        }
-    }
-    else if(indexPath.section == 1)
-    {
         if(indexPath.row == 0)
         {
             [navigationController popToRootViewControllerAnimated:NO];
@@ -344,7 +306,7 @@
             }
         }
     }
-    else if(indexPath.section == 2)
+    else if(indexPath.section == 1)
     {
         UAReminder *reminder = [[[UAReminderController sharedInstance] ungroupedReminders] objectAtIndex:indexPath.row];
         if(reminder)

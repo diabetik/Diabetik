@@ -19,7 +19,6 @@
 //
 
 #import "UARunKeeperAccount.h"
-#import "UAAccount.h"
 
 @implementation UARunKeeperAccount
 

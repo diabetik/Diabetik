@@ -24,7 +24,6 @@
 #import "NSDate+Extension.h"
 
 #import "UARunKeeperClient.h"
-#import "UAAccountController.h"
 #import "UAEventController.h"
 #import "UAActivity.h"
 
@@ -46,9 +45,7 @@ NSString *const kRunKeeperBaseURL = @"https://api.runkeeper.com";
                                                           
                                                           if([aNotification.userInfo objectForKey:NXOAuth2AccountStoreNewAccountUserInfoKey])
                                                           {
-                                                              UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
                                                               NXOAuth2Account *newAccount = [aNotification.userInfo objectForKey:NXOAuth2AccountStoreNewAccountUserInfoKey];
-                                                              newAccount.userData = [activeAccount guid];
                                                             
                                                               // Force a sync request
                                                               [self performSyncByForce:YES];
@@ -87,64 +84,59 @@ NSString *const kRunKeeperBaseURL = @"https://api.runkeeper.com";
 {
     NSManagedObjectContext *moc = [[UASyncController sharedInstance] moc];
     
-    [moc performBlock:^{        
-        UAAccount *account = [[UAAccountController sharedInstance] activeAccountInContext:moc];
-        if(account)
+    [moc performBlock:^{
+        NXOAuth2Account *externalAccount = (NXOAuth2Account *)[[UASyncController sharedInstance] externalAccountForServiceIdentifier:kRunKeeperServiceIdentifier];
+        
+        UARunKeeperAccount *runKeeperAccount = [self accountInContext:moc];
+        if(externalAccount)
         {
-            NXOAuth2Account *externalAccount = (NXOAuth2Account *)[[UASyncController sharedInstance] externalAccountForServiceIdentifier:kRunKeeperServiceIdentifier
-                                                                                                                             withAccount:account];
-            
-            if(externalAccount)
+            if(runKeeperAccount)
             {
-                if(account.runKeeperAccount)
+                // If we're not being forced to update, check whether we're within our sync interval
+                if(!force)
                 {
-                    // If we're not being forced to update, check whether we're within our sync interval
-                    if(!force)
+                    NSDate *nextSyncDate = [runKeeperAccount.lastSyncTimestamp dateByAddingTimeInterval:[[runKeeperAccount syncInterval] integerValue]];
+                    if(![[NSDate date] isLaterThanDate:nextSyncDate])
                     {
-                        NSDate *nextSyncDate = [account.runKeeperAccount.lastSyncTimestamp dateByAddingTimeInterval:[[account.runKeeperAccount syncInterval] integerValue]];
-                        if(![[NSDate date] isLaterThanDate:nextSyncDate])
-                        {
-                            //NSLog(@"Within sync interval, bailing out");
-                            return;
-                        }
+                        //NSLog(@"Within sync interval, bailing out");
+                        return;
                     }
-                    
-                    [self fetchLatestActivitiesForAccount:account inContext:moc];
                 }
-                else
-                {
-                    [self performRequest:@"/user" success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
+                
+                [self fetchLatestActivitiesInContext:moc];
+            }
+            else
+            {
+                [self performRequest:@"/user" success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
 
+                    NSError *error = nil;
+                    
+                    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UARunKeeperAccount" inManagedObjectContext:moc];
+                    UARunKeeperAccount *runKeeperAccount = (UARunKeeperAccount *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+                    runKeeperAccount.userID = [[JSON objectForKey:@"userID"] stringValue];
+                    runKeeperAccount.lastSyncTimestamp = [NSDate distantPast];
+                    runKeeperAccount.syncInterval = [NSNumber numberWithInteger:6*60*60]; // every 6 hours
+                    
+                    [moc save:&error];
+                    [moc.parentContext performBlock:^{
                         NSError *error = nil;
-                        
-                        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UARunKeeperAccount" inManagedObjectContext:moc];
-                        UARunKeeperAccount *runKeeperAccount = (UARunKeeperAccount *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
-                        runKeeperAccount.userID = [[JSON objectForKey:@"userID"] stringValue];
-                        runKeeperAccount.lastSyncTimestamp = [NSDate distantPast];
-                        runKeeperAccount.syncInterval = [NSNumber numberWithInteger:6*60*60]; // every 6 hours
-                        runKeeperAccount.account = account;
-                        
-                        [moc save:&error];
-                        [moc.parentContext performBlock:^{
-                            NSError *error = nil;
-                            [moc.parentContext save:&error];
-                        }];
-                        
-                        if(error)
-                        {
-                            NSLog(@"There was an error saving runKeeperAccount details: %@", error);
-                        }
-                        else
-                        {
-                            NSLog(@"Account with ID %@ saved", runKeeperAccount.userID);
-                            
-                            [self fetchLatestActivitiesForAccount:account inContext:moc];
-                        }
-                     
-                    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
-                        
+                        [moc.parentContext save:&error];
                     }];
-                }
+                    
+                    if(error)
+                    {
+                        NSLog(@"There was an error saving runKeeperAccount details: %@", error);
+                    }
+                    else
+                    {
+                        NSLog(@"Account with ID %@ saved", runKeeperAccount.userID);
+                        
+                        [self fetchLatestActivitiesInContext:moc];
+                    }
+                 
+                } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON) {
+                    
+                }];
             }
         }
     }];
@@ -153,17 +145,15 @@ NSString *const kRunKeeperBaseURL = @"https://api.runkeeper.com";
                success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON))success
                failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON))failure;
 {
-    UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
-    
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kRunKeeperBaseURL, endpoint]];
-    NSURLRequest *request = [self createRequestForAccount:activeAccount withURL:url];
+    NSURLRequest *request = [self createRequestWithURL:url];
     
     [AFJSONRequestOperation addAcceptableContentTypes:[NSSet setWithArray:@[@"application/vnd.com.runkeeper.user+json", @"application/vnd.com.runkeeper.fitnessactivityfeed+json"]]];
     AFJSONRequestOperation *operation = [AFJSONRequestOperation JSONRequestOperationWithRequest:request success:success failure:failure];
     
     [[[UASyncController sharedInstance] networkOperationQueue] addOperation:operation];
 }
-- (void)fetchLatestActivitiesForAccount:(UAAccount *)account inContext:(NSManagedObjectContext *)moc
+- (void)fetchLatestActivitiesInContext:(NSManagedObjectContext *)moc
 {
     [self performRequest:@"/fitnessActivities?pageSize=100" success:^(NSURLRequest *request, NSHTTPURLResponse *response, id JSON) {
         NSArray *activities = [JSON objectForKey:@"items"];
@@ -176,7 +166,7 @@ NSString *const kRunKeeperBaseURL = @"https://api.runkeeper.com";
             NSString *guid = [activity objectForKey:@"uri"];
             if(guid)
             {
-                UAActivity *existingEvent = (UAActivity *)[[UAEventController sharedInstance] fetchEventForAccount:account withExternalGUID:[activity objectForKey:@"uri"] inContext:moc];
+                UAActivity *existingEvent = (UAActivity *)[[UAEventController sharedInstance] fetchEventWithExternalGUID:[activity objectForKey:@"uri"] inContext:moc];
                 
                 if(existingEvent)
                 {
@@ -193,7 +183,6 @@ NSString *const kRunKeeperBaseURL = @"https://api.runkeeper.com";
                     newEvent.name = [activity objectForKey:@"type"];
                     newEvent.minutes = [NSNumber numberWithDouble:[[activity objectForKey:@"duration"] integerValue]/60];
                     newEvent.timestamp = [dateFormatter dateFromString:[activity objectForKey:@"start_time"]];
-                    newEvent.account = account;
                     newEvent.filterType = [NSNumber numberWithInteger:ActivityFilterType];
                     newEvent.externalSource = @"RunKeeper";
                     
@@ -206,7 +195,11 @@ NSString *const kRunKeeperBaseURL = @"https://api.runkeeper.com";
             }
         }
         
-        account.runKeeperAccount.lastSyncTimestamp = [NSDate date];
+        UARunKeeperAccount *runKeeperAccount = [self accountInContext:moc];
+        if(runKeeperAccount)
+        {
+            runKeeperAccount.lastSyncTimestamp = [NSDate date];
+        }
         
         [moc save:nil];
         [moc.parentContext performBlock:^{
@@ -222,21 +215,32 @@ NSString *const kRunKeeperBaseURL = @"https://api.runkeeper.com";
 }
 
 #pragma mark - Helpers
-- (NSMutableURLRequest *)createRequestForAccount:(UAAccount *)account withURL:(NSURL *)url
+- (UARunKeeperAccount *)accountInContext:(NSManagedObjectContext *)moc
 {
-    UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
-    if(activeAccount)
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UARunKeeperAccount" inManagedObjectContext:moc];
+    [request setEntity:entity];
+    
+    // Execute the fetch.
+    NSError *error = nil;
+    NSArray *objects = [moc executeFetchRequest:request error:&error];
+    if (objects != nil && [objects count] > 0)
     {
-        NXOAuth2Account *externalAccount = (NXOAuth2Account *)[[UASyncController sharedInstance] externalAccountForServiceIdentifier:kRunKeeperServiceIdentifier
-                                                                                                                         withAccount:activeAccount];
-        
-        if(externalAccount)
-        {
-            NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-            [request setValue:[NSString stringWithFormat:@"Bearer %@", [[externalAccount accessToken] accessToken]] forHTTPHeaderField:@"Authorization"];
-            return request;
-        }
+        return (UARunKeeperAccount *)objects[0];
+    }
+    
+    return nil;
+}
+- (NSMutableURLRequest *)createRequestWithURL:(NSURL *)url
+{
+    NXOAuth2Account *externalAccount = (NXOAuth2Account *)[[UASyncController sharedInstance] externalAccountForServiceIdentifier:kRunKeeperServiceIdentifier];
+    
+    if(externalAccount)
+    {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [request setValue:[NSString stringWithFormat:@"Bearer %@", [[externalAccount accessToken] accessToken]] forHTTPHeaderField:@"Authorization"];
+        return request;
     }
     
     return nil;

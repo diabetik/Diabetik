@@ -28,7 +28,6 @@
 #import "UABaseViewController.h"
 #import "UAEventController.h"
 #import "UATagController.h"
-#import "UAAccountController.h"
 #import "UAMediaController.h"
 #import "UATimeReminderViewController.h"
 
@@ -41,8 +40,6 @@
 #import "UAKeyboardBackingView.h"
 #import "UADeleteButton.h"
 #import "UAAutocompleteBar.h"
-
-#import "UAAccount.h"
 
 @class UAInputBaseViewController;
 @interface UAInputParentViewController : UABaseViewController <UAKeyboardBackingDelegate, UIActionSheetDelegate, UIScrollViewDelegate>

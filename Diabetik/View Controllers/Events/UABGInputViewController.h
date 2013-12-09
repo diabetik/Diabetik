@@ -21,7 +21,6 @@
 #import <UIKit/UIKit.h>
 #import "UAInputBaseViewController.h"
 
-#import "UAAccount.h"
 #import "UAReading.h"
 
 @interface UABGInputViewController : UAInputBaseViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>

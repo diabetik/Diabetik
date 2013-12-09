@@ -9,7 +9,6 @@
 #import "UASideMenuHeaderView.h"
 #import "UAMenuAccountAvatarView.h"
 
-#import "UAAccountController.h"
 #import "UAMediaController.h"
 
 @interface UASideMenuHeaderView ()
@@ -61,12 +60,7 @@
 #pragma mark - Logic
 - (void)updateView
 {
-    UAAccount *account = [[UAAccountController sharedInstance] activeAccount];
-    UIImage *avatar = [[UAMediaController sharedInstance] imageWithFilename:account.photoPath];
-    if(!avatar)
-    {
-        avatar = [UIImage imageNamed:@"DefaultAvatar"];
-    }
+    UIImage *avatar = [UIImage imageNamed:@"DefaultAvatar"];
     
     imageView.image = avatar;
 }

@@ -71,17 +71,7 @@
 {
     if(name && [name length])
     {
-        if([self.date compare:[NSDate date]] == NSOrderedAscending)
-        {
-            UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
-            if(!activeAccount)
-            {
-                NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-                [errorInfo setValue:NSLocalizedString(@"We were unable to save your meal", nil) forKey:NSLocalizedDescriptionKey];
-                return [NSError errorWithDomain:kErrorDomain code:0 userInfo:errorInfo];
-            }
-        }
-        else
+        if([self.date compare:[NSDate date]] != NSOrderedAscending)
         {
             NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
             [errorInfo setValue:NSLocalizedString(@"You cannot enter an event in the future", nil) forKey:NSLocalizedDescriptionKey];
@@ -100,52 +90,45 @@
 - (UAEvent *)saveEvent:(NSError **)error
 {
     [self.view endEditing:YES];
-    
-    UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccountInContext:self.moc];
-    if(activeAccount)
+
+    if(!meal)
     {
-        if(!meal)
-        {
-            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAMeal" inManagedObjectContext:self.moc];
-            meal = (UAMeal *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-            meal.account = activeAccount;
-            meal.filterType = [NSNumber numberWithInteger:MealFilterType];
-        }
-        meal.name = name;
-        meal.timestamp = self.date;
-        meal.type = [NSNumber numberWithInteger:0];
-        meal.grams = [NSNumber numberWithDouble:grams];
-        
-        if(!notes.length) notes = nil;
-        meal.notes = notes;
-        
-        // Save our geotag data
-        if(![self.lat isEqual:meal.lat] || ![self.lon isEqual:meal.lon])
-        {
-            meal.lat = self.lat;
-            meal.lon = self.lon;
-        }
-        
-        // Save our photo
-        if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:meal.photoPath])
-        {
-            // If a photo already exists for this entry remove it now
-            if(meal.photoPath)
-            {
-                [[UAMediaController sharedInstance] deleteImageWithFilename:meal.photoPath success:nil failure:nil];
-            }
-            
-            meal.photoPath = self.currentPhotoPath;
-        }
-        
-        NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
-        [[UATagController sharedInstance] assignTags:tags toEvent:meal];
-        
-        [self.moc save:&*error];
-        return meal;
+        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAMeal" inManagedObjectContext:self.moc];
+        meal = (UAMeal *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
+        meal.filterType = [NSNumber numberWithInteger:MealFilterType];
+    }
+    meal.name = name;
+    meal.timestamp = self.date;
+    meal.type = [NSNumber numberWithInteger:0];
+    meal.grams = [NSNumber numberWithDouble:grams];
+    
+    if(!notes.length) notes = nil;
+    meal.notes = notes;
+    
+    // Save our geotag data
+    if(![self.lat isEqual:meal.lat] || ![self.lon isEqual:meal.lon])
+    {
+        meal.lat = self.lat;
+        meal.lon = self.lon;
     }
     
-    return nil;
+    // Save our photo
+    if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:meal.photoPath])
+    {
+        // If a photo already exists for this entry remove it now
+        if(meal.photoPath)
+        {
+            [[UAMediaController sharedInstance] deleteImageWithFilename:meal.photoPath success:nil failure:nil];
+        }
+        
+        meal.photoPath = self.currentPhotoPath;
+    }
+    
+    NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
+    [[UATagController sharedInstance] assignTags:tags toEvent:meal];
+    
+    [self.moc save:&*error];
+    return meal;
 }
 
 // UI
@@ -342,7 +325,7 @@
     }
     else
     {
-        return [[UATagController sharedInstance] fetchAllTagsForAccount:[[UAAccountController sharedInstance] activeAccount]];
+        return [[UATagController sharedInstance] fetchAllTags];
     }
     
     return nil;

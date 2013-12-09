@@ -22,7 +22,6 @@
 
 #import "UAEventController.h"
 #import "UATagController.h"
-#import "UAAccountController.h"
 #import "UAAppDelegate.h"
 
 #import "UAReading.h"
@@ -60,7 +59,7 @@
     
     // Fetch all medication inputs over the past 15 days
     NSDate *timestamp = [[[NSDate date] dateAtStartOfDay] dateBySubtractingDays:15];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp >= %@ && account = %@", timestamp, [[UAAccountController sharedInstance] activeAccount]];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp >= %@", timestamp];
     [request setPredicate:predicate];
     
     NSInteger hourInterval = 3;
@@ -182,7 +181,7 @@
 {
     // Get an array of all tags contained within the string
     NSArray *tags = [[UATagController sharedInstance] fetchTokensInString:string withPrefix:@""];
-    NSArray *existingTags = [[UATagController sharedInstance] fetchExistingTagsWithStrings:tags forAccount:[[UAAccountController sharedInstance] activeAccount]];
+    NSArray *existingTags = [[UATagController sharedInstance] fetchExistingTagsWithStrings:tags];
     if(existingTags && [existingTags count])
     {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -217,9 +216,9 @@
     
     return nil;
 }
-- (UAEvent *)fetchEventForAccount:(UAAccount *)account withExternalGUID:(NSString *)guid inContext:(NSManagedObjectContext *)moc
+- (UAEvent *)fetchEventWithExternalGUID:(NSString *)guid inContext:(NSManagedObjectContext *)moc
 {
-    NSArray *objects = [self fetchEventsWithPredicate:[NSPredicate predicateWithFormat:@"externalGUID == %@ && account == %@", guid, account] inContext:moc];
+    NSArray *objects = [self fetchEventsWithPredicate:[NSPredicate predicateWithFormat:@"externalGUID == %@", guid] inContext:moc];
     if (objects != nil && [objects count] > 0)
     {
         return [objects objectAtIndex:0];

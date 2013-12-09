@@ -169,7 +169,7 @@
     [request setEntity:entity];
     [request setSortDescriptors:@[sortDescriptor]];
     [request setReturnsObjectsAsFaults:NO];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"account = %@", [[UAAccountController sharedInstance] activeAccount]]];
+    //[request setPredicate:[NSPredicate predicateWithFormat:@"account = %@", [[UAAccountController sharedInstance] activeAccount]]];
     
     OrderedDictionary *data = [OrderedDictionary dictionary];
     

@@ -20,7 +20,6 @@
 
 #import "UAReportsViewController.h"
 #import "UAReportPreviewView.h"
-#import "UAAccountController.h"
 #import "UADateButton.h"
 
 #import "UABloodGlucoseChartViewController.h"
@@ -225,7 +224,7 @@
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
         NSArray *sortDescriptors = @[sortDescriptor];
         [fetchRequest setSortDescriptors:sortDescriptors];
-        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@ && account = %@", fetchFromDate, fetchToDate, [[UAAccountController sharedInstance] activeAccount]]];
+        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@", fetchFromDate, fetchToDate]];
         
         NSError *error = nil;
         reportData = [self.moc executeFetchRequest:fetchRequest error:&error];

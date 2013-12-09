@@ -72,14 +72,11 @@
         [self.runKeeper performSyncByForce:force];
     });
 }
-- (id)externalAccountForServiceIdentifier:(NSString *)serviceIdentifier withAccount:(UAAccount *)account
+- (id)externalAccountForServiceIdentifier:(NSString *)serviceIdentifier
 {
     for (NXOAuth2Account *externalAccount in [[NXOAuth2AccountStore sharedStore] accountsWithAccountType:serviceIdentifier])
     {
-        if([account.guid isEqualToString:(NSString *)externalAccount.userData])
-        {
-            return externalAccount;
-        }
+        return externalAccount;
     }
     
     return nil;

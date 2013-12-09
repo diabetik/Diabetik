@@ -20,7 +20,6 @@
 
 #import "UABaseViewController.h"
 #import "UASyncController.h"
-#import "UAAccountController.h"
 
 @interface UASettingsRunKeeperViewController : UABaseTableViewController <UIAlertViewDelegate>
 

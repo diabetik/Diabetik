@@ -79,17 +79,7 @@
 {
     if(value && [value length])
     {
-        if([self.date compare:[NSDate date]] == NSOrderedAscending)
-        {
-            UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
-            if(!activeAccount)
-            {
-                NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-                [errorInfo setValue:NSLocalizedString(@"We were unable to save your reading", @"Error message for blood glucose reading") forKey:NSLocalizedDescriptionKey];
-                return [NSError errorWithDomain:kErrorDomain code:0 userInfo:errorInfo];
-            }
-        }
-        else
+        if([self.date compare:[NSDate date]] != NSOrderedAscending)
         {
             NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
             [errorInfo setValue:NSLocalizedString(@"You cannot enter an event in the future", nil) forKey:NSLocalizedDescriptionKey];
@@ -126,52 +116,45 @@
         double convertedValue = round([[valueFormatter numberFromString:mmoValue] doubleValue] * 18.0182);
         mgValue = [NSString stringWithFormat:@"%f", convertedValue];
     }
-    
-    UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
-    if(activeAccount)
+
+    if(!reading)
     {
-        if(!reading)
-        {
-            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReading" inManagedObjectContext:self.moc];
-            reading = (UAReading *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-            reading.filterType = [NSNumber numberWithInteger:ReadingFilterType];
-            reading.account = activeAccount;
-            reading.name = NSLocalizedString(@"Blood glucose level", nil);
-        }
-        reading.mmoValue = [NSNumber numberWithDouble:[[valueFormatter numberFromString:mmoValue] doubleValue]];
-        reading.mgValue = [NSNumber numberWithDouble:[[valueFormatter numberFromString:mgValue] doubleValue]];
-        reading.timestamp = self.date;
-        
-        if(!notes.length) notes = nil;
-        reading.notes = notes;
-        
-        // Save our geotag data
-        if(![self.lat isEqual:reading.lat] || ![self.lon isEqual:reading.lon])
-        {
-            reading.lat = self.lat;
-            reading.lon = self.lon;
-        }
-        
-        // Save our photo
-        if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:reading.photoPath])
-        {
-            // If a photo already exists for this entry remove it now
-            if(reading.photoPath)
-            {
-                [[UAMediaController sharedInstance] deleteImageWithFilename:reading.photoPath success:nil failure:nil];
-            }
-            
-            reading.photoPath = self.currentPhotoPath;
-        }
-        
-        NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
-        [[UATagController sharedInstance] assignTags:tags toEvent:reading];
-        
-        [self.moc save:&*error];
-        return reading;
+        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReading" inManagedObjectContext:self.moc];
+        reading = (UAReading *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
+        reading.filterType = [NSNumber numberWithInteger:ReadingFilterType];
+        reading.name = NSLocalizedString(@"Blood glucose level", nil);
+    }
+    reading.mmoValue = [NSNumber numberWithDouble:[[valueFormatter numberFromString:mmoValue] doubleValue]];
+    reading.mgValue = [NSNumber numberWithDouble:[[valueFormatter numberFromString:mgValue] doubleValue]];
+    reading.timestamp = self.date;
+    
+    if(!notes.length) notes = nil;
+    reading.notes = notes;
+    
+    // Save our geotag data
+    if(![self.lat isEqual:reading.lat] || ![self.lon isEqual:reading.lon])
+    {
+        reading.lat = self.lat;
+        reading.lon = self.lon;
     }
     
-    return nil;
+    // Save our photo
+    if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:reading.photoPath])
+    {
+        // If a photo already exists for this entry remove it now
+        if(reading.photoPath)
+        {
+            [[UAMediaController sharedInstance] deleteImageWithFilename:reading.photoPath success:nil failure:nil];
+        }
+        
+        reading.photoPath = self.currentPhotoPath;
+    }
+    
+    NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
+    [[UATagController sharedInstance] assignTags:tags toEvent:reading];
+    
+    [self.moc save:&*error];
+    return reading;
 }
 
 // UI
@@ -334,7 +317,7 @@
     }
     else
     {
-        return [[UATagController sharedInstance] fetchAllTagsForAccount:[[UAAccountController sharedInstance] activeAccount]];
+        return [[UATagController sharedInstance] fetchAllTags];
     }
     
     return nil;

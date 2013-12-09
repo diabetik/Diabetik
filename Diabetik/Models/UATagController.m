@@ -19,7 +19,6 @@
 //
 
 #import "UATagController.h"
-#import "UAAccountController.h"
 #import "UAAppDelegate.h"
 
 @interface UATagController ()
@@ -98,20 +97,13 @@
     
     return [NSArray arrayWithArray:tags];
 }
-- (NSArray *)fetchAllTagsForAccount:(UAAccount *)account
+- (NSArray *)fetchAllTags
 {
     NSManagedObjectContext *moc = [(UAAppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"UATag" inManagedObjectContext:moc];
     [request setEntity:entity];
-    
-    // Are we filtering our request by a specific account?
-    if(account)
-    {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SUBQUERY(events, $x, $x.account = %@).@count > 0", account];
-        [request setPredicate:predicate];
-    }
     
     // Execute the fetch.
     NSError *error = nil;
@@ -127,7 +119,7 @@
     
     return [NSArray arrayWithArray:tags];
 }
-- (NSArray *)fetchExistingTagsWithStrings:(NSArray *)strings forAccount:(UAAccount *)account
+- (NSArray *)fetchExistingTagsWithStrings:(NSArray *)strings
 {
     NSManagedObjectContext *moc = [(UAAppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -135,16 +127,8 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"UATag" inManagedObjectContext:moc];
     [request setEntity:entity];
     
-    if(account)
-    {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nameLC IN %@ AND SUBQUERY(self.events, $x, $x.account = %@).@count > 0", strings, account];
-        [request setPredicate:predicate];
-    }
-    else
-    {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nameLC IN %@", strings];
-        [request setPredicate:predicate];
-    }
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nameLC IN %@", strings];
+    [request setPredicate:predicate];
     
     // Execute the fetch.
     NSError *error = nil;
@@ -174,7 +158,7 @@
     // Now re-assign any applicable tags to this event
     for(NSString *tag in tags)
     {
-        NSArray *existingTags = [self fetchExistingTagsWithStrings:@[[tag lowercaseString]] forAccount:[[UAAccountController sharedInstance] activeAccount]];
+        NSArray *existingTags = [self fetchExistingTagsWithStrings:@[[tag lowercaseString]]];
         if(existingTags && [existingTags count])
         {
             [event addTagsObject:(UATag *)[existingTags objectAtIndex:0]];

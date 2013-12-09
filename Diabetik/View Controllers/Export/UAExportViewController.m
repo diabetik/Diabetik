@@ -22,7 +22,6 @@
 #import "MBProgressHUD.h"
 
 #import "UAExportViewController.h"
-#import "UAAccountController.h"
 #import "UAAppDelegate.h"
 #import "UAEventController.h"
 #import "UAExportTooltipView.h"
@@ -366,7 +365,6 @@
     [request setEntity:entity];
     [request setSortDescriptors:@[sortDescriptor]];
     [request setReturnsObjectsAsFaults:NO];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"account = %@", [[UAAccountController sharedInstance] activeAccount]]];
     
     // Execute the fetch.
     NSError *error = nil;
@@ -485,7 +483,6 @@
 }
 - (NSData *)generatePDFData
 {
-    UAAccount *account = [[UAAccountController sharedInstance] activeAccount];
     NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
     
     UAPDFDocument *pdfDocument = [[UAPDFDocument alloc] init];
@@ -498,14 +495,7 @@
     
     [pdfDocument drawImage:[UIImage imageNamed:@"logo.png"] atPosition:pdfDocument.contentFrame.origin];
     
-    if([[account.name lowercaseString] isEqualToString:@"you"])
-    {
-        [pdfDocument drawText:NSLocalizedString(@"Your Diabetic Record", nil) atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 30.0f) withFont:[UAFont standardDemiBoldFontWithSize:16.0f]];
-    }
-    else
-    {
-        [pdfDocument drawText:[NSString stringWithFormat:@"%@'s %@", account.name, NSLocalizedString(@"Diabetic Record", nil)] atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 30.0f) withFont:[UAFont standardDemiBoldFontWithSize:16.0f]];
-    }
+    [pdfDocument drawText:NSLocalizedString(@"Your Diabetic Record", nil) atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 30.0f) withFont:[UAFont standardDemiBoldFontWithSize:16.0f]];
     
     // Monthly breakdown
     [pdfDocument drawText:@"Monthly Breakdown" atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 15.0f) withFont:[UAFont standardMediumFontWithSize:14.0f]];

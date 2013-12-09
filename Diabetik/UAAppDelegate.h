@@ -25,8 +25,6 @@
 
 #import "UAUI.h"
 #import "UABackupController.h"
-
-#import "UAAccount.h"
 #import "UASyncController.h"
 
 @interface UAAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate, BITHockeyManagerDelegate>

@@ -20,7 +20,6 @@
 
 #import <Dropbox/Dropbox.h>
 #import "UABackupController.h"
-#import "UAAccountController.h"
 #import "UAAppDelegate.h"
 
 @interface UABackupController ()
@@ -46,6 +45,7 @@
 #pragma mark - Logic
 - (void)backupToDropbox:(void (^)(NSError *))completionCallback
 {
+    /*
     [self.moc performBlock:^{
         
         NSError *error = nil;
@@ -89,6 +89,7 @@
             completionCallback(error);
         });
     }];
+    */
 }
 - (void)restoreFromBackup:(void (^)(NSError *))completionCallback
 {

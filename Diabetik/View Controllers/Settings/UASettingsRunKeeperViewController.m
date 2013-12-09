@@ -87,16 +87,14 @@
 #pragma mark - Logic
 - (void)fetchLinkedAccount
 {
-    UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
-    externalAccount = [[UASyncController sharedInstance] externalAccountForServiceIdentifier:kRunKeeperServiceIdentifier withAccount:activeAccount];
+    externalAccount = [[UASyncController sharedInstance] externalAccountForServiceIdentifier:kRunKeeperServiceIdentifier];
 
     [self updateSyncInformation];
 }
 - (void)updateSyncInformation
 {
-    UAAccount *activeAccount = [[UAAccountController sharedInstance] activeAccount];
-
-    if(activeAccount && externalAccount)
+    UARunKeeperAccount *runKeeperAccount = [[[UASyncController sharedInstance] runKeeper] accountInContext:[[UASyncController sharedInstance] moc]];
+    if(externalAccount && runKeeperAccount)
     {
         lastSyncLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width-20.0f, 0.0f)];
         lastSyncLabel.numberOfLines = 0;
@@ -107,9 +105,9 @@
         lastSyncLabel.shadowOffset = CGSizeMake(0.0f, 1.0f);
         lastSyncLabel.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.6f];
         
-        if(activeAccount.runKeeperAccount.lastSyncTimestamp)
+        if(runKeeperAccount.lastSyncTimestamp)
         {
-            lastSyncLabel.text = [NSString stringWithFormat:@"%@\n%@", NSLocalizedString(@"Last sync performed on", @"A label showing the date a sync operation was last performed on"), [dateFormatter stringFromDate:activeAccount.runKeeperAccount.lastSyncTimestamp]];
+            lastSyncLabel.text = [NSString stringWithFormat:@"%@\n%@", NSLocalizedString(@"Last sync performed on", @"A label showing the date a sync operation was last performed on"), [dateFormatter stringFromDate:runKeeperAccount.lastSyncTimestamp]];
         }
         else
         {

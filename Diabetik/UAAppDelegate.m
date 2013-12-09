@@ -29,7 +29,6 @@
 #import "UASideMenuViewController.h"
 
 #import "UAReminderController.h"
-#import "UAAccountController.h"
 #import "UALocationController.h"
 #import "UAEventController.h"
 
@@ -96,8 +95,6 @@
     // Call various singletons
     [[UAReminderController sharedInstance] setMOC:self.managedObjectContext];
     [[UAEventController sharedInstance] setMOC:self.managedObjectContext];
-    [[UAAccountController sharedInstance] setMOC:self.managedObjectContext];
-    [[UAAccountController sharedInstance] activeAccount];
     [UASyncController sharedInstance];
     [UALocationController sharedInstance];
     

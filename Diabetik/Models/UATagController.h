@@ -32,8 +32,8 @@
 // Helpers
 - (NSArray *)fetchTagsInString:(NSString *)string;
 - (NSArray *)fetchTokensInString:(NSString *)string withPrefix:(NSString *)prefix;
-- (NSArray *)fetchAllTagsForAccount:(UAAccount *)account;
-- (NSArray *)fetchExistingTagsWithStrings:(NSArray *)strings forAccount:(UAAccount *)account;
+- (NSArray *)fetchAllTags;
+- (NSArray *)fetchExistingTagsWithStrings:(NSArray *)strings;
 - (void)assignTags:(NSArray *)tags toEvent:(UAEvent *)event;
 
 @end

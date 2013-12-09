@@ -29,7 +29,6 @@
 		533F07451708B72300B7BF55 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07441708B72300B7BF55 /* SystemConfiguration.framework */; };
 		533F32E91773266600AD89E2 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F302A1773266500AD89E2 /* NSDate+Extension.m */; };
 		533F32EA1773266600AD89E2 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F302C1773266500AD89E2 /* NSString+Extension.m */; };
-		533F32F41773266600AD89E2 /* UAAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F30421773266500AD89E2 /* UAAccount.m */; };
 		533F32F51773266600AD89E2 /* UAActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F30441773266500AD89E2 /* UAActivity.m */; };
 		533F32F61773266600AD89E2 /* UAEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F30461773266500AD89E2 /* UAEvent.m */; };
 		533F32F71773266600AD89E2 /* UAManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F30481773266500AD89E2 /* UAManagedObject.m */; };
@@ -79,9 +78,6 @@
 		533F34A21773266600AD89E2 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32471773266600AD89E2 /* MBProgressHUD.m */; };
 		533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F324B1773266600AD89E2 /* OrderedDictionary.m */; };
 		533F34A41773266600AD89E2 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F324E1773266600AD89E2 /* UIImage+Resize.m */; };
-		533F34A51773266600AD89E2 /* UAAccountDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32531773266600AD89E2 /* UAAccountDetailsCell.m */; };
-		533F34A61773266600AD89E2 /* UAAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32551773266600AD89E2 /* UAAccountViewController.m */; };
-		533F34A71773266600AD89E2 /* UAAccountAvatarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32581773266600AD89E2 /* UAAccountAvatarButton.m */; };
 		533F34A81773266600AD89E2 /* UAAddEntryModalButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F325B1773266600AD89E2 /* UAAddEntryModalButton.m */; };
 		533F34A91773266600AD89E2 /* UAAddEntryModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F325D1773266600AD89E2 /* UAAddEntryModalView.m */; };
 		533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32611773266600AD89E2 /* UAEventInputTextFieldViewCell.m */; };
@@ -140,7 +136,6 @@
 		533F34E21773266600AD89E2 /* UATimelineTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32E41773266600AD89E2 /* UATimelineTableHeaderView.m */; };
 		533F34E31773266600AD89E2 /* UATimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32E61773266600AD89E2 /* UATimelineViewController.m */; };
 		533F34E41773266600AD89E2 /* UABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32E81773266600AD89E2 /* UABaseViewController.m */; };
-		533F352317736C0600AD89E2 /* UAAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351217736C0600AD89E2 /* UAAccountController.m */; };
 		533F352417736C0600AD89E2 /* UABackupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351417736C0600AD89E2 /* UABackupController.m */; };
 		533F352517736C0600AD89E2 /* UAEventController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351617736C0600AD89E2 /* UAEventController.m */; };
 		533F352617736C0600AD89E2 /* UAKeyboardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351817736C0600AD89E2 /* UAKeyboardController.m */; };
@@ -181,6 +176,7 @@
 		538FF35116FB1152002B4FC9 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538FF35016FB1152002B4FC9 /* Social.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		538FF35316FB115E002B4FC9 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538FF35216FB115E002B4FC9 /* Accounts.framework */; };
 		53949907184A98B400FF20D1 /* UASettingsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53949906184A98B400FF20D1 /* UASettingsViewCell.m */; };
+		539664D018563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 539664CF18563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel */; };
 		5399308A16852640002F208D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5399308916852640002F208D /* QuartzCore.framework */; };
 		5399F55816DBD850007E619B /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5399F55716DBD850007E619B /* MapKit.framework */; };
 		539E1CCF17B7FEA10059ED17 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E1CCE17B7FEA10059ED17 /* UIImage+ImageEffects.m */; };
@@ -260,8 +256,6 @@
 		533F302A1773266500AD89E2 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
 		533F302B1773266500AD89E2 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		533F302C1773266500AD89E2 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
-		533F30411773266500AD89E2 /* UAAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAccount.h; sourceTree = "<group>"; };
-		533F30421773266500AD89E2 /* UAAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAccount.m; sourceTree = "<group>"; };
 		533F30431773266500AD89E2 /* UAActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAActivity.h; sourceTree = "<group>"; };
 		533F30441773266500AD89E2 /* UAActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAActivity.m; sourceTree = "<group>"; };
 		533F30451773266500AD89E2 /* UAEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEvent.h; sourceTree = "<group>"; };
@@ -349,12 +343,6 @@
 		533F324B1773266600AD89E2 /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 		533F324D1773266600AD89E2 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		533F324E1773266600AD89E2 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		533F32521773266600AD89E2 /* UAAccountDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAccountDetailsCell.h; sourceTree = "<group>"; };
-		533F32531773266600AD89E2 /* UAAccountDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAccountDetailsCell.m; sourceTree = "<group>"; };
-		533F32541773266600AD89E2 /* UAAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAccountViewController.h; sourceTree = "<group>"; };
-		533F32551773266600AD89E2 /* UAAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAccountViewController.m; sourceTree = "<group>"; };
-		533F32571773266600AD89E2 /* UAAccountAvatarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAccountAvatarButton.h; sourceTree = "<group>"; };
-		533F32581773266600AD89E2 /* UAAccountAvatarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAccountAvatarButton.m; sourceTree = "<group>"; };
 		533F325A1773266600AD89E2 /* UAAddEntryModalButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryModalButton.h; sourceTree = "<group>"; };
 		533F325B1773266600AD89E2 /* UAAddEntryModalButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryModalButton.m; sourceTree = "<group>"; };
 		533F325C1773266600AD89E2 /* UAAddEntryModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryModalView.h; sourceTree = "<group>"; };
@@ -470,8 +458,6 @@
 		533F32E61773266600AD89E2 /* UATimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATimelineViewController.m; sourceTree = "<group>"; };
 		533F32E71773266600AD89E2 /* UABaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UABaseViewController.h; sourceTree = "<group>"; };
 		533F32E81773266600AD89E2 /* UABaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UABaseViewController.m; sourceTree = "<group>"; };
-		533F351117736C0600AD89E2 /* UAAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAccountController.h; sourceTree = "<group>"; };
-		533F351217736C0600AD89E2 /* UAAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAccountController.m; sourceTree = "<group>"; };
 		533F351317736C0600AD89E2 /* UABackupController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UABackupController.h; sourceTree = "<group>"; };
 		533F351417736C0600AD89E2 /* UABackupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UABackupController.m; sourceTree = "<group>"; };
 		533F351517736C0600AD89E2 /* UAEventController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventController.h; sourceTree = "<group>"; };
@@ -547,6 +533,8 @@
 		538FF35216FB115E002B4FC9 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		53949905184A98B400FF20D1 /* UASettingsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsViewCell.h; sourceTree = "<group>"; };
 		53949906184A98B400FF20D1 /* UASettingsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsViewCell.m; sourceTree = "<group>"; };
+		539664CE185639D100AD1842 /* Diabetik_1.3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = Diabetik_1.3.xcdatamodel; sourceTree = "<group>"; };
+		539664CF18563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_1.2_to_1.3.xcmappingmodel; sourceTree = "<group>"; };
 		5399308916852640002F208D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		5399F55716DBD850007E619B /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		539E1CCD17B7FEA10059ED17 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -708,6 +696,7 @@
 				533F31E81773266600AD89E2 /* Sync Proxies */,
 				533F30401773266500AD89E2 /* CoreData Models */,
 				533F305D1773266500AD89E2 /* Diabetik.xcdatamodeld */,
+				539664CF18563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel */,
 				535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */,
 				5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */,
 				533F30591773266500AD89E2 /* Localizable.strings */,
@@ -743,8 +732,6 @@
 		533F30401773266500AD89E2 /* CoreData Models */ = {
 			isa = PBXGroup;
 			children = (
-				533F30411773266500AD89E2 /* UAAccount.h */,
-				533F30421773266500AD89E2 /* UAAccount.m */,
 				533F30431773266500AD89E2 /* UAActivity.h */,
 				533F30441773266500AD89E2 /* UAActivity.m */,
 				533F30451773266500AD89E2 /* UAEvent.h */,
@@ -915,7 +902,6 @@
 			isa = PBXGroup;
 			children = (
 				536E9654177FA7D900140DF0 /* Insulin Calculator */,
-				533F32501773266600AD89E2 /* Account */,
 				533F32591773266600AD89E2 /* Add Entry */,
 				533F325E1773266600AD89E2 /* Events */,
 				533F328B1773266600AD89E2 /* Export */,
@@ -929,35 +915,6 @@
 				533F32E81773266600AD89E2 /* UABaseViewController.m */,
 			);
 			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		533F32501773266600AD89E2 /* Account */ = {
-			isa = PBXGroup;
-			children = (
-				533F32561773266600AD89E2 /* UI */,
-				533F32511773266600AD89E2 /* Cells */,
-				533F32541773266600AD89E2 /* UAAccountViewController.h */,
-				533F32551773266600AD89E2 /* UAAccountViewController.m */,
-			);
-			path = Account;
-			sourceTree = "<group>";
-		};
-		533F32511773266600AD89E2 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				533F32521773266600AD89E2 /* UAAccountDetailsCell.h */,
-				533F32531773266600AD89E2 /* UAAccountDetailsCell.m */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		533F32561773266600AD89E2 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				533F32571773266600AD89E2 /* UAAccountAvatarButton.h */,
-				533F32581773266600AD89E2 /* UAAccountAvatarButton.m */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		533F32591773266600AD89E2 /* Add Entry */ = {
@@ -1251,8 +1208,6 @@
 		533F351017736C0600AD89E2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				533F351117736C0600AD89E2 /* UAAccountController.h */,
-				533F351217736C0600AD89E2 /* UAAccountController.m */,
 				533F351317736C0600AD89E2 /* UABackupController.h */,
 				533F351417736C0600AD89E2 /* UABackupController.m */,
 				533F351517736C0600AD89E2 /* UAEventController.h */,
@@ -1682,7 +1637,6 @@
 				53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */,
 				533F32E91773266600AD89E2 /* NSDate+Extension.m in Sources */,
 				533F32EA1773266600AD89E2 /* NSString+Extension.m in Sources */,
-				533F32F41773266600AD89E2 /* UAAccount.m in Sources */,
 				533F32F51773266600AD89E2 /* UAActivity.m in Sources */,
 				53F78EDA18422B5B006736F5 /* UIImage+AspectFit.m in Sources */,
 				533F32F61773266600AD89E2 /* UAEvent.m in Sources */,
@@ -1690,6 +1644,7 @@
 				533F32F81773266600AD89E2 /* UAMeal.m in Sources */,
 				533F32F91773266600AD89E2 /* UAMedicine.m in Sources */,
 				533F32FA1773266600AD89E2 /* UANote.m in Sources */,
+				539664D018563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel in Sources */,
 				533F32FB1773266600AD89E2 /* UAReading.m in Sources */,
 				533F32FC1773266600AD89E2 /* UAReminder.m in Sources */,
 				533F32FD1773266600AD89E2 /* UAReminderRule.m in Sources */,
@@ -1717,9 +1672,6 @@
 				531D4D83184D372800ABAEC3 /* REFrostedViewController.m in Sources */,
 				533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */,
 				533F34A41773266600AD89E2 /* UIImage+Resize.m in Sources */,
-				533F34A51773266600AD89E2 /* UAAccountDetailsCell.m in Sources */,
-				533F34A61773266600AD89E2 /* UAAccountViewController.m in Sources */,
-				533F34A71773266600AD89E2 /* UAAccountAvatarButton.m in Sources */,
 				533F34A81773266600AD89E2 /* UAAddEntryModalButton.m in Sources */,
 				533F34A91773266600AD89E2 /* UAAddEntryModalView.m in Sources */,
 				533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */,
@@ -1786,7 +1738,6 @@
 				533F34E31773266600AD89E2 /* UATimelineViewController.m in Sources */,
 				53BAD21F1847FF3B007F2977 /* UASideMenuHeaderView.m in Sources */,
 				533F34E41773266600AD89E2 /* UABaseViewController.m in Sources */,
-				533F352317736C0600AD89E2 /* UAAccountController.m in Sources */,
 				533F352417736C0600AD89E2 /* UABackupController.m in Sources */,
 				5310265618491F4F001C5766 /* UADragMenuViewController.m in Sources */,
 				533F352517736C0600AD89E2 /* UAEventController.m in Sources */,
@@ -2133,11 +2084,12 @@
 			isa = XCVersionGroup;
 			children = (
 				5326A32417CFB74900B5F4A2 /* Diabetik_1.2.xcdatamodel */,
+				539664CE185639D100AD1842 /* Diabetik_1.3.xcdatamodel */,
 				533F305E1773266500AD89E2 /* Diabetik.xcdatamodel */,
 				533F305F1773266500AD89E2 /* Diabetik_2.xcdatamodel */,
 				536E964B177F5A3800140DF0 /* Diabetik_1.1.xcdatamodel */,
 			);
-			currentVersion = 5326A32417CFB74900B5F4A2 /* Diabetik_1.2.xcdatamodel */;
+			currentVersion = 539664CE185639D100AD1842 /* Diabetik_1.3.xcdatamodel */;
 			path = Diabetik.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

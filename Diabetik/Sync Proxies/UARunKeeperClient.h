@@ -26,7 +26,6 @@
 #import "AFNetworking.h"
 
 #import "UASyncController.h"
-#import "UAAccount.h"
 #import "UARunKeeperAccount.h"
 
 @protocol UARunKeeperClientDelegate <NSObject>
@@ -42,9 +41,10 @@
 - (void)performRequest:(NSString *)endpoint
                success:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, id JSON))success
                failure:(void (^)(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error, id JSON))failure;
-- (void)fetchLatestActivitiesForAccount:(UAAccount *)account inContext:(NSManagedObjectContext *)moc;
+- (void)fetchLatestActivitiesInContext:(NSManagedObjectContext *)moc;
 
 // Helpers
-- (NSMutableURLRequest *)createRequestForAccount:(UAAccount *)account withURL:(NSURL *)url;
+- (UARunKeeperAccount *)accountInContext:(NSManagedObjectContext *)moc;
+- (NSMutableURLRequest *)createRequestWithURL:(NSURL *)url;
 
 @end
