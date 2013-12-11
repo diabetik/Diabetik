@@ -52,8 +52,8 @@
 @property (nonatomic, strong) UAKeyboardBackingViewButton *locationButton;
 
 // Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC andEventType:(NSInteger)eventType;
-- (id)initWithEvent:(UAEvent *)aEvent andMOC:(NSManagedObjectContext *)aMOC;
+- (id)initWithEventType:(NSInteger)eventType;
+- (id)initWithEvent:(UAEvent *)aEvent;
 - (void)performSetup;
 
 // Logic

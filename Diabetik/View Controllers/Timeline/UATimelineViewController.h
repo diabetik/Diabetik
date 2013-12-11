@@ -33,8 +33,8 @@
 @interface UATimelineViewController : UABaseTableViewController <UAAddEntryModalDelegate, UAReportsDelegate, UIActionSheetDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 
 // Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC relativeDays:(NSInteger)days;
-- (id)initWithMOC:(NSManagedObjectContext *)moc withDateFrom:(NSDate *)aFromDate to:(NSDate *)aToDate;
+- (id)initWithRelativeDays:(NSInteger)days;
+- (id)initWithDateFrom:(NSDate *)aFromDate to:(NSDate *)aToDate;
 
 // Logic
 - (void)refreshView;

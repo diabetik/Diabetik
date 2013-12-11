@@ -35,6 +35,7 @@
 @interface UASettingsViewController ()
 
 // UI
+- (void)toggleiCloudSync:(UISwitch *)sender;
 - (void)toggleSmartInput:(UISwitch *)sender;
 - (void)toggleSounds:(UISwitch *)sender;
 
@@ -78,6 +79,10 @@
 }
 
 #pragma mark - UI
+- (void)toggleiCloudSync:(UISwitch *)sender
+{
+    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:USMCloudEnabledKey];
+}
 - (void)toggleSmartInput:(UISwitch *)sender
 {
     [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:kUseSmartInputKey];
@@ -104,7 +109,7 @@
         return 1;
     }
     
-    return 3;
+    return 4;
 }
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
 {
@@ -182,17 +187,28 @@
     {
         if(indexPath.row == 0)
         {
+            cell.imageView.image = nil;
+            cell.textLabel.text = NSLocalizedString(@"iCloud sync", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
+            [switchControl addTarget:self action:@selector(toggleiCloudSync:) forControlEvents:UIControlEventTouchUpInside];
+            cell.accessoryView = switchControl;
+            [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:USMCloudEnabledKey]];
+        }
+        if(indexPath.row == 1)
+        {
             cell.imageView.image = [UIImage imageNamed:@"diabetik-small-icon.png"];
             cell.textLabel.text = NSLocalizedString(@"Backup settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        if(indexPath.row == 1)
+        if(indexPath.row == 2)
         {
             cell.imageView.image = [UIImage imageNamed:@"dropbox-small-icon.png"];
             cell.textLabel.text = NSLocalizedString(@"Dropbox settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        else if(indexPath.row == 2)
+        else if(indexPath.row == 3)
         {
             cell.imageView.image = [UIImage imageNamed:@"runkeeper-small-icon.png"];
             cell.textLabel.text = NSLocalizedString(@"RunKeeper settings", nil);

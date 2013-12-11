@@ -51,8 +51,8 @@
     if(self)
     {
         _networkOperationQueue = [[NSOperationQueue alloc] init];
-        _moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        _moc.parentContext = [(UAAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
+        //_moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        //_moc.parentContext = [(UAAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
 
         _syncTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(syncTimerTick) userInfo:nil repeats:YES];
         _runKeeper = [[UARunKeeperClient alloc] init];

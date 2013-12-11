@@ -39,17 +39,17 @@
 @implementation UAActivityInputViewController
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
-    self = [super initWithMOC:aMOC];
+    self = [super init];
     if (self) {
         self.title = NSLocalizedString(@"Add Activity", nil);
     }
     return self;
 }
-- (id)initWithEvent:(UAEvent *)aEvent andMOC:(NSManagedObjectContext *)aMOC
+- (id)initWithEvent:(UAEvent *)aEvent
 {
-    self = [super initWithEvent:aEvent andMOC:aMOC];
+    self = [super initWithEvent:aEvent];
     if(self)
     {
         self.title = NSLocalizedString(@"Edit Activity", nil);

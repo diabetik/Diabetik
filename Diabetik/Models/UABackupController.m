@@ -36,8 +36,8 @@
     self = [super init];
     if(self)
     {
-        _moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        _moc.parentContext = aMOC;
+        //_moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        //_moc.parentContext = aMOC;
     }
     
     return self;

@@ -27,13 +27,11 @@
 @synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super init];
     if (self)
     {
-        _moc = aMOC;
-        
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         
@@ -66,14 +64,13 @@
     }
     return self;
 }
-- (id)initWithEvent:(UAEvent *)aEvent andMOC:(NSManagedObjectContext *)aMOC
+- (id)initWithEvent:(UAEvent *)aEvent
 {
-    _event = aEvent;
-    _moc = aMOC;
-    
-    self = [self initWithMOC:aMOC];
+    self = [self init];
     if(self)
     {
+        self.event = aEvent;
+        
         self.date = self.event.timestamp;
         notes = self.event.notes;
         self.currentPhotoPath = self.event.photoPath;

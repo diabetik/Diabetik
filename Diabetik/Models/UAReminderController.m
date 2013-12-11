@@ -92,41 +92,44 @@
 }
 - (NSArray *)fetchAllReminders
 {
-    NSManagedObjectContext *moc = [(UAAppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:moc];
-    [request setEntity:entity];
-    
-    NSSortDescriptor *sortPredicate = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
-    [request setSortDescriptors:@[sortPredicate]];
-    
-    // Execute the fetch.
-    NSError *error = nil;
-    NSArray *objects = [moc executeFetchRequest:request error:&error];
-    if (objects != nil && [objects count] > 0)
+    NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+    if(moc)
     {
-        NSMutableArray *dateReminders = [NSMutableArray array];
-        NSMutableArray *repeatingReminders = [NSMutableArray array];
-        NSMutableArray *locationReminders = [NSMutableArray array];
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
         
-        for(UAReminder *reminder in objects)
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:moc];
+        [request setEntity:entity];
+        
+        NSSortDescriptor *sortPredicate = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+        [request setSortDescriptors:@[sortPredicate]];
+        
+        // Execute the fetch.
+        NSError *error = nil;
+        NSArray *objects = [moc executeFetchRequest:request error:&error];
+        if (objects != nil && [objects count] > 0)
         {
-            if([reminder.type integerValue] == kReminderTypeDate)
+            NSMutableArray *dateReminders = [NSMutableArray array];
+            NSMutableArray *repeatingReminders = [NSMutableArray array];
+            NSMutableArray *locationReminders = [NSMutableArray array];
+            
+            for(UAReminder *reminder in objects)
             {
-                [dateReminders addObject:reminder];
+                if([reminder.type integerValue] == kReminderTypeDate)
+                {
+                    [dateReminders addObject:reminder];
+                }
+                else if([reminder.type integerValue] == kReminderTypeRepeating)
+                {
+                    [repeatingReminders addObject:reminder];
+                }
+                else if([reminder.type integerValue] == kReminderTypeLocation)
+                {
+                    [locationReminders addObject:reminder];
+                }
             }
-            else if([reminder.type integerValue] == kReminderTypeRepeating)
-            {
-                [repeatingReminders addObject:reminder];
-            }
-            else if([reminder.type integerValue] == kReminderTypeLocation)
-            {
-                [locationReminders addObject:reminder];
-            }
+            
+            return @[repeatingReminders, locationReminders, dateReminders];
         }
-        
-        return @[repeatingReminders, locationReminders, dateReminders];
     }
     
     return nil;
@@ -194,21 +197,24 @@
 #pragma mark - Rules
 - (NSArray *)fetchAllReminderRules
 {
-    NSManagedObjectContext *moc = [(UAAppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAReminderRule" inManagedObjectContext:moc];
-    [request setEntity:entity];
-    
-    NSSortDescriptor *sortPredicate = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    [request setSortDescriptors:@[sortPredicate]];
-    
-    // Execute the fetch.
-    NSError *error = nil;
-    NSArray *objects = [moc executeFetchRequest:request error:&error];
-    if (objects != nil && [objects count] > 0)
+    NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+    if(moc)
     {
-        return objects;
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAReminderRule" inManagedObjectContext:moc];
+        [request setEntity:entity];
+        
+        NSSortDescriptor *sortPredicate = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+        [request setSortDescriptors:@[sortPredicate]];
+        
+        // Execute the fetch.
+        NSError *error = nil;
+        NSArray *objects = [moc executeFetchRequest:request error:&error];
+        if (objects != nil && [objects count] > 0)
+        {
+            return objects;
+        }
     }
     
     return nil;

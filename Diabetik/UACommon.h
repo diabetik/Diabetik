@@ -21,6 +21,7 @@
 #import "NSString+Extension.h"
 #import "NSDate+Extension.h"
 #import "VKRSAppSoundPlayer.h"
+#import "UbiquityStoreManager.h"
 
 #import "UAUI.h"
 #import "UAManagedObject.h"

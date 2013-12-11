@@ -21,6 +21,7 @@
 		5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */; };
 		532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EA4177D7DD1000D793F /* CoreText.framework */; };
 		532D0EA8177D7F64000D793F /* HockeyApp-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EA7177D7F64000D793F /* HockeyApp-License.txt */; };
+		532D720A1858BFD800ECBC97 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D72091858BFD800ECBC97 /* JRSwizzle.m */; };
 		53327C46170DDED3004FA6D2 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53327C43170DDEC9004FA6D2 /* libOAuth2Client.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		53350EC917B6A86300223662 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53350EC817B6A86300223662 /* Media.xcassets */; };
 		53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */; };
@@ -195,6 +196,8 @@
 		53D5C501184132B50000CB86 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4F3184132B50000CB86 /* README.md */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
+		53E915C218579A230025B465 /* NSError+UbiquityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E915BF18579A230025B465 /* NSError+UbiquityStoreManager.m */; };
+		53E915C318579A230025B465 /* UbiquityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E915C118579A230025B465 /* UbiquityStoreManager.m */; };
 		53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED118422B5B006736F5 /* TGRImageViewController.m */; };
 		53F78ED818422B5B006736F5 /* TGRImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F78ED218422B5B006736F5 /* TGRImageViewController.xib */; };
 		53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED418422B5B006736F5 /* TGRImageZoomAnimationController.m */; };
@@ -245,6 +248,9 @@
 		5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_1.1_to_1.2.xcmappingmodel; sourceTree = "<group>"; };
 		532D0EA4177D7DD1000D793F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		532D0EA7177D7F64000D793F /* HockeyApp-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "HockeyApp-License.txt"; sourceTree = "<group>"; };
+		532D72081858BFD800ECBC97 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		532D72091858BFD800ECBC97 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
+		532D720E1858FEC300ECBC97 /* Diabetik.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Diabetik.entitlements; sourceTree = "<group>"; };
 		53327C3B170DDEC8004FA6D2 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = "OAuth2Client-master/OAuth2Client.xcodeproj"; sourceTree = "<group>"; };
 		53350EC817B6A86300223662 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -587,6 +593,10 @@
 		53D5C4FC184132B50000CB86 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AppiraterLocalizable.strings"; sourceTree = "<group>"; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		53E915BE18579A230025B465 /* NSError+UbiquityStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+UbiquityStoreManager.h"; sourceTree = "<group>"; };
+		53E915BF18579A230025B465 /* NSError+UbiquityStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+UbiquityStoreManager.m"; sourceTree = "<group>"; };
+		53E915C018579A230025B465 /* UbiquityStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UbiquityStoreManager.h; sourceTree = "<group>"; };
+		53E915C118579A230025B465 /* UbiquityStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UbiquityStoreManager.m; sourceTree = "<group>"; };
 		53F78ED018422B5B006736F5 /* TGRImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGRImageViewController.h; sourceTree = "<group>"; };
 		53F78ED118422B5B006736F5 /* TGRImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGRImageViewController.m; sourceTree = "<group>"; };
 		53F78ED218422B5B006736F5 /* TGRImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TGRImageViewController.xib; sourceTree = "<group>"; };
@@ -674,6 +684,15 @@
 			path = HockeyApp;
 			sourceTree = "<group>";
 		};
+		532D72071858BFD800ECBC97 /* JRSwizzle */ = {
+			isa = PBXGroup;
+			children = (
+				532D72081858BFD800ECBC97 /* JRSwizzle.h */,
+				532D72091858BFD800ECBC97 /* JRSwizzle.m */,
+			);
+			path = JRSwizzle;
+			sourceTree = "<group>";
+		};
 		53327C3C170DDEC8004FA6D2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -693,6 +712,7 @@
 				533F31E81773266600AD89E2 /* Sync Proxies */,
 				533F30401773266500AD89E2 /* CoreData Models */,
 				533F305D1773266500AD89E2 /* Diabetik.xcdatamodeld */,
+				532D720E1858FEC300ECBC97 /* Diabetik.entitlements */,
 				539664CF18563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel */,
 				535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */,
 				539664D11856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel */,
@@ -807,6 +827,8 @@
 		533F32211773266600AD89E2 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				532D72071858BFD800ECBC97 /* JRSwizzle */,
+				53E915BD18579A230025B465 /* UbiquityStoreManager */,
 				531D4D74184D372800ABAEC3 /* REFrostedViewController */,
 				53F78ECF18422B5B006736F5 /* Vertigo */,
 				53D5C4D7184132B50000CB86 /* Appirater */,
@@ -1467,6 +1489,17 @@
 			path = Appirater;
 			sourceTree = "<group>";
 		};
+		53E915BD18579A230025B465 /* UbiquityStoreManager */ = {
+			isa = PBXGroup;
+			children = (
+				53E915BE18579A230025B465 /* NSError+UbiquityStoreManager.h */,
+				53E915BF18579A230025B465 /* NSError+UbiquityStoreManager.m */,
+				53E915C018579A230025B465 /* UbiquityStoreManager.h */,
+				53E915C118579A230025B465 /* UbiquityStoreManager.m */,
+			);
+			path = UbiquityStoreManager;
+			sourceTree = "<group>";
+		};
 		53F78ECF18422B5B006736F5 /* Vertigo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1517,6 +1550,9 @@
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
 							};
 						};
 					};
@@ -1671,6 +1707,7 @@
 				533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */,
 				533F34AB1773266600AD89E2 /* UAEventInputTextViewViewCell.m in Sources */,
 				533F34AC1773266600AD89E2 /* UAEventInputViewCell.m in Sources */,
+				53E915C218579A230025B465 /* NSError+UbiquityStoreManager.m in Sources */,
 				539664D21856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel in Sources */,
 				533F34AF1773266600AD89E2 /* UAEventMapPin.m in Sources */,
 				533F34B01773266600AD89E2 /* UAEventMapViewController.m in Sources */,
@@ -1713,6 +1750,7 @@
 				533F34D21773266600AD89E2 /* UACarbsChartViewController.m in Sources */,
 				533F34D31773266600AD89E2 /* UAChartViewController.m in Sources */,
 				533F34D41773266600AD89E2 /* UALeastSquareFitCalculator.m in Sources */,
+				532D720A1858BFD800ECBC97 /* JRSwizzle.m in Sources */,
 				533F34D51773266600AD89E2 /* UAScatterChartViewController.m in Sources */,
 				533F34D61773266600AD89E2 /* UAReportPreviewView.m in Sources */,
 				531D4D86184D372800ABAEC3 /* UIViewController+REFrostedViewController.m in Sources */,
@@ -1720,6 +1758,7 @@
 				533F34D81773266600AD89E2 /* UADateButton.m in Sources */,
 				533F34D91773266600AD89E2 /* UADatePickerController.m in Sources */,
 				533F34DA1773266600AD89E2 /* UASettingsBackupViewController.m in Sources */,
+				53E915C318579A230025B465 /* UbiquityStoreManager.m in Sources */,
 				533F34DB1773266600AD89E2 /* UASettingsDropboxViewController.m in Sources */,
 				5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */,
 				533F34DC1773266600AD89E2 /* UASettingsGlucoseViewController.m in Sources */,
@@ -1872,6 +1911,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Diabetik/Diabetik.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
@@ -1898,8 +1938,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
+				PROVISIONING_PROFILE = "78FF5F02-7867-49E9-9C93-0B01C50633DE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "78FF5F02-7867-49E9-9C93-0B01C50633DE";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1980,6 +2020,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Diabetik/Diabetik.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
@@ -2004,8 +2045,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
+				PROVISIONING_PROFILE = "78FF5F02-7867-49E9-9C93-0B01C50633DE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "78FF5F02-7867-49E9-9C93-0B01C50633DE";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2016,6 +2057,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Diabetik/Diabetik.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
@@ -2041,8 +2083,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
+				PROVISIONING_PROFILE = "78FF5F02-7867-49E9-9C93-0B01C50633DE";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "78FF5F02-7867-49E9-9C93-0B01C50633DE";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
