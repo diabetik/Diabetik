@@ -66,7 +66,6 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *moc;
 
-@property (nonatomic, assign) BOOL needsDataRefresh;
 @property (nonatomic, assign) NSInteger relativeDays;
 
 @end
@@ -76,7 +75,6 @@
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize detailViewController = _detailViewController;
 @synthesize reportsVC = _reportsVC;
-@synthesize needsDataRefresh = _needsDataRefresh;
 @synthesize relativeDays = _relativeDays;
 
 #pragma mark - Setup
@@ -94,7 +92,6 @@
         [dateFormatter setDateFormat:@"d MMMM yyyy"];
         
         _relativeDays = days;
-        _needsDataRefresh = NO;
         allowReportRotation = YES;
     }
     
@@ -113,7 +110,6 @@
         [dateFormatter setDateFormat:@"d MMMM yyyy"];
         
         _relativeDays = -1;
-        _needsDataRefresh = NO;
         allowReportRotation = YES;
     }
     return self;
@@ -163,16 +159,14 @@
         
         if(strongSelf.relativeDays > -1)
         {
-            strongSelf.needsDataRefresh = YES;
             [strongSelf setDateRangeForRelativeDays:strongSelf.relativeDays];
-            [strongSelf refreshView];
+            [strongSelf reloadViewData:note];
         }
     }];
     settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSettingsChangedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        strongSelf.needsDataRefresh = YES;
-        [strongSelf refreshView];
+        [strongSelf reloadViewData:note];
     }];
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -220,18 +214,19 @@
 }
 
 #pragma mark - Logic
+- (void)reloadViewData:(NSNotification *)note
+{
+    [super reloadViewData:note];
+    
+    self.fetchedResultsController = nil;
+    [[self.fetchedResultsController fetchRequest] setPredicate:[self timelinePredicate]];
+    [self.fetchedResultsController performFetch:nil];
+    [self.tableView reloadData];
+    
+    [self refreshView];
+}
 - (void)refreshView
 {
-    // If we've dirtied our cache re-fetch everything
-    if(_needsDataRefresh)
-    {
-        [[self.fetchedResultsController fetchRequest] setPredicate:[self timelinePredicate]];
-        [self.fetchedResultsController performFetch:nil];
-        [self.tableView reloadData];
-        
-        _needsDataRefresh = NO;
-    }
-    
     // If we're actively searching refresh our data
     if([searchDisplayController isActive])
     {
@@ -735,7 +730,7 @@
 #pragma mark - NSFetchedResultsControllerDelegate functions
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (_fetchedResultsController != nil && !_needsDataRefresh)
+    if (_fetchedResultsController != nil)
     {
         return _fetchedResultsController;
     }
@@ -766,7 +761,6 @@
             abort();
         }
         
-        _needsDataRefresh = NO;
         [self calculateSectionStats];
     }
     

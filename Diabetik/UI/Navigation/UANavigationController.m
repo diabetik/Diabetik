@@ -38,9 +38,7 @@
 }
 
 #pragma mark - UINavigationControllerDelegate
-/*
- A nasty hack found here: http://keighl.com/post/ios7-interactive-pop-gesture-custom-back-button/
- */
+// A nasty hack found here: http://keighl.com/post/ios7-interactive-pop-gesture-custom-back-button/
 - (void)pushViewController:(UIViewController *)viewController
                   animated:(BOOL)animated
 {

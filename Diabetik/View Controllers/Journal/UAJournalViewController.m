@@ -43,19 +43,14 @@
     NSDateFormatter *dateFormatter;
     
     id settingsChangeNotifier;
-    id coredataChangeNotifier;
     
-    BOOL needsDataRefresh;
     double todaysMean, sevenDaysMean, fourteenDaysMean;
     double todaysHighest, sevenDaysHighest, fourteenDaysHighest;
     NSInteger todaysCount, sevenDaysCount, fourteenDaysCount;
 }
-@property (strong, nonatomic) NSManagedObjectContext *moc;
-
 @end
 
 @implementation UAJournalViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
 - (id)init
@@ -66,32 +61,21 @@
         __weak typeof(self) weakSelf = self;
         
         self.title = NSLocalizedString(@"Journal", @"The title for the applications index screen - which is a physical journal");
-        needsDataRefresh = YES;
         
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MMMM yyyy"];
         
         // Notifications
-        coredataChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextObjectsDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            needsDataRefresh = YES;
-        }];
         settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSignificantSettingsChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            needsDataRefresh = YES;
-            [weakSelf refreshView];
-        }];
-        
-        [[NSNotificationCenter defaultCenter] addObserverForName:USMStoreDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            NSLog(@"Store did change");
-            [weakSelf refreshView];
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf reloadViewData:note];
         }];
     }
     return self;
 }
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];    
-    [[NSNotificationCenter defaultCenter] removeObserver:accountSwitchNotifier];
-    [[NSNotificationCenter defaultCenter] removeObserver:coredataChangeNotifier];
+    [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -135,6 +119,7 @@
     
     // Additional setup
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    
     [self refreshView];
 }
 - (void)viewDidLoad
@@ -155,6 +140,8 @@
     {
         [self showTips];
     }
+    
+    [self reloadViewData:nil];
 }
 
 #pragma mark - Logic
@@ -227,14 +214,15 @@
 {
     if(isVisible)
     {
-        //if(needsDataRefresh)
-        //{
-            readings = [self fetchReadingData];
-            needsDataRefresh = NO;
-        //}
-    
         [self.tableView reloadData];
     }
+}
+- (void)reloadViewData:(NSNotification *)note
+{
+    [super reloadViewData:note];
+
+    readings = [self fetchReadingData];
+    [self refreshView];
 }
 
 #pragma mark - UI

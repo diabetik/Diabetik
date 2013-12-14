@@ -83,7 +83,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self refreshView];
+    [self reloadViewData:nil];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -100,10 +100,15 @@
     
     noReportsView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height-self.topLayoutGuide.length);
 }
+- (void)reloadViewData:(NSNotification *)note
+{
+    [super reloadViewData:note];
+    
+    reportData = [self fetchEvents];
+    [self refreshView];
+}
 - (void)refreshView
 {
-    reportData = [self fetchEvents];
-    
     if(!noReportsView)
     {
         noReportsView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero

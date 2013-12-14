@@ -27,19 +27,22 @@
     BOOL isVisible;
     BOOL isFirstLoad;
     
-    id accountSwitchNotifier;
     UIScreenEdgePanGestureRecognizer *edgePanGestureRecognizer;
 }
-@property (nonatomic, retain) UIView *activeField;
-
+@property (nonatomic, strong) UIView *activeField;
 @property (nonatomic, strong) NSIndexPath *activeControlIndexPath;
 @property (nonatomic, strong) NSIndexPath *previouslyActiveControlIndexPath;
 
 // Logic
+- (void)reloadViewData:(NSNotification *)note;
 - (void)handleBack:(id)sender withSound:(BOOL)playSound;
 - (void)handleBack:(id)sender;
 - (BOOL)isPresentedModally;
 - (void)panGestureRecognized:(UIPanGestureRecognizer *)sender;
+
+// Notifications
+- (void)coreDataDidChange:(NSNotification *)note;
+- (void)iCloudDataDidChange:(NSNotification *)note;
 
 // Helpers
 - (UIView *)dismissableView;

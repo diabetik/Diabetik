@@ -330,6 +330,26 @@
 }
 
 #pragma mark - Logic
+- (void)reloadViewData:(NSNotification *)note
+{
+    [super reloadViewData:note];
+    
+    NSDictionary *userInfo = [note userInfo];
+    if(userInfo && userInfo[NSDeletedObjectsKey])
+    {
+        for(NSManagedObjectID *objectID in userInfo[NSDeletedObjectsKey])
+        {
+            for(UAInputBaseViewController *vc in self.viewControllers)
+            {
+                if(vc.eventOID && [objectID isEqual:vc.eventOID])
+                {
+                    [self handleBack:self withSound:NO];
+                    return;
+                }
+            }
+        }
+    }
+}
 - (void)saveEvent:(id)sender
 {
     UAInputBaseViewController *targetVC = [self targetViewController];

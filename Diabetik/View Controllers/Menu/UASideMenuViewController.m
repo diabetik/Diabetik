@@ -325,19 +325,11 @@
 #pragma mark - UAModalViewDelegate methods
 - (void)willDisplayModalView:(UAModalView *)aModal
 {
-    /*
-    // Disable swipe gesture
-    JASidePanelController *sidePanel = (JASidePanelController *)[self sidePanelController];
-    sidePanel.disablePanGesture = YES;
-    */
+    // STUB
 }
 - (void)didDismissModalView:(UAModalView *)aModal
 {
-    /*
-    // Re-enable swipe gesture
-    JASidePanelController *sidePanel = (JASidePanelController *)[self sidePanelController];
-    sidePanel.disablePanGesture = NO;
-    */
+    // STUB
 }
 
 @end

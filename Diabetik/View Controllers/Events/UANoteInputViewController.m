@@ -60,6 +60,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    NSLog(@"DEALLOCING UANOTEINPUT");
+}
+
 #pragma mark - Logic
 - (NSError *)validationError
 {

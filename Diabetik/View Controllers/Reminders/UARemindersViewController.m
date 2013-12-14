@@ -56,17 +56,7 @@
 {
     [super viewWillAppear:animated];
 
-    if(!noRemindersView)
-    {
-        // No entry label
-        noRemindersView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero
-                                                           andTitle:NSLocalizedString(@"No Reminders", nil)
-                                                         andMessage:NSLocalizedString(@"You currently don't have any reminders setup. To add one, tap the + icon.", nil)];
-        [noRemindersView setHidden:YES];
-        [self.view addSubview:noRemindersView];
-    }
-    
-    [self updateView];
+    [self reloadViewData:nil];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -76,7 +66,7 @@
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        [strongSelf updateView];
+        [strongSelf reloadViewData:note];
     }];
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenReminderTooltip])
@@ -97,11 +87,27 @@
     noRemindersView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height-self.topLayoutGuide.length);
 }
 
-#pragma mark - UI
-- (void)updateView
+#pragma mark - Logic
+- (void)reloadViewData:(NSNotification *)note
 {
+    [super reloadViewData:note];
+    
     _rules = [[UAReminderController sharedInstance] fetchAllReminderRules];
     _reminders = [[UAReminderController sharedInstance] fetchAllReminders];
+    
+    [self updateView];
+}
+- (void)updateView
+{
+    if(!noRemindersView)
+    {
+        // No entry label
+        noRemindersView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero
+                                                           andTitle:NSLocalizedString(@"No Reminders", nil)
+                                                         andMessage:NSLocalizedString(@"You currently don't have any reminders setup. To add one, tap the + icon.", nil)];
+        [noRemindersView setHidden:YES];
+        [self.view addSubview:noRemindersView];
+    }
  
     if((_reminders && [_reminders count]) || (_rules && [_rules count]))
     {

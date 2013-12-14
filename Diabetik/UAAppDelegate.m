@@ -73,7 +73,8 @@
     // Is this a first run experience?
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasRunBeforeKey])
     {
-        // Dump any existing local notifications (handy when the application has been deleted and re-installed, as iOS likes to keep local notifications around for 24 hours)
+        // Dump any existing local notifications (handy when the application has been deleted and re-installed,
+        // as iOS likes to keep local notifications around for 24 hours)
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasRunBeforeKey];

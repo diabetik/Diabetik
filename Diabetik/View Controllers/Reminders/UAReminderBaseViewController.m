@@ -29,6 +29,25 @@
     return self;
 }
 
+#pragma mark - Logic
+- (void)reloadViewData:(NSNotification *)note
+{
+    [super reloadViewData:note];
+    
+    NSDictionary *userInfo = [note userInfo];
+    if(userInfo && userInfo[NSDeletedObjectsKey])
+    {
+        for(NSManagedObjectID *objectID in userInfo[NSDeletedObjectsKey])
+        {
+            if(self.reminderOID && [objectID isEqual:self.reminderOID])
+            {
+                [self handleBack:self withSound:NO];
+                return;
+            }
+        }
+    }
+}
+
 #pragma mark - Accessors
 - (UAReminder *)reminder
 {

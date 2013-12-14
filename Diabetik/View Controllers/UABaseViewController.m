@@ -24,6 +24,8 @@
 @interface UABaseViewController ()
 {
     UIView *dismissableOverlayView;
+    
+    id iCloudChangeNotifier;
 }
 @end
 
@@ -37,13 +39,26 @@
         isVisible = NO;
         isFirstLoad = YES;
         
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(iCloudDataDidChange:)
+                                                     name:USMStoreDidImportChangesNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(iCloudDataDidChange:)
+                                                     name:USMStoreDidChangeNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(coreDataDidChange:)
+                                                     name:NSManagedObjectContextObjectsDidChangeNotification
+                                                   object:nil];
+        
         self.automaticallyAdjustsScrollViewInsets = YES;
     }
     return self;
 }
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:accountSwitchNotifier];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)viewDidLoad
 {
@@ -79,6 +94,10 @@
 }
 
 #pragma mark - Logic
+- (void)reloadViewData:(NSNotification *)note
+{
+    NSLog(@"reloadViewData: %@", note);
+}
 - (void)handleBack:(id)sender withSound:(BOOL)playSound
 {
     if([self isPresentedModally] && [self.navigationController.viewControllers count] <= 1)
@@ -124,6 +143,24 @@
         return YES;
     }
     return NO;
+}
+
+#pragma mark - Notifications
+- (void)coreDataDidChange:(NSNotification *)note
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf reloadViewData:note];
+    });
+}
+- (void)iCloudDataDidChange:(NSNotification *)note
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf reloadViewData:note];
+    });
 }
 
 #pragma mark - Helpers
