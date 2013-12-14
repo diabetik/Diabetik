@@ -140,11 +140,10 @@
 {
     [self.view endEditing:YES];
     
+    NSError *error = nil;
     if((type == kReminderTypeDate && message && [message length] && date) ||
        (type == kReminderTypeRepeating && message && [message length] && date && days))
     {
-        NSError *error = nil;
-        
         NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
         if(moc)
         {
@@ -164,16 +163,7 @@
                 newReminder.days = [NSNumber numberWithInteger:days];
                 
                 [moc save:&error];
-                if(error)
-                {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                        message:[NSString stringWithFormat:NSLocalizedString(@"We were unable to save your reminder for the following reason: %@", nil), [error localizedDescription]]
-                                                                       delegate:nil
-                                                              cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                              otherButtonTitles:nil];
-                    [alertView show];
-                }
-                else
+                if(!error)
                 {
                     [[UAReminderController sharedInstance] setNotificationsForReminder:newReminder];
                     
@@ -186,19 +176,23 @@
             }
             else
             {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                    message:NSLocalizedString(@"There was an error while setting your reminders date and time", nil)
-                                                                   delegate:nil
-                                                          cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                          otherButtonTitles:nil];
-                [alertView show];
+                error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"Invalid reminder date"}];
             }
+        }
+        else
+        {
+            error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No applicable MOC present"}];
         }
     }
     else
     {
+        error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"Please complete all required fields"}];
+    }
+    
+    if(error)
+    {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                            message:NSLocalizedString(@"Please complete all required fields", nil)
+                                                            message:[NSString stringWithFormat:NSLocalizedString(@"We were unable to save your reminder for the following reason: %@", nil), [error localizedDescription]]
                                                            delegate:nil
                                                   cancelButtonTitle:NSLocalizedString(@"Okay", nil)
                                                   otherButtonTitles:nil];

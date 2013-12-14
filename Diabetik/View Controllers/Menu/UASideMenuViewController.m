@@ -157,32 +157,32 @@
         if(indexPath.row == 0)
         {
             cell.textLabel.text = NSLocalizedString(@"Journal", nil);
-            cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconJournal.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            cell.tintColor = [UIColor colorWithRed:120.0f/255.0f green:217.0f/255.0f blue:115.0f/255.0f alpha:1.0f];
+            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconJournal"];
+            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconJournalHighlighted"];
         }
         else if(indexPath.row == 1)
         {
             cell.textLabel.text = NSLocalizedString(@"Reminders", nil);
-            cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconReminders.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            cell.tintColor = [UIColor colorWithRed:71.0f/255.0f green:179.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
+            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders"];
+            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconRemindersHighlighted"];
         }
         else if(indexPath.row == 2)
         {
             cell.textLabel.text = NSLocalizedString(@"Export", @"Menu item to take users to the export screen");
-            cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconExport.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            cell.tintColor = [UIColor colorWithRed:230.0f/255.0f green:123.0f/255.0f blue:122.0f/255.0f alpha:1.0f];
+            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconExport"];
+            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconExportHighlighted"];
         }
         else if(indexPath.row == 3)
         {
             cell.textLabel.text = NSLocalizedString(@"Credits", @"Menu item to show users the application credits");
-            cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconCredits.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            cell.tintColor = [UIColor colorWithRed:230.0f/255.0f green:179.0f/255.0f blue:11.0f/255.0f alpha:1.0f];
+            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconCredits"];
+            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconCreditsHighlighted"];
         }
         else if(indexPath.row == 4)
         {
             cell.textLabel.text = NSLocalizedString(@"Settings", nil);
-            cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconSettings.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-            cell.tintColor = [UIColor colorWithRed:158.0f/255.0f green:122.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
+            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconSettings"];
+            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconSettingsHighlighted"];
         }
     }
     else if(indexPath.section == 1)
@@ -197,16 +197,20 @@
             switch([reminder.type integerValue])
             {
                 case kReminderTypeDate:
-                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconTimeReminder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconTimeReminder"];
+                    cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconTimeReminderHighlighted"];
                     break;
                 case kReminderTypeRepeating:
-                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconDateReminder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconDateReminder"];
+                    cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconDateReminderHighlighted"];
                     break;
                 case kReminderTypeLocation:
-                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconLocationReminder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconLocationReminder"];
+                    cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconLocationReminderHighlighted"];
                     break;
                 case kReminderTypeRule:
-                    cell.accessoryIcon.image = [[UIImage imageNamed:@"ListMenuIconRuleReminder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+                    cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconRuleReminder"];
+                    cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconRuleReminderHighlighted"];
                     break;
                 default:
                     cell.accessoryIcon.image = nil;

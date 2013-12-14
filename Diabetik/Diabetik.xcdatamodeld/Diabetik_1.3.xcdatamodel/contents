@@ -68,10 +68,10 @@
         <element name="UAEvent" positionX="-1125" positionY="-156" width="128" height="208"/>
         <element name="UAMeal" positionX="-693" positionY="-307" width="128" height="75"/>
         <element name="UAMedicine" positionX="-1127" positionY="-306" width="128" height="75"/>
-        <element name="UANote" positionX="-551" positionY="-306" width="128" height="45"/>
+        <element name="UANote" positionX="-551" positionY="-306" width="128" height="43"/>
         <element name="UAReading" positionX="-837" positionY="-306" width="128" height="75"/>
         <element name="UAReminder" positionX="-740" positionY="-162" width="128" height="193"/>
-        <element name="UAReminderRule" positionX="-576" positionY="-162" width="128" height="105"/>
+        <element name="UAReminderRule" positionX="-576" positionY="-162" width="128" height="103"/>
         <element name="UARunKeeperAccount" positionX="-893" positionY="-61" width="128" height="88"/>
         <element name="UATag" positionX="-1127" positionY="108" width="128" height="90"/>
     </elements>

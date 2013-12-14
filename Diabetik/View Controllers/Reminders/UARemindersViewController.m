@@ -222,18 +222,23 @@
     {
         case kReminderTypeDate:
             cell.imageView.image = [UIImage imageNamed:@"ListMenuIconTimeReminder"];
+            cell.imageView.highlightedImage = [UIImage imageNamed:@"ListMenuIconTimeReminderHighlighted"];
             break;
         case kReminderTypeRepeating:
             cell.imageView.image = [UIImage imageNamed:@"ListMenuIconDateReminder"];
+            cell.imageView.highlightedImage = [UIImage imageNamed:@"ListMenuIconDateReminderHighlighted"];
             break;
         case kReminderTypeLocation:
             cell.imageView.image = [UIImage imageNamed:@"ListMenuIconLocationReminder"];
+            cell.imageView.highlightedImage = [UIImage imageNamed:@"ListMenuIconLocationReminderHighlighted"];
             break;
         case kReminderTypeRule:
             cell.imageView.image = [UIImage imageNamed:@"ListMenuIconRuleReminder"];
+            cell.imageView.highlightedImage = [UIImage imageNamed:@"ListMenuIconRuleReminderHighlighted"];
             break;
         default:
             cell.imageView.image = nil;
+            cell.imageView.highlightedImage = nil;
             break;
     }
     

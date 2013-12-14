@@ -162,6 +162,8 @@
 {
     OrderedDictionary *data = [OrderedDictionary dictionary];
     NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    NSArray *objects = @[];
+    NSError *error = nil;
     if(moc)
     {
         // Save any changes the MOC has waiting in the wings
@@ -177,53 +179,46 @@
         [request setEntity:entity];
         [request setSortDescriptors:@[sortDescriptor]];
         [request setReturnsObjectsAsFaults:NO];
-        //[request setPredicate:[NSPredicate predicateWithFormat:@"account = %@", [[UAAccountController sharedInstance] activeAccount]]];
         
-        // Execute the fetch.
-        NSError *error = nil;
-        NSArray *objects = [moc executeFetchRequest:request error:&error];
-        if(!error && objects)
-        {
-            NSString *title = nil;
-            NSDate *currentDate = [NSDate date];
-            
-            NSInteger month = 6;
-            if([objects count])
-            {
-                month = [[[NSCalendar currentCalendar] components:NSMonthCalendarUnit
-                                                         fromDate:(NSDate *)[[objects lastObject] valueForKey:@"timestamp"]
-                                                           toDate:[NSDate date]
-                                                          options:0] month];
-            }
-            if(month < 6) month = 6;
-            
-            // Past 6 months
-            for(NSInteger i = 0; i <= month; i++)
-            {
-                NSDateComponents *comps = [[NSDateComponents alloc] init];
-                [comps setDay:1];
-                [comps setMonth:[currentDate month]-i];
-                [comps setHour:0];
-                [comps setMinute:0];
-                [comps setSecond:0];
-                [comps setYear:[currentDate year]];
-                
-                NSDate *fromDate = [[NSCalendar currentCalendar] dateFromComponents:comps];
-                NSDate *toDate = [fromDate dateAtEndOfMonth];
-                
-                if(fromDate && toDate)
-                {
-                    NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:fromDate toDate:toDate];
-                    
-                    title = [dateFormatter stringFromDate:fromDate];
-                    [data setObject:stats forKey:title];
-                }
-            }
-        }
+        objects = [moc executeFetchRequest:request error:&error];
     }
-    else
+    
+    // Force objects to be empty if we run into errors
+    if(error || !objects) objects = @[];
+    
+    NSString *title = nil;
+    NSDate *currentDate = [NSDate date];
+    NSInteger month = 6;
+    if([objects count])
     {
-        NSLog(@"NO MOC");
+        month = [[[NSCalendar currentCalendar] components:NSMonthCalendarUnit
+                                                 fromDate:(NSDate *)[[objects lastObject] valueForKey:@"timestamp"]
+                                                   toDate:[NSDate date]
+                                                  options:0] month];
+    }
+    if(month < 6) month = 6;
+    
+    // Past 6 months
+    for(NSInteger i = 0; i <= month; i++)
+    {
+        NSDateComponents *comps = [[NSDateComponents alloc] init];
+        [comps setDay:1];
+        [comps setMonth:[currentDate month]-i];
+        [comps setHour:0];
+        [comps setMinute:0];
+        [comps setSecond:0];
+        [comps setYear:[currentDate year]];
+        
+        NSDate *fromDate = [[NSCalendar currentCalendar] dateFromComponents:comps];
+        NSDate *toDate = [fromDate dateAtEndOfMonth];
+        
+        if(fromDate && toDate)
+        {
+            NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:fromDate toDate:toDate];
+            
+            title = [dateFormatter stringFromDate:fromDate];
+            [data setObject:stats forKey:title];
+        }
     }
     
     return data;
@@ -233,10 +228,10 @@
     if(isVisible)
     {
         //if(needsDataRefresh)
-        {
+        //{
             readings = [self fetchReadingData];
             needsDataRefresh = NO;
-        }
+        //}
     
         [self.tableView reloadData];
     }

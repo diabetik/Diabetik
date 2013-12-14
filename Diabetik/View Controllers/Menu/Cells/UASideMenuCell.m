@@ -73,18 +73,4 @@
     self.accessoryIcon.frame = CGRectMake(self.accessoryIcon.frame.origin.x, self.frame.size.height/2 - self.accessoryIcon.frame.size.height/2, self.accessoryIcon.frame.size.width, self.accessoryIcon.frame.size.height);
 }
 
-- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
-{
-    [super setHighlighted:highlighted animated:animated];
-    
-    if(highlighted)
-    {
-        self.accessoryIcon.tintColor = [UIColor whiteColor];
-    }
-    else
-    {
-        self.accessoryIcon.tintColor = nil;
-    }
-}
-
 @end

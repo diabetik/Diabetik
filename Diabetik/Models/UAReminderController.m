@@ -92,7 +92,7 @@
 }
 - (NSArray *)fetchAllReminders
 {
-    NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -197,7 +197,7 @@
 #pragma mark - Rules
 - (NSArray *)fetchAllReminderRules
 {
-    NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
