@@ -21,8 +21,4 @@
 #import "UABaseViewController.h"
 
 @interface UASettingsBackupViewController : UABaseTableViewController <UIAlertViewDelegate>
-
-// Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-
 @end

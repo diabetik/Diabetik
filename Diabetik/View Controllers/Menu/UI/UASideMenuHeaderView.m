@@ -15,8 +15,6 @@
 {
     UAMenuAccountAvatarView *imageView;
     UILabel *accountLabel;
-    
-    id accountSwitchNotifier;
 }
 
 // Logic
@@ -35,20 +33,10 @@
         imageView = [[UAMenuAccountAvatarView alloc] initWithImage:nil];
         [self addSubview:imageView];
         
-        __weak typeof(self) weakSelf = self;
-        accountSwitchNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsSwitchedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf updateView];
-        }];
-        
         [self updateView];
     }
     
     return self;
-}
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:accountSwitchNotifier];
 }
 - (void)layoutSubviews
 {

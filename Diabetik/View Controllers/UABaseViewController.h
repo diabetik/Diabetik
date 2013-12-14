@@ -30,7 +30,6 @@
     id accountSwitchNotifier;
     UIScreenEdgePanGestureRecognizer *edgePanGestureRecognizer;
 }
-@property (nonatomic, retain) NSManagedObjectContext *moc;
 @property (nonatomic, retain) UIView *activeField;
 
 @property (nonatomic, strong) NSIndexPath *activeControlIndexPath;
@@ -40,7 +39,6 @@
 - (void)handleBack:(id)sender withSound:(BOOL)playSound;
 - (void)handleBack:(id)sender;
 - (BOOL)isPresentedModally;
-- (void)didSwitchUserAccount;
 - (void)panGestureRecognized:(UIPanGestureRecognizer *)sender;
 
 // Helpers

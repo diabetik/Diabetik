@@ -335,99 +335,112 @@
     UAInputBaseViewController *targetVC = [self targetViewController];
     [targetVC.view endEditing:YES];
     
-    NSError *validationError = nil;
-    NSInteger vcIndex = 0;
-    for(UAInputBaseViewController *vc in self.viewControllers)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        validationError = [vc validationError];
-        if(validationError)
-        {
-            [self.scrollView scrollRectToVisible:CGRectMake(vcIndex*self.scrollView.bounds.size.width, 0.0f, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                message:validationError.localizedDescription
-                                                               delegate:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            
-            break;
-        }
-        vcIndex ++;
-    }
-    
-    if(!validationError)
-    {
-        NSMutableArray *newEvents = [NSMutableArray array];
-        
-        NSError *saveError = nil;
+        NSError *validationError = nil;
+        NSInteger vcIndex = 0;
         for(UAInputBaseViewController *vc in self.viewControllers)
         {
-            UAEvent *event = [vc saveEvent:&saveError];
-            if(event && !saveError)
+            validationError = [vc validationError];
+            if(validationError)
             {
-                [newEvents addObject:event];
-            }
-        }
-        
-        // If we're editing an event, remove it so that we don't continually create new reminders
-        if(self.event)
-        {
-            [newEvents removeObject:self.event];
-        }
-        
-        // Iterate over our newly created events and see if any match our rules
-        NSArray *rules = [[UAReminderController sharedInstance] fetchAllReminderRules];
-        if(rules && [rules count])
-        {
-            for(UAReminderRule *rule in rules)
-            {
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:rule.predicate];
-                if(predicate)
-                {
-                    NSMutableArray *filteredEvents = [NSMutableArray arrayWithArray:[newEvents filteredArrayUsingPredicate:predicate]];
+                [self.scrollView scrollRectToVisible:CGRectMake(vcIndex*self.scrollView.bounds.size.width, 0.0f, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
                 
-                    // If we have a match go ahead and create a reminder
-                    if(filteredEvents && [filteredEvents count])
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                    message:validationError.localizedDescription
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                          otherButtonTitles:nil];
+                [alertView show];
+                
+                break;
+            }
+            vcIndex ++;
+        }
+        
+        if(!validationError)
+        {
+            NSMutableArray *newEvents = [NSMutableArray array];
+            
+            NSError *saveError = nil;
+            for(UAInputBaseViewController *vc in self.viewControllers)
+            {
+                UAEvent *event = [vc saveEvent:&saveError];
+                if(event && !saveError)
+                {
+                    [newEvents addObject:event];
+                }
+            }
+            
+            // If we're editing an event, remove it so that we don't continually create new reminders
+            if(self.event)
+            {
+                [newEvents removeObject:self.event];
+            }
+            
+            // Iterate over our newly created events and see if any match our rules
+            NSArray *rules = [[UAReminderController sharedInstance] fetchAllReminderRules];
+            if(rules && [rules count])
+            {
+                for(UAReminderRule *rule in rules)
+                {
+                    NSPredicate *predicate = [NSPredicate predicateWithFormat:rule.predicate];
+                    if(predicate)
                     {
-                        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:self.moc];
-                        UAReminder *newReminder = (UAReminder *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-                        newReminder.created = [NSDate date];
-                        
-                        NSDate *triggerDate = [[filteredEvents objectAtIndex:0] valueForKey:@"timestamp"];
-                        
-                        newReminder.message = rule.name;
-                        if([rule.intervalType integerValue] == kMinuteIntervalType)
+                        NSMutableArray *filteredEvents = [NSMutableArray arrayWithArray:[newEvents filteredArrayUsingPredicate:predicate]];
+                    
+                        // If we have a match go ahead and create a reminder
+                        if(filteredEvents && [filteredEvents count])
                         {
-                            newReminder.date = [triggerDate dateByAddingMinutes:[rule.intervalAmount integerValue]];
-                        } 
-                        else if([rule.intervalType integerValue] == kHourIntervalType)
-                        {
-                            newReminder.date = [triggerDate dateByAddingHours:[rule.intervalAmount integerValue]];
-                        }
-                        else if([rule.intervalType integerValue] == kDayIntervalType)
-                        {
-                            newReminder.date = [triggerDate dateByAddingDays:[rule.intervalAmount integerValue]];
-                        }
-                        newReminder.type = [NSNumber numberWithInteger:kReminderTypeDate];
-                        
-                        NSError *error = nil;                        
-                        [self.moc save:&error];
-                        
-                        if(!error)
-                        {
-                            [[UAReminderController sharedInstance] setNotificationsForReminder:newReminder];
+                            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:moc];
+                            UAReminder *newReminder = (UAReminder *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+                            newReminder.created = [NSDate date];
                             
-                            // Notify anyone interested that we've updated our reminders
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+                            NSDate *triggerDate = [[filteredEvents objectAtIndex:0] valueForKey:@"timestamp"];
+                            
+                            newReminder.message = rule.name;
+                            if([rule.intervalType integerValue] == kMinuteIntervalType)
+                            {
+                                newReminder.date = [triggerDate dateByAddingMinutes:[rule.intervalAmount integerValue]];
+                            } 
+                            else if([rule.intervalType integerValue] == kHourIntervalType)
+                            {
+                                newReminder.date = [triggerDate dateByAddingHours:[rule.intervalAmount integerValue]];
+                            }
+                            else if([rule.intervalType integerValue] == kDayIntervalType)
+                            {
+                                newReminder.date = [triggerDate dateByAddingDays:[rule.intervalAmount integerValue]];
+                            }
+                            newReminder.type = [NSNumber numberWithInteger:kReminderTypeDate];
+                            
+                            NSError *error = nil;                        
+                            [moc save:&error];
+                            
+                            if(!error)
+                            {
+                                [[UAReminderController sharedInstance] setNotificationsForReminder:newReminder];
+                                
+                                // Notify anyone interested that we've updated our reminders
+                                [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+                            }
                         }
                     }
                 }
             }
+            
+            [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
+            [self handleBack:self withSound:NO];
         }
-        
-        [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
-        [self handleBack:self withSound:NO];
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                            message:NSLocalizedString(@"We're unable to save your data as a sync is in progress!", nil)
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                  otherButtonTitles:nil];
+        [alertView show];
     }
 }
 - (void)deleteEvent:(id)sender
@@ -868,7 +881,7 @@
     }
     
     NSDate *date = [[NSDate date] dateByAddingMinutes:minutes];
-    UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithMOC:self.moc andDate:date];
+    UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithDate:date];
     UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nvc animated:YES completion:^{
         // STUB

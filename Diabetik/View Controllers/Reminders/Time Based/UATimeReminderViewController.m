@@ -26,7 +26,6 @@
     NSDateFormatter *timeFormatter;
     NSDateFormatter *dateFormatter;
     
-    UAReminder *reminder;
     id reminderUpdateNotifier;
     
     NSString *message;
@@ -38,15 +37,13 @@
 @end
 
 @implementation UATimeReminderViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         self.title = NSLocalizedString(@"Add Reminder", nil);
-        _moc = aMOC;
         
         timeFormatter = [[NSDateFormatter alloc] init];
         [timeFormatter setTimeStyle:NSDateFormatterShortStyle];
@@ -54,7 +51,6 @@
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateStyle:NSDateFormatterShortStyle];
         
-        reminder = nil;
         type = kReminderTypeDate;
         date = [NSDate date];
         days = 1;
@@ -62,26 +58,30 @@
     }
     return self;
 }
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC andDate:(NSDate *)aDate
+- (id)initWithDate:(NSDate *)aDate
 {
-    self = [self initWithMOC:aMOC];
+    self = [self init];
     if (self) {
         date = aDate;
     }
     
     return self;
 }
-- (id)initWithReminder:(UAReminder *)theReminder andMOC:(NSManagedObjectContext *)aMOC
+- (id)initWithReminder:(UAReminder *)theReminder
 {
-    self = [self initWithMOC:aMOC];
+    self = [self init];
     if (self) {
         self.title = NSLocalizedString(@"Edit Reminder", nil);
+        self.reminder = theReminder;
         
-        reminder = theReminder;
-        type = [reminder.type integerValue];
-        date = reminder.date;
-        message = reminder.message;
-        days = [reminder.days integerValue];
+        UAReminder *reminder = (UAReminder *)[self reminder];
+        if(reminder)
+        {
+            type = [reminder.type integerValue];
+            date = reminder.date;
+            message = reminder.message;
+            days = [reminder.days integerValue];
+        }
         
         // Ditch out of the edit view if the reminder we're editing is removed
         reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -122,7 +122,7 @@
     UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconSave.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(addReminder:)];
     [self.navigationItem setRightBarButtonItem:saveBarButtonItem animated:NO];
 
-    if(!reminder)
+    if(![self reminder])
     {
         [self.tableView reloadData];
         
@@ -145,50 +145,54 @@
     {
         NSError *error = nil;
         
-        NSDate *notificationDate = [[UAReminderController sharedInstance] generateNotificationDateWithDate:date];
-        if(notificationDate)
+        NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+        if(moc)
         {
-            UAReminder *newReminder = reminder;
-            if(!newReminder)
+            NSDate *notificationDate = [[UAReminderController sharedInstance] generateNotificationDateWithDate:date];
+            if(notificationDate)
             {
-                NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:self.moc];
-                newReminder = (UAReminder *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-                newReminder.created = [NSDate date];
+                UAReminder *newReminder = (UAReminder *)[self reminder];
+                if(!newReminder)
+                {
+                    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:moc];
+                    newReminder = (UAReminder *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+                    newReminder.created = [NSDate date];
+                }
+                newReminder.message = message;
+                newReminder.date = notificationDate;
+                newReminder.type = [NSNumber numberWithInteger:type];
+                newReminder.days = [NSNumber numberWithInteger:days];
+                
+                [moc save:&error];
+                if(error)
+                {
+                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                        message:[NSString stringWithFormat:NSLocalizedString(@"We were unable to save your reminder for the following reason: %@", nil), [error localizedDescription]]
+                                                                       delegate:nil
+                                                              cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                              otherButtonTitles:nil];
+                    [alertView show];
+                }
+                else
+                {
+                    [[UAReminderController sharedInstance] setNotificationsForReminder:newReminder];
+                    
+                    // Notify anyone interested that we've updated our reminders
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+                    
+                    [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
+                    [self handleBack:self withSound:NO];
+                }
             }
-            newReminder.message = message;
-            newReminder.date = notificationDate;
-            newReminder.type = [NSNumber numberWithInteger:type];
-            newReminder.days = [NSNumber numberWithInteger:days];
-            
-            [self.moc save:&error];
-            if(error)
+            else
             {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"We were unable to save your reminder for the following reason: %@", nil), [error localizedDescription]]
+                                                                    message:NSLocalizedString(@"There was an error while setting your reminders date and time", nil)
                                                                    delegate:nil
                                                           cancelButtonTitle:NSLocalizedString(@"Okay", nil)
                                                           otherButtonTitles:nil];
                 [alertView show];
             }
-            else
-            {
-                [[UAReminderController sharedInstance] setNotificationsForReminder:newReminder];
-                
-                // Notify anyone interested that we've updated our reminders
-                [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
-                
-                [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
-                [self handleBack:self withSound:NO];
-            }
-        }
-        else
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                message:NSLocalizedString(@"There was an error while setting your reminders date and time", nil)
-                                                               delegate:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
         }
     }
     else
@@ -369,7 +373,7 @@
         {
             if(indexPath.row == 0)
             {
-                UAReminderRepeatViewController *vc = [[UAReminderRepeatViewController alloc] initWithFlags:days andMOC:self.moc];
+                UAReminderRepeatViewController *vc = [[UAReminderRepeatViewController alloc] initWithFlags:days];
                 vc.delegate = self;
                 [self.navigationController pushViewController:vc animated:YES];
             }

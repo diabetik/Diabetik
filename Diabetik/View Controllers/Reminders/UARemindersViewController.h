@@ -27,9 +27,6 @@
 
 @interface UARemindersViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UAModalViewDelegate>
 
-// Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-
 // UI
 - (void)addReminder:(id)sender;
 

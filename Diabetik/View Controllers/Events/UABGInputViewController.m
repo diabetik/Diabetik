@@ -31,8 +31,6 @@
     NSString *value;
     NSString *mgValue;
     NSString *mmoValue;
-    
-    UAReading *reading;
 }
 @end
 
@@ -48,26 +46,29 @@
     }
     return self;
 }
-- (id)initWithEvent:(UAEvent *)aEvent
+- (id)initWithEvent:(UAEvent *)theEvent
 {
-    self = [super initWithEvent:aEvent];
+    self = [super initWithEvent:theEvent];
     if(self)
     {
         self.title = NSLocalizedString(@"Edit Reading", @"Edit blood glucose reading");
         
         NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
-        reading = (UAReading *)aEvent;
-        mmoValue = [valueFormatter stringFromNumber:reading.mmoValue];
-        mgValue = [valueFormatter stringFromNumber:reading.mgValue];
-        
-        NSInteger unitSetting = [[NSUserDefaults standardUserDefaults] integerForKey:kBGTrackingUnitKey];
-        if(unitSetting == BGTrackingUnitMG)
+        UAReading *reading = (UAReading *)[self event];
+        if(reading)
         {
-            value = mgValue;
-        }
-        else
-        {
-            value = mmoValue;
+            mmoValue = [valueFormatter stringFromNumber:reading.mmoValue];
+            mgValue = [valueFormatter stringFromNumber:reading.mgValue];
+            
+            NSInteger unitSetting = [[NSUserDefaults standardUserDefaults] integerForKey:kBGTrackingUnitKey];
+            if(unitSetting == BGTrackingUnitMG)
+            {
+                value = mgValue;
+            }
+            else
+            {
+                value = mmoValue;
+            }
         }
     }
     
@@ -99,10 +100,9 @@
 {
     [self.view endEditing:YES];
     
-    NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
-
         // Convert our input into the right units
         NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
         NSInteger unitSetting = [[NSUserDefaults standardUserDefaults] integerForKey:kBGTrackingUnitKey];
@@ -121,6 +121,7 @@
             mgValue = [NSString stringWithFormat:@"%f", convertedValue];
         }
 
+        UAReading *reading = (UAReading *)[self event];
         if(!reading)
         {
             NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReading" inManagedObjectContext:moc];
@@ -158,12 +159,18 @@
         [[UATagController sharedInstance] assignTags:tags toEvent:reading];
         
         [moc save:&*error];
+        
+        return reading;
+    }
+    else
+    {
+        *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No applicable MOC present"}];
     }
     
-    return reading;
+    return nil;
 }
 
-// UI
+#pragma mark - UI
 - (void)changeDate:(id)sender
 {
     self.date = [sender date];

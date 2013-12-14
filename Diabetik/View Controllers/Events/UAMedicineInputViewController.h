@@ -27,7 +27,6 @@
 @property (nonatomic, retain) NSString *amount;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, assign) NSInteger type;
-@property (nonatomic, retain) UAMedicine *medicine;
 
 // Logic
 - (void)selectType:(UIButton *)sender;

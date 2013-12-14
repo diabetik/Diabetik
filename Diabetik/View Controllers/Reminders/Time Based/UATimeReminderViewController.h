@@ -23,14 +23,14 @@
 
 #import "UAInputLabel.h"
 #import "UAReminderRepeatViewController.h"
+#import "UAReminderBaseViewController.h"
 #import "UAReminderController.h"
 
-@interface UATimeReminderViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UAReminderRepeatDelegate, UAInputLabelDelegate>
+@interface UATimeReminderViewController : UAReminderBaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UAReminderRepeatDelegate, UAInputLabelDelegate>
 
 // Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC andDate:(NSDate *)aDate;
-- (id)initWithReminder:(UAReminder *)theReminder andMOC:(NSManagedObjectContext *)aMOC;
+- (id)initWithDate:(NSDate *)aDate;
+- (id)initWithReminder:(UAReminder *)theReminder;
 
 // Logic
 - (void)addReminder:(id)sender;

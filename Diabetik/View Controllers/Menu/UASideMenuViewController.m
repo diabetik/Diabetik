@@ -29,7 +29,6 @@
 #import "UAJournalViewController.h"
 #import "UATimelineViewController.h"
 #import "UAExportViewController.h"
-#import "UAInsulinCalculatorViewController.h"
 
 #import "UASideMenuCell.h"
 #import "UASideMenuAccountCell.h"
@@ -37,7 +36,6 @@
 
 @interface UASideMenuViewController ()
 {
-    id accountUpdateNotifier;
     id reminderUpdateNotifier;
 }
 @end
@@ -45,12 +43,12 @@
 @implementation UASideMenuViewController
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if(self)
     {
-        self.moc = aMOC;
+        // STUB
     }
     
     return self;
@@ -59,7 +57,7 @@
 {
     [super viewDidLoad];
     
-    UASideMenuHeaderView *headerView = [[UASideMenuHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 115.0f)];
+    UASideMenuHeaderView *headerView = [[UASideMenuHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 150.0f)];
     
     self.tableView.tableHeaderView = headerView;
     //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -71,10 +69,6 @@
     
     self.view.backgroundColor = [UIColor clearColor];
     
-    // Notifications
-    accountUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        [self.tableView reloadData];
-    }];
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self.tableView reloadData];
     }];
@@ -88,7 +82,6 @@
 }
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:accountUpdateNotifier];
     [[NSNotificationCenter defaultCenter] removeObserver:reminderUpdateNotifier];
 }
 
@@ -281,7 +274,7 @@
         {
             if(![[navigationController topViewController] isKindOfClass:[UARemindersViewController class]])
             {
-                UARemindersViewController *vc = [[UARemindersViewController alloc] initWithMOC:self.moc];
+                UARemindersViewController *vc = [[UARemindersViewController alloc] init];
                 [navigationController pushViewController:vc animated:NO];
             }
         }
@@ -301,7 +294,7 @@
         {
             if(![[navigationController topViewController] isKindOfClass:[UASettingsViewController class]])
             {
-                UASettingsViewController *vc = [[UASettingsViewController alloc] initWithMOC:self.moc];
+                UASettingsViewController *vc = [[UASettingsViewController alloc] init];
                 [navigationController pushViewController:vc animated:NO];
             }
         }
@@ -313,12 +306,12 @@
         {
             if([reminder.type integerValue] == kReminderTypeDate || [reminder.type integerValue] == kReminderTypeRepeating)
             {
-                UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithReminder:reminder andMOC:self.moc];
+                UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithReminder:reminder];
                 [navigationController pushViewController:vc animated:NO];
             }
             else
             {
-                UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] initWithReminder:reminder andMOC:self.moc];
+                UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] initWithReminder:reminder];
                 [navigationController pushViewController:vc animated:NO];
             }
         }

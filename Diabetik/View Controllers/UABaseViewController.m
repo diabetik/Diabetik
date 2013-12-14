@@ -28,7 +28,6 @@
 @end
 
 @implementation UABaseViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -39,12 +38,6 @@
         isFirstLoad = YES;
         
         self.automaticallyAdjustsScrollViewInsets = YES;
-        
-        __weak typeof(self) weakSelf = self;
-        accountSwitchNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsSwitchedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf didSwitchUserAccount];
-        }];
     }
     return self;
 }
@@ -131,10 +124,6 @@
         return YES;
     }
     return NO;
-}
-- (void)didSwitchUserAccount
-{
-    // STUB
 }
 
 #pragma mark - Helpers

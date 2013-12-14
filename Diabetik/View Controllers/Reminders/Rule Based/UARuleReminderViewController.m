@@ -38,17 +38,15 @@
 @end
 
 @implementation UARuleReminderViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self)
     {
         self.title = NSLocalizedString(@"Rule-based Reminder", nil);
-        _moc = aMOC;
-        
+    
         ruleTitle = nil;
         triggerClassName = @"UAMedicine";
         triggerEventName = nil;
@@ -62,9 +60,9 @@
     }
     return self;
 }
-- (id)initWithReminderRule:(UAReminderRule *)rule andMOC:(NSManagedObjectContext *)aMOC
+- (id)initWithReminderRule:(UAReminderRule *)rule
 {
-    self = [self initWithMOC:aMOC];
+    self = [self init];
     if(self)
     {
         ruleTitle = rule.name;
@@ -72,14 +70,17 @@
         triggerIntervalType = [rule.intervalType integerValue];
         
         self.title = NSLocalizedString(@"Edit Reminder", nil);
+        self.reminderRule = rule;
         
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:rule.predicate];
-        if(predicate)
+        UAReminderRule *reminderRule = [self reminderRule];
+        if(reminderRule)
         {
-            [self configureFromPredicate:predicate];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:reminderRule.predicate];
+            if(predicate)
+            {
+                [self configureFromPredicate:predicate];
+            }
         }
-        
-        existingRule = rule;
     }
     
     return self;
@@ -119,33 +120,37 @@
             predicateFormat = [predicateFormat stringByAppendingFormat:@" && name ==[cd] '%@'", triggerEventName];
         }
         
-        UAReminderRule *newReminderRule = existingRule;
-        if(!newReminderRule)
+        NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+        if(moc)
         {
-            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminderRule" inManagedObjectContext:self.moc];
-            newReminderRule = (UAReminderRule *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-        }
-        newReminderRule.name = ruleTitle;
-        newReminderRule.predicate = predicateFormat;
-        newReminderRule.intervalType = [NSNumber numberWithInteger:triggerIntervalType];
-        newReminderRule.intervalAmount = [NSNumber numberWithDouble:triggerInterval];
-        
-        NSError *error = nil;
-        [self.moc save:&error];
-        
-        if(error)
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedString(@"We were unable to save your reminder rule for the following reason: %@", nil), [error localizedDescription]]
-                                                               delegate:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
-        }
-        else
-        {
-            [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
-            [self handleBack:self withSound:NO];
+            UAReminderRule *newReminderRule = [self reminderRule];
+            if(!newReminderRule)
+            {
+                NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminderRule" inManagedObjectContext:moc];
+                newReminderRule = (UAReminderRule *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+            }
+            newReminderRule.name = ruleTitle;
+            newReminderRule.predicate = predicateFormat;
+            newReminderRule.intervalType = [NSNumber numberWithInteger:triggerIntervalType];
+            newReminderRule.intervalAmount = [NSNumber numberWithDouble:triggerInterval];
+            
+            NSError *error = nil;
+            [moc save:&error];
+            
+            if(error)
+            {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"We were unable to save your reminder rule for the following reason: %@", nil), [error localizedDescription]]
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            }
+            else
+            {
+                [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
+                [self handleBack:self withSound:NO];
+            }
         }
     }
     else

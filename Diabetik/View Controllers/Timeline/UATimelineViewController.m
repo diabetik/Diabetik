@@ -377,13 +377,6 @@
         @"meal": [NSNumber numberWithDouble:mealTotal]
     };
 }
-- (void)didSwitchUserAccount
-{
-    [super didSwitchUserAccount];
-    
-    _needsDataRefresh = YES;
-    [self refreshView];
-}
 
 #pragma mark - UI
 - (void)addEvent:(id)sender
@@ -689,7 +682,7 @@
     {
         indexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
         
-        NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+        NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
         if(moc)
         {
             NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -747,7 +740,7 @@
         return _fetchedResultsController;
     }
 
-    NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -895,7 +888,7 @@
 
     if(UIInterfaceOrientationIsLandscape(appOrientation) && !self.reportsVC)
     {
-        self.reportsVC = [[UAReportsViewController alloc] initWithMOC:self.moc fromDate:fromDate toDate:toDate];
+        self.reportsVC = [[UAReportsViewController alloc] initFromDate:fromDate toDate:toDate];
         self.reportsVC.delegate = self;
         self.reportsVC.view.frame = self.parentViewController.view.frame;
         

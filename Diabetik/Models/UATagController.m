@@ -99,21 +99,24 @@
 }
 - (NSArray *)fetchAllTags
 {
-    NSManagedObjectContext *moc = [(UAAppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UATag" inManagedObjectContext:moc];
-    [request setEntity:entity];
-    
-    // Execute the fetch.
-    NSError *error = nil;
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     NSMutableArray *tags = [NSMutableArray array];
-    NSArray *objects = [moc executeFetchRequest:request error:&error];
-    if (objects != nil && [objects count] > 0)
+    if(moc)
     {
-        for(UATag *tag in objects)
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UATag" inManagedObjectContext:moc];
+        [request setEntity:entity];
+        
+        // Execute the fetch.
+        NSError *error = nil;
+        NSArray *objects = [moc executeFetchRequest:request error:&error];
+        if (objects != nil && [objects count] > 0)
         {
-            [tags addObject:tag.name];
+            for(UATag *tag in objects)
+            {
+                [tags addObject:tag.name];
+            }
         }
     }
     
@@ -121,54 +124,59 @@
 }
 - (NSArray *)fetchExistingTagsWithStrings:(NSArray *)strings
 {
-    NSManagedObjectContext *moc = [(UAAppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UATag" inManagedObjectContext:moc];
-    [request setEntity:entity];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nameLC IN %@", strings];
-    [request setPredicate:predicate];
-    
-    // Execute the fetch.
-    NSError *error = nil;
-    NSArray *objects = [moc executeFetchRequest:request error:&error];
-    if (objects != nil && [objects count] > 0)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        return objects;
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UATag" inManagedObjectContext:moc];
+        [request setEntity:entity];
+        
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"nameLC IN %@", strings];
+        [request setPredicate:predicate];
+        
+        // Execute the fetch.
+        NSError *error = nil;
+        NSArray *objects = [moc executeFetchRequest:request error:&error];
+        if (objects != nil && [objects count] > 0)
+        {
+            return objects;
+        }
     }
     
     return nil;
 }
 - (void)assignTags:(NSArray *)tags toEvent:(UAEvent *)event
 {
-    NSManagedObjectContext *moc = [(UAAppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
-    
-    // Remove any existing tags from this event
-    if(event.tags.count)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        NSSet *existingEventTags = [event.tags copy];
-        for (NSManagedObject *tag in existingEventTags)
+        // Remove any existing tags from this event
+        if(event.tags.count)
         {
-            [[event mutableSetValueForKey:@"tags"] removeObject:tag];
-            [moc deleteObject:tag];
+            NSSet *existingEventTags = [event.tags copy];
+            for (NSManagedObject *tag in existingEventTags)
+            {
+                [[event mutableSetValueForKey:@"tags"] removeObject:tag];
+                [moc deleteObject:tag];
+            }
         }
-    }
-    
-    // Now re-assign any applicable tags to this event
-    for(NSString *tag in tags)
-    {
-        NSArray *existingTags = [self fetchExistingTagsWithStrings:@[[tag lowercaseString]]];
-        if(existingTags && [existingTags count])
+        
+        // Now re-assign any applicable tags to this event
+        for(NSString *tag in tags)
         {
-            [event addTagsObject:(UATag *)[existingTags objectAtIndex:0]];
-        }
-        else
-        {
-            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UATag" inManagedObjectContext:moc];
-            UATag *newTag = (UATag *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
-            newTag.name = tag;
-            [newTag addEventsObject:event];
+            NSArray *existingTags = [self fetchExistingTagsWithStrings:@[[tag lowercaseString]]];
+            if(existingTags && [existingTags count])
+            {
+                [event addTagsObject:(UATag *)[existingTags objectAtIndex:0]];
+            }
+            else
+            {
+                NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UATag" inManagedObjectContext:moc];
+                UATag *newTag = (UATag *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+                newTag.name = tag;
+                [newTag addEventsObject:event];
+            }
         }
     }
 }

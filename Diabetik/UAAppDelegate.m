@@ -20,7 +20,6 @@
 
 #import <Dropbox/Dropbox.h>
 #import <ShinobiCharts/ShinobiChart.h>
-#import "NXOAuth2.h"
 #import "Appirater.h"
 
 #import "UAHelper.h"
@@ -34,15 +33,6 @@
 
 #import "UAKeyboardController.h"
 
-@interface UAAppDelegate ()
-{
-    UIAlertView *cloudContentCorruptedAlert;
-    UIAlertView *cloudContentHealingAlert;
-    UIAlertView *handleCloudContentWarningAlert;
-    UIAlertView *handleLocalStoreAlert;
-}
-@end
-
 @implementation UAAppDelegate
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -52,15 +42,6 @@
 + (UAAppDelegate *)sharedAppDelegate
 {
     return (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
-}
-+ (void)initialize;
-{
-    [[NXOAuth2AccountStore sharedStore] setClientID:kRunKeeperClientKey
-                                             secret:kRunKeeperClientSecret
-                                   authorizationURL:[NSURL URLWithString:kRunKeeperAuthURL]
-                                           tokenURL:[NSURL URLWithString:kRunKeeperTokenURL]
-                                        redirectURL:[NSURL URLWithString:[NSString stringWithFormat:@"rk%@://oauth2", kRunKeeperClientKey]]
-                                     forAccountType:kRunKeeperServiceIdentifier];
 }
 
 #pragma mark - UIApplicationDelegate
@@ -103,29 +84,21 @@
     [self setupSFX];
     [self setupDropbox];
     
-    self.ubiquityStoreManager = [[UbiquityStoreManager alloc] initStoreNamed:@"Diabetik"
-                                                      withManagedObjectModel:nil
-                                                               localStoreURL:[self persistentStoreURL]
-                                                         containerIdentifier:nil
-                                                      additionalStoreOptions:nil
-                                                                    delegate:self];
-    
-    // Setup our backup controller
-    self.backupController = [[UABackupController alloc] initWithMOC:[self managedObjectContext]];
-
     // Call various singletons
-    //[[UAReminderController sharedInstance] setMOC:self.managedObjectContext];
-    //[[UAEventController sharedInstance] setMOC:self.managedObjectContext];
-    [UASyncController sharedInstance];
+    [UACoreDataController sharedInstance];
+    [UAReminderController sharedInstance];
+    [UAEventController sharedInstance];
     [UALocationController sharedInstance];
     
+    // Setup our backup controller
+    self.backupController = [[UABackupController alloc] init];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.tintColor = kDefaultTintColor;
     
-    UAJournalViewController *journalViewController = [[UAJournalViewController alloc] initWithMOC:self.managedObjectContext];
+    UAJournalViewController *journalViewController = [[UAJournalViewController alloc] init];
     UANavigationController *navigationController = [[UANavigationController alloc] initWithRootViewController:journalViewController];
     
-    self.viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext]];
+    self.viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] init]];
     self.viewController.direction = REFrostedViewControllerDirectionLeft;
     self.viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
     self.viewController.liveBlur = NO;
@@ -146,7 +119,7 @@
 }
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [self saveContext];
+    [[UACoreDataController sharedInstance] saveContext];
 }
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
@@ -159,9 +132,6 @@
 {
     // Delete any expired date-based notifications
     [[UAReminderController sharedInstance] deleteExpiredReminders];
-    
-    // Determine whether we need to sync with any external services
-    [[UASyncController sharedInstance] requestExternalSyncByForce:NO];
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url sourceApplication:(NSString *)source annotation:(id)annotation
 {
@@ -179,16 +149,6 @@
         }
         
         return YES;
-    }
-    // Is this RunKeeper?
-    else if([[url absoluteString] hasPrefix:[NSString stringWithFormat:@"rk%@", kRunKeeperClientKey]])
-    {
-        BOOL handled = [[NXOAuth2AccountStore sharedStore] handleRedirectURL:url];
-        if (!handled) {
-            NSLog(@"The URL (%@) could not be handled. Maybe you want to do something with it.", [url absoluteString]);
-        }
-        
-        return handled;
     }
     
     return NO;
@@ -261,226 +221,11 @@
     // Charts
     [ShinobiCharts setTheme:[SChartiOS7Theme new]];
 }
-- (void)saveContext
-{
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        } 
-    }
-}
 
 #pragma mark - Location services
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     [[UAReminderController sharedInstance] didReceiveLocalNotification:notification];
-}
-
-#pragma mark - Core Data stack
-
-/*
-- (NSManagedObjectModel *)managedObjectModel
-{
-    if (_managedObjectModel != nil) {
-        return _managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Diabetik" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return _managedObjectModel;
-}
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return _managedObjectContext;
-}
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-    if (_persistentStoreCoordinator != nil) {
-        return _persistentStoreCoordinator;
-    }
-    
-    NSURL *storeURL = [self persistentStoreURL];
-    
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
-                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-    
-    NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }    
-    
-    return _persistentStoreCoordinator;
-}
-*/
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (alertView == cloudContentHealingAlert) {
-        if (buttonIndex == [alertView firstOtherButtonIndex]) {
-            // Disable
-            self.ubiquityStoreManager.cloudEnabled = NO;
-        }
-    }
-    
-    if (alertView == cloudContentCorruptedAlert) {
-        if (buttonIndex == [alertView firstOtherButtonIndex]) {
-            // Disable
-            self.ubiquityStoreManager.cloudEnabled = NO;
-        }
-        else if (buttonIndex == [alertView firstOtherButtonIndex] + 1) {
-            // Fix Now
-            handleCloudContentWarningAlert = [[UIAlertView alloc] initWithTitle:@"Fix iCloud Now" message:
-                                              @"This problem can usually be auto‑corrected by opening the app on another device where you recently made changes.\n"
-                                              @"If you wish to correct the problem from this device anyway, it is possible that recent changes on another device will be lost."
-                                                                       delegate:self
-                                                              cancelButtonTitle:@"Back"
-                                                              otherButtonTitles:@"Fix Anyway", nil];
-            [handleCloudContentWarningAlert show];
-        }
-    }
-    
-    if (alertView == handleCloudContentWarningAlert) {
-        if (buttonIndex == alertView.cancelButtonIndex) {
-            // Back
-            [cloudContentCorruptedAlert show];
-        }
-        else if (buttonIndex == alertView.firstOtherButtonIndex) {
-            // Fix Anyway
-            [self.ubiquityStoreManager rebuildCloudContentFromCloudStoreOrLocalStore:YES];
-        }
-    }
-    
-    if (alertView == handleLocalStoreAlert) {
-        if (buttonIndex == [alertView firstOtherButtonIndex]) {
-            // Recreate
-            [self.ubiquityStoreManager deleteLocalStore];
-        }
-    }
-}
-
-
-#pragma mark - UbiquityStoreManagerDelegate
-- (NSManagedObjectContext *)managedObjectContextForUbiquityChangesInManager:(UbiquityStoreManager *)manager
-{
-    return self.managedObjectContext;
-}
-
-- (void)ubiquityStoreManager:(UbiquityStoreManager *)manager willLoadStoreIsCloud:(BOOL)isCloudStore
-{
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    [managedObjectContext performBlockAndWait:^{
-        NSError *error = nil;
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
-            NSLog( @"Unresolved error: %@\n%@", error, [error userInfo] );
-        
-        [managedObjectContext reset];
-    }];
-    
-    _managedObjectContext = nil;
-}
-
-- (void)ubiquityStoreManager:(UbiquityStoreManager *)manager
-  didLoadStoreForCoordinator:(NSPersistentStoreCoordinator *)coordinator
-                     isCloud:(BOOL)isCloudStore
-{
-    
-    NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-    moc.persistentStoreCoordinator = coordinator;
-    moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
-    _managedObjectContext = moc;
-    
-    dispatch_async( dispatch_get_main_queue(), ^{
-        [cloudContentCorruptedAlert dismissWithClickedButtonIndex:[cloudContentCorruptedAlert cancelButtonIndex] animated:YES];
-        [handleCloudContentWarningAlert dismissWithClickedButtonIndex:[handleCloudContentWarningAlert cancelButtonIndex] animated:YES];
-    });
-}
-
-- (void)ubiquityStoreManager:(UbiquityStoreManager *)manager
- failedLoadingStoreWithCause:(UbiquityStoreErrorCause)cause
-                     context:(id)context
-                    wasCloud:(BOOL)wasCloudStore
-{
-    dispatch_async( dispatch_get_main_queue(), ^{
-        
-        if (!wasCloudStore && ![handleLocalStoreAlert isVisible]) {
-            handleLocalStoreAlert = [[UIAlertView alloc] initWithTitle:@"Local Store Problem"
-                                                               message:@"Your datastore got corrupted and needs to be recreated."
-                                                              delegate:self
-                                                     cancelButtonTitle:nil otherButtonTitles:@"Recreate", nil];
-            [handleLocalStoreAlert show];
-        }
-    });
-}
-- (BOOL)ubiquityStoreManager:(UbiquityStoreManager *)manager
-handleCloudContentCorruptionWithHealthyStore:(BOOL)storeHealthy
-{
-    
-    if (storeHealthy) {
-        dispatch_async( dispatch_get_main_queue(), ^{
-            if ([cloudContentHealingAlert isVisible])
-                return;
-            
-            cloudContentHealingAlert = [[UIAlertView alloc]
-                                        initWithTitle:@"iCloud Store Corruption"
-                                        message:@"\n\n\n\nRebuilding cloud store to resolve corruption."
-                                        delegate:self cancelButtonTitle:nil otherButtonTitles:@"Disable iCloud", nil];
-            
-            UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc]
-                                                          initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-            activityIndicator.center = CGPointMake( 142, 90 );
-            [activityIndicator startAnimating];
-            [cloudContentHealingAlert addSubview:activityIndicator];
-            [cloudContentHealingAlert show];
-        } );
-        
-        return YES;
-    }
-    else {
-        dispatch_async( dispatch_get_main_queue(), ^{
-            if ([cloudContentHealingAlert isVisible] || [handleCloudContentWarningAlert isVisible])
-                return;
-            
-            cloudContentCorruptedAlert = [[UIAlertView alloc]
-                                          initWithTitle:@"iCloud Store Corruption"
-                                          message:@"\n\n\n\nWaiting for another device to auto-correct the problem..."
-                                          delegate:self cancelButtonTitle:nil otherButtonTitles:@"Disable iCloud", @"Fix Now", nil];
-            
-            UIActivityIndicatorView *activityIndicator = [[UIActivityIndicatorView alloc]
-                                                          initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-            activityIndicator.center = CGPointMake( 142, 90 );
-            [activityIndicator startAnimating];
-            [cloudContentCorruptedAlert addSubview:activityIndicator];
-            [cloudContentCorruptedAlert show];
-        } );
-        
-        return NO;
-    }
-}
-
-#pragma mark - Helpers
-- (NSURL *)persistentStoreURL
-{
-    return [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Diabetik.sqlite"];
-}
-- (NSURL *)applicationDocumentsDirectory
-{
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 @end

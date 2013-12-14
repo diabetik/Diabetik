@@ -24,7 +24,7 @@
 #import "UASettingsGlucoseViewController.h"
 #import "UASettingsTimelineViewController.h"
 #import "UASettingsDropboxViewController.h"
-#import "UASettingsRunKeeperViewController.h"
+#import "UASettingsiCloudViewController.h"
 #import "UASettingsBackupViewController.h"
 #import "UASettingsLicensesViewController.h"
 
@@ -35,23 +35,20 @@
 @interface UASettingsViewController ()
 
 // UI
-- (void)toggleiCloudSync:(UISwitch *)sender;
 - (void)toggleSmartInput:(UISwitch *)sender;
 - (void)toggleSounds:(UISwitch *)sender;
 
 @end
 
 @implementation UASettingsViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self)
     {
         self.title = NSLocalizedString(@"Settings", @"Settings title");
-        _moc = aMOC;
     }
     return self;
 }
@@ -79,10 +76,6 @@
 }
 
 #pragma mark - UI
-- (void)toggleiCloudSync:(UISwitch *)sender
-{
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:USMCloudEnabledKey];
-}
 - (void)toggleSmartInput:(UISwitch *)sender
 {
     [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:kUseSmartInputKey];
@@ -109,7 +102,7 @@
         return 1;
     }
     
-    return 4;
+    return 3;
 }
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
 {
@@ -187,31 +180,20 @@
     {
         if(indexPath.row == 0)
         {
-            cell.imageView.image = nil;
-            cell.textLabel.text = NSLocalizedString(@"iCloud sync", nil);
+            cell.imageView.image = [UIImage imageNamed:@"icloud-small-icon"];
+            cell.textLabel.text = NSLocalizedString(@"iCloud settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-            
-            UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
-            [switchControl addTarget:self action:@selector(toggleiCloudSync:) forControlEvents:UIControlEventTouchUpInside];
-            cell.accessoryView = switchControl;
-            [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:USMCloudEnabledKey]];
         }
         if(indexPath.row == 1)
         {
-            cell.imageView.image = [UIImage imageNamed:@"diabetik-small-icon.png"];
+            cell.imageView.image = [UIImage imageNamed:@"diabetik-small-icon"];
             cell.textLabel.text = NSLocalizedString(@"Backup settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         if(indexPath.row == 2)
         {
-            cell.imageView.image = [UIImage imageNamed:@"dropbox-small-icon.png"];
+            cell.imageView.image = [UIImage imageNamed:@"dropbox-small-icon"];
             cell.textLabel.text = NSLocalizedString(@"Dropbox settings", nil);
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        else if(indexPath.row == 3)
-        {
-            cell.imageView.image = [UIImage imageNamed:@"runkeeper-small-icon.png"];
-            cell.textLabel.text = NSLocalizedString(@"RunKeeper settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
@@ -249,17 +231,17 @@
     {
         if(indexPath.row == 0)
         {
-            UASettingsBackupViewController *vc = [[UASettingsBackupViewController alloc] initWithMOC:self.moc];
+            UASettingsiCloudViewController *vc = [[UASettingsiCloudViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
         else if(indexPath.row == 1)
         {
-            UASettingsDropboxViewController *vc = [[UASettingsDropboxViewController alloc] init];
+            UASettingsBackupViewController *vc = [[UASettingsBackupViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
         else if(indexPath.row == 2)
         {
-            UASettingsRunKeeperViewController *vc = [[UASettingsRunKeeperViewController alloc] init];
+            UASettingsDropboxViewController *vc = [[UASettingsDropboxViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }

@@ -58,7 +58,7 @@
 @synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self)
@@ -66,7 +66,6 @@
         __weak typeof(self) weakSelf = self;
         
         self.title = NSLocalizedString(@"Journal", @"The title for the applications index screen - which is a physical journal");
-        _moc = aMOC;
         needsDataRefresh = YES;
         
         dateFormatter = [[NSDateFormatter alloc] init];
@@ -162,10 +161,9 @@
 - (OrderedDictionary *)fetchReadingData
 {
     OrderedDictionary *data = [OrderedDictionary dictionary];
-    NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
-        NSLog(@"HAS MOC");
         // Save any changes the MOC has waiting in the wings
         if([moc hasChanges])
         {
@@ -234,7 +232,7 @@
 {
     if(isVisible)
     {
-        if(needsDataRefresh)
+        //if(needsDataRefresh)
         {
             readings = [self fetchReadingData];
             needsDataRefresh = NO;
@@ -242,13 +240,6 @@
     
         [self.tableView reloadData];
     }
-}
-- (void)didSwitchUserAccount
-{
-    [super didSwitchUserAccount];
-    
-    needsDataRefresh = YES;
-    [self refreshView];
 }
 
 #pragma mark - UI

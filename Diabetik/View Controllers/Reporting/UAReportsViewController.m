@@ -48,13 +48,11 @@
 @synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)moc fromDate:(NSDate *)aFromDate toDate:(NSDate *)aToDate;
+- (id)initFromDate:(NSDate *)aFromDate toDate:(NSDate *)aToDate;
 {
     self = [super initWithNibName:nil bundle:nil];
     if(self)
     {
-        _moc = moc;
-        
         fromDate = aFromDate;
         toDate = aToDate;
         reportData = nil;
@@ -86,12 +84,8 @@
     
     pageControl = [[UIPageControl alloc] initWithFrame:CGRectZero];
     pageControl.numberOfPages = [reports count];
-    
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-    {
-        pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:69.0f/255.0f green:77.0f/255.0f blue:74.0f/255.0f alpha:0.4];
-        pageControl.pageIndicatorTintColor = [UIColor colorWithRed:69.0f/255.0f green:77.0f/255.0f blue:74.0f/255.0f alpha:0.12];
-    }
+    pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:69.0f/255.0f green:77.0f/255.0f blue:74.0f/255.0f alpha:0.4];
+    pageControl.pageIndicatorTintColor = [UIColor colorWithRed:69.0f/255.0f green:77.0f/255.0f blue:74.0f/255.0f alpha:0.12];
     [self.view addSubview:pageControl];
     
     CGFloat y = 35.0f;
@@ -211,27 +205,31 @@
 #pragma mark - Logic
 - (void)fetchReportData
 {
-    NSDate *fetchFromDate = [fromDate dateAtStartOfDay];
-    NSDate *fetchToDate = [toDate dateAtEndOfDay];
-    
-    if(fetchFromDate)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:self.moc];
-        [fetchRequest setEntity:entity];
-        [fetchRequest setFetchBatchSize:20];
+        NSDate *fetchFromDate = [fromDate dateAtStartOfDay];
+        NSDate *fetchToDate = [toDate dateAtEndOfDay];
         
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-        NSArray *sortDescriptors = @[sortDescriptor];
-        [fetchRequest setSortDescriptors:sortDescriptors];
-        [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@", fetchFromDate, fetchToDate]];
-        
-        NSError *error = nil;
-        reportData = [self.moc executeFetchRequest:fetchRequest error:&error];
-        
-        if(error)
+        if(fetchFromDate)
         {
-            reportData = nil;
+            NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
+            [fetchRequest setEntity:entity];
+            [fetchRequest setFetchBatchSize:20];
+            
+            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+            NSArray *sortDescriptors = @[sortDescriptor];
+            [fetchRequest setSortDescriptors:sortDescriptors];
+            [fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@", fetchFromDate, fetchToDate]];
+            
+            NSError *error = nil;
+            reportData = [moc executeFetchRequest:fetchRequest error:&error];
+            
+            if(error)
+            {
+                reportData = nil;
+            }
         }
     }
 }

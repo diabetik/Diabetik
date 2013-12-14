@@ -31,8 +31,6 @@
 {
     NSString *name;
     NSString *minutes;
-    
-    UAActivity *activity;
 }
 @end
 
@@ -47,16 +45,19 @@
     }
     return self;
 }
-- (id)initWithEvent:(UAEvent *)aEvent
+- (id)initWithEvent:(UAEvent *)theEvent
 {
-    self = [super initWithEvent:aEvent];
+    self = [super initWithEvent:theEvent];
     if(self)
     {
         self.title = NSLocalizedString(@"Edit Activity", nil);
         
-        activity = (UAActivity *)aEvent;
-        name = activity.name;
-        minutes = [NSString stringWithFormat:@"%.0f", [activity.minutes doubleValue]];
+        UAActivity *activity = (UAActivity *)[self event];
+        if(activity)
+        {
+            name = activity.name;
+            minutes = [NSString stringWithFormat:@"%.0f", [activity.minutes doubleValue]];
+        }
     }
     
     return self;
@@ -87,46 +88,57 @@
 {
     [self.view endEditing:YES];
 
-    if(!activity)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAActivity" inManagedObjectContext:self.moc];
-        activity = (UAActivity *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-        activity.filterType = [NSNumber numberWithInteger:ActivityFilterType];
-    }
-    activity.name = name;
-    activity.timestamp = self.date;
-    activity.minutes = [NSNumber numberWithDouble:[minutes doubleValue]];
-    
-    if(!notes.length) notes = nil;
-    activity.notes = notes;
-    
-    // Save our geotag data
-    if(![self.lat isEqual:activity.lat] || ![self.lon isEqual:activity.lon])
-    {
-        activity.lat = self.lat;
-        activity.lon = self.lon;
-    }
-    
-    // Save our photo
-    if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:activity.photoPath])
-    {
-        // If a photo already exists for this entry remove it now
-        if(activity.photoPath)
+        UAActivity *activity = (UAActivity *)[self event];
+        if(!activity)
         {
-            [[UAMediaController sharedInstance] deleteImageWithFilename:activity.photoPath success:nil failure:nil];
+            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAActivity" inManagedObjectContext:moc];
+            activity = (UAActivity *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+            activity.filterType = [NSNumber numberWithInteger:ActivityFilterType];
+        }
+        activity.name = name;
+        activity.timestamp = self.date;
+        activity.minutes = [NSNumber numberWithDouble:[minutes doubleValue]];
+        
+        if(!notes.length) notes = nil;
+        activity.notes = notes;
+        
+        // Save our geotag data
+        if(![self.lat isEqual:activity.lat] || ![self.lon isEqual:activity.lon])
+        {
+            activity.lat = self.lat;
+            activity.lon = self.lon;
         }
         
-        activity.photoPath = self.currentPhotoPath;
+        // Save our photo
+        if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:activity.photoPath])
+        {
+            // If a photo already exists for this entry remove it now
+            if(activity.photoPath)
+            {
+                [[UAMediaController sharedInstance] deleteImageWithFilename:activity.photoPath success:nil failure:nil];
+            }
+            
+            activity.photoPath = self.currentPhotoPath;
+        }
+        
+        NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
+        [[UATagController sharedInstance] assignTags:tags toEvent:activity];
+        
+        [moc save:&*error];
+        return activity;
+    }
+    else
+    {
+        *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No applicable MOC present"}];
     }
     
-    NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
-    [[UATagController sharedInstance] assignTags:tags toEvent:activity];
-    
-    [self.moc save:&*error];
-    return activity;
+    return nil;
 }
 
-// UI
+#pragma mark - UI
 - (void)changeDate:(id)sender
 {
     self.date = [sender date];

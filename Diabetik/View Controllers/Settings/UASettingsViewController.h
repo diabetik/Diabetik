@@ -24,8 +24,4 @@
 #import "UAMediaController.h"
 
 @interface UASettingsViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
-
-// Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-
 @end

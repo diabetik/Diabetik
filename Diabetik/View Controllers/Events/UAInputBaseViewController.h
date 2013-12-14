@@ -54,6 +54,7 @@
     BOOL usingSmartInput;
 }
 @property (nonatomic, strong) UAEvent *event;
+@property (nonatomic, strong) NSManagedObjectID *eventOID;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) UAAutocompleteBar *autocompleteBar;
 @property (nonatomic, strong) UAAutocompleteBar *autocompleteTagBar;

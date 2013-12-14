@@ -356,57 +356,59 @@
 #pragma mark - Logic
 - (OrderedDictionary *)fetchEvents
 {
-    UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSManagedObjectContext *moc = appDelegate.managedObjectContext;
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
-    [request setEntity:entity];
-    [request setSortDescriptors:@[sortDescriptor]];
-    [request setReturnsObjectsAsFaults:NO];
-    
-    // Execute the fetch.
-    NSError *error = nil;
-    NSArray *objects = [moc executeFetchRequest:request error:&error];
-    
-    if(!error)
+    if(moc)
     {
-        NSDateFormatter *dateKeyFormatter = [[NSDateFormatter alloc] init];
-        [dateKeyFormatter setDateFormat:@"MMM yyyy"];
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
+        [request setEntity:entity];
+        [request setSortDescriptors:@[sortDescriptor]];
+        [request setReturnsObjectsAsFaults:NO];
         
-        OrderedDictionary *dictionary = [[OrderedDictionary alloc] init];
-        for(UAEvent *event in objects)
+        // Execute the fetch.
+        NSError *error = nil;
+        NSArray *objects = [moc executeFetchRequest:request error:&error];
+        
+        if(!error)
         {
-            NSString *date = [dateKeyFormatter stringFromDate:event.timestamp];
-            if(date)
+            NSDateFormatter *dateKeyFormatter = [[NSDateFormatter alloc] init];
+            [dateKeyFormatter setDateFormat:@"MMM yyyy"];
+            
+            OrderedDictionary *dictionary = [[OrderedDictionary alloc] init];
+            for(UAEvent *event in objects)
             {
-                if(![dictionary objectForKey:date])
+                NSString *date = [dateKeyFormatter stringFromDate:event.timestamp];
+                if(date)
                 {
-                    NSDate *startDate = [(NSDate *)event.timestamp dateAtStartOfMonth];
-                    NSDate *endDate = [startDate dateAtEndOfMonth];
-
-                    if(startDate && endDate)
+                    if(![dictionary objectForKey:date])
                     {
-                        NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:startDate toDate:endDate];
-                        [dictionary setObject:@{@"startDate": startDate, @"endDate": endDate, @"stats": stats, @"events": @[event]} forKey:date];
+                        NSDate *startDate = [(NSDate *)event.timestamp dateAtStartOfMonth];
+                        NSDate *endDate = [startDate dateAtEndOfMonth];
+
+                        if(startDate && endDate)
+                        {
+                            NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:startDate toDate:endDate];
+                            [dictionary setObject:@{@"startDate": startDate, @"endDate": endDate, @"stats": stats, @"events": @[event]} forKey:date];
+                        }
                     }
+                    else
+                    {
+                        NSMutableDictionary *month = [NSMutableDictionary dictionaryWithDictionary:[dictionary objectForKey:date]];
+                        NSArray *events = [[month objectForKey:@"events"] arrayByAddingObject:event];
+                        [month setObject:events forKey:@"events"];
+                        [dictionary setObject:month forKey:date];
+                    }
+                    
+                    [selectedMonths setValue:[NSNumber numberWithBool:YES] forKey:date];
                 }
-                else
-                {
-                    NSMutableDictionary *month = [NSMutableDictionary dictionaryWithDictionary:[dictionary objectForKey:date]];
-                    NSArray *events = [[month objectForKey:@"events"] arrayByAddingObject:event];
-                    [month setObject:events forKey:@"events"];
-                    [dictionary setObject:month forKey:date];
-                }
-                
-                [selectedMonths setValue:[NSNumber numberWithBool:YES] forKey:date];
             }
-        }
-        
-        if([[dictionary allKeys] count])
-        {
-            return dictionary;
+            
+            if([[dictionary allKeys] count])
+            {
+                return dictionary;
+            }
         }
     }
     
@@ -600,12 +602,6 @@
     [pdfDocument close];
     
     return pdfDocument.data;
-}
-- (void)didSwitchUserAccount
-{
-    [super didSwitchUserAccount];
-    
-    [self refreshView];
 }
 
 #pragma mark - UAPDFDocumentDelegate methods

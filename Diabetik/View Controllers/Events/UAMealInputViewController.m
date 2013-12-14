@@ -29,8 +29,6 @@
     
     NSString *name;
     double grams;
-    
-    UAMeal *meal;
 }
 @property (nonatomic, assign) NSInteger type;
 @end
@@ -51,18 +49,19 @@
     }
     return self;
 }
-- (id)initWithEvent:(UAEvent *)aEvent
+- (id)initWithEvent:(UAEvent *)theEvent
 {
-    self = [super initWithEvent:aEvent];
+    self = [super initWithEvent:theEvent];
     if(self)
     {
         self.title = NSLocalizedString(@"Edit Meal", nil);
         
-        meal = (UAMeal *)aEvent;
-        name = meal.name;
-        grams = [meal.grams doubleValue];
-        
-        NSLog(@"%@ %@", meal, self.date);
+        UAMeal *meal = (UAMeal *)[self event];
+        if(meal)
+        {
+            name = meal.name;
+            grams = [meal.grams doubleValue];
+        }
     }
     
     return self;
@@ -93,44 +92,56 @@
 {
     [self.view endEditing:YES];
 
-    if(!meal)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAMeal" inManagedObjectContext:self.moc];
-        meal = (UAMeal *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-        meal.filterType = [NSNumber numberWithInteger:MealFilterType];
-    }
-    meal.name = name;
-    meal.timestamp = self.date;
-    meal.type = [NSNumber numberWithInteger:0];
-    meal.grams = [NSNumber numberWithDouble:grams];
-    
-    if(!notes.length) notes = nil;
-    meal.notes = notes;
-    
-    // Save our geotag data
-    if(![self.lat isEqual:meal.lat] || ![self.lon isEqual:meal.lon])
-    {
-        meal.lat = self.lat;
-        meal.lon = self.lon;
-    }
-    
-    // Save our photo
-    if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:meal.photoPath])
-    {
-        // If a photo already exists for this entry remove it now
-        if(meal.photoPath)
+        UAMeal *meal = (UAMeal *)[self event];
+        if(!meal)
         {
-            [[UAMediaController sharedInstance] deleteImageWithFilename:meal.photoPath success:nil failure:nil];
+            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAMeal" inManagedObjectContext:moc];
+            meal = (UAMeal *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+            meal.filterType = [NSNumber numberWithInteger:MealFilterType];
+        }
+        meal.name = name;
+        meal.timestamp = self.date;
+        meal.type = [NSNumber numberWithInteger:0];
+        meal.grams = [NSNumber numberWithDouble:grams];
+        
+        if(!notes.length) notes = nil;
+        meal.notes = notes;
+        
+        // Save our geotag data
+        if(![self.lat isEqual:meal.lat] || ![self.lon isEqual:meal.lon])
+        {
+            meal.lat = self.lat;
+            meal.lon = self.lon;
         }
         
-        meal.photoPath = self.currentPhotoPath;
+        // Save our photo
+        if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:meal.photoPath])
+        {
+            // If a photo already exists for this entry remove it now
+            if(meal.photoPath)
+            {
+                [[UAMediaController sharedInstance] deleteImageWithFilename:meal.photoPath success:nil failure:nil];
+            }
+            
+            meal.photoPath = self.currentPhotoPath;
+        }
+        
+        NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
+        [[UATagController sharedInstance] assignTags:tags toEvent:meal];
+        
+        [moc save:&*error];
+        
+        return meal;
+    }
+    else
+    {
+        *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No applicable MOC present"}];
     }
     
-    NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
-    [[UATagController sharedInstance] assignTags:tags toEvent:meal];
-    
-    [self.moc save:&*error];
-    return meal;
+    return nil;
 }
 
 // UI

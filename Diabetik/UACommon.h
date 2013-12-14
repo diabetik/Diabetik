@@ -25,6 +25,7 @@
 
 #import "UAUI.h"
 #import "UAManagedObject.h"
+#import "UACoreDataController.h"
 #import "UACredentials.h"
 
 #ifndef Diabetik_UACommon_h
@@ -81,8 +82,6 @@ static NSString * const kRunKeeperTokenURL = @"https://runkeeper.com/apps/token"
 static NSString * const kRunKeeperServiceIdentifier = @"RunKeeper";
 
 // Notifications
-static NSString * const kAccountsUpdatedNotification = @"com.uglyapps.accounts.updated";
-static NSString * const kAccountsSwitchedNotification = @"com.uglyapps.accounts.switched";
 static NSString * const kRemindersUpdatedNotification = @"com.uglyapps.reminders.updated";
 static NSString * const kSignificantSettingsChangeNotification = @"com.uglyapps.settings.change";
 static NSString * const kDropboxLinkNotification = @"com.uglyapps.dropbox.linked";
@@ -103,7 +102,6 @@ static NSString * const kReportsDefaultKey = @"kReportsDefaultKey";
 static NSString * const kShowInlineImages = @"kShowInlineImages";
 
 static NSString * const kSettingsChangedNotification = @"kSettingsChangedNotification";
-static NSString * const kActiveAccountKey = @"kActiveAccountKey";
 
 static NSString * const kMinHealthyBGKey = @"kMinHealthyBGKey";
 static NSString * const kMaxHealthyBGKey = @"kMaxHealthyBGKey";

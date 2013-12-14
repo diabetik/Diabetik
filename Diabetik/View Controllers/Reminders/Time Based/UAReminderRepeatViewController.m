@@ -27,24 +27,22 @@
 @end
 
 @implementation UAReminderRepeatViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self)
     {
         self.title = NSLocalizedString(@"Repeat", nil);
-        _moc = aMOC;
-        
+
         days[0] = 1;
     }
     return self;
 }
-- (id)initWithFlags:(NSInteger)flags andMOC:(NSManagedObjectContext *)aMOC
+- (id)initWithFlags:(NSInteger)flags
 {
-    self = [self initWithMOC:aMOC];
+    self = [self init];
     if(self)
     {
         days[0] = 0;

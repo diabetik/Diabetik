@@ -25,9 +25,8 @@
 
 #import "UAUI.h"
 #import "UABackupController.h"
-#import "UASyncController.h"
 
-@interface UAAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate, BITHockeyManagerDelegate, UbiquityStoreManagerDelegate>
+@interface UAAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate, BITHockeyManagerDelegate>
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) UbiquityStoreManager *ubiquityStoreManager;
@@ -46,10 +45,5 @@
 - (void)setupStyling;
 - (void)setupSFX;
 - (void)setupDefaultConfigurationValues;
-
-// Helpers
-- (void)saveContext;
-- (NSURL *)persistentStoreURL;
-- (NSURL *)applicationDocumentsDirectory;
 
 @end

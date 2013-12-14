@@ -22,7 +22,6 @@
 
 @interface UANoteInputViewController ()
 {
-    UANote *note;
     NSString *title;
 }
 @end
@@ -47,8 +46,15 @@
     {
         self.title = NSLocalizedString(@"Edit Note", nil);
         
-        note = (UANote *)aEvent;
-        title = note.name;
+        UAEvent *event = [self event];
+        if(event)
+        {
+            title = event.name;
+        }
+        else
+        {
+            title = NSLocalizedString(@"Note", nil);
+        }
     }
     
     return self;
@@ -79,47 +85,59 @@
 {
     [self.view endEditing:YES];
 
-    if(!title || ![title length])
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        title = NSLocalizedString(@"Note", nil);
-    }
-    
-    if(!note)
-    {
-        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UANote" inManagedObjectContext:self.moc];
-        note = (UANote *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-        note.filterType = [NSNumber numberWithInteger:NoteFilterType];
-    }
-    note.name = title;
-    note.timestamp = self.date;
-    
-    if(!notes.length) notes = nil;
-    note.notes = notes;
-    
-    // Save our geotag data
-    if(![self.lat isEqual:note.lat] || ![self.lon isEqual:note.lon])
-    {
-        note.lat = self.lat;
-        note.lon = self.lon;
-    }
-    
-    // Save our photo
-    if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:note.photoPath])
-    {
-        // If a photo already exists for this entry remove it now
-        if(note.photoPath)
+        if(!title || ![title length])
         {
-            [[UAMediaController sharedInstance] deleteImageWithFilename:note.photoPath success:nil failure:nil];
+            title = NSLocalizedString(@"Note", nil);
         }
         
-        note.photoPath = self.currentPhotoPath;
+        UANote *note = (UANote *)[self event];
+        if(!note)
+        {
+            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UANote" inManagedObjectContext:moc];
+            note = (UANote *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+            note.filterType = [NSNumber numberWithInteger:NoteFilterType];
+        }
+        note.name = title;
+        note.timestamp = self.date;
+        
+        if(!notes.length) notes = nil;
+        note.notes = notes;
+        
+        // Save our geotag data
+        if(![self.lat isEqual:note.lat] || ![self.lon isEqual:note.lon])
+        {
+            note.lat = self.lat;
+            note.lon = self.lon;
+        }
+        
+        // Save our photo
+        if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:note.photoPath])
+        {
+            // If a photo already exists for this entry remove it now
+            if(note.photoPath)
+            {
+                [[UAMediaController sharedInstance] deleteImageWithFilename:note.photoPath success:nil failure:nil];
+            }
+            
+            note.photoPath = self.currentPhotoPath;
+        }
+        
+        NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
+        [[UATagController sharedInstance] assignTags:tags toEvent:note];
+        
+        [moc save:&*error];
+        
+        return note;
+    }
+    else
+    {
+        *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No applicable MOC present"}];
     }
     
-    NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
-    [[UATagController sharedInstance] assignTags:tags toEvent:note];
-    
-    [self.moc save:&*error];
-    return note;
+    return nil;
 }
 
 #pragma mark - UI

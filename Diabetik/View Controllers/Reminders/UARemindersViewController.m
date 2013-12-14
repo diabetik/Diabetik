@@ -32,18 +32,16 @@
 @end
 
 @implementation UARemindersViewController
-@synthesize moc = _moc;
 @synthesize reminders = _reminders;
 @synthesize rules = _rules;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self)
     {
         self.title = NSLocalizedString(@"Reminders", nil);
-        _moc = aMOC;
     }
     return self;
 }
@@ -253,21 +251,21 @@
     {
         UAReminderRule *rule = (UAReminderRule *)[_rules objectAtIndex:indexPath.row];
         
-        UARuleReminderViewController *vc = [[UARuleReminderViewController alloc] initWithReminderRule:rule andMOC:self.moc];
+        UARuleReminderViewController *vc = [[UARuleReminderViewController alloc] initWithReminderRule:rule];
         [self.navigationController pushViewController:vc animated:YES];
     }
     else if(adjustedSection == kReminderTypeDate || adjustedSection == kReminderTypeRepeating)
     {
         UAReminder *reminder = (UAReminder *)[[_reminders objectAtIndex:adjustedSection] objectAtIndex:indexPath.row];
         
-        UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithReminder:reminder andMOC:self.moc];
+        UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithReminder:reminder];
         [self.navigationController pushViewController:vc animated:YES];
     }
     else
     {
         UAReminder *reminder = (UAReminder *)[[_reminders objectAtIndex:adjustedSection] objectAtIndex:indexPath.row];
 
-        UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] initWithReminder:reminder andMOC:self.moc];
+        UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] initWithReminder:reminder];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -312,7 +310,7 @@
 {
     if(buttonIndex == 0)
     {
-        UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithMOC:self.moc];
+        UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] init];
         UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
         [self.navigationController presentViewController:nvc animated:YES completion:^{
             // STUB
@@ -320,7 +318,7 @@
     }
     else if(buttonIndex == 1)
     {
-        UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] initWithMOC:self.moc];
+        UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] init];
         UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
         [self.navigationController presentViewController:nvc animated:YES completion:^{
             // STUB
@@ -328,7 +326,7 @@
     }
     else if(buttonIndex == 2)
     {
-        UARuleReminderViewController *vc = [[UARuleReminderViewController alloc] initWithMOC:self.moc];
+        UARuleReminderViewController *vc = [[UARuleReminderViewController alloc] init];
         UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
         [self.navigationController presentViewController:nvc animated:YES completion:^{
             // STUB

@@ -22,7 +22,6 @@
 
 #import "UAEventController.h"
 #import "UATagController.h"
-#import "UAAppDelegate.h"
 
 #import "UAReading.h"
 #import "UAMedicine.h"
@@ -55,7 +54,7 @@
                                      success:(void (^)(UAMedicine*))successBlock
                                      failure:(void (^)(void))failureBlock
 {
-    NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
@@ -189,7 +188,7 @@
 }
 - (NSArray *)fetchEventsMatchingSearch:(NSString *)string withPredicate:(NSPredicate *)basePredicate
 {
-    NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
         // Get an array of all tags contained within the string
@@ -328,7 +327,7 @@
 }
 - (NSArray *)fetchKey:(NSString *)key forEventsWithFilterType:(EventFilterType)filterType
 {
-    NSManagedObjectContext *moc = [[UAAppDelegate sharedAppDelegate] managedObjectContext];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
