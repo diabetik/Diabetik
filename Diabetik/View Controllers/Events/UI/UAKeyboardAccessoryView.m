@@ -39,7 +39,7 @@
         
         _backingView = aBackingView;        
         
-        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width - 80, self.frame.size.height)];
+        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width - 50.0f, self.frame.size.height)];
         [self addSubview:_contentView];
     }
     return self;

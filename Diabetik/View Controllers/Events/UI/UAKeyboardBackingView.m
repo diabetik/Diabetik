@@ -52,12 +52,12 @@
         backingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.08f];
         [self addSubview:backingView];
         
-        _keyboardToggleButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 8.0f, 26.0f, 33.0f)];
+        _keyboardToggleButton = [[UIButton alloc] initWithFrame:_controlContainer.bounds];
         [_keyboardToggleButton setImage:[UIImage imageNamed:@"KeyboardDismissDownButton.png"] forState:UIControlStateNormal];
         [_keyboardToggleButton setImage:[UIImage imageNamed:@"KeyboardDismissDownButtonPressed.png"] forState:UIControlStateHighlighted];
         [_keyboardToggleButton addTarget:self action:@selector(keyboardTogglePress:) forControlEvents:UIControlEventTouchUpInside];
         [_keyboardToggleButton setAdjustsImageWhenHighlighted:NO];
-        //[_keyboardToggleButton setImageEdgeInsets:UIEdgeInsetsMake(0.0f, 30.0f, 0.0f, 0.0f)];
+        [_keyboardToggleButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0f)];
         
         [_controlContainer addSubview:_keyboardToggleButton];
         
