@@ -20,6 +20,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UASettingsiCloudViewController : UABaseTableViewController
+@interface UASettingsiCloudViewController : UABaseTableViewController <UIAlertViewDelegate>
 
 @end

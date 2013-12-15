@@ -21,9 +21,14 @@
 #import "UASettingsiCloudViewController.h"
 
 @interface UASettingsiCloudViewController ()
+{
+    UIAlertView *redownloadAlertView;
+    UIAlertView *deleteAlertView;
+}
 
-// UI
+// Logic
 - (void)toggleiCloudSync:(UISwitch *)sender;
+- (void)userDefaultsDidChange:(NSNotification *)note;
 
 @end
 
@@ -36,6 +41,11 @@
     if (self)
     {
         self.title = NSLocalizedString(@"iCloud", nil);
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(userDefaultsDidChange:)
+                                                     name:NSUserDefaultsDidChangeNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -45,6 +55,12 @@
     
     [self updateView];
 }
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Logic
 - (void)updateView
 {
     UILabel *warningLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width-40.0f, 0.0f)];
@@ -68,26 +84,32 @@
     [footerView addSubview:warningLabel];
     
     self.tableView.tableFooterView = footerView;
-    
     [self.tableView reloadData];
 }
-
-#pragma mark - UI
 - (void)toggleiCloudSync:(UISwitch *)sender
 {
     [[UACoreDataController sharedInstance] toggleiCloudSync];
-    
-    [self updateView];
+}
+- (void)userDefaultsDidChange:(NSNotification *)note
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf updateView];
+    });
 }
 
 #pragma mark - UITableViewDataSource methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
 {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:USMCloudEnabledKey] ? 2 : 1;
+    return [[[UACoreDataController sharedInstance] ubiquityStoreManager] cloudEnabled] ? 2 : 1;
 }
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if(section == 0) return 1;
+    if(section == 1) return 2;
+    
+    return 0;
 }
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
 {
@@ -129,13 +151,19 @@
         
         UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
         [switchControl addTarget:self action:@selector(toggleiCloudSync:) forControlEvents:UIControlEventTouchUpInside];
-        [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:USMCloudEnabledKey]];
+        [switchControl setOn:[[[UACoreDataController sharedInstance] ubiquityStoreManager] cloudEnabled]];
         [switchControl setEnabled:[[[UACoreDataController sharedInstance] ubiquityStoreManager] cloudAvailable]];
         cell.accessoryView = switchControl;
     }
     else if(indexPath.section == 1 && indexPath.row == 0)
     {
-        cell.textLabel.text = NSLocalizedString(@"Restore from backup", nil);
+        cell.textLabel.text = NSLocalizedString(@"Redownload iCloud data", nil);
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+        cell.detailTextLabel.text = nil;
+    }
+    else if(indexPath.section == 1 && indexPath.row == 1)
+    {
+        cell.textLabel.text = NSLocalizedString(@"Delete Diabetik iCloud data", nil);
         cell.textLabel.textAlignment = NSTextAlignmentCenter;
         cell.detailTextLabel.text = nil;
     }
@@ -148,9 +176,59 @@
 {
     [super tableView:aTableView didSelectRowAtIndexPath:indexPath];
     [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if(indexPath.section == 1)
+    {
+        if(indexPath.row == 0)
+        {
+            [[[UACoreDataController sharedInstance] ubiquityStoreManager] reloadStore];
+            /*
+            redownloadAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Redownload iCloud data", nil)
+                                                             message:NSLocalizedString(@"Are you sure you'd like to redownload data from iCloud?", nil)
+                                                            delegate:self
+                                                   cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                   otherButtonTitles:NSLocalizedString(@"Redownload", nil), nil];
+            [redownloadAlertView show];
+            */
+        }
+        else
+        {
+            deleteAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete iCloud data", nil)
+                                                         message:NSLocalizedString(@"Are you sure you'd like to delete all Diabetik iCloud data? This action is irreversible!", nil)
+                                                        delegate:self
+                                               cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                               otherButtonTitles:NSLocalizedString(@"Delete", nil), nil];
+            [deleteAlertView show];
+        }
+    }
 }
 - (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.section == 1)
+    {
+        return YES;
+    }
+    
     return NO;
 }
+
+#pragma mark - UIAlertViewDelegate methods
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView == redownloadAlertView)
+    {
+        if(buttonIndex == [alertView firstOtherButtonIndex])
+        {
+            [[[UACoreDataController sharedInstance] ubiquityStoreManager] deleteCloudStoreLocalOnly:YES];
+        }
+    }
+    else if(alertView == deleteAlertView)
+    {
+        if(buttonIndex == [alertView firstOtherButtonIndex])
+        {
+            [[[UACoreDataController sharedInstance] ubiquityStoreManager] deleteCloudContainerLocalOnly:NO];
+        }
+    }
+}
+
 @end

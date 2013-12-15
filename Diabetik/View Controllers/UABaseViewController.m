@@ -96,7 +96,7 @@
 #pragma mark - Logic
 - (void)reloadViewData:(NSNotification *)note
 {
-    NSLog(@"reloadViewData: %@", note);
+    // STUB
 }
 - (void)handleBack:(id)sender withSound:(BOOL)playSound
 {

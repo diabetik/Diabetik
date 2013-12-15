@@ -15,8 +15,8 @@
     UIAlertView *handleCloudContentWarningAlert;
     UIAlertView *handleLocalStoreAlert;
     
-    UIAlertView *iCloudEnabledAlertView;
-    UIAlertView *iCloudDisabledAlertView;
+    __block UIAlertView *iCloudEnabledAlertView;
+    __block UIAlertView *iCloudDisabledAlertView;
 }
 @property (copy, nonatomic) void(^iCloudConfirmationBlock)(BOOL);
 
@@ -94,8 +94,10 @@
 {
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+    if (managedObjectContext != nil)
+    {
+        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
+        {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -115,7 +117,9 @@
     [managedObjectContext performBlockAndWait:^{
         NSError *error = nil;
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
+        {
             NSLog( @"Unresolved error: %@\n%@", error, [error userInfo] );
+        }
         
         [managedObjectContext reset];
     }];
@@ -127,12 +131,12 @@
                      isCloud:(BOOL)isCloudStore
 {
     
-    NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType/* NSMainQueueConcurrencyType*/];
     moc.persistentStoreCoordinator = coordinator;
     moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
     _managedObjectContext = moc;
-    NSLog(@"SET MOC: %@", self.managedObjectContext);
-    dispatch_async( dispatch_get_main_queue(), ^{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
         [cloudContentCorruptedAlert dismissWithClickedButtonIndex:[cloudContentCorruptedAlert cancelButtonIndex] animated:YES];
         [handleCloudContentWarningAlert dismissWithClickedButtonIndex:[handleCloudContentWarningAlert cancelButtonIndex] animated:YES];
     });
@@ -142,9 +146,10 @@
                      context:(id)context
                     wasCloud:(BOOL)wasCloudStore
 {
-    dispatch_async( dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         
-        if (!wasCloudStore && ![handleLocalStoreAlert isVisible]) {
+        if (!wasCloudStore && ![handleLocalStoreAlert isVisible])
+        {
             handleLocalStoreAlert = [[UIAlertView alloc] initWithTitle:@"Local Store Problem"
                                                                message:@"Your datastore got corrupted and needs to be recreated."
                                                               delegate:self
@@ -153,14 +158,16 @@
         }
     });
 }
-- (BOOL)ubiquityStoreManager:(UbiquityStoreManager *)manager
-handleCloudContentCorruptionWithHealthyStore:(BOOL)storeHealthy
+- (BOOL)ubiquityStoreManager:(UbiquityStoreManager *)manager handleCloudContentCorruptionWithHealthyStore:(BOOL)storeHealthy
 {
     
-    if (storeHealthy) {
-        dispatch_async( dispatch_get_main_queue(), ^{
+    if (storeHealthy)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
             if ([cloudContentHealingAlert isVisible])
+            {
                 return;
+            }
             
             cloudContentHealingAlert = [[UIAlertView alloc]
                                         initWithTitle:@"iCloud Store Corruption"
@@ -173,14 +180,17 @@ handleCloudContentCorruptionWithHealthyStore:(BOOL)storeHealthy
             [activityIndicator startAnimating];
             [cloudContentHealingAlert addSubview:activityIndicator];
             [cloudContentHealingAlert show];
-        } );
+        });
         
         return YES;
     }
-    else {
-        dispatch_async( dispatch_get_main_queue(), ^{
+    else
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
             if ([cloudContentHealingAlert isVisible] || [handleCloudContentWarningAlert isVisible])
+            {
                 return;
+            }
             
             cloudContentCorruptedAlert = [[UIAlertView alloc]
                                           initWithTitle:@"iCloud Store Corruption"
@@ -193,7 +203,7 @@ handleCloudContentCorruptionWithHealthyStore:(BOOL)storeHealthy
             [activityIndicator startAnimating];
             [cloudContentCorruptedAlert addSubview:activityIndicator];
             [cloudContentCorruptedAlert show];
-        } );
+        });
         
         return NO;
     }
@@ -221,21 +231,23 @@ handleCloudContentCorruptionWithHealthyStore:(BOOL)storeHealthy
         }
     }
     
-    /*
     if (alertView == cloudContentHealingAlert)
     {
-        if (buttonIndex == [alertView firstOtherButtonIndex]) {
+        if (buttonIndex == [alertView firstOtherButtonIndex])
+        {
             // Disable
             self.ubiquityStoreManager.cloudEnabled = NO;
         }
     }
     else if (alertView == cloudContentCorruptedAlert)
     {
-        if (buttonIndex == [alertView firstOtherButtonIndex]) {
+        if (buttonIndex == [alertView firstOtherButtonIndex])
+        {
             // Disable
             self.ubiquityStoreManager.cloudEnabled = NO;
         }
-        else if (buttonIndex == [alertView firstOtherButtonIndex] + 1) {
+        else if (buttonIndex == [alertView firstOtherButtonIndex] + 1)
+        {
             // Fix Now
             handleCloudContentWarningAlert = [[UIAlertView alloc] initWithTitle:@"Fix iCloud Now" message:
                                               @"This problem can usually be auto‑corrected by opening the app on another device where you recently made changes.\n"
@@ -248,23 +260,25 @@ handleCloudContentCorruptionWithHealthyStore:(BOOL)storeHealthy
     }
     else if (alertView == handleCloudContentWarningAlert)
     {
-        if (buttonIndex == alertView.cancelButtonIndex) {
+        if (buttonIndex == alertView.cancelButtonIndex)
+        {
             // Back
             [cloudContentCorruptedAlert show];
         }
-        else if (buttonIndex == alertView.firstOtherButtonIndex) {
+        else if (buttonIndex == alertView.firstOtherButtonIndex)
+        {
             // Fix Anyway
             [self.ubiquityStoreManager rebuildCloudContentFromCloudStoreOrLocalStore:YES];
         }
     }
     else if (alertView == handleLocalStoreAlert)
     {
-        if (buttonIndex == [alertView firstOtherButtonIndex]) {
+        if (buttonIndex == [alertView firstOtherButtonIndex])
+        {
             // Recreate
             [self.ubiquityStoreManager deleteLocalStore];
         }
     }
-    */
 }
 
 #pragma mark - Helpers

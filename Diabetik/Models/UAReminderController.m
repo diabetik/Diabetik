@@ -97,10 +97,8 @@
     if(moc)
     {
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:moc];
         [request setEntity:entity];
-        
         NSSortDescriptor *sortPredicate = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
         [request setSortDescriptors:@[sortPredicate]];
         
@@ -301,15 +299,19 @@
     // Generate a date-based notification
     if([aReminder.type integerValue] == kReminderTypeDate)
     {
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.fireDate = aReminder.date;
-        notification.alertBody = aReminder.message;
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.timeZone = [NSTimeZone defaultTimeZone];
-        notification.soundName = @"notification.caf";
-        notification.userInfo = @{@"ID": aReminder.guid, @"type": aReminder.type};
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        // Make sure this date hasn't already passed
+        if([aReminder.date isLaterThanDate:[NSDate date]])
+        {
+            UILocalNotification *notification = [[UILocalNotification alloc] init];
+            notification.fireDate = aReminder.date;
+            notification.alertBody = aReminder.message;
+            notification.soundName = UILocalNotificationDefaultSoundName;
+            notification.timeZone = [NSTimeZone defaultTimeZone];
+            notification.soundName = @"notification.caf";
+            notification.userInfo = @{@"ID": aReminder.guid, @"type": aReminder.type};
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        }
     }
     else
     {
