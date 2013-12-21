@@ -145,6 +145,8 @@
     // Don't allow us to setup our chart more than once
     if(self.chart) return;
     
+    NSLog(@"%@", chartData[@"data"]);
+    
     if([[chartData objectForKey:@"data"] count])
     {
         self.chart = [[ShinobiChart alloc] initWithFrame:self.view.bounds];
@@ -201,7 +203,7 @@
     if(seriesIndex < 3)
     {
         SChartColumnSeries *barSeries = [SChartColumnSeries new];
-        //barSeries.stackIndex = [NSNumber numberWithInteger:seriesIndex];
+        barSeries.stackIndex = @1; //(seriesIndex);
         return barSeries;
     }
     else if(seriesIndex == 3)
@@ -245,7 +247,7 @@
     
     NSDictionary *info = (NSDictionary *)[[chartData objectForKey:@"data"] objectAtIndex:dataIndex];
     point.xValue = [[info objectForKey:@"date"] dateAtStartOfDay];
-    
+    NSLog(@"%@", point.xValue);
     if(seriesIndex == 0)
     {
         point.yValue = [info objectForKey:@"morningTotal"];

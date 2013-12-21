@@ -210,7 +210,8 @@
      
                                           kUseSmartInputKey: @YES,
                                               kUseSoundsKey: @YES,
-                                          kShowInlineImages: @YES
+                                          kShowInlineImages: @YES,
+                                    kFilterSearchResultsKey: @YES
      }];
     
     
