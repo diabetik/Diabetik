@@ -42,7 +42,7 @@
 {
     [super drawRect:rect];
     
-    CGFloat height = 20.0f + 30.0f;
+    CGFloat height = 22.0f + 30.0f;
     
     NSMutableParagraphStyle *paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [paragraphStyle setAlignment:NSTextAlignmentCenter];
@@ -55,9 +55,9 @@
     height += textFrame.size.height;
     
     CGRect f = CGRectMake(50.0f, floorf(self.frame.size.height/2-height/2), floorf(self.frame.size.width-100.0f), height);
-    [self.title drawInRect:CGRectMake(f.origin.x, f.origin.y, f.size.width, 20.0f) withAttributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:18.0f], NSForegroundColorAttributeName:[UIColor colorWithRed:63.0f/255.0f green:63.0f/255.0f blue:63.0f/255.0f alpha:1.0f], NSParagraphStyleAttributeName:paragraphStyle}];
+    [self.title drawInRect:CGRectMake(f.origin.x, f.origin.y, f.size.width, 22.0f) withAttributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:18.0f], NSForegroundColorAttributeName:[UIColor colorWithRed:63.0f/255.0f green:63.0f/255.0f blue:63.0f/255.0f alpha:1.0f], NSParagraphStyleAttributeName:paragraphStyle}];
 
-    [self.message drawInRect:CGRectMake(f.origin.x, f.origin.y + 30.0f, f.size.width, textFrame.size.height) withAttributes:@{NSFontAttributeName:[UAFont standardRegularFontWithSize:16.0f], NSForegroundColorAttributeName: [UIColor colorWithRed:114.0f/255.0f green:115.0f/255.0f blue:115.0f/255.0f alpha:1.0f], NSParagraphStyleAttributeName:paragraphStyle}];
+    [self.message drawInRect:CGRectMake(f.origin.x, f.origin.y + 32.0f, f.size.width, textFrame.size.height) withAttributes:@{NSFontAttributeName:[UAFont standardRegularFontWithSize:16.0f], NSForegroundColorAttributeName: [UIColor colorWithRed:114.0f/255.0f green:115.0f/255.0f blue:115.0f/255.0f alpha:1.0f], NSParagraphStyleAttributeName:paragraphStyle}];
 }
 
 @end

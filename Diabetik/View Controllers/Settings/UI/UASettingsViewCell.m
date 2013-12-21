@@ -20,7 +20,7 @@
     {
         self.imageView.contentMode = UIViewContentModeScaleToFill;
         self.imageView.frame = CGRectMake(15.0f, self.bounds.size.height/2.0f - 30.0f/2.0f, 30.0f, 30.0f);
-        self.imageView.layer.cornerRadius = 15.0f;
+        self.imageView.layer.cornerRadius = 4.0f;
         self.imageView.layer.masksToBounds = YES;
         
         indent = 55.0f;
