@@ -26,7 +26,7 @@
 
 @required
 - (NSArray *)suggestionsForAutocompleteBar:(UAAutocompleteBar *)autocompleteBar;
-- (void)didSelectAutocompleteSuggestion:(NSString *)suggestion;
+- (void)autocompleteBar:(UAAutocompleteBar *)autocompleteBar didSelectSuggestion:(NSString *)suggestion;
 
 @optional
 - (void)addTagCaret;

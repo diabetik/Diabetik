@@ -313,7 +313,7 @@
 {
     return nil;
 }
-- (void)didSelectAutocompleteSuggestion:(NSString *)suggestion
+- (void)autocompleteBar:(UAAutocompleteBar *)autocompleteBar didSelectSuggestion:(NSString *)suggestion
 {
     [self.tableView scrollToRowAtIndexPath:self.activeControlIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
     
