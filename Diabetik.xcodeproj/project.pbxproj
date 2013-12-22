@@ -777,7 +777,6 @@
 				533F32221773266600AD89E2 /* AFNetworking */,
 				533F32371773266600AD89E2 /* AppSoundEngine */,
 				533F32441773266600AD89E2 /* MBProgressHUD */,
-				533F32481773266600AD89E2 /* OAuth2Client */,
 				533F32491773266600AD89E2 /* OrderedDictionary */,
 				533F324C1773266600AD89E2 /* UIImage+Resize */,
 			);
@@ -832,13 +831,6 @@
 				533F32471773266600AD89E2 /* MBProgressHUD.m */,
 			);
 			path = MBProgressHUD;
-			sourceTree = "<group>";
-		};
-		533F32481773266600AD89E2 /* OAuth2Client */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = OAuth2Client;
 			sourceTree = "<group>";
 		};
 		533F32491773266600AD89E2 /* OrderedDictionary */ = {
