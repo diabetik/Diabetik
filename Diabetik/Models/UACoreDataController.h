@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UACoreDataController : NSObject <UbiquityStoreManagerDelegate, UIAlertViewDelegate>
+@interface UACoreDataController : NSObject /*<UbiquityStoreManagerDelegate, UIAlertViewDelegate>*/
 @property (strong, nonatomic) UbiquityStoreManager *ubiquityStoreManager;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;

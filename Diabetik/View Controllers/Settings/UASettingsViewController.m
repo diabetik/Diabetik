@@ -102,7 +102,7 @@
         return 1;
     }
     
-    return 3;
+    return 2;
 }
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
 {
@@ -178,19 +178,21 @@
     }
     else if(indexPath.section == 1)
     {
+        /*
         if(indexPath.row == 0)
         {
             cell.imageView.image = [UIImage imageNamed:@"icloud-small-icon"];
             cell.textLabel.text = NSLocalizedString(@"iCloud settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        if(indexPath.row == 1)
+        */
+        if(indexPath.row == 0)
         {
             cell.imageView.image = [UIImage imageNamed:@"diabetik-small-icon"];
             cell.textLabel.text = NSLocalizedString(@"Backup settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        if(indexPath.row == 2)
+        if(indexPath.row == 1)
         {
             cell.imageView.image = [UIImage imageNamed:@"dropbox-small-icon"];
             cell.textLabel.text = NSLocalizedString(@"Dropbox settings", nil);
@@ -229,17 +231,19 @@
     }
     else if(indexPath.section == 1)
     {
+        /*
         if(indexPath.row == 0)
         {
             UASettingsiCloudViewController *vc = [[UASettingsiCloudViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
-        else if(indexPath.row == 1)
+        */
+        if(indexPath.row == 0)
         {
             UASettingsBackupViewController *vc = [[UASettingsBackupViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
-        else if(indexPath.row == 2)
+        else if(indexPath.row == 1)
         {
             UASettingsDropboxViewController *vc = [[UASettingsDropboxViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];

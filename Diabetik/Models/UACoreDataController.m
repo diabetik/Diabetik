@@ -27,6 +27,9 @@
 @end
 
 @implementation UACoreDataController
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 + (id)sharedInstance
 {
@@ -58,7 +61,6 @@
 }
 
 #pragma mark - Logic
-/*
 - (void)toggleiCloudSync
 {
     __weak typeof(self) weakSelf = self;
@@ -91,7 +93,6 @@
         }];
     }
 }
-*/
 - (void)saveContext
 {
     NSError *error = nil;
