@@ -25,6 +25,7 @@
 #import "UASettingsTimelineViewController.h"
 #import "UASettingsDropboxViewController.h"
 #import "UASettingsiCloudViewController.h"
+#import "UASettingsAnalytikViewController.h"
 #import "UASettingsBackupViewController.h"
 #import "UASettingsLicensesViewController.h"
 
@@ -102,7 +103,7 @@
         return 1;
     }
     
-    return 2;
+    return 3;
 }
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
 {
@@ -192,10 +193,16 @@
             cell.textLabel.text = NSLocalizedString(@"Backup settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        if(indexPath.row == 1)
+        else if(indexPath.row == 1)
         {
             cell.imageView.image = [UIImage imageNamed:@"dropbox-small-icon"];
             cell.textLabel.text = NSLocalizedString(@"Dropbox settings", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if(indexPath.row == 2)
+        {
+            cell.imageView.image = [UIImage imageNamed:@"dropbox-small-icon"];
+            cell.textLabel.text = NSLocalizedString(@"Analytik settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
@@ -246,6 +253,11 @@
         else if(indexPath.row == 1)
         {
             UASettingsDropboxViewController *vc = [[UASettingsDropboxViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        else if(indexPath.row == 2)
+        {
+            UASettingsAnalytikViewController *vc = [[UASettingsAnalytikViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }
