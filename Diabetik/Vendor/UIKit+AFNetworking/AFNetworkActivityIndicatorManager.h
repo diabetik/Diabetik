@@ -1,6 +1,6 @@
 // AFNetworkActivityIndicatorManager.h
 //
-// Copyright (c) 2011 Gowalla (http://gowalla.com/)
+// Copyright (c) 2013 AFNetworking (http://afnetworking.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,7 @@
 #import <Availability.h>
 
 #if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
+
 #import <UIKit/UIKit.h>
 
 /**
@@ -44,7 +45,7 @@
 /**
  A Boolean value indicating whether the manager is enabled.
 
- @discussion If YES, the manager will change status bar network activity indicator according to network operation notifications it receives. The default value is NO.
+ If YES, the manager will change status bar network activity indicator according to network operation notifications it receives. The default value is NO.
  */
 @property (nonatomic, assign, getter = isEnabled) BOOL enabled;
 

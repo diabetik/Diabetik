@@ -8,6 +8,7 @@
 
 #import "UASettingsAnalytikViewController.h"
 #import "UASettingsTextViewCell.h"
+#import "AFNetworking.h"
 
 @interface UASettingsAnalytikViewController ()
 {
