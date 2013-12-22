@@ -44,18 +44,21 @@
     self = [super init];
     if(self)
     {
+        /*
         self.ubiquityStoreManager = [[UbiquityStoreManager alloc] initStoreNamed:@"Diabetik"
                                                           withManagedObjectModel:nil
                                                                    localStoreURL:[self persistentStoreURL]
                                                              containerIdentifier:nil
                                                           additionalStoreOptions:nil
                                                                         delegate:self];
+         */
     }
     
     return self;
 }
 
 #pragma mark - Logic
+/*
 - (void)toggleiCloudSync
 {
     __weak typeof(self) weakSelf = self;
@@ -88,6 +91,7 @@
         }];
     }
 }
+*/
 - (void)saveContext
 {
     NSError *error = nil;
@@ -104,6 +108,51 @@
     }
 }
 
+#pragma mark - Core Data stack
+- (NSManagedObjectContext *)managedObjectContext
+{
+    if (_managedObjectContext != nil) {
+        return _managedObjectContext;
+    }
+    
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+    return _managedObjectContext;
+}
+- (NSManagedObjectModel *)managedObjectModel
+{
+    if (_managedObjectModel != nil) {
+        return _managedObjectModel;
+    }
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Diabetik" withExtension:@"momd"];
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+    return _managedObjectModel;
+}
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+    if (_persistentStoreCoordinator != nil) {
+        return _persistentStoreCoordinator;
+    }
+    
+    NSURL *storeURL = [self persistentStoreURL];
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+    
+    NSError *error = nil;
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    return _persistentStoreCoordinator;
+}
+
+/*
 #pragma mark - UbiquityStoreManagerDelegate
 - (NSManagedObjectContext *)managedObjectContextForUbiquityChangesInManager:(UbiquityStoreManager *)manager
 {
@@ -128,7 +177,7 @@
   didLoadStoreForCoordinator:(NSPersistentStoreCoordinator *)coordinator
                      isCloud:(BOOL)isCloudStore
 {
-    NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType/* NSMainQueueConcurrencyType*/];
+    NSManagedObjectContext *moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     moc.persistentStoreCoordinator = coordinator;
     moc.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy;
     _managedObjectContext = moc;
@@ -277,7 +326,8 @@
         }
     }
 }
-
+*/
+ 
 #pragma mark - Helpers
 - (NSURL *)persistentStoreURL
 {
