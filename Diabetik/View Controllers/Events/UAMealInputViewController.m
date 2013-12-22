@@ -343,6 +343,44 @@
     
     return nil;
 }
+- (void)autocompleteBar:(UAAutocompleteBar *)theAutocompleteBar didSelectSuggestion:(NSString *)suggestion
+{
+    if([theAutocompleteBar isEqual:self.autocompleteBar])
+    {
+        // If we're auto-selecting a previous meal, fetch and populate it's carb count too!
+        NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+        if(moc)
+        {
+            [moc performBlockAndWait:^{
+                
+                NSFetchRequest *request = [[NSFetchRequest alloc] init];
+                NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
+                [request setEntity:entity];
+                [request setReturnsDistinctResults:YES];
+                
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterType == %d && name == %@", MealFilterType, suggestion];
+                [request setPredicate:predicate];
+                
+                NSError *error = nil;
+                NSArray *objects = [moc executeFetchRequest:request error:&error];
+                if (objects != nil && [objects count] > 0)
+                {
+                    UAMeal *meal = (UAMeal *)objects[0];
+                    if(meal)
+                    {
+                        grams = [meal.grams doubleValue];
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                        });
+                    }
+                }
+            }];
+        }
+    }
+    
+    [super autocompleteBar:theAutocompleteBar didSelectSuggestion:suggestion];
+}
 
 #pragma mark - UITextFieldDelegate methods
 - (void)textFieldDidBeginEditing:(UITextField *)textField
