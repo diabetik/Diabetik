@@ -347,6 +347,8 @@
 {
     if([theAutocompleteBar isEqual:self.autocompleteBar])
     {
+        __weak typeof(self) weakSelf = self;
+        
         // If we're auto-selecting a previous meal, fetch and populate it's carb count too!
         NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
         if(moc)
@@ -371,7 +373,8 @@
                         grams = [meal.grams doubleValue];
                         
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                            __strong typeof(weakSelf) strongSelf = self;
+                            [strongSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
                         });
                     }
                 }
