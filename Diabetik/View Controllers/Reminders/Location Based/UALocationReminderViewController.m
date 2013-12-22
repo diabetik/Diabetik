@@ -24,7 +24,6 @@
 
 @interface UALocationReminderViewController ()
 {
-    UAReminder *reminder;
     NSString *message;
     NSInteger trigger;
     
@@ -36,16 +35,14 @@
 @end
 
 @implementation UALocationReminderViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         self.title = NSLocalizedString(@"Add Reminder", nil);
-        _moc = aMOC;
-        
+
         message = @"";
         trigger = 0;
         location = nil;
@@ -54,19 +51,22 @@
     }
     return self;
 }
-- (id)initWithReminder:(UAReminder *)theReminder andMOC:(NSManagedObjectContext *)aMOC
+- (id)initWithReminder:(UAReminder *)theReminder
 {
-    self = [self initWithMOC:aMOC];
+    self = [self init];
     if(self)
     {
         self.title = NSLocalizedString(@"Edit reminder", nil);
-        _moc = aMOC;
-        
-        reminder = theReminder;
-        message = theReminder.message;
-        trigger = [theReminder.trigger integerValue];
-        location = [[CLLocation alloc] initWithLatitude:[theReminder.lat doubleValue] longitude:[theReminder.lng doubleValue]];
-        locationName = theReminder.locationName;
+        self.reminder = theReminder;
+
+        UAReminder *reminder = (UAReminder *)[self reminder];
+        if(reminder)
+        {
+            message = reminder.message;
+            trigger = [reminder.trigger integerValue];
+            location = [[CLLocation alloc] initWithLatitude:[reminder.lat doubleValue] longitude:[reminder.lng doubleValue]];
+            locationName = reminder.locationName;
+        }
         
         currentlyDeterminingUserLocation = NO;
     }
@@ -77,7 +77,7 @@
 {
     [super viewWillAppear:animated];
     
-    if(!reminder)
+    if(![self reminder])
     {
         [self.tableView reloadData];
         
@@ -101,54 +101,58 @@
 {
     [self.view endEditing:YES];
     
-    if(message && [message length] && location && locationName)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        NSError *error = nil;
-        
-        UAReminder *newReminder = reminder;
-        if(!newReminder)
+        if(message && [message length] && location && locationName)
         {
-            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:self.moc];
-            newReminder = (UAReminder *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-            newReminder.type = [NSNumber numberWithInteger:kReminderTypeLocation];            
-            newReminder.created = [NSDate date];
+            NSError *error = nil;
+            
+            UAReminder *newReminder = [self reminder];
+            if(!newReminder)
+            {
+                NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:moc];
+                newReminder = (UAReminder *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+                newReminder.type = [NSNumber numberWithInteger:kReminderTypeLocation];            
+                newReminder.created = [NSDate date];
+            }
+            newReminder.message = message;
+            newReminder.locationName = locationName;        
+            newReminder.lat = [NSNumber numberWithDouble:location.coordinate.latitude];
+            newReminder.lng = [NSNumber numberWithDouble:location.coordinate.longitude];
+            newReminder.trigger = [NSNumber numberWithInteger:trigger];
+            [moc save:&error];
+            
+            if(error)
+            {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"We were unable to save your reminder for the following reason: %@", nil), [error localizedDescription]]
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            }
+            else
+            {
+                // Setup region monitoring
+                [[UALocationController sharedInstance] setupLocationMonitoringForApplicableReminders];
+                
+                // Notify anyone interested that we've updated our reminders
+                [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+                
+                [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
+                [self handleBack:self withSound:NO];
+            }
         }
-        newReminder.message = message;
-        newReminder.locationName = locationName;        
-        newReminder.lat = [NSNumber numberWithDouble:location.coordinate.latitude];
-        newReminder.lng = [NSNumber numberWithDouble:location.coordinate.longitude];
-        newReminder.trigger = [NSNumber numberWithInteger:trigger];
-        
-        [self.moc save:&error];
-        if(error)
+        else
         {
             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedString(@"We were unable to save your reminder for the following reason: %@", nil), [error localizedDescription]]
+                                                                message:NSLocalizedString(@"Please complete all required fields", nil)
                                                                delegate:nil
                                                       cancelButtonTitle:NSLocalizedString(@"Okay", nil)
                                                       otherButtonTitles:nil];
             [alertView show];
         }
-        else
-        {
-            // Setup region monitoring
-            [[UALocationController sharedInstance] setupLocationMonitoringForApplicableReminders];
-            
-            // Notify anyone interested that we've updated our reminders
-            [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
-            
-            [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
-            [self handleBack:self withSound:NO];
-        }
-    }
-    else
-    {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                            message:NSLocalizedString(@"Please complete all required fields", nil)
-                                                           delegate:nil
-                                                  cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                  otherButtonTitles:nil];
-        [alertView show];
     }
 }
 - (void)geolocateUser

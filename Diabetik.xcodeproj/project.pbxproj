@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5301AED5185A08A0005F4CF4 /* UACoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301AED4185A08A0005F4CF4 /* UACoreDataController.m */; };
+		5301AED8185A0D36005F4CF4 /* UASettingsiCloudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301AED7185A0D36005F4CF4 /* UASettingsiCloudViewController.m */; };
 		530603A4167FCFFA00EFBE8B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530603A3167FCFFA00EFBE8B /* CoreLocation.framework */; };
 		531026521849135E001C5766 /* UAMenuAccountAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 531026511849135E001C5766 /* UAMenuAccountAvatarView.m */; };
-		5310265618491F4F001C5766 /* UADragMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5310265518491F4F001C5766 /* UADragMenuViewController.m */; };
 		531D4D81184D372800ABAEC3 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D76184D372800ABAEC3 /* RECommonFunctions.m */; };
 		531D4D82184D372800ABAEC3 /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D78184D372800ABAEC3 /* REFrostedContainerViewController.m */; };
 		531D4D83184D372800ABAEC3 /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D7A184D372800ABAEC3 /* REFrostedViewController.m */; };
@@ -21,7 +22,7 @@
 		5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */; };
 		532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EA4177D7DD1000D793F /* CoreText.framework */; };
 		532D0EA8177D7F64000D793F /* HockeyApp-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EA7177D7F64000D793F /* HockeyApp-License.txt */; };
-		53327C46170DDED3004FA6D2 /* libOAuth2Client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53327C43170DDEC9004FA6D2 /* libOAuth2Client.a */; settings = {ATTRIBUTES = (Required, ); }; };
+		532D720A1858BFD800ECBC97 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D72091858BFD800ECBC97 /* JRSwizzle.m */; };
 		53350EC917B6A86300223662 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53350EC817B6A86300223662 /* Media.xcassets */; };
 		53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */; };
 		533F07431708B71700B7BF55 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07421708B71700B7BF55 /* CFNetwork.framework */; };
@@ -57,7 +58,6 @@
 		533F34781773266600AD89E2 /* success.caf in Resources */ = {isa = PBXBuildFile; fileRef = 533F31E41773266600AD89E2 /* success.caf */; };
 		533F34791773266600AD89E2 /* tap-significant.caf in Resources */ = {isa = PBXBuildFile; fileRef = 533F31E51773266600AD89E2 /* tap-significant.caf */; };
 		533F347A1773266600AD89E2 /* tap.caf in Resources */ = {isa = PBXBuildFile; fileRef = 533F31E61773266600AD89E2 /* tap.caf */; };
-		533F347B1773266600AD89E2 /* UARunKeeperClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F31EA1773266600AD89E2 /* UARunKeeperClient.m */; };
 		533F347C1773266600AD89E2 /* UAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F31ED1773266600AD89E2 /* UAAppDelegate.m */; };
 		533F347D1773266600AD89E2 /* UAHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F31F01773266600AD89E2 /* UAHelper.m */; };
 		533F34911773266600AD89E2 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32241773266600AD89E2 /* AFHTTPClient.m */; };
@@ -128,7 +128,6 @@
 		533F34DB1773266600AD89E2 /* UASettingsDropboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32D41773266600AD89E2 /* UASettingsDropboxViewController.m */; };
 		533F34DC1773266600AD89E2 /* UASettingsGlucoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32D61773266600AD89E2 /* UASettingsGlucoseViewController.m */; };
 		533F34DD1773266600AD89E2 /* UASettingsLicensesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32D81773266600AD89E2 /* UASettingsLicensesViewController.m */; };
-		533F34DE1773266600AD89E2 /* UASettingsRunKeeperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32DA1773266600AD89E2 /* UASettingsRunKeeperViewController.m */; };
 		533F34DF1773266600AD89E2 /* UASettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32DC1773266600AD89E2 /* UASettingsViewController.m */; };
 		533F34E01773266600AD89E2 /* UATimelineHeaderViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32E01773266600AD89E2 /* UATimelineHeaderViewCell.m */; };
 		533F34E11773266600AD89E2 /* UATimelineViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32E21773266600AD89E2 /* UATimelineViewCell.m */; };
@@ -141,7 +140,6 @@
 		533F352717736C0600AD89E2 /* UALocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351A17736C0600AD89E2 /* UALocationController.m */; };
 		533F352817736C0600AD89E2 /* UAMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351C17736C0600AD89E2 /* UAMediaController.m */; };
 		533F352917736C0600AD89E2 /* UAReminderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351E17736C0600AD89E2 /* UAReminderController.m */; };
-		533F352A17736C0600AD89E2 /* UASyncController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F352017736C0600AD89E2 /* UASyncController.m */; };
 		533F352B17736C0600AD89E2 /* UATagController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F352217736C0600AD89E2 /* UATagController.m */; };
 		533F355C17736C5500AD89E2 /* UAAutocompleteBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353017736C5500AD89E2 /* UAAutocompleteBar.m */; };
 		533F355D17736C5500AD89E2 /* UAAutocompleteBarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353217736C5500AD89E2 /* UAAutocompleteBarButton.m */; };
@@ -150,7 +148,6 @@
 		533F356117736C5500AD89E2 /* UASlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353B17736C5500AD89E2 /* UASlider.m */; };
 		533F356217736C5500AD89E2 /* UAGenericTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353E17736C5500AD89E2 /* UAGenericTableHeaderView.m */; };
 		533F356317736C5500AD89E2 /* UAGenericTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354017736C5500AD89E2 /* UAGenericTableViewCell.m */; };
-		533F356417736C5500AD89E2 /* UAMinimalistButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354217736C5500AD89E2 /* UAMinimalistButton.m */; };
 		533F356517736C5500AD89E2 /* UAAlertMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354517736C5500AD89E2 /* UAAlertMessageView.m */; };
 		533F356617736C5500AD89E2 /* UAFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354717736C5500AD89E2 /* UAFont.m */; };
 		533F356717736C5500AD89E2 /* UANavSubtitleHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354917736C5500AD89E2 /* UANavSubtitleHeaderView.m */; };
@@ -163,9 +160,8 @@
 		533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */; };
 		534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */; };
 		5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5354083817B7B90A008C64A4 /* StoreKit.framework */; };
+		53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5356124F185B9E3900438A91 /* UAReminderBaseViewController.m */; };
 		535918A717809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */; };
-		536E965A177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E9657177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */; };
-		536E965B177FA7D900140DF0 /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 536E9659177FA7D900140DF0 /* UAInsulinCalculatorViewController.m */; };
 		537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 537983AE17CD3F5A00032F3A /* UAShortcutButton.m */; };
 		538DBA78166F830300F0709F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA77166F830300F0709F /* UIKit.framework */; };
 		538DBA7A166F830300F0709F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA79166F830300F0709F /* Foundation.framework */; };
@@ -195,6 +191,8 @@
 		53D5C501184132B50000CB86 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4F3184132B50000CB86 /* README.md */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
+		53E915C218579A230025B465 /* NSError+UbiquityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E915BF18579A230025B465 /* NSError+UbiquityStoreManager.m */; };
+		53E915C318579A230025B465 /* UbiquityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E915C118579A230025B465 /* UbiquityStoreManager.m */; };
 		53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED118422B5B006736F5 /* TGRImageViewController.m */; };
 		53F78ED818422B5B006736F5 /* TGRImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F78ED218422B5B006736F5 /* TGRImageViewController.xib */; };
 		53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED418422B5B006736F5 /* TGRImageZoomAnimationController.m */; };
@@ -204,29 +202,14 @@
 		53F78EE618427791006736F5 /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F78EE518427791006736F5 /* ShinobiCharts.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		53327C42170DDEC9004FA6D2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 53327C3B170DDEC8004FA6D2 /* OAuth2Client.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D;
-			remoteInfo = OAuth2Client;
-		};
-		53327C44170DDECE004FA6D2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 53327C3B170DDEC8004FA6D2 /* OAuth2Client.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = OAuth2Client;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		5301AED3185A08A0005F4CF4 /* UACoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACoreDataController.h; sourceTree = "<group>"; };
+		5301AED4185A08A0005F4CF4 /* UACoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UACoreDataController.m; sourceTree = "<group>"; };
+		5301AED6185A0D36005F4CF4 /* UASettingsiCloudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsiCloudViewController.h; sourceTree = "<group>"; };
+		5301AED7185A0D36005F4CF4 /* UASettingsiCloudViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsiCloudViewController.m; sourceTree = "<group>"; };
 		530603A3167FCFFA00EFBE8B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		531026501849135E001C5766 /* UAMenuAccountAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMenuAccountAvatarView.h; sourceTree = "<group>"; };
 		531026511849135E001C5766 /* UAMenuAccountAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMenuAccountAvatarView.m; sourceTree = "<group>"; };
-		5310265418491F4F001C5766 /* UADragMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UADragMenuViewController.h; sourceTree = "<group>"; };
-		5310265518491F4F001C5766 /* UADragMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UADragMenuViewController.m; sourceTree = "<group>"; };
 		531D4D75184D372800ABAEC3 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
 		531D4D76184D372800ABAEC3 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
 		531D4D77184D372800ABAEC3 /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedContainerViewController.h; sourceTree = "<group>"; };
@@ -245,7 +228,9 @@
 		5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_1.1_to_1.2.xcmappingmodel; sourceTree = "<group>"; };
 		532D0EA4177D7DD1000D793F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		532D0EA7177D7F64000D793F /* HockeyApp-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "HockeyApp-License.txt"; sourceTree = "<group>"; };
-		53327C3B170DDEC8004FA6D2 /* OAuth2Client.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuth2Client.xcodeproj; path = "OAuth2Client-master/OAuth2Client.xcodeproj"; sourceTree = "<group>"; };
+		532D72081858BFD800ECBC97 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
+		532D72091858BFD800ECBC97 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
+		532D720E1858FEC300ECBC97 /* Diabetik.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Diabetik.entitlements; sourceTree = "<group>"; };
 		53350EC817B6A86300223662 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		533F07421708B71700B7BF55 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -301,8 +286,6 @@
 		533F31E51773266600AD89E2 /* tap-significant.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "tap-significant.caf"; sourceTree = "<group>"; };
 		533F31E61773266600AD89E2 /* tap.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = tap.caf; sourceTree = "<group>"; };
 		533F31E71773266600AD89E2 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
-		533F31E91773266600AD89E2 /* UARunKeeperClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARunKeeperClient.h; sourceTree = "<group>"; };
-		533F31EA1773266600AD89E2 /* UARunKeeperClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARunKeeperClient.m; sourceTree = "<group>"; };
 		533F31EC1773266600AD89E2 /* UAAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAppDelegate.h; sourceTree = "<group>"; };
 		533F31ED1773266600AD89E2 /* UAAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAppDelegate.m; sourceTree = "<group>"; };
 		533F31EE1773266600AD89E2 /* UACommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACommon.h; sourceTree = "<group>"; };
@@ -442,8 +425,6 @@
 		533F32D61773266600AD89E2 /* UASettingsGlucoseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsGlucoseViewController.m; sourceTree = "<group>"; };
 		533F32D71773266600AD89E2 /* UASettingsLicensesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsLicensesViewController.h; sourceTree = "<group>"; };
 		533F32D81773266600AD89E2 /* UASettingsLicensesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsLicensesViewController.m; sourceTree = "<group>"; };
-		533F32D91773266600AD89E2 /* UASettingsRunKeeperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsRunKeeperViewController.h; sourceTree = "<group>"; };
-		533F32DA1773266600AD89E2 /* UASettingsRunKeeperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsRunKeeperViewController.m; sourceTree = "<group>"; };
 		533F32DB1773266600AD89E2 /* UASettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsViewController.h; sourceTree = "<group>"; };
 		533F32DC1773266600AD89E2 /* UASettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsViewController.m; sourceTree = "<group>"; };
 		533F32DF1773266600AD89E2 /* UATimelineHeaderViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATimelineHeaderViewCell.h; sourceTree = "<group>"; };
@@ -468,8 +449,6 @@
 		533F351C17736C0600AD89E2 /* UAMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMediaController.m; sourceTree = "<group>"; };
 		533F351D17736C0600AD89E2 /* UAReminderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAReminderController.h; sourceTree = "<group>"; };
 		533F351E17736C0600AD89E2 /* UAReminderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAReminderController.m; sourceTree = "<group>"; };
-		533F351F17736C0600AD89E2 /* UASyncController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASyncController.h; sourceTree = "<group>"; };
-		533F352017736C0600AD89E2 /* UASyncController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASyncController.m; sourceTree = "<group>"; };
 		533F352117736C0600AD89E2 /* UATagController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATagController.h; sourceTree = "<group>"; };
 		533F352217736C0600AD89E2 /* UATagController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATagController.m; sourceTree = "<group>"; };
 		533F352F17736C5500AD89E2 /* UAAutocompleteBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAutocompleteBar.h; sourceTree = "<group>"; };
@@ -486,8 +465,6 @@
 		533F353E17736C5500AD89E2 /* UAGenericTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAGenericTableHeaderView.m; sourceTree = "<group>"; };
 		533F353F17736C5500AD89E2 /* UAGenericTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAGenericTableViewCell.h; sourceTree = "<group>"; };
 		533F354017736C5500AD89E2 /* UAGenericTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAGenericTableViewCell.m; sourceTree = "<group>"; };
-		533F354117736C5500AD89E2 /* UAMinimalistButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMinimalistButton.h; sourceTree = "<group>"; };
-		533F354217736C5500AD89E2 /* UAMinimalistButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMinimalistButton.m; sourceTree = "<group>"; };
 		533F354417736C5500AD89E2 /* UAAlertMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAlertMessageView.h; sourceTree = "<group>"; };
 		533F354517736C5500AD89E2 /* UAAlertMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAlertMessageView.m; sourceTree = "<group>"; };
 		533F354617736C5500AD89E2 /* UAFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAFont.h; sourceTree = "<group>"; };
@@ -512,12 +489,10 @@
 		534617511852828E00ED4B6D /* UASettingsTimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsTimelineViewController.h; sourceTree = "<group>"; };
 		534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsTimelineViewController.m; sourceTree = "<group>"; };
 		5354083817B7B90A008C64A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		5356124E185B9E3900438A91 /* UAReminderBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAReminderBaseViewController.h; sourceTree = "<group>"; };
+		5356124F185B9E3900438A91 /* UAReminderBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAReminderBaseViewController.m; sourceTree = "<group>"; };
 		535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_2_to_1.1.xcmappingmodel; sourceTree = SOURCE_ROOT; };
 		536E964B177F5A3800140DF0 /* Diabetik_1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diabetik_1.1.xcdatamodel; sourceTree = "<group>"; };
-		536E9656177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTextFieldViewCell.h; sourceTree = "<group>"; };
-		536E9657177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTextFieldViewCell.m; sourceTree = "<group>"; };
-		536E9658177FA7D900140DF0 /* UAInsulinCalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorViewController.h; sourceTree = "<group>"; };
-		536E9659177FA7D900140DF0 /* UAInsulinCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorViewController.m; sourceTree = "<group>"; };
 		537983AD17CD3F5A00032F3A /* UAShortcutButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAShortcutButton.h; sourceTree = "<group>"; };
 		537983AE17CD3F5A00032F3A /* UAShortcutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAShortcutButton.m; sourceTree = "<group>"; };
 		538DBA73166F830300F0709F /* Diabetik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diabetik.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -587,6 +562,10 @@
 		53D5C4FC184132B50000CB86 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/AppiraterLocalizable.strings"; sourceTree = "<group>"; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		53E915BE18579A230025B465 /* NSError+UbiquityStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+UbiquityStoreManager.h"; sourceTree = "<group>"; };
+		53E915BF18579A230025B465 /* NSError+UbiquityStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+UbiquityStoreManager.m"; sourceTree = "<group>"; };
+		53E915C018579A230025B465 /* UbiquityStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UbiquityStoreManager.h; sourceTree = "<group>"; };
+		53E915C118579A230025B465 /* UbiquityStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UbiquityStoreManager.m; sourceTree = "<group>"; };
 		53F78ED018422B5B006736F5 /* TGRImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGRImageViewController.h; sourceTree = "<group>"; };
 		53F78ED118422B5B006736F5 /* TGRImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGRImageViewController.m; sourceTree = "<group>"; };
 		53F78ED218422B5B006736F5 /* TGRImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TGRImageViewController.xib; sourceTree = "<group>"; };
@@ -631,22 +610,12 @@
 				538DBA7A166F830300F0709F /* Foundation.framework in Frameworks */,
 				53D5C4C8184129EB0000CB86 /* HockeySDK.framework in Frameworks */,
 				538DBA7E166F830300F0709F /* CoreData.framework in Frameworks */,
-				53327C46170DDED3004FA6D2 /* libOAuth2Client.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5310265318491F3C001C5766 /* Drag Menu */ = {
-			isa = PBXGroup;
-			children = (
-				5310265418491F4F001C5766 /* UADragMenuViewController.h */,
-				5310265518491F4F001C5766 /* UADragMenuViewController.m */,
-			);
-			path = "Drag Menu";
-			sourceTree = "<group>";
-		};
 		531D4D74184D372800ABAEC3 /* REFrostedViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -674,12 +643,13 @@
 			path = HockeyApp;
 			sourceTree = "<group>";
 		};
-		53327C3C170DDEC8004FA6D2 /* Products */ = {
+		532D72071858BFD800ECBC97 /* JRSwizzle */ = {
 			isa = PBXGroup;
 			children = (
-				53327C43170DDEC9004FA6D2 /* libOAuth2Client.a */,
+				532D72081858BFD800ECBC97 /* JRSwizzle.h */,
+				532D72091858BFD800ECBC97 /* JRSwizzle.m */,
 			);
-			name = Products;
+			path = JRSwizzle;
 			sourceTree = "<group>";
 		};
 		533F30271773266500AD89E2 /* Diabetik */ = {
@@ -690,9 +660,9 @@
 				533F352C17736C5500AD89E2 /* UI */,
 				533F324F1773266600AD89E2 /* View Controllers */,
 				533F351017736C0600AD89E2 /* Models */,
-				533F31E81773266600AD89E2 /* Sync Proxies */,
 				533F30401773266500AD89E2 /* CoreData Models */,
 				533F305D1773266500AD89E2 /* Diabetik.xcdatamodeld */,
+				532D720E1858FEC300ECBC97 /* Diabetik.entitlements */,
 				539664CF18563A3D00AD1842 /* Diabetik_1.2_to_1.3.xcmappingmodel */,
 				535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */,
 				539664D11856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel */,
@@ -795,18 +765,11 @@
 			path = SFX;
 			sourceTree = "<group>";
 		};
-		533F31E81773266600AD89E2 /* Sync Proxies */ = {
-			isa = PBXGroup;
-			children = (
-				533F31E91773266600AD89E2 /* UARunKeeperClient.h */,
-				533F31EA1773266600AD89E2 /* UARunKeeperClient.m */,
-			);
-			path = "Sync Proxies";
-			sourceTree = "<group>";
-		};
 		533F32211773266600AD89E2 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				532D72071858BFD800ECBC97 /* JRSwizzle */,
+				53E915BD18579A230025B465 /* UbiquityStoreManager */,
 				531D4D74184D372800ABAEC3 /* REFrostedViewController */,
 				53F78ECF18422B5B006736F5 /* Vertigo */,
 				53D5C4D7184132B50000CB86 /* Appirater */,
@@ -899,7 +862,6 @@
 		533F324F1773266600AD89E2 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				536E9654177FA7D900140DF0 /* Insulin Calculator */,
 				533F32591773266600AD89E2 /* Add Entry */,
 				533F325E1773266600AD89E2 /* Events */,
 				533F328B1773266600AD89E2 /* Export */,
@@ -1052,6 +1014,8 @@
 				533F32A11773266600AD89E2 /* Location Based */,
 				533F32AA1773266600AD89E2 /* Rule Based */,
 				533F32AD1773266600AD89E2 /* Time Based */,
+				5356124E185B9E3900438A91 /* UAReminderBaseViewController.h */,
+				5356124F185B9E3900438A91 /* UAReminderBaseViewController.m */,
 				533F32B21773266600AD89E2 /* UARemindersViewController.h */,
 				533F32B31773266600AD89E2 /* UARemindersViewController.m */,
 			);
@@ -1164,14 +1128,14 @@
 				533F32D21773266600AD89E2 /* UASettingsBackupViewController.m */,
 				533F32D31773266600AD89E2 /* UASettingsDropboxViewController.h */,
 				533F32D41773266600AD89E2 /* UASettingsDropboxViewController.m */,
+				5301AED6185A0D36005F4CF4 /* UASettingsiCloudViewController.h */,
+				5301AED7185A0D36005F4CF4 /* UASettingsiCloudViewController.m */,
 				533F32D51773266600AD89E2 /* UASettingsGlucoseViewController.h */,
 				533F32D61773266600AD89E2 /* UASettingsGlucoseViewController.m */,
 				534617511852828E00ED4B6D /* UASettingsTimelineViewController.h */,
 				534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */,
 				533F32D71773266600AD89E2 /* UASettingsLicensesViewController.h */,
 				533F32D81773266600AD89E2 /* UASettingsLicensesViewController.m */,
-				533F32D91773266600AD89E2 /* UASettingsRunKeeperViewController.h */,
-				533F32DA1773266600AD89E2 /* UASettingsRunKeeperViewController.m */,
 				533F32DB1773266600AD89E2 /* UASettingsViewController.h */,
 				533F32DC1773266600AD89E2 /* UASettingsViewController.m */,
 			);
@@ -1218,10 +1182,10 @@
 				533F351C17736C0600AD89E2 /* UAMediaController.m */,
 				533F351D17736C0600AD89E2 /* UAReminderController.h */,
 				533F351E17736C0600AD89E2 /* UAReminderController.m */,
-				533F351F17736C0600AD89E2 /* UASyncController.h */,
-				533F352017736C0600AD89E2 /* UASyncController.m */,
 				533F352117736C0600AD89E2 /* UATagController.h */,
 				533F352217736C0600AD89E2 /* UATagController.m */,
+				5301AED3185A08A0005F4CF4 /* UACoreDataController.h */,
+				5301AED4185A08A0005F4CF4 /* UACoreDataController.m */,
 			);
 			name = Models;
 			path = Diabetik/Models;
@@ -1230,7 +1194,6 @@
 		533F352C17736C5500AD89E2 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				5310265318491F3C001C5766 /* Drag Menu */,
 				533F352D17736C5500AD89E2 /* Controls */,
 				533F353C17736C5500AD89E2 /* Generic */,
 				533F354317736C5500AD89E2 /* Misc */,
@@ -1281,8 +1244,6 @@
 				533F353E17736C5500AD89E2 /* UAGenericTableHeaderView.m */,
 				533F353F17736C5500AD89E2 /* UAGenericTableViewCell.h */,
 				533F354017736C5500AD89E2 /* UAGenericTableViewCell.m */,
-				533F354117736C5500AD89E2 /* UAMinimalistButton.h */,
-				533F354217736C5500AD89E2 /* UAMinimalistButton.m */,
 			);
 			path = Generic;
 			sourceTree = "<group>";
@@ -1336,25 +1297,6 @@
 			path = "Modal view";
 			sourceTree = "<group>";
 		};
-		536E9654177FA7D900140DF0 /* Insulin Calculator */ = {
-			isa = PBXGroup;
-			children = (
-				536E9655177FA7D900140DF0 /* Cells */,
-				536E9658177FA7D900140DF0 /* UAInsulinCalculatorViewController.h */,
-				536E9659177FA7D900140DF0 /* UAInsulinCalculatorViewController.m */,
-			);
-			path = "Insulin Calculator";
-			sourceTree = "<group>";
-		};
-		536E9655177FA7D900140DF0 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				536E9656177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.h */,
-				536E9657177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
 		537983AC17CD3F5A00032F3A /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1367,7 +1309,6 @@
 		538DBA68166F830300F0709F = {
 			isa = PBXGroup;
 			children = (
-				53327C3B170DDEC8004FA6D2 /* OAuth2Client.xcodeproj */,
 				533F30271773266500AD89E2 /* Diabetik */,
 				538DBA76166F830300F0709F /* Frameworks */,
 				538DBA74166F830300F0709F /* Products */,
@@ -1467,6 +1408,17 @@
 			path = Appirater;
 			sourceTree = "<group>";
 		};
+		53E915BD18579A230025B465 /* UbiquityStoreManager */ = {
+			isa = PBXGroup;
+			children = (
+				53E915BE18579A230025B465 /* NSError+UbiquityStoreManager.h */,
+				53E915BF18579A230025B465 /* NSError+UbiquityStoreManager.m */,
+				53E915C018579A230025B465 /* UbiquityStoreManager.h */,
+				53E915C118579A230025B465 /* UbiquityStoreManager.m */,
+			);
+			path = UbiquityStoreManager;
+			sourceTree = "<group>";
+		};
 		53F78ECF18422B5B006736F5 /* Vertigo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1491,12 +1443,11 @@
 				538DBA6F166F830300F0709F /* Sources */,
 				538DBA70166F830300F0709F /* Frameworks */,
 				538DBA71166F830300F0709F /* Resources */,
-				53DE96E2185FB61800CB462C /* ShellScript */,
+				532A3F78185E565200508F75 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				53327C45170DDECE004FA6D2 /* PBXTargetDependency */,
 			);
 			name = Diabetik;
 			productName = Diabetting;
@@ -1518,6 +1469,9 @@
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
 								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
 							};
 						};
 					};
@@ -1562,28 +1516,12 @@
 			mainGroup = 538DBA68166F830300F0709F;
 			productRefGroup = 538DBA74166F830300F0709F /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 53327C3C170DDEC8004FA6D2 /* Products */;
-					ProjectRef = 53327C3B170DDEC8004FA6D2 /* OAuth2Client.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				538DBA72166F830300F0709F /* Diabetik */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		53327C43170DDEC9004FA6D2 /* libOAuth2Client.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libOAuth2Client.a;
-			remoteRef = 53327C42170DDEC9004FA6D2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		538DBA71166F830300F0709F /* Resources */ = {
@@ -1625,7 +1563,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		53DE96E2185FB61800CB462C /* ShellScript */ = {
+		532A3F78185E565200508F75 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1663,7 +1601,6 @@
 				533F32FF1773266600AD89E2 /* UATag.m in Sources */,
 				533F33021773266600AD89E2 /* Diabetik.xcdatamodeld in Sources */,
 				533F33031773266600AD89E2 /* main.m in Sources */,
-				533F347B1773266600AD89E2 /* UARunKeeperClient.m in Sources */,
 				533F347C1773266600AD89E2 /* UAAppDelegate.m in Sources */,
 				533F347D1773266600AD89E2 /* UAHelper.m in Sources */,
 				533F34911773266600AD89E2 /* AFHTTPClient.m in Sources */,
@@ -1688,6 +1625,7 @@
 				533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */,
 				533F34AB1773266600AD89E2 /* UAEventInputTextViewViewCell.m in Sources */,
 				533F34AC1773266600AD89E2 /* UAEventInputViewCell.m in Sources */,
+				53E915C218579A230025B465 /* NSError+UbiquityStoreManager.m in Sources */,
 				539664D21856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel in Sources */,
 				533F34AF1773266600AD89E2 /* UAEventMapPin.m in Sources */,
 				533F34B01773266600AD89E2 /* UAEventMapViewController.m in Sources */,
@@ -1730,6 +1668,7 @@
 				533F34D21773266600AD89E2 /* UACarbsChartViewController.m in Sources */,
 				533F34D31773266600AD89E2 /* UAChartViewController.m in Sources */,
 				533F34D41773266600AD89E2 /* UALeastSquareFitCalculator.m in Sources */,
+				532D720A1858BFD800ECBC97 /* JRSwizzle.m in Sources */,
 				533F34D51773266600AD89E2 /* UAScatterChartViewController.m in Sources */,
 				533F34D61773266600AD89E2 /* UAReportPreviewView.m in Sources */,
 				531D4D86184D372800ABAEC3 /* UIViewController+REFrostedViewController.m in Sources */,
@@ -1737,12 +1676,12 @@
 				533F34D81773266600AD89E2 /* UADateButton.m in Sources */,
 				533F34D91773266600AD89E2 /* UADatePickerController.m in Sources */,
 				533F34DA1773266600AD89E2 /* UASettingsBackupViewController.m in Sources */,
+				53E915C318579A230025B465 /* UbiquityStoreManager.m in Sources */,
 				533F34DB1773266600AD89E2 /* UASettingsDropboxViewController.m in Sources */,
 				5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */,
 				533F34DC1773266600AD89E2 /* UASettingsGlucoseViewController.m in Sources */,
 				533F34DD1773266600AD89E2 /* UASettingsLicensesViewController.m in Sources */,
 				539E1CCF17B7FEA10059ED17 /* UIImage+ImageEffects.m in Sources */,
-				533F34DE1773266600AD89E2 /* UASettingsRunKeeperViewController.m in Sources */,
 				533F34DF1773266600AD89E2 /* UASettingsViewController.m in Sources */,
 				533F34E01773266600AD89E2 /* UATimelineHeaderViewCell.m in Sources */,
 				533F34E11773266600AD89E2 /* UATimelineViewCell.m in Sources */,
@@ -1751,13 +1690,11 @@
 				53BAD21F1847FF3B007F2977 /* UASideMenuHeaderView.m in Sources */,
 				533F34E41773266600AD89E2 /* UABaseViewController.m in Sources */,
 				533F352417736C0600AD89E2 /* UABackupController.m in Sources */,
-				5310265618491F4F001C5766 /* UADragMenuViewController.m in Sources */,
 				533F352517736C0600AD89E2 /* UAEventController.m in Sources */,
 				533F352617736C0600AD89E2 /* UAKeyboardController.m in Sources */,
 				533F352717736C0600AD89E2 /* UALocationController.m in Sources */,
 				533F352817736C0600AD89E2 /* UAMediaController.m in Sources */,
 				533F352917736C0600AD89E2 /* UAReminderController.m in Sources */,
-				533F352A17736C0600AD89E2 /* UASyncController.m in Sources */,
 				533F352B17736C0600AD89E2 /* UATagController.m in Sources */,
 				533F355C17736C5500AD89E2 /* UAAutocompleteBar.m in Sources */,
 				533F355D17736C5500AD89E2 /* UAAutocompleteBarButton.m in Sources */,
@@ -1767,10 +1704,10 @@
 				533F356117736C5500AD89E2 /* UASlider.m in Sources */,
 				533F356217736C5500AD89E2 /* UAGenericTableHeaderView.m in Sources */,
 				533F356317736C5500AD89E2 /* UAGenericTableViewCell.m in Sources */,
-				533F356417736C5500AD89E2 /* UAMinimalistButton.m in Sources */,
 				531D4D82184D372800ABAEC3 /* REFrostedContainerViewController.m in Sources */,
 				533F356517736C5500AD89E2 /* UAAlertMessageView.m in Sources */,
 				533F356617736C5500AD89E2 /* UAFont.m in Sources */,
+				53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */,
 				534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */,
 				533F356717736C5500AD89E2 /* UANavSubtitleHeaderView.m in Sources */,
 				533F356817736C5500AD89E2 /* UAUIHintView.m in Sources */,
@@ -1779,24 +1716,16 @@
 				533F356B17736C5500AD89E2 /* UACreditsTooltipView.m in Sources */,
 				531D4D85184D372800ABAEC3 /* UIView+REFrostedViewController.m in Sources */,
 				533F356C17736C5500AD89E2 /* UAExportTooltipView.m in Sources */,
+				5301AED8185A0D36005F4CF4 /* UASettingsiCloudViewController.m in Sources */,
 				533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */,
 				533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */,
-				536E965A177FA7D900140DF0 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */,
 				53F78EE018425634006736F5 /* UATimelineStatView.m in Sources */,
-				536E965B177FA7D900140DF0 /* UAInsulinCalculatorViewController.m in Sources */,
+				5301AED5185A08A0005F4CF4 /* UACoreDataController.m in Sources */,
 				535918A717809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		53327C45170DDECE004FA6D2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OAuth2Client;
-			targetProxy = 53327C44170DDECE004FA6D2 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		533F30591773266500AD89E2 /* Localizable.strings */ = {
@@ -1889,6 +1818,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Diabetik/Diabetik.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
@@ -1915,8 +1845,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
+				PROVISIONING_PROFILE = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1997,6 +1927,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Diabetik/Diabetik.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
@@ -2021,8 +1952,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
+				PROVISIONING_PROFILE = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2033,6 +1964,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Diabetik/Diabetik.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COMPRESS_PNG_FILES = NO;
@@ -2058,8 +1990,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B21D6B3F-E0DD-4EF0-B9E6-4FA869170DBA";
+				PROVISIONING_PROFILE = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

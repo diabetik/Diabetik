@@ -21,7 +21,6 @@
 #import "NSDate+Extension.h"
 #import "NSString+Extension.h"
 
-#import "UAInsulinCalculatorViewController.h"
 #import "UAMedicineInputViewController.h"
 #import "UAAppDelegate.h"
 
@@ -36,41 +35,45 @@
 @end
 
 @implementation UAMedicineInputViewController
-@synthesize medicine = _medicine;
 @synthesize type = _type;
 @synthesize name = _name;
 @synthesize amount = _amount;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
-    self = [super initWithMOC:aMOC];
+    self = [super init];
     if (self)
     {
         self.title = NSLocalizedString(@"Add Medicine", nil);
     }
     return self;
 }
-- (id)initWithEvent:(UAEvent *)aEvent andMOC:(NSManagedObjectContext *)aMOC
+- (id)initWithEvent:(UAEvent *)theEvent
 {
-    self = [super initWithEvent:aEvent andMOC:aMOC];
+    self = [super initWithEvent:theEvent];
     if(self)
     {
         self.title = NSLocalizedString(@"Edit Medicine", nil);
         
         NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
         
-        _medicine = (UAMedicine *)aEvent;
-        _type = [self.medicine.type integerValue];
-        _name = self.medicine.name;
-        _amount = [valueFormatter stringFromNumber:self.medicine.amount];
+        UAMedicine *medicine = (UAMedicine *)theEvent;
+        if(medicine)
+        {
+            _type = [medicine.type integerValue];
+            _name = medicine.name;
+            _amount = [valueFormatter stringFromNumber:medicine.amount];
+        }
     }
     
     return self;
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    if(!self.medicine && isFirstLoad)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    
+    if(![self event] && moc && isFirstLoad)
     {
         if([[NSUserDefaults standardUserDefaults] boolForKey:kUseSmartInputKey])
         {
@@ -83,9 +86,9 @@
                 if([vc isKindOfClass:[self class]] && vc != self)
                 {
                     UAMedicineInputViewController *medicineVC = (UAMedicineInputViewController *)vc;
-                    if(!medicineVC.medicine)
+                    if(![medicineVC event])
                     {
-                        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAMedicine" inManagedObjectContext:self.moc];
+                        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAMedicine" inManagedObjectContext:moc];
                         UAMedicine *entry = [[UAMedicine alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:nil];
                         entry.name = medicineVC.name;
                         entry.type = [NSNumber numberWithInteger:medicineVC.type];
@@ -153,46 +156,58 @@
 {
     [self.view endEditing:YES];
     
-    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
+    {
+        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
 
-    if(!self.medicine)
-    {
-        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAMedicine" inManagedObjectContext:self.moc];
-        self.medicine = (UAMedicine *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-        self.medicine.filterType = [NSNumber numberWithInteger:MedicineFilterType];
-    }
-    self.medicine.amount = [valueFormatter numberFromString:self.amount];
-    self.medicine.name = self.name;
-    self.medicine.timestamp = self.date;
-    self.medicine.type = [NSNumber numberWithInt:self.type];
-    
-    if(!notes.length) notes = nil;
-    self.medicine.notes = notes;
-    
-    // Save our geotag data
-    if(![self.lat isEqual:self.medicine.lat] || ![self.lon isEqual:self.medicine.lon])
-    {
-        self.medicine.lat = self.lat;
-        self.medicine.lon = self.lon;
-    }
-    
-    // Save our photo
-    if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:self.medicine.photoPath])
-    {
-        // If a photo already exists for this entry remove it now
-        if(self.medicine.photoPath)
+        UAMedicine *medicine = (UAMedicine *)[self event];
+        if(!medicine)
         {
-            [[UAMediaController sharedInstance] deleteImageWithFilename:self.medicine.photoPath success:nil failure:nil];
+            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAMedicine" inManagedObjectContext:moc];
+            medicine = (UAMedicine *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+            medicine.filterType = [NSNumber numberWithInteger:MedicineFilterType];
+        }
+        medicine.amount = [valueFormatter numberFromString:self.amount];
+        medicine.name = self.name;
+        medicine.timestamp = self.date;
+        medicine.type = [NSNumber numberWithInt:self.type];
+        
+        if(!notes.length) notes = nil;
+        medicine.notes = notes;
+        
+        // Save our geotag data
+        if(![self.lat isEqual:medicine.lat] || ![self.lon isEqual:medicine.lon])
+        {
+            medicine.lat = self.lat;
+            medicine.lon = self.lon;
         }
         
-        self.medicine.photoPath = self.currentPhotoPath;
+        // Save our photo
+        if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:medicine.photoPath])
+        {
+            // If a photo already exists for this entry remove it now
+            if(medicine.photoPath)
+            {
+                [[UAMediaController sharedInstance] deleteImageWithFilename:medicine.photoPath success:nil failure:nil];
+            }
+            
+            medicine.photoPath = self.currentPhotoPath;
+        }
+        
+        NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
+        [[UATagController sharedInstance] assignTags:tags toEvent:medicine];
+        
+        [moc save:&*error];
+        
+        return medicine;
+    }
+    else
+    {
+        *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No applicable MOC present"}];
     }
     
-    NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
-    [[UATagController sharedInstance] assignTags:tags toEvent:self.medicine];
-    
-    [self.moc save:&*error];
-    return self.medicine;
+    return nil;
 }
 - (void)selectType:(UIButton *)sender
 {

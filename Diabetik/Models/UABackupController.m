@@ -24,109 +24,116 @@
 #import "UAAppDelegate.h"
 
 @interface UABackupController ()
-@property (nonatomic, strong) NSManagedObjectContext *moc;
 @end
 
 @implementation UABackupController
-@synthesize moc = _moc;
-
-#pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
-{
-    self = [super init];
-    if(self)
-    {
-        _moc = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
-        _moc.parentContext = aMOC;
-    }
-    
-    return self;
-}
 
 #pragma mark - Logic
 - (void)backupToDropbox:(void (^)(NSError *))completionCallback
 {
-    [self.moc performBlock:^{
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
+    {
+        NSManagedObjectContext *childMOC = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        childMOC.parentContext = moc;
         
-        NSError *error = nil;
-        NSMutableArray *representations = [NSMutableArray array];
-        
-        NSArray *events = [[UAEventController sharedInstance] fetchEventsWithPredicate:nil inContext:self.moc];
-        if(events)
-        {
-            for(UAEvent *event in events)
-            {
-                NSDictionary *representation = [event dictionaryRepresentation];
-                [representations addObject:representation];
-            }
-        }
-        
-        if([representations count])
-        {
-            NSData *data = [NSKeyedArchiver archivedDataWithRootObject:representations];
+        [childMOC performBlock:^{
             
-            if([[DBFilesystem sharedFilesystem] completedFirstSync])
+            NSError *error = nil;
+            NSMutableArray *representations = [NSMutableArray array];
+            
+            NSArray *events = [[UAEventController sharedInstance] fetchEventsWithPredicate:nil inContext:childMOC];
+            if(events)
             {
-                DBPath *newPath =nil;
-                DBFile *file = nil;
-                
-                newPath = [[DBPath root] childPath:[NSString stringWithFormat:@"backup.dtk"]];
-                [[DBFilesystem sharedFilesystem] deletePath:newPath error:nil];
-                file = [[DBFilesystem sharedFilesystem] createFile:newPath error:&error];
-                
-                if(!error)
+                for(UAEvent *event in events)
                 {
-                    [file writeData:data error:&error];
+                    NSDictionary *representation = [event dictionaryRepresentation];
+                    [representations addObject:representation];
                 }
-                [file close];
             }
-            else
+            
+            if([representations count])
             {
-                NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-                [errorInfo setValue:@"Dropbox is currently performing a sync operation" forKey:NSLocalizedDescriptionKey];
-                error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:errorInfo];
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:representations];
+                
+                if([[DBFilesystem sharedFilesystem] completedFirstSync])
+                {
+                    DBPath *newPath =nil;
+                    DBFile *file = nil;
+                    
+                    newPath = [[DBPath root] childPath:[NSString stringWithFormat:@"backup.dtk"]];
+                    [[DBFilesystem sharedFilesystem] deletePath:newPath error:nil];
+                    file = [[DBFilesystem sharedFilesystem] createFile:newPath error:&error];
+                    
+                    if(!error)
+                    {
+                        [file writeData:data error:&error];
+                    }
+                    [file close];
+                }
+                else
+                {
+                    error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"Dropbox is currently performing a sync operation"}];
+                }
             }
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completionCallback(error);
-        });
-    }];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionCallback(error);
+            });
+        }];
+    }
+    else
+    {
+        NSError *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"The underlying MOC is unavailable"}];
+        completionCallback(error);
+    }
 }
 - (void)restoreFromBackup:(void (^)(NSError *))completionCallback
 {
-    [self.moc performBlock:^{
-        NSError *error = nil;
-        DBPath *path = [[DBPath root] childPath:[NSString stringWithFormat:@"backup.dtk"]];
-        DBFile *file = [[DBFilesystem sharedFilesystem] openFile:path error:&error];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
+    {
+        NSManagedObjectContext *childMOC = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+        childMOC.parentContext = moc;
         
-        if(!error && file)
-        {
-            NSData *data = [file readData:&error];
-            if(!error && data)
+        [childMOC performBlock:^{
+            NSError *error = nil;
+            DBPath *path = [[DBPath root] childPath:[NSString stringWithFormat:@"backup.dtk"]];
+            DBFile *file = [[DBFilesystem sharedFilesystem] openFile:path error:&error];
+            
+            if(!error && file)
             {
-                NSArray *representations = (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
-                
-                for(NSDictionary *representation in representations)
+                NSData *data = [file readData:&error];
+                if(!error && data)
                 {
-                    [UAManagedObject createManagedObjectFromDictionaryRepresentation:representation inContext:self.moc];
+                    NSArray *representations = (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+                    
+                    for(NSDictionary *representation in representations)
+                    {
+                        [UAManagedObject createManagedObjectFromDictionaryRepresentation:representation inContext:childMOC];
+                    }
+                    [file close];
+                    
+                    [childMOC save:&error];
                 }
-                [file close];
-                
-                [self.moc save:&error];
+                else
+                {
+                    NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
+                    [errorInfo setValue:@"Failed to locate backup file" forKey:NSLocalizedDescriptionKey];
+                    error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:errorInfo];
+                }
             }
-            else
-            {
-                NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
-                [errorInfo setValue:@"Failed to locate backup file" forKey:NSLocalizedDescriptionKey];
-                error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:errorInfo];
-            }
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            completionCallback(error);
-        });
-    }];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                completionCallback(error);
+            });
+        }];
+    }
+    else
+    {
+        NSError *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"The underlying MOC is unavailable"}];
+        completionCallback(error);
+    }
 }
 
 @end

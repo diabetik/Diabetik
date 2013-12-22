@@ -66,7 +66,6 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *moc;
 
-@property (nonatomic, assign) BOOL needsDataRefresh;
 @property (nonatomic, assign) NSInteger relativeDays;
 
 @end
@@ -76,16 +75,14 @@
 @synthesize fetchedResultsController = _fetchedResultsController;
 @synthesize detailViewController = _detailViewController;
 @synthesize reportsVC = _reportsVC;
-@synthesize needsDataRefresh = _needsDataRefresh;
 @synthesize relativeDays = _relativeDays;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC relativeDays:(NSInteger)days
+- (id)initWithRelativeDays:(NSInteger)days
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self)
     {
-        _moc = aMOC;
         _reportsVC = nil;
         fromDate = nil;
         toDate = nil;
@@ -95,18 +92,16 @@
         [dateFormatter setDateFormat:@"d MMMM yyyy"];
         
         _relativeDays = days;
-        _needsDataRefresh = NO;
         allowReportRotation = YES;
     }
     
     return self;
 }
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC withDateFrom:(NSDate *)aFromDate to:(NSDate *)aToDate
+- (id)initWithDateFrom:(NSDate *)aFromDate to:(NSDate *)aToDate
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self)
     {
-        _moc = aMOC;
         _reportsVC = nil;
         fromDate = aFromDate;
         toDate = aToDate;
@@ -115,7 +110,6 @@
         [dateFormatter setDateFormat:@"d MMMM yyyy"];
         
         _relativeDays = -1;
-        _needsDataRefresh = NO;
         allowReportRotation = YES;
     }
     return self;
@@ -165,16 +159,14 @@
         
         if(strongSelf.relativeDays > -1)
         {
-            strongSelf.needsDataRefresh = YES;
             [strongSelf setDateRangeForRelativeDays:strongSelf.relativeDays];
-            [strongSelf refreshView];
+            [strongSelf reloadViewData:note];
         }
     }];
     settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSettingsChangedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        strongSelf.needsDataRefresh = YES;
-        [strongSelf refreshView];
+        [strongSelf reloadViewData:note];
     }];
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -222,18 +214,19 @@
 }
 
 #pragma mark - Logic
+- (void)reloadViewData:(NSNotification *)note
+{
+    [super reloadViewData:note];
+    
+    self.fetchedResultsController = nil;
+    [[self.fetchedResultsController fetchRequest] setPredicate:[self timelinePredicate]];
+    [self.fetchedResultsController performFetch:nil];
+    [self.tableView reloadData];
+    
+    [self refreshView];
+}
 - (void)refreshView
 {
-    // If we've dirtied our cache re-fetch everything
-    if(_needsDataRefresh)
-    {
-        [[self.fetchedResultsController fetchRequest] setPredicate:[self timelinePredicate]];
-        [self.fetchedResultsController performFetch:nil];
-        [self.tableView reloadData];
-        
-        _needsDataRefresh = NO;
-    }
-    
     // If we're actively searching refresh our data
     if([searchDisplayController isActive])
     {
@@ -378,13 +371,6 @@
         @"activity": [NSNumber numberWithDouble:activityTotal],
         @"meal": [NSNumber numberWithDouble:mealTotal]
     };
-}
-- (void)didSwitchUserAccount
-{
-    [super didSwitchUserAccount];
-    
-    _needsDataRefresh = YES;
-    [self refreshView];
 }
 
 #pragma mark - UI
@@ -541,7 +527,7 @@
     
     if(buttonIndex < 5)
     {
-        UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithMOC:self.moc andEventType:buttonIndex];
+        UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithEventType:buttonIndex];
         if(vc)
         {
             UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
@@ -575,7 +561,7 @@
     
     if(object)
     {
-        UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithEvent:(UAEvent *)object andMOC:self.moc];
+        UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithEvent:(UAEvent *)object];
         [self.navigationController pushViewController:vc animated:YES];
     }
 }
@@ -691,27 +677,31 @@
     {
         indexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
         
-        NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-        NSError *error = nil;
-        if(object)
+        NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+        if(moc)
         {
-            [self.moc deleteObject:object];
-            [self.moc save:&error];
+            NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            NSError *error = nil;
+            if(object)
+            {
+                [moc deleteObject:object];
+                [moc save:&error];
+                
+                [self refreshView];
+            }
             
-            [self refreshView];
-        }
-        
-        // Turn off the UITableView's edit mode to avoid having it 'freeze'
-        tableView.editing = NO;
-        
-        if(error)
-        {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                message:[NSString stringWithFormat:NSLocalizedString(@"There was an error while trying to delete this event: %@", nil), [error localizedDescription]]
-                                                               delegate:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
+            // Turn off the UITableView's edit mode to avoid having it 'freeze'
+            tableView.editing = NO;
+            
+            if(error)
+            {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"There was an error while trying to delete this event: %@", nil), [error localizedDescription]]
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            }
         }
     }
 }
@@ -740,36 +730,39 @@
 #pragma mark - NSFetchedResultsControllerDelegate functions
 - (NSFetchedResultsController *)fetchedResultsController
 {
-    if (_fetchedResultsController != nil && !_needsDataRefresh)
+    if (_fetchedResultsController != nil)
     {
         return _fetchedResultsController;
     }
 
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:self.moc];
-    [fetchRequest setEntity:entity];
-    [fetchRequest setFetchBatchSize:20];
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    NSArray *sortDescriptors = @[sortDescriptor];
-    [fetchRequest setSortDescriptors:sortDescriptors];
-    [fetchRequest setPredicate:[self timelinePredicate]];
-    
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                                                                managedObjectContext:self.moc
-                                                                                                  sectionNameKeyPath:@"sectionIdentifier"
-                                                                                                           cacheName:nil];
-    aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
-    
-	NSError *error = nil;
-	if (![aFetchedResultsController performFetch:&error]) {
-	    NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	    abort();
-	}
-    
-    _needsDataRefresh = NO;
-    [self calculateSectionStats];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
+    {
+        NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
+        [fetchRequest setEntity:entity];
+        [fetchRequest setFetchBatchSize:20];
+        
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+        NSArray *sortDescriptors = @[sortDescriptor];
+        [fetchRequest setSortDescriptors:sortDescriptors];
+        [fetchRequest setPredicate:[self timelinePredicate]];
+        
+        NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
+                                                                                                    managedObjectContext:moc
+                                                                                                      sectionNameKeyPath:@"sectionIdentifier"
+                                                                                                               cacheName:nil];
+        aFetchedResultsController.delegate = self;
+        self.fetchedResultsController = aFetchedResultsController;
+        
+        NSError *error = nil;
+        if (![aFetchedResultsController performFetch:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+        
+        [self calculateSectionStats];
+    }
     
     return _fetchedResultsController;
 }
@@ -889,7 +882,7 @@
 
     if(UIInterfaceOrientationIsLandscape(appOrientation) && !self.reportsVC)
     {
-        self.reportsVC = [[UAReportsViewController alloc] initWithMOC:self.moc fromDate:fromDate toDate:toDate];
+        self.reportsVC = [[UAReportsViewController alloc] initFromDate:fromDate toDate:toDate];
         self.reportsVC.delegate = self;
         self.reportsVC.view.frame = self.parentViewController.view.frame;
         

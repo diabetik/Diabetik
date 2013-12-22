@@ -19,6 +19,7 @@
 //
 
 #import "UAReminder.h"
+#import "UAReminderController.h"
 
 @implementation UAReminder
 
@@ -31,5 +32,12 @@
 @dynamic account;
 @dynamic lat, lng, locationName;
 @dynamic trigger;
+
+- (void)prepareForDeletion
+{
+    [super prepareForDeletion];
+    
+    [[UAReminderController sharedInstance] deleteNotificationsWithID:self.guid];
+}
 
 @end

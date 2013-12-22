@@ -43,22 +43,17 @@
     NSDateFormatter *dateFormatter;
     
     id settingsChangeNotifier;
-    id coredataChangeNotifier;
     
-    BOOL needsDataRefresh;
     double todaysMean, sevenDaysMean, fourteenDaysMean;
     double todaysHighest, sevenDaysHighest, fourteenDaysHighest;
     NSInteger todaysCount, sevenDaysCount, fourteenDaysCount;
 }
-@property (strong, nonatomic) NSManagedObjectContext *moc;
-
 @end
 
 @implementation UAJournalViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self)
@@ -66,28 +61,21 @@
         __weak typeof(self) weakSelf = self;
         
         self.title = NSLocalizedString(@"Journal", @"The title for the applications index screen - which is a physical journal");
-        _moc = aMOC;
-        needsDataRefresh = YES;
         
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"MMMM yyyy"];
         
         // Notifications
-        coredataChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:NSManagedObjectContextObjectsDidChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            needsDataRefresh = YES;
-        }];
         settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSignificantSettingsChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            needsDataRefresh = YES;
-            [weakSelf refreshView];
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf reloadViewData:note];
         }];
     }
     return self;
 }
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];    
-    [[NSNotificationCenter defaultCenter] removeObserver:accountSwitchNotifier];
-    [[NSNotificationCenter defaultCenter] removeObserver:coredataChangeNotifier];
+    [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -131,6 +119,7 @@
     
     // Additional setup
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    
     [self refreshView];
 }
 - (void)viewDidLoad
@@ -151,67 +140,71 @@
     {
         [self showTips];
     }
+    
+    [self reloadViewData:nil];
 }
 
 #pragma mark - Logic
 - (OrderedDictionary *)fetchReadingData
 {
-    // Save any changes the MOC has waiting in the wings
-    if([self.moc hasChanges])
+    OrderedDictionary *data = [OrderedDictionary dictionary];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    NSArray *objects = @[];
+    NSError *error = nil;
+    if(moc)
     {
-        NSError *error = nil;
-        [self.moc save:&error];
+        // Save any changes the MOC has waiting in the wings
+        if([moc hasChanges])
+        {
+            NSError *error = nil;
+            [moc save:&error];
+        }
+        
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
+        [request setEntity:entity];
+        [request setSortDescriptors:@[sortDescriptor]];
+        [request setReturnsObjectsAsFaults:NO];
+        
+        objects = [moc executeFetchRequest:request error:&error];
     }
     
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:self.moc];
-    [request setEntity:entity];
-    [request setSortDescriptors:@[sortDescriptor]];
-    [request setReturnsObjectsAsFaults:NO];
-    //[request setPredicate:[NSPredicate predicateWithFormat:@"account = %@", [[UAAccountController sharedInstance] activeAccount]]];
+    // Force objects to be empty if we run into errors
+    if(error || !objects) objects = @[];
     
-    OrderedDictionary *data = [OrderedDictionary dictionary];
-    
-    // Execute the fetch.
-    NSError *error = nil;
-    NSArray *objects = [self.moc executeFetchRequest:request error:&error];
-    if(!error && objects)
+    NSString *title = nil;
+    NSDate *currentDate = [NSDate date];
+    NSInteger month = 6;
+    if([objects count])
     {
-        NSString *title = nil;
-        NSDate *currentDate = [NSDate date];
+        month = [[[NSCalendar currentCalendar] components:NSMonthCalendarUnit
+                                                 fromDate:(NSDate *)[[objects lastObject] valueForKey:@"timestamp"]
+                                                   toDate:[NSDate date]
+                                                  options:0] month];
+    }
+    if(month < 6) month = 6;
+    
+    // Past 6 months
+    for(NSInteger i = 0; i <= month; i++)
+    {
+        NSDateComponents *comps = [[NSDateComponents alloc] init];
+        [comps setDay:1];
+        [comps setMonth:[currentDate month]-i];
+        [comps setHour:0];
+        [comps setMinute:0];
+        [comps setSecond:0];
+        [comps setYear:[currentDate year]];
         
-        NSInteger month = 6;
-        if([objects count])
-        {
-            month = [[[NSCalendar currentCalendar] components:NSMonthCalendarUnit
-                                                     fromDate:(NSDate *)[[objects lastObject] valueForKey:@"timestamp"]
-                                                       toDate:[NSDate date]
-                                                      options:0] month];
-        }
-        if(month < 6) month = 6;
+        NSDate *fromDate = [[NSCalendar currentCalendar] dateFromComponents:comps];
+        NSDate *toDate = [fromDate dateAtEndOfMonth];
         
-        // Past 6 months
-        for(NSInteger i = 0; i <= month; i++)
+        if(fromDate && toDate)
         {
-            NSDateComponents *comps = [[NSDateComponents alloc] init];
-            [comps setDay:1];
-            [comps setMonth:[currentDate month]-i];
-            [comps setHour:0];
-            [comps setMinute:0];
-            [comps setSecond:0];
-            [comps setYear:[currentDate year]];
+            NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:fromDate toDate:toDate];
             
-            NSDate *fromDate = [[NSCalendar currentCalendar] dateFromComponents:comps];
-            NSDate *toDate = [fromDate dateAtEndOfMonth];
-            
-            if(fromDate && toDate)
-            {
-                NSDictionary *stats = [[UAEventController sharedInstance] statisticsForEvents:objects fromDate:fromDate toDate:toDate];
-                
-                title = [dateFormatter stringFromDate:fromDate];
-                [data setObject:stats forKey:title];
-            }
+            title = [dateFormatter stringFromDate:fromDate];
+            [data setObject:stats forKey:title];
         }
     }
     
@@ -221,20 +214,14 @@
 {
     if(isVisible)
     {
-        if(needsDataRefresh)
-        {
-            readings = [self fetchReadingData];
-            needsDataRefresh = NO;
-        }
-    
         [self.tableView reloadData];
     }
 }
-- (void)didSwitchUserAccount
+- (void)reloadViewData:(NSNotification *)note
 {
-    [super didSwitchUserAccount];
-    
-    needsDataRefresh = YES;
+    [super reloadViewData:note];
+
+    readings = [self fetchReadingData];
     [self refreshView];
 }
 
@@ -260,7 +247,7 @@
 {
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap"];
     
-    UATimelineViewController *vc = [[UATimelineViewController alloc] initWithMOC:self.moc relativeDays:sender.tag];
+    UATimelineViewController *vc = [[UATimelineViewController alloc] initWithRelativeDays:sender.tag];
     vc.title = [sender titleForState:UIControlStateNormal];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -290,7 +277,7 @@
         {
             NSDictionary *data = [readings objectForKey:key];
             
-            UATimelineViewController *vc = [[UATimelineViewController alloc] initWithMOC:self.moc withDateFrom:[data valueForKey:@"min_date"] to:[data valueForKey:@"max_date"]];
+            UATimelineViewController *vc = [[UATimelineViewController alloc] initWithDateFrom:[data valueForKey:@"min_date"] to:[data valueForKey:@"max_date"]];
             
             vc.title = key;
             [self.navigationController pushViewController:vc animated:YES];
@@ -389,7 +376,7 @@
     
     if(buttonIndex < 5)
     {
-        UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithMOC:self.moc andEventType:buttonIndex];
+        UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithEventType:buttonIndex];
         if(vc)
         {
             UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];

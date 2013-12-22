@@ -22,9 +22,6 @@
 
 @interface UABackupController : NSObject
 
-// Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-
 // Logic
 - (void)backupToDropbox:(void (^)(NSError *))completionCallback;
 - (void)restoreFromBackup:(void (^)(NSError *))completionCallback;

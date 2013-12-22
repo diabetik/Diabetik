@@ -25,8 +25,8 @@
 @interface UANoteInputViewController : UAInputBaseViewController
 
 // Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-- (id)initWithEvent:(UAEvent *)aEvent andMOC:(NSManagedObjectContext *)aMOC;
+- (id)init;
+- (id)initWithEvent:(UAEvent *)aEvent;
 
 // UI
 - (void)changeDate:(id)sender;

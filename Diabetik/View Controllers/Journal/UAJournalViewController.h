@@ -26,9 +26,6 @@
 
 @interface UAJournalViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UAModalViewDelegate, UAAddEntryModalDelegate>
 
-// Setup
-- (id)initWithMOC:(NSManagedObjectContext *)moc;
-
 // Logic
 - (OrderedDictionary *)fetchReadingData;
 - (void)addEvent:(id)sender;

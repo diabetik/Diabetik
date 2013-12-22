@@ -29,7 +29,6 @@
 #import "UAJournalViewController.h"
 #import "UATimelineViewController.h"
 #import "UAExportViewController.h"
-#import "UAInsulinCalculatorViewController.h"
 
 #import "UASideMenuCell.h"
 #import "UASideMenuAccountCell.h"
@@ -37,7 +36,6 @@
 
 @interface UASideMenuViewController ()
 {
-    id accountUpdateNotifier;
     id reminderUpdateNotifier;
 }
 @end
@@ -45,12 +43,12 @@
 @implementation UASideMenuViewController
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if(self)
     {
-        self.moc = aMOC;
+        // STUB
     }
     
     return self;
@@ -59,7 +57,7 @@
 {
     [super viewDidLoad];
     
-    UASideMenuHeaderView *headerView = [[UASideMenuHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 115.0f)];
+    UASideMenuHeaderView *headerView = [[UASideMenuHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 150.0f)];
     
     self.tableView.tableHeaderView = headerView;
     //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -71,10 +69,6 @@
     
     self.view.backgroundColor = [UIColor clearColor];
     
-    // Notifications
-    accountUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        [self.tableView reloadData];
-    }];
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self.tableView reloadData];
     }];
@@ -88,7 +82,6 @@
 }
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:accountUpdateNotifier];
     [[NSNotificationCenter defaultCenter] removeObserver:reminderUpdateNotifier];
 }
 
@@ -166,35 +159,30 @@
             cell.textLabel.text = NSLocalizedString(@"Journal", nil);
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconJournal"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconJournalHighlighted"];
-            cell.tintColor = [UIColor colorWithRed:120.0f/255.0f green:217.0f/255.0f blue:115.0f/255.0f alpha:1.0f];
         }
         else if(indexPath.row == 1)
         {
             cell.textLabel.text = NSLocalizedString(@"Reminders", nil);
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconRemindersHighlighted"];
-            cell.tintColor = [UIColor colorWithRed:71.0f/255.0f green:179.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
         }
         else if(indexPath.row == 2)
         {
             cell.textLabel.text = NSLocalizedString(@"Export", @"Menu item to take users to the export screen");
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconExport"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconExportHighlighted"];
-            cell.tintColor = [UIColor colorWithRed:230.0f/255.0f green:123.0f/255.0f blue:122.0f/255.0f alpha:1.0f];
         }
         else if(indexPath.row == 3)
         {
             cell.textLabel.text = NSLocalizedString(@"Credits", @"Menu item to show users the application credits");
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconCredits"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconCreditsHighlighted"];
-            cell.tintColor = [UIColor colorWithRed:230.0f/255.0f green:179.0f/255.0f blue:11.0f/255.0f alpha:1.0f];
         }
         else if(indexPath.row == 4)
         {
             cell.textLabel.text = NSLocalizedString(@"Settings", nil);
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconSettings"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconSettingsHighlighted"];
-            cell.tintColor = [UIColor colorWithRed:158.0f/255.0f green:122.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
         }
     }
     else if(indexPath.section == 1)
@@ -290,7 +278,7 @@
         {
             if(![[navigationController topViewController] isKindOfClass:[UARemindersViewController class]])
             {
-                UARemindersViewController *vc = [[UARemindersViewController alloc] initWithMOC:self.moc];
+                UARemindersViewController *vc = [[UARemindersViewController alloc] init];
                 [navigationController pushViewController:vc animated:NO];
             }
         }
@@ -310,7 +298,7 @@
         {
             if(![[navigationController topViewController] isKindOfClass:[UASettingsViewController class]])
             {
-                UASettingsViewController *vc = [[UASettingsViewController alloc] initWithMOC:self.moc];
+                UASettingsViewController *vc = [[UASettingsViewController alloc] init];
                 [navigationController pushViewController:vc animated:NO];
             }
         }
@@ -322,12 +310,12 @@
         {
             if([reminder.type integerValue] == kReminderTypeDate || [reminder.type integerValue] == kReminderTypeRepeating)
             {
-                UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithReminder:reminder andMOC:self.moc];
+                UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithReminder:reminder];
                 [navigationController pushViewController:vc animated:NO];
             }
             else
             {
-                UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] initWithReminder:reminder andMOC:self.moc];
+                UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] initWithReminder:reminder];
                 [navigationController pushViewController:vc animated:NO];
             }
         }
@@ -337,19 +325,11 @@
 #pragma mark - UAModalViewDelegate methods
 - (void)willDisplayModalView:(UAModalView *)aModal
 {
-    /*
-    // Disable swipe gesture
-    JASidePanelController *sidePanel = (JASidePanelController *)[self sidePanelController];
-    sidePanel.disablePanGesture = YES;
-    */
+    // STUB
 }
 - (void)didDismissModalView:(UAModalView *)aModal
 {
-    /*
-    // Re-enable swipe gesture
-    JASidePanelController *sidePanel = (JASidePanelController *)[self sidePanelController];
-    sidePanel.disablePanGesture = NO;
-    */
+    // STUB
 }
 
 @end

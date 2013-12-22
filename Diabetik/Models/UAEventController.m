@@ -22,7 +22,6 @@
 
 #import "UAEventController.h"
 #import "UATagController.h"
-#import "UAAppDelegate.h"
 
 #import "UAReading.h"
 #import "UAMedicine.h"
@@ -51,170 +50,193 @@
 }
 
 #pragma mark - Events
-- (void)attemptSmartInputWithExistingEntries:(NSMutableArray *)existingEntries success:(void (^)(UAMedicine*))successBlock failure:(void (^)(void))failureBlock
+- (void)attemptSmartInputWithExistingEntries:(NSMutableArray *)existingEntries
+                                     success:(void (^)(UAMedicine*))successBlock
+                                     failure:(void (^)(void))failureBlock
 {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAMedicine" inManagedObjectContext:self.moc];
-    [request setEntity:entity];
-    
-    // Fetch all medication inputs over the past 15 days
-    NSDate *timestamp = [[[NSDate date] dateAtStartOfDay] dateBySubtractingDays:15];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp >= %@", timestamp];
-    [request setPredicate:predicate];
-    
-    NSInteger hourInterval = 3;
-    NSInteger numberOfSegments = 24/(hourInterval*2);
-    
-    // Execute the fetch.
-    NSError *error;
-    NSMutableArray *objects = [NSMutableArray array];
-    NSArray *results = [self.moc executeFetchRequest:request error:&error];
-    if(results)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        [objects addObjectsFromArray:results];
-    }
-    if(existingEntries)
-    {
-        [objects addObjectsFromArray:existingEntries];
-    }
-    
-    if (objects != nil && [objects count] > 0)
-    {
-        NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *currentComponents = [gregorianCalendar components:NSHourCalendarUnit fromDate:[NSDate date]];
-        NSInteger currentHour = [currentComponents hour];
-        
-        // Create an event array index for each medicine 'type'
-        NSMutableArray *previousEvents = [NSMutableArray array];
-        NSMutableArray *todaysEvents = [NSMutableArray array];
-        for(NSInteger i = 0; i < numberOfSegments; i++)
-        {
-            [previousEvents addObject:[NSMutableArray array]];
-            [todaysEvents addObject:[NSMutableArray array]];
-        }
-        
-        // Iterate over all medicine events that have taken place over the past 15 days
-        for(UAMedicine *event in objects)
-        {
-            NSDateComponents *eventComponents = [gregorianCalendar components:NSHourCalendarUnit fromDate:[event timestamp]];
-            NSInteger eventHour = [eventComponents hour];
+        [moc performBlock:^{
+
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAMedicine" inManagedObjectContext:moc];
+            [request setEntity:entity];
             
-            // If this event occurred today, remove it from the rest of the group
-            if([[event timestamp] isEqualToDateIgnoringTime:[NSDate date]])
+            // Fetch all medication inputs over the past 15 days
+            NSDate *timestamp = [[[NSDate date] dateAtStartOfDay] dateBySubtractingDays:15];
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp >= %@", timestamp];
+            [request setPredicate:predicate];
+            
+            NSInteger hourInterval = 3;
+            NSInteger numberOfSegments = 24/(hourInterval*2);
+            
+            // Execute the fetch.
+            NSError *error;
+            NSMutableArray *objects = [NSMutableArray array];
+            NSArray *results = [moc executeFetchRequest:request error:&error];
+            if(results)
             {
-                NSMutableArray *existingEvents = [todaysEvents objectAtIndex:[[event type] integerValue]];
-                [existingEvents addObject:event];
-                [todaysEvents replaceObjectAtIndex:[[event type] integerValue] withObject:existingEvents];
+                [objects addObjectsFromArray:results];
             }
-            else
+            if(existingEntries)
             {
-                // Did this event happen within 3 hours (irrespective of date) from the current time?
-                if(abs(eventHour-currentHour) <= numberOfSegments-1)
+                [objects addObjectsFromArray:existingEntries];
+            }
+            
+            if (objects != nil && [objects count] > 0)
+            {
+                NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+                NSDateComponents *currentComponents = [gregorianCalendar components:NSHourCalendarUnit fromDate:[NSDate date]];
+                NSInteger currentHour = [currentComponents hour];
+                
+                // Create an event array index for each medicine 'type'
+                NSMutableArray *previousEvents = [NSMutableArray array];
+                NSMutableArray *todaysEvents = [NSMutableArray array];
+                for(NSInteger i = 0; i < numberOfSegments; i++)
                 {
-                    NSMutableArray *existingEvents = [previousEvents objectAtIndex:[[event type] integerValue]];
-                    [existingEvents addObject:event];
-                    [previousEvents replaceObjectAtIndex:[[event type] integerValue] withObject:existingEvents];
+                    [previousEvents addObject:[NSMutableArray array]];
+                    [todaysEvents addObject:[NSMutableArray array]];
                 }
-            }
-        }
-        
-        // Loop through today's events and try to determine what has already been entered
-        for(NSInteger i = 0; i < numberOfSegments; i++)
-        {
-            NSMutableArray *events = [todaysEvents objectAtIndex:i];
-            if([events count])
-            {
-                // Loop through all of the events of this type that occurred today
-                NSMutableArray *pEvents = [previousEvents objectAtIndex:i];
-                for(UAMedicine *event in events)
+                
+                // Iterate over all medicine events that have taken place over the past 15 days
+                for(UAMedicine *event in objects)
                 {
-                    // Loop through previous events of this type
-                    for(UAMedicine *pEvent in [pEvents copy])
+                    NSDateComponents *eventComponents = [gregorianCalendar components:NSHourCalendarUnit fromDate:[event timestamp]];
+                    NSInteger eventHour = [eventComponents hour];
+                    
+                    // If this event occurred today, remove it from the rest of the group
+                    if([[event timestamp] isEqualToDateIgnoringTime:[NSDate date]])
                     {
-                        // Determine whether this previous event is similar to the medicine taken earlier today
-                        // If it is, remove it from consideration
-                        NSString *eventDesc = [[event name] lowercaseString];
-                        NSString *pEventDesc = [[pEvent name] lowercaseString];
-                        if([eventDesc levenshteinDistanceToString:pEventDesc] <= 3)
+                        NSMutableArray *existingEvents = [todaysEvents objectAtIndex:[[event type] integerValue]];
+                        [existingEvents addObject:event];
+                        [todaysEvents replaceObjectAtIndex:[[event type] integerValue] withObject:existingEvents];
+                    }
+                    else
+                    {
+                        // Did this event happen within 3 hours (irrespective of date) from the current time?
+                        if(abs(eventHour-currentHour) <= numberOfSegments-1)
                         {
-                            NSDateComponents *eventComponents = [gregorianCalendar components:NSHourCalendarUnit fromDate:[event timestamp]];
-                            NSInteger eventHour = [eventComponents hour];
-                            
-                            // Remove any medication taken within 3 hours of this date/time
-                            if(abs(eventHour-currentHour) <= numberOfSegments-1)
-                            {
-                                [pEvents removeObject:pEvent];
-                            }
+                            NSMutableArray *existingEvents = [previousEvents objectAtIndex:[[event type] integerValue]];
+                            [existingEvents addObject:event];
+                            [previousEvents replaceObjectAtIndex:[[event type] integerValue] withObject:existingEvents];
                         }
                     }
                 }
-                [previousEvents replaceObjectAtIndex:i withObject:pEvents];
+                
+                // Loop through today's events and try to determine what has already been entered
+                for(NSInteger i = 0; i < numberOfSegments; i++)
+                {
+                    NSMutableArray *events = [todaysEvents objectAtIndex:i];
+                    if([events count])
+                    {
+                        // Loop through all of the events of this type that occurred today
+                        NSMutableArray *pEvents = [previousEvents objectAtIndex:i];
+                        for(UAMedicine *event in events)
+                        {
+                            // Loop through previous events of this type
+                            for(UAMedicine *pEvent in [pEvents copy])
+                            {
+                                // Determine whether this previous event is similar to the medicine taken earlier today
+                                // If it is, remove it from consideration
+                                NSString *eventDesc = [[event name] lowercaseString];
+                                NSString *pEventDesc = [[pEvent name] lowercaseString];
+                                if([eventDesc levenshteinDistanceToString:pEventDesc] <= 3)
+                                {
+                                    NSDateComponents *eventComponents = [gregorianCalendar components:NSHourCalendarUnit fromDate:[event timestamp]];
+                                    NSInteger eventHour = [eventComponents hour];
+                                    
+                                    // Remove any medication taken within 3 hours of this date/time
+                                    if(abs(eventHour-currentHour) <= numberOfSegments-1)
+                                    {
+                                        [pEvents removeObject:pEvent];
+                                    }
+                                }
+                            }
+                        }
+                        [previousEvents replaceObjectAtIndex:i withObject:pEvents];
+                    }
+                }
+                
+                NSMutableArray *sortedEvents = [NSMutableArray arrayWithArray:[previousEvents sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+                    NSNumber *first = [NSNumber numberWithInteger:[a count]];
+                    NSNumber *second = [NSNumber numberWithInteger:[b count]];
+                    return [first compare:second];
+                }]];
+                for(NSInteger i = numberOfSegments-1; i >= 0; i--)
+                {
+                    NSMutableArray *events = [sortedEvents objectAtIndex:i];
+                    
+                    // Only choose an event if there's more than 1 instance of it (experimental)
+                    if([events count] > 1)
+                    {
+                        successBlock((UAMedicine *)[events objectAtIndex:0]);
+                        return;
+                    }
+                    else
+                    {
+                        // Uh oh, better get out of here
+                        break;
+                    }
+                }
+                
+                failureBlock();
             }
-        }
-        
-        NSMutableArray *sortedEvents = [NSMutableArray arrayWithArray:[previousEvents sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
-            NSNumber *first = [NSNumber numberWithInteger:[a count]];
-            NSNumber *second = [NSNumber numberWithInteger:[b count]];
-            return [first compare:second];
-        }]];
-        for(NSInteger i = numberOfSegments-1; i >= 0; i--)
-        {
-            NSMutableArray *events = [sortedEvents objectAtIndex:i];
-            
-            // Only choose an event if there's more than 1 instance of it (experimental)
-            if([events count] > 1)
-            {
-                successBlock((UAMedicine *)[events objectAtIndex:0]);
-                return;
-            }
-            else
-            {
-                // Uh oh, better get out of here
-                break;
-            }
-        }
-        
+        }];
+    }
+    else
+    {
         failureBlock();
     }
 }
 - (NSArray *)fetchEventsMatchingSearch:(NSString *)string withPredicate:(NSPredicate *)basePredicate
 {
-    // Get an array of all tags contained within the string
-    NSArray *tags = [[UATagController sharedInstance] fetchTokensInString:string withPrefix:@""];
-    NSArray *existingTags = [[UATagController sharedInstance] fetchExistingTagsWithStrings:tags];
-    if(existingTags && [existingTags count])
+    __block NSArray *returnArray = nil;
+    
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        NSFetchRequest *request = [[NSFetchRequest alloc] init];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:self.moc];
-        [request setEntity:entity];
-        
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-        [request setSortDescriptors:@[sortDescriptor]];
-        
-        NSPredicate *tagPredicate = [NSPredicate predicateWithFormat:@"SUBQUERY(self.tags, $tag, $tag.nameLC IN %@).@count >= %d", tags, [tags count]];
-        if(tagPredicate)
-        {
-            if(basePredicate)
+        [moc performBlockAndWait:^{
+            
+            // Get an array of all tags contained within the string
+            NSArray *tags = [[UATagController sharedInstance] fetchTokensInString:string withPrefix:@""];
+            NSArray *existingTags = [[UATagController sharedInstance] fetchExistingTagsWithStrings:tags];
+            if(existingTags && [existingTags count])
             {
-                NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[basePredicate, tagPredicate]];
-                [request setPredicate:compoundPredicate];
-            }
-            else
-            {
-                [request setPredicate:tagPredicate];
+                NSFetchRequest *request = [[NSFetchRequest alloc] init];
+                NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
+                [request setEntity:entity];
+                
+                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+                [request setSortDescriptors:@[sortDescriptor]];
+                
+                NSPredicate *tagPredicate = [NSPredicate predicateWithFormat:@"SUBQUERY(self.tags, $tag, $tag.nameLC IN %@).@count >= %d", tags, [tags count]];
+                if(tagPredicate)
+                {
+                    if(basePredicate)
+                    {
+                        NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[basePredicate, tagPredicate]];
+                        [request setPredicate:compoundPredicate];
+                    }
+                    else
+                    {
+                        [request setPredicate:tagPredicate];
+                    }
+                    
+                    // Execute the fetch.
+                    NSError *error = nil;
+                    NSArray *objects = [moc executeFetchRequest:request error:&error];
+                    if (objects != nil && [objects count] > 0)
+                    {
+                        returnArray = objects;
+                    }
+                }
             }
             
-            // Execute the fetch. 
-            NSError *error = nil;
-            NSArray *objects = [self.moc executeFetchRequest:request error:&error];
-            if (objects != nil && [objects count] > 0)
-            {
-                return objects;
-            }
-        }
+        }];
     }
     
-    return nil;
+    return returnArray;
 }
 - (UAEvent *)fetchEventWithExternalGUID:(NSString *)guid inContext:(NSManagedObjectContext *)moc
 {
@@ -314,44 +336,52 @@
 }
 - (NSArray *)fetchKey:(NSString *)key forEventsWithFilterType:(EventFilterType)filterType
 {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:self.moc];
-    [request setEntity:entity];
-    [request setResultType:NSDictionaryResultType];
-    
-    NSExpression *valueExpression = [NSExpression expressionForKeyPath:key];
-    NSExpressionDescription *valueDescription = [[NSExpressionDescription alloc] init];
-    [valueDescription setName:@"value"];
-    [valueDescription setExpression:valueExpression];
-    [valueDescription setExpressionResultType:NSStringAttributeType];
-    [request setPropertiesToFetch:@[valueDescription]];
-    [request setReturnsDistinctResults:YES];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterType == %d", filterType];
-    [request setPredicate:predicate];
-    
-    // Execute the fetch.
-    NSError *error = nil;
-    NSMutableArray *results = [NSMutableArray array];
-    NSArray *objects = [self.moc executeFetchRequest:request error:&error];
-    if (objects != nil && [objects count] > 0)
+    __block NSArray *returnArray = nil;
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        for(NSDictionary *object in objects)
-        {
-            if([object valueForKey:@"value"])
+        [moc performBlockAndWait:^{
+
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
+            [request setEntity:entity];
+            [request setResultType:NSDictionaryResultType];
+            
+            NSExpression *valueExpression = [NSExpression expressionForKeyPath:key];
+            NSExpressionDescription *valueDescription = [[NSExpressionDescription alloc] init];
+            [valueDescription setName:@"value"];
+            [valueDescription setExpression:valueExpression];
+            [valueDescription setExpressionResultType:NSStringAttributeType];
+            [request setPropertiesToFetch:@[valueDescription]];
+            [request setReturnsDistinctResults:YES];
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterType == %d", filterType];
+            [request setPredicate:predicate];
+            
+            // Execute the fetch.
+            NSError *error = nil;
+            NSMutableArray *results = [NSMutableArray array];
+            NSArray *objects = [moc executeFetchRequest:request error:&error];
+            if (objects != nil && [objects count] > 0)
             {
-                [results addObject:[object valueForKey:@"value"]];
+                for(NSDictionary *object in objects)
+                {
+                    if([object valueForKey:@"value"])
+                    {
+                        [results addObject:[object valueForKey:@"value"]];
+                    }
+                }
             }
-        }
+            
+            if([results count])
+            {
+                NSArray *sorted = [NSArray arrayWithArray:results];
+                returnArray = [sorted sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+            }
+        }];
     }
     
-    if([results count])
-    {
-        NSArray *sorted = [NSArray arrayWithArray:results];
-        return [sorted sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-    }
-    
-    return nil;
+    return returnArray;
 }
 
 #pragma mark - Helpers

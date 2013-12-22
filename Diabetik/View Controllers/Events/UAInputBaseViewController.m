@@ -24,16 +24,13 @@
 
 @implementation UAInputBaseViewController
 @synthesize event = _event;
-@synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super init];
     if (self)
     {
-        _moc = aMOC;
-        
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         
@@ -66,14 +63,13 @@
     }
     return self;
 }
-- (id)initWithEvent:(UAEvent *)aEvent andMOC:(NSManagedObjectContext *)aMOC
+- (id)initWithEvent:(UAEvent *)theEvent
 {
-    _event = aEvent;
-    _moc = aMOC;
-    
-    self = [self initWithMOC:aMOC];
+    self = [self init];
     if(self)
     {
+        self.event = theEvent;
+        
         self.date = self.event.timestamp;
         notes = self.event.notes;
         self.currentPhotoPath = self.event.photoPath;
@@ -166,10 +162,20 @@
 - (void)deleteEvent
 {
     NSError *error = nil;
-    if(self.event)
+    
+    UAEvent *event = [self event];
+    if(event)
     {
-        [self.moc deleteObject:self.event];
-        [self.moc save:&error];
+        NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+        if(moc)
+        {
+            [moc deleteObject:event];
+            [moc save:&error];
+        }
+        else
+        {
+            error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No applicable MOC present"}];
+        }
     }
     
     if(!error)
@@ -505,7 +511,6 @@
         }
     }
 }
-
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
     if ([presented isKindOfClass:TGRImageViewController.class]) {
         
@@ -526,7 +531,7 @@
 }
 
 
-#pragma mark - UINavigationControllerDelegate
+#pragma mark - UINavigationControllerDelegate methods
 - (void)navigationController:(UINavigationController *)navigationController
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
@@ -538,7 +543,7 @@
     }
 }
 
-#pragma mark - UIImagePickerControllerDelegate
+#pragma mark - UIImagePickerControllerDelegate methods
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -595,7 +600,36 @@
     [parentVC.keyboardBackingView setKeyboardState:kKeyboardHidden];
 }
 
-#pragma mark - UINavigationController
+#pragma mark - Accessors
+- (UAEvent *)event
+{
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(!moc) return nil;
+    if(!self.eventOID) return nil;
+    
+    NSError *error = nil;
+    UAEvent *event = (UAEvent *)[moc existingObjectWithID:self.eventOID error:&error];
+    if (!event)
+    {
+        self.eventOID = nil;
+    }
+    
+    return event;
+}
+- (void)setEvent:(UAEvent *)theEvent
+{
+    NSError *error = nil;
+    if(theEvent.objectID.isTemporaryID && ![theEvent.managedObjectContext obtainPermanentIDsForObjects:@[theEvent] error:&error])
+    {
+        self.eventOID = nil;
+    }
+    else
+    {
+        self.eventOID = theEvent.objectID;
+    }
+}
+
+#pragma mark - UINavigationControllerDelegate methods
 - (void)didMoveToParentViewController:(UIViewController *)parent
 {
     [super didMoveToParentViewController:parent];

@@ -31,18 +31,16 @@
 @end
 
 @implementation UASettingsBackupViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self)
     {
         self.title = NSLocalizedString(@"Backup/Restore", nil);
         
-        _moc = aMOC;
-        backupController = [[UABackupController alloc] initWithMOC:self.moc];
+        backupController = [[UABackupController alloc] init];
     }
     return self;
 }
@@ -196,9 +194,6 @@
             
             if(!error)
             {
-                // Post a notification to let everyone know we've updated the accounts list
-                [[NSNotificationCenter defaultCenter] postNotificationName:kAccountsUpdatedNotification object:nil];
-                
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Restore successful", nil)
                                                                     message:[NSString stringWithFormat:NSLocalizedString(@"Your backup was restored successfully", nil), [error localizedDescription]]
                                                                    delegate:nil

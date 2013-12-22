@@ -20,12 +20,12 @@
 
 #import "UABaseViewController.h"
 #import "UAReminderRule.h"
+#import "UAReminderBaseViewController.h"
 
-@interface UARuleReminderViewController : UABaseTableViewController <UITextFieldDelegate, UIAlertViewDelegate, UAAutocompleteBarDelegate>
+@interface UARuleReminderViewController : UAReminderBaseViewController <UITextFieldDelegate, UIAlertViewDelegate, UAAutocompleteBarDelegate>
 
 // Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-- (id)initWithReminderRule:(UAReminderRule *)rule andMOC:(NSManagedObjectContext *)aMOC;
+- (id)initWithReminderRule:(UAReminderRule *)rule;
 
 // UI
 - (void)addTrigger:(id)sender;

@@ -20,7 +20,6 @@
 
 #import <Dropbox/Dropbox.h>
 #import <ShinobiCharts/ShinobiChart.h>
-#import "NXOAuth2.h"
 #import "Appirater.h"
 
 #import "UAHelper.h"
@@ -35,19 +34,11 @@
 #import "UAKeyboardController.h"
 
 @implementation UAAppDelegate
-@synthesize managedObjectContext = _managedObjectContext;
-@synthesize managedObjectModel = _managedObjectModel;
-@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
 #pragma mark - Setup
-+ (void)initialize;
++ (UAAppDelegate *)sharedAppDelegate
 {
-    [[NXOAuth2AccountStore sharedStore] setClientID:kRunKeeperClientKey
-                                             secret:kRunKeeperClientSecret
-                                   authorizationURL:[NSURL URLWithString:kRunKeeperAuthURL]
-                                           tokenURL:[NSURL URLWithString:kRunKeeperTokenURL]
-                                        redirectURL:[NSURL URLWithString:[NSString stringWithFormat:@"rk%@://oauth2", kRunKeeperClientKey]]
-                                     forAccountType:kRunKeeperServiceIdentifier];
+    return (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
 #pragma mark - UIApplicationDelegate
@@ -79,32 +70,33 @@
     // Is this a first run experience?
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasRunBeforeKey])
     {
-        // Dump any existing local notifications (handy when the application has been deleted and re-installed, as iOS likes to keep local notifications around for 24 hours)
+        // Dump any existing local notifications (handy when the application has been deleted and re-installed,
+        // as iOS likes to keep local notifications around for 24 hours)
         [[UIApplication sharedApplication] cancelAllLocalNotifications];
         
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasRunBeforeKey];
     }
+    
     [self setupDefaultConfigurationValues];
     [self setupStyling];
     [self setupSFX];
     [self setupDropbox];
     
-    // Setup our backup controller
-    self.backupController = [[UABackupController alloc] initWithMOC:[self managedObjectContext]];
-
     // Call various singletons
-    [[UAReminderController sharedInstance] setMOC:self.managedObjectContext];
-    [[UAEventController sharedInstance] setMOC:self.managedObjectContext];
-    [UASyncController sharedInstance];
+    [UACoreDataController sharedInstance];
+    [UAReminderController sharedInstance];
+    [UAEventController sharedInstance];
     [UALocationController sharedInstance];
     
+    // Setup our backup controller
+    self.backupController = [[UABackupController alloc] init];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.tintColor = kDefaultTintColor;
     
-    UAJournalViewController *journalViewController = [[UAJournalViewController alloc] initWithMOC:self.managedObjectContext];
+    UAJournalViewController *journalViewController = [[UAJournalViewController alloc] init];
     UANavigationController *navigationController = [[UANavigationController alloc] initWithRootViewController:journalViewController];
     
-    self.viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] initWithMOC:self.managedObjectContext]];
+    self.viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] init]];
     self.viewController.direction = REFrostedViewControllerDirectionLeft;
     self.viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
     self.viewController.liveBlur = NO;
@@ -125,7 +117,7 @@
 }
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    [self saveContext];
+    [[UACoreDataController sharedInstance] saveContext];
 }
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
@@ -138,9 +130,6 @@
 {
     // Delete any expired date-based notifications
     [[UAReminderController sharedInstance] deleteExpiredReminders];
-    
-    // Determine whether we need to sync with any external services
-    [[UASyncController sharedInstance] requestExternalSyncByForce:NO];
 }
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url sourceApplication:(NSString *)source annotation:(id)annotation
 {
@@ -158,16 +147,6 @@
         }
         
         return YES;
-    }
-    // Is this RunKeeper?
-    else if([[url absoluteString] hasPrefix:[NSString stringWithFormat:@"rk%@", kRunKeeperClientKey]])
-    {
-        BOOL handled = [[NXOAuth2AccountStore sharedStore] handleRedirectURL:url];
-        if (!handled) {
-            NSLog(@"The URL (%@) could not be handled. Maybe you want to do something with it.", [url absoluteString]);
-        }
-        
-        return handled;
     }
     
     return NO;
@@ -211,7 +190,8 @@
                                           kUseSmartInputKey: @YES,
                                               kUseSoundsKey: @YES,
                                           kShowInlineImages: @YES,
-                                    kFilterSearchResultsKey: @YES
+                                         
+                                         USMCloudEnabledKey: @NO // iCloud is disabled by default
      }];
     
     
@@ -239,78 +219,11 @@
     // Charts
     [ShinobiCharts setTheme:[SChartiOS7Theme new]];
 }
-- (void)saveContext
-{
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
-             // Replace this implementation with code to handle the error appropriately.
-             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. 
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        } 
-    }
-}
 
 #pragma mark - Location services
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     [[UAReminderController sharedInstance] didReceiveLocalNotification:notification];
-}
-
-#pragma mark - Core Data stack
-- (NSManagedObjectContext *)managedObjectContext
-{
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
-    }
-    
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
-    }
-    return _managedObjectContext;
-}
-- (NSManagedObjectModel *)managedObjectModel
-{
-    if (_managedObjectModel != nil) {
-        return _managedObjectModel;
-    }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Diabetik" withExtension:@"momd"];
-    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-    return _managedObjectModel;
-}
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-    if (_persistentStoreCoordinator != nil) {
-        return _persistentStoreCoordinator;
-    }
-    
-    NSURL *storeURL = [self persistentStoreURL];
-    
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
-                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-    
-    NSError *error = nil;
-    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }    
-    
-    return _persistentStoreCoordinator;
-}
-
-#pragma mark - Helpers
-- (NSURL *)persistentStoreURL
-{
-    return [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Diabetik.sqlite"];
-}
-- (NSURL *)applicationDocumentsDirectory
-{
-    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
 @end

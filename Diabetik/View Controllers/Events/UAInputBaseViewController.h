@@ -53,7 +53,8 @@
     CGFloat textViewHeight;
     BOOL usingSmartInput;
 }
-@property (nonatomic, retain) UAEvent *event;
+@property (nonatomic, strong) UAEvent *event;
+@property (nonatomic, strong) NSManagedObjectID *eventOID;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) UAAutocompleteBar *autocompleteBar;
 @property (nonatomic, strong) UAAutocompleteBar *autocompleteTagBar;
@@ -66,8 +67,8 @@
 @property (nonatomic, strong) UIView *previouslyActiveField;
 
 // Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-- (id)initWithEvent:(UAEvent *)aEvent andMOC:(NSManagedObjectContext *)aMOC;
+- (id)init;
+- (id)initWithEvent:(UAEvent *)aEvent;
 
 // Logic
 - (void)didBecomeActive:(BOOL)editing;

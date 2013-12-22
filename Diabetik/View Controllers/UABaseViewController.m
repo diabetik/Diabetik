@@ -24,11 +24,12 @@
 @interface UABaseViewController ()
 {
     UIView *dismissableOverlayView;
+    
+    id iCloudChangeNotifier;
 }
 @end
 
 @implementation UABaseViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,19 +39,26 @@
         isVisible = NO;
         isFirstLoad = YES;
         
-        self.automaticallyAdjustsScrollViewInsets = YES;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(iCloudDataDidChange:)
+                                                     name:USMStoreDidImportChangesNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(iCloudDataDidChange:)
+                                                     name:USMStoreDidChangeNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(coreDataDidChange:)
+                                                     name:NSManagedObjectContextObjectsDidChangeNotification
+                                                   object:nil];
         
-        __weak typeof(self) weakSelf = self;
-        accountSwitchNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsSwitchedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf didSwitchUserAccount];
-        }];
+        self.automaticallyAdjustsScrollViewInsets = YES;
     }
     return self;
 }
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:accountSwitchNotifier];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)viewDidLoad
 {
@@ -86,6 +94,10 @@
 }
 
 #pragma mark - Logic
+- (void)reloadViewData:(NSNotification *)note
+{
+    // STUB
+}
 - (void)handleBack:(id)sender withSound:(BOOL)playSound
 {
     if([self isPresentedModally] && [self.navigationController.viewControllers count] <= 1)
@@ -132,9 +144,23 @@
     }
     return NO;
 }
-- (void)didSwitchUserAccount
+
+#pragma mark - Notifications
+- (void)coreDataDidChange:(NSNotification *)note
 {
-    // STUB
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf reloadViewData:note];
+    });
+}
+- (void)iCloudDataDidChange:(NSNotification *)note
+{
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf reloadViewData:note];
+    });
 }
 
 #pragma mark - Helpers

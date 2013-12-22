@@ -182,7 +182,7 @@
         [paragraphStyle setAlignment:NSTextAlignmentCenter];
         [paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
         
-        [self.text drawInRect:textRect withAttributes:@{NSFontAttributeName: self.font, NSParagraphStyleAttributeName: paragraphStyle}];
+        [self.text drawInRect:textRect withAttributes:@{NSFontAttributeName: self.font, NSForegroundColorAttributeName: [UIColor whiteColor], NSParagraphStyleAttributeName: paragraphStyle}];
     }
 }
 

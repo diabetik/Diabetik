@@ -1,8 +1,8 @@
 //
-//  UASettingsRunKeeperViewController.h
+//  UASettingsiCloudViewController.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 31/03/2013.
+//  Created by Nial Giacomelli on 12/12/2013.
 //  Copyright 2013 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,8 @@
 //  limitations under the License.
 //
 
-#import "UABaseViewController.h"
-#import "UASyncController.h"
+#import <UIKit/UIKit.h>
 
-@interface UASettingsRunKeeperViewController : UABaseTableViewController <UIAlertViewDelegate>
-
-// Logic
-- (void)updateSyncInformation;
-- (void)performManualSync;
+@interface UASettingsiCloudViewController : UABaseTableViewController <UIAlertViewDelegate>
 
 @end

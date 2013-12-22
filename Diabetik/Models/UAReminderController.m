@@ -29,7 +29,6 @@
     NSDateFormatter *dateFormatter;
     NSDateFormatter *timeFormatter;
 }
-@property (strong, nonatomic) NSManagedObjectContext *moc;
 
 - (void)cacheReminders;
 @end
@@ -37,7 +36,6 @@
 @implementation UAReminderController
 @synthesize reminders = _reminders;
 @synthesize ungroupedReminders = _ungroupedReminders;
-@synthesize moc = _moc;
 
 + (id)sharedInstance
 {
@@ -48,10 +46,6 @@
     });
     return _sharedObject;
 }
-- (void)setMOC:(NSManagedObjectContext *)aMOC
-{
-    _moc = aMOC;
-}
 
 #pragma mark - Setup
 - (id)init
@@ -59,7 +53,14 @@
     self = [super init];
     if(self)
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cacheReminders) name:kRemindersUpdatedNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(cacheReminders)
+                                                     name:kRemindersUpdatedNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateRemindersBasedOnCoreDataNotification:)
+                                                     name:USMStoreDidImportChangesNotification
+                                                   object:nil];
         
         dateFormatter = [[NSDateFormatter alloc] init];
         [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
@@ -92,44 +93,91 @@
 }
 - (NSArray *)fetchAllReminders
 {
-    NSManagedObjectContext *moc = [(UAAppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:moc];
-    [request setEntity:entity];
-    
-    NSSortDescriptor *sortPredicate = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
-    [request setSortDescriptors:@[sortPredicate]];
-    
-    // Execute the fetch.
-    NSError *error = nil;
-    NSArray *objects = [moc executeFetchRequest:request error:&error];
-    if (objects != nil && [objects count] > 0)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        NSMutableArray *dateReminders = [NSMutableArray array];
-        NSMutableArray *repeatingReminders = [NSMutableArray array];
-        NSMutableArray *locationReminders = [NSMutableArray array];
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:moc];
+        [request setEntity:entity];
+        NSSortDescriptor *sortPredicate = [[NSSortDescriptor alloc] initWithKey:@"date" ascending:YES];
+        [request setSortDescriptors:@[sortPredicate]];
         
-        for(UAReminder *reminder in objects)
+        // Execute the fetch.
+        NSError *error = nil;
+        NSArray *objects = [moc executeFetchRequest:request error:&error];
+        if (objects != nil && [objects count] > 0)
         {
-            if([reminder.type integerValue] == kReminderTypeDate)
+            NSMutableArray *dateReminders = [NSMutableArray array];
+            NSMutableArray *repeatingReminders = [NSMutableArray array];
+            NSMutableArray *locationReminders = [NSMutableArray array];
+            
+            for(UAReminder *reminder in objects)
             {
-                [dateReminders addObject:reminder];
+                if([reminder.type integerValue] == kReminderTypeDate)
+                {
+                    [dateReminders addObject:reminder];
+                }
+                else if([reminder.type integerValue] == kReminderTypeRepeating)
+                {
+                    [repeatingReminders addObject:reminder];
+                }
+                else if([reminder.type integerValue] == kReminderTypeLocation)
+                {
+                    [locationReminders addObject:reminder];
+                }
             }
-            else if([reminder.type integerValue] == kReminderTypeRepeating)
-            {
-                [repeatingReminders addObject:reminder];
-            }
-            else if([reminder.type integerValue] == kReminderTypeLocation)
-            {
-                [locationReminders addObject:reminder];
-            }
+            
+            return @[repeatingReminders, locationReminders, dateReminders];
         }
-        
-        return @[repeatingReminders, locationReminders, dateReminders];
     }
     
     return nil;
+}
+- (void)updateRemindersBasedOnCoreDataNotification:(NSNotification *)note
+{
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
+    {
+        NSDictionary *userInfo = [note userInfo];
+        if(userInfo)
+        {
+            BOOL reminderUpdatesPerformed = NO;
+            for(NSString *key in userInfo)
+            {
+                // Deleted notifications
+                if([key isEqualToString:NSDeletedObjectsKey])
+                {
+                    for(NSManagedObjectID *objectID in userInfo[key])
+                    {
+                        UAManagedObject *managedObject = (UAManagedObject *)[moc objectWithID:objectID];
+                        if(managedObject && [managedObject isKindOfClass:[UAReminder class]])
+                        {
+                            reminderUpdatesPerformed = YES;
+                        }
+                    }
+                }
+                // Inserted/updated notifications
+                else if([key isEqualToString:NSUpdatedObjectsKey] || [key isEqualToString:NSInsertedObjectsKey])
+                {
+                    for(NSManagedObjectID *objectID in userInfo[key])
+                    {
+                        UAManagedObject *managedObject = (UAManagedObject *)[moc objectWithID:objectID];
+                        if(managedObject && [managedObject isKindOfClass:[UAReminder class]])
+                        {
+                            [self setNotificationsForReminder:(UAReminder *)managedObject];
+                            
+                            reminderUpdatesPerformed = YES;
+                        }
+                    }
+                }
+            }
+            
+            if(reminderUpdatesPerformed)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+            }
+        }
+    }
 }
 - (void)deleteExpiredReminders
 {
@@ -158,17 +206,19 @@
 }
 - (void)deleteReminderWithID:(NSString *)reminderID error:(NSError **)error
 {
-    UAReminder *reminder = [self fetchReminderWithID:reminderID];
-    if(reminder)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        [self.moc deleteObject:reminder];
-        [self.moc save:*&error];
-        
-        if(!*error)
+        UAReminder *reminder = [self fetchReminderWithID:reminderID];
+        if(reminder)
         {
-            [self deleteNotificationsWithID:reminderID];
+            [moc deleteObject:reminder];
+            [moc save:*&error];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+            if(!*error)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+            }
         }
     }
 }
@@ -194,21 +244,23 @@
 #pragma mark - Rules
 - (NSArray *)fetchAllReminderRules
 {
-    NSManagedObjectContext *moc = [(UAAppDelegate *)[UIApplication sharedApplication].delegate managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAReminderRule" inManagedObjectContext:moc];
-    [request setEntity:entity];
-    
-    NSSortDescriptor *sortPredicate = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
-    [request setSortDescriptors:@[sortPredicate]];
-    
-    // Execute the fetch.
-    NSError *error = nil;
-    NSArray *objects = [moc executeFetchRequest:request error:&error];
-    if (objects != nil && [objects count] > 0)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        return objects;
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAReminderRule" inManagedObjectContext:moc];
+        [request setEntity:entity];
+        
+        NSSortDescriptor *sortPredicate = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+        [request setSortDescriptors:@[sortPredicate]];
+        
+        // Execute the fetch.
+        NSError *error = nil;
+        NSArray *objects = [moc executeFetchRequest:request error:&error];
+        if (objects != nil && [objects count] > 0)
+        {
+            return objects;
+        }
     }
     
     return nil;
@@ -217,12 +269,16 @@
 {
     if(reminderRule)
     {
-        [self.moc deleteObject:reminderRule];
-        [self.moc save:*&error];
-        
-        if(!*error)
+        NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+        if(moc)
         {
-            [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+            [moc deleteObject:reminderRule];
+            [moc save:*&error];
+            
+            if(!*error)
+            {
+                [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+            }
         }
     }
 }
@@ -243,15 +299,19 @@
     // Generate a date-based notification
     if([aReminder.type integerValue] == kReminderTypeDate)
     {
-        UILocalNotification *notification = [[UILocalNotification alloc] init];
-        notification.fireDate = aReminder.date;
-        notification.alertBody = aReminder.message;
-        notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.timeZone = [NSTimeZone defaultTimeZone];
-        notification.soundName = @"notification.caf";
-        notification.userInfo = @{@"ID": aReminder.guid, @"type": aReminder.type};
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        // Make sure this date hasn't already passed
+        if([aReminder.date isLaterThanDate:[NSDate date]])
+        {
+            UILocalNotification *notification = [[UILocalNotification alloc] init];
+            notification.fireDate = aReminder.date;
+            notification.alertBody = aReminder.message;
+            notification.soundName = UILocalNotificationDefaultSoundName;
+            notification.timeZone = [NSTimeZone defaultTimeZone];
+            notification.soundName = @"notification.caf";
+            notification.userInfo = @{@"ID": aReminder.guid, @"type": aReminder.type};
+            
+            [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+        }
     }
     else
     {
@@ -291,7 +351,7 @@
                         notificationDate = [calendar dateFromComponents:dateComponents];
                     }
                     
-                    if(notificationDate)
+                    if(notificationDate) 
                     {
                         UILocalNotification *notification = [[UILocalNotification alloc] init];
                         notification.fireDate = notificationDate;
@@ -320,8 +380,6 @@
         }
     }
 }
-
-#pragma mark - Notifications
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification
 {
     UIApplicationState state = [[UIApplication sharedApplication] applicationState];
@@ -341,16 +399,20 @@
 #pragma mark - Helpers
 - (UAReminder *)fetchReminderWithID:(NSString *)reminderID
 {
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"UAReminder"];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"guid = %@", reminderID];
-    [request setPredicate:predicate];
-    
-    // Execute the fetch.
-    NSError *error = nil;
-    NSArray *objects = [self.moc executeFetchRequest:request error:&error];
-    if (objects != nil && [objects count] > 0)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        return (UAReminder *)[objects objectAtIndex:0];
+        NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"UAReminder"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"guid = %@", reminderID];
+        [request setPredicate:predicate];
+        
+        // Execute the fetch.
+        NSError *error = nil;
+        NSArray *objects = [moc executeFetchRequest:request error:&error];
+        if (objects != nil && [objects count] > 0)
+        {
+            return (UAReminder *)[objects objectAtIndex:0];
+        }
     }
     
     return nil;

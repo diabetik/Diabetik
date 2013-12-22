@@ -23,13 +23,13 @@
 
 #import "UAUI.h"
 #import "UAReminderController.h"
+#import "UAReminderBaseViewController.h"
 #import "UALocationReminderMapViewController.h"
 
-@interface UALocationReminderViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UALocationReminderMapDelegate>
+@interface UALocationReminderViewController : UAReminderBaseViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UALocationReminderMapDelegate>
 
 // Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-- (id)initWithReminder:(UAReminder *)theReminder andMOC:(NSManagedObjectContext *)aMOC;
+- (id)initWithReminder:(UAReminder *)theReminder;
 
 // Logic
 - (void)addReminder:(id)sender;

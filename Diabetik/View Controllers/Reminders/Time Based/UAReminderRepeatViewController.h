@@ -29,7 +29,6 @@
 @property (nonatomic, assign) id<UAReminderRepeatDelegate> delegate;
 
 // Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-- (id)initWithFlags:(NSInteger)flags andMOC:(NSManagedObjectContext *)aMOC;
+- (id)initWithFlags:(NSInteger)flags;
 
 @end

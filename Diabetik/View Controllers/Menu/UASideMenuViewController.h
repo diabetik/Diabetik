@@ -23,9 +23,6 @@
 
 @interface UASideMenuViewController : UABaseTableViewController <UAModalViewDelegate>
 
-// Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC;
-
 // UI
 - (void)showCredits;
 

@@ -24,7 +24,7 @@
 #import "UASettingsGlucoseViewController.h"
 #import "UASettingsTimelineViewController.h"
 #import "UASettingsDropboxViewController.h"
-#import "UASettingsRunKeeperViewController.h"
+#import "UASettingsiCloudViewController.h"
 #import "UASettingsBackupViewController.h"
 #import "UASettingsLicensesViewController.h"
 
@@ -41,16 +41,14 @@
 @end
 
 @implementation UASettingsViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self)
     {
         self.title = NSLocalizedString(@"Settings", @"Settings title");
-        _moc = aMOC;
     }
     return self;
 }
@@ -104,7 +102,7 @@
         return 1;
     }
     
-    return 3;
+    return 2;
 }
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
 {
@@ -180,22 +178,24 @@
     }
     else if(indexPath.section == 1)
     {
+        /*
         if(indexPath.row == 0)
         {
-            cell.imageView.image = [UIImage imageNamed:@"diabetik-small-icon.png"];
+            cell.imageView.image = [UIImage imageNamed:@"icloud-small-icon"];
+            cell.textLabel.text = NSLocalizedString(@"iCloud settings", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        */
+        if(indexPath.row == 0)
+        {
+            cell.imageView.image = [UIImage imageNamed:@"diabetik-small-icon"];
             cell.textLabel.text = NSLocalizedString(@"Backup settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         if(indexPath.row == 1)
         {
-            cell.imageView.image = [UIImage imageNamed:@"dropbox-small-icon.png"];
+            cell.imageView.image = [UIImage imageNamed:@"dropbox-small-icon"];
             cell.textLabel.text = NSLocalizedString(@"Dropbox settings", nil);
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        else if(indexPath.row == 2)
-        {
-            cell.imageView.image = [UIImage imageNamed:@"runkeeper-small-icon.png"];
-            cell.textLabel.text = NSLocalizedString(@"RunKeeper settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
@@ -231,19 +231,21 @@
     }
     else if(indexPath.section == 1)
     {
+        /*
         if(indexPath.row == 0)
         {
-            UASettingsBackupViewController *vc = [[UASettingsBackupViewController alloc] initWithMOC:self.moc];
+            UASettingsiCloudViewController *vc = [[UASettingsiCloudViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        */
+        if(indexPath.row == 0)
+        {
+            UASettingsBackupViewController *vc = [[UASettingsBackupViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
         else if(indexPath.row == 1)
         {
             UASettingsDropboxViewController *vc = [[UASettingsDropboxViewController alloc] init];
-            [self.navigationController pushViewController:vc animated:YES];
-        }
-        else if(indexPath.row == 2)
-        {
-            UASettingsRunKeeperViewController *vc = [[UASettingsRunKeeperViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
     }

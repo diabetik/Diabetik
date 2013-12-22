@@ -34,7 +34,7 @@
 @property (nonatomic, weak) id<UAReportsDelegate> delegate;
 
 // Setup
-- (id)initWithMOC:(NSManagedObjectContext *)moc fromDate:(NSDate *)aFromDate toDate:(NSDate *)aToDate;
+- (id)initFromDate:(NSDate *)aFromDate toDate:(NSDate *)aToDate;
 
 // Logic
 - (void)didSelectReport:(UIButton *)sender;

@@ -59,12 +59,12 @@
 @synthesize event = _event;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC andEventType:(NSInteger)eventType
+- (id)initWithEventType:(NSInteger)eventType
 {
     self = [super init];
     if (self)
     {
-        _moc = aMOC;
+        //_moc = aMOC;
         isAddingQuickEntry = NO;
         isAnimatingAddEntry = NO;
         isBeingPopped = NO;
@@ -72,23 +72,23 @@
         UAInputBaseViewController *vc = nil;
         if(eventType == 0)
         {
-            vc = [[UAMedicineInputViewController alloc] initWithMOC:self.moc];
+            vc = [[UAMedicineInputViewController alloc] init];
         }
         else if(eventType == 1)
         {
-            vc = [[UABGInputViewController alloc] initWithMOC:self.moc];
+            vc = [[UABGInputViewController alloc] init];
         }
         else if(eventType == 2)
         {
-            vc = [[UAMealInputViewController alloc] initWithMOC:self.moc];
+            vc = [[UAMealInputViewController alloc] init];
         }
         else if(eventType == 3)
         {
-            vc = [[UAActivityInputViewController alloc] initWithMOC:self.moc];
+            vc = [[UAActivityInputViewController alloc] init];
         }
         else if(eventType == 4)
         {
-            vc = [[UANoteInputViewController alloc] initWithMOC:self.moc];
+            vc = [[UANoteInputViewController alloc] init];
         }
         
         self.viewControllers = [NSMutableArray arrayWithObject:vc];
@@ -97,10 +97,9 @@
     }
     return self;
 }
-- (id)initWithEvent:(UAEvent *)aEvent andMOC:(NSManagedObjectContext *)aMOC
+- (id)initWithEvent:(UAEvent *)aEvent
 {
     _event = aEvent;
-    _moc = aMOC;
     
     self = [super init];
     if(self)
@@ -111,23 +110,23 @@
         
         if([aEvent isKindOfClass:[UAMedicine class]])
         {
-            self.viewControllers = [NSMutableArray arrayWithObject:[[UAMedicineInputViewController alloc] initWithEvent:aEvent andMOC:aMOC]];
+            self.viewControllers = [NSMutableArray arrayWithObject:[[UAMedicineInputViewController alloc] initWithEvent:aEvent]];
         }
         else if([aEvent isKindOfClass:[UAReading class]])
         {
-            self.viewControllers = [NSMutableArray arrayWithObject:[[UABGInputViewController alloc] initWithEvent:aEvent andMOC:aMOC]];
+            self.viewControllers = [NSMutableArray arrayWithObject:[[UABGInputViewController alloc] initWithEvent:aEvent]];
         }
         else if([aEvent isKindOfClass:[UAActivity class]])
         {
-            self.viewControllers = [NSMutableArray arrayWithObject:[[UAActivityInputViewController alloc] initWithEvent:aEvent andMOC:aMOC]];
+            self.viewControllers = [NSMutableArray arrayWithObject:[[UAActivityInputViewController alloc] initWithEvent:aEvent]];
         }
         else if([aEvent isKindOfClass:[UAMeal class]])
         {
-            self.viewControllers = [NSMutableArray arrayWithObject:[[UAMealInputViewController alloc] initWithEvent:aEvent andMOC:aMOC]];
+            self.viewControllers = [NSMutableArray arrayWithObject:[[UAMealInputViewController alloc] initWithEvent:aEvent]];
         }
         else if([aEvent isKindOfClass:[UANote class]])
         {
-            self.viewControllers = [NSMutableArray arrayWithObject:[[UANoteInputViewController alloc] initWithEvent:aEvent andMOC:aMOC]];
+            self.viewControllers = [NSMutableArray arrayWithObject:[[UANoteInputViewController alloc] initWithEvent:aEvent]];
         }
         
         [self performSetup];
@@ -331,104 +330,137 @@
 }
 
 #pragma mark - Logic
+- (void)reloadViewData:(NSNotification *)note
+{
+    [super reloadViewData:note];
+    
+    NSDictionary *userInfo = [note userInfo];
+    if(userInfo && userInfo[NSDeletedObjectsKey])
+    {
+        for(NSManagedObjectID *objectID in userInfo[NSDeletedObjectsKey])
+        {
+            for(UAInputBaseViewController *vc in self.viewControllers)
+            {
+                if(vc.eventOID && [objectID isEqual:vc.eventOID])
+                {
+                    [self handleBack:self withSound:NO];
+                    return;
+                }
+            }
+        }
+    }
+}
 - (void)saveEvent:(id)sender
 {
     UAInputBaseViewController *targetVC = [self targetViewController];
     [targetVC.view endEditing:YES];
     
-    NSError *validationError = nil;
-    NSInteger vcIndex = 0;
-    for(UAInputBaseViewController *vc in self.viewControllers)
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        validationError = [vc validationError];
-        if(validationError)
-        {
-            [self.scrollView scrollRectToVisible:CGRectMake(vcIndex*self.scrollView.bounds.size.width, 0.0f, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
-            
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                message:validationError.localizedDescription
-                                                               delegate:nil
-                                                      cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                      otherButtonTitles:nil];
-            [alertView show];
-            
-            break;
-        }
-        vcIndex ++;
-    }
-    
-    if(!validationError)
-    {
-        NSMutableArray *newEvents = [NSMutableArray array];
-        
-        NSError *saveError = nil;
+        NSError *validationError = nil;
+        NSInteger vcIndex = 0;
         for(UAInputBaseViewController *vc in self.viewControllers)
         {
-            UAEvent *event = [vc saveEvent:&saveError];
-            if(event && !saveError)
+            validationError = [vc validationError];
+            if(validationError)
             {
-                [newEvents addObject:event];
-            }
-        }
-        
-        // If we're editing an event, remove it so that we don't continually create new reminders
-        if(self.event)
-        {
-            [newEvents removeObject:self.event];
-        }
-        
-        // Iterate over our newly created events and see if any match our rules
-        NSArray *rules = [[UAReminderController sharedInstance] fetchAllReminderRules];
-        if(rules && [rules count])
-        {
-            for(UAReminderRule *rule in rules)
-            {
-                NSPredicate *predicate = [NSPredicate predicateWithFormat:rule.predicate];
-                if(predicate)
-                {
-                    NSMutableArray *filteredEvents = [NSMutableArray arrayWithArray:[newEvents filteredArrayUsingPredicate:predicate]];
+                [self.scrollView scrollRectToVisible:CGRectMake(vcIndex*self.scrollView.bounds.size.width, 0.0f, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height) animated:YES];
                 
-                    // If we have a match go ahead and create a reminder
-                    if(filteredEvents && [filteredEvents count])
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                    message:validationError.localizedDescription
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                          otherButtonTitles:nil];
+                [alertView show];
+                
+                break;
+            }
+            vcIndex ++;
+        }
+        
+        if(!validationError)
+        {
+            NSMutableArray *newEvents = [NSMutableArray array];
+            
+            NSError *saveError = nil;
+            for(UAInputBaseViewController *vc in self.viewControllers)
+            {
+                UAEvent *event = [vc saveEvent:&saveError];
+                if(event && !saveError)
+                {
+                    [newEvents addObject:event];
+                }
+            }
+            
+            // If we're editing an event, remove it so that we don't continually create new reminders
+            if(self.event)
+            {
+                [newEvents removeObject:self.event];
+            }
+            
+            // Iterate over our newly created events and see if any match our rules
+            NSArray *rules = [[UAReminderController sharedInstance] fetchAllReminderRules];
+            if(rules && [rules count])
+            {
+                for(UAReminderRule *rule in rules)
+                {
+                    NSPredicate *predicate = [NSPredicate predicateWithFormat:rule.predicate];
+                    if(predicate)
                     {
-                        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:self.moc];
-                        UAReminder *newReminder = (UAReminder *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-                        newReminder.created = [NSDate date];
-                        
-                        NSDate *triggerDate = [[filteredEvents objectAtIndex:0] valueForKey:@"timestamp"];
-                        
-                        newReminder.message = rule.name;
-                        if([rule.intervalType integerValue] == kMinuteIntervalType)
+                        NSMutableArray *filteredEvents = [NSMutableArray arrayWithArray:[newEvents filteredArrayUsingPredicate:predicate]];
+                    
+                        // If we have a match go ahead and create a reminder
+                        if(filteredEvents && [filteredEvents count])
                         {
-                            newReminder.date = [triggerDate dateByAddingMinutes:[rule.intervalAmount integerValue]];
-                        } 
-                        else if([rule.intervalType integerValue] == kHourIntervalType)
-                        {
-                            newReminder.date = [triggerDate dateByAddingHours:[rule.intervalAmount integerValue]];
-                        }
-                        else if([rule.intervalType integerValue] == kDayIntervalType)
-                        {
-                            newReminder.date = [triggerDate dateByAddingDays:[rule.intervalAmount integerValue]];
-                        }
-                        newReminder.type = [NSNumber numberWithInteger:kReminderTypeDate];
-                        
-                        NSError *error = nil;                        
-                        [self.moc save:&error];
-                        
-                        if(!error)
-                        {
-                            [[UAReminderController sharedInstance] setNotificationsForReminder:newReminder];
+                            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReminder" inManagedObjectContext:moc];
+                            UAReminder *newReminder = (UAReminder *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+                            newReminder.created = [NSDate date];
                             
-                            // Notify anyone interested that we've updated our reminders
-                            [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+                            NSDate *triggerDate = [[filteredEvents objectAtIndex:0] valueForKey:@"timestamp"];
+                            
+                            newReminder.message = rule.name;
+                            if([rule.intervalType integerValue] == kMinuteIntervalType)
+                            {
+                                newReminder.date = [triggerDate dateByAddingMinutes:[rule.intervalAmount integerValue]];
+                            } 
+                            else if([rule.intervalType integerValue] == kHourIntervalType)
+                            {
+                                newReminder.date = [triggerDate dateByAddingHours:[rule.intervalAmount integerValue]];
+                            }
+                            else if([rule.intervalType integerValue] == kDayIntervalType)
+                            {
+                                newReminder.date = [triggerDate dateByAddingDays:[rule.intervalAmount integerValue]];
+                            }
+                            newReminder.type = [NSNumber numberWithInteger:kReminderTypeDate];
+                            
+                            NSError *error = nil;                        
+                            [moc save:&error];
+                            
+                            if(!error)
+                            {
+                                [[UAReminderController sharedInstance] setNotificationsForReminder:newReminder];
+                                
+                                // Notify anyone interested that we've updated our reminders
+                                [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+                            }
                         }
                     }
                 }
             }
+            
+            [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
+            [self handleBack:self withSound:NO];
         }
-        
-        [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
-        [self handleBack:self withSound:NO];
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                            message:NSLocalizedString(@"We're unable to save your data as a sync is in progress!", nil)
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                  otherButtonTitles:nil];
+        [alertView show];
     }
 }
 - (void)deleteEvent:(id)sender
@@ -805,31 +837,31 @@
         
         if(offsetX-kDragBuffer < 20.0f)
         {
-            UAMedicineInputViewController *vc = [[UAMedicineInputViewController alloc] initWithMOC:self.moc];
+            UAMedicineInputViewController *vc = [[UAMedicineInputViewController alloc] init];
             [self.viewControllers addObject:vc];
             [self addVC:(UIViewController *)vc];
         }
         else if(offsetX-kDragBuffer < 40.0f)
         {
-            UABGInputViewController *vc = [[UABGInputViewController alloc] initWithMOC:self.moc];
+            UABGInputViewController *vc = [[UABGInputViewController alloc] init];
             [self.viewControllers addObject:vc];
             [self addVC:(UIViewController *)vc];
         }
         else if(offsetX-kDragBuffer < 60.0f)
         {
-            UAMealInputViewController *vc = [[UAMealInputViewController alloc] initWithMOC:self.moc];
+            UAMealInputViewController *vc = [[UAMealInputViewController alloc] init];
             [self.viewControllers addObject:vc];
             [self addVC:(UIViewController *)vc];
         }
         else if(offsetX-kDragBuffer < 80.0f)
         {
-            UAActivityInputViewController *vc = [[UAActivityInputViewController alloc] initWithMOC:self.moc];
+            UAActivityInputViewController *vc = [[UAActivityInputViewController alloc] init];
             [self.viewControllers addObject:vc];
             [self addVC:(UIViewController *)vc];
         }
         else if(offsetX-kDragBuffer < 100.0f)
         {
-            UANoteInputViewController *vc = [[UANoteInputViewController alloc] initWithMOC:self.moc];
+            UANoteInputViewController *vc = [[UANoteInputViewController alloc] init];
             [self.viewControllers addObject:vc];
             [self addVC:(UIViewController *)vc];
         }
@@ -869,7 +901,7 @@
     }
     
     NSDate *date = [[NSDate date] dateByAddingMinutes:minutes];
-    UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithMOC:self.moc andDate:date];
+    UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithDate:date];
     UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
     [self presentViewController:nvc animated:YES completion:^{
         // STUB

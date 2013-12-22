@@ -31,43 +31,44 @@
     NSString *value;
     NSString *mgValue;
     NSString *mmoValue;
-    
-    UAReading *reading;
 }
 @end
 
 @implementation UABGInputViewController
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC
+- (id)init
 {
-    self = [super initWithMOC:aMOC];
+    self = [super init];
     if (self) {
         self.title = NSLocalizedString(@"Add a Reading", @"Add blood glucose reading");
         value = @"";
     }
     return self;
 }
-- (id)initWithEvent:(UAEvent *)aEvent andMOC:(NSManagedObjectContext *)aMOC
+- (id)initWithEvent:(UAEvent *)theEvent
 {
-    self = [super initWithEvent:aEvent andMOC:aMOC];
+    self = [super initWithEvent:theEvent];
     if(self)
     {
         self.title = NSLocalizedString(@"Edit Reading", @"Edit blood glucose reading");
         
         NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
-        reading = (UAReading *)aEvent;
-        mmoValue = [valueFormatter stringFromNumber:reading.mmoValue];
-        mgValue = [valueFormatter stringFromNumber:reading.mgValue];
-        
-        NSInteger unitSetting = [[NSUserDefaults standardUserDefaults] integerForKey:kBGTrackingUnitKey];
-        if(unitSetting == BGTrackingUnitMG)
+        UAReading *reading = (UAReading *)[self event];
+        if(reading)
         {
-            value = mgValue;
-        }
-        else
-        {
-            value = mmoValue;
+            mmoValue = [valueFormatter stringFromNumber:reading.mmoValue];
+            mgValue = [valueFormatter stringFromNumber:reading.mgValue];
+            
+            NSInteger unitSetting = [[NSUserDefaults standardUserDefaults] integerForKey:kBGTrackingUnitKey];
+            if(unitSetting == BGTrackingUnitMG)
+            {
+                value = mgValue;
+            }
+            else
+            {
+                value = mmoValue;
+            }
         }
     }
     
@@ -98,66 +99,78 @@
 - (UAEvent *)saveEvent:(NSError **)error
 {
     [self.view endEditing:YES];
-
-    // Convert our input into the right units
-    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
-    NSInteger unitSetting = [[NSUserDefaults standardUserDefaults] integerForKey:kBGTrackingUnitKey];
-    if(unitSetting == BGTrackingUnitMG)
+    
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
     {
-        mgValue = value;
+        // Convert our input into the right units
+        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+        NSInteger unitSetting = [[NSUserDefaults standardUserDefaults] integerForKey:kBGTrackingUnitKey];
+        if(unitSetting == BGTrackingUnitMG)
+        {
+            mgValue = value;
+            
+            double convertedValue = [[valueFormatter numberFromString:mgValue] doubleValue] * 0.0555;
+            mmoValue = [NSString stringWithFormat:@"%f", convertedValue];
+        }
+        else
+        {
+            mmoValue = value;
+            
+            double convertedValue = round([[valueFormatter numberFromString:mmoValue] doubleValue] * 18.0182);
+            mgValue = [NSString stringWithFormat:@"%f", convertedValue];
+        }
+
+        UAReading *reading = (UAReading *)[self event];
+        if(!reading)
+        {
+            NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReading" inManagedObjectContext:moc];
+            reading = (UAReading *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+            reading.filterType = [NSNumber numberWithInteger:ReadingFilterType];
+            reading.name = NSLocalizedString(@"Blood glucose level", nil);
+        }
+        reading.mmoValue = [NSNumber numberWithDouble:[[valueFormatter numberFromString:mmoValue] doubleValue]];
+        reading.mgValue = [NSNumber numberWithDouble:[[valueFormatter numberFromString:mgValue] doubleValue]];
+        reading.timestamp = self.date;
         
-        double convertedValue = [[valueFormatter numberFromString:mgValue] doubleValue] * 0.0555;
-        mmoValue = [NSString stringWithFormat:@"%f", convertedValue];
+        if(!notes.length) notes = nil;
+        reading.notes = notes;
+        
+        // Save our geotag data
+        if(![self.lat isEqual:reading.lat] || ![self.lon isEqual:reading.lon])
+        {
+            reading.lat = self.lat;
+            reading.lon = self.lon;
+        }
+        
+        // Save our photo
+        if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:reading.photoPath])
+        {
+            // If a photo already exists for this entry remove it now
+            if(reading.photoPath)
+            {
+                [[UAMediaController sharedInstance] deleteImageWithFilename:reading.photoPath success:nil failure:nil];
+            }
+            
+            reading.photoPath = self.currentPhotoPath;
+        }
+        
+        NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
+        [[UATagController sharedInstance] assignTags:tags toEvent:reading];
+        
+        [moc save:&*error];
+        
+        return reading;
     }
     else
     {
-        mmoValue = value;
-        
-        double convertedValue = round([[valueFormatter numberFromString:mmoValue] doubleValue] * 18.0182);
-        mgValue = [NSString stringWithFormat:@"%f", convertedValue];
-    }
-
-    if(!reading)
-    {
-        NSEntityDescription *entityDescription = [NSEntityDescription entityForName:@"UAReading" inManagedObjectContext:self.moc];
-        reading = (UAReading *)[[UAManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:self.moc];
-        reading.filterType = [NSNumber numberWithInteger:ReadingFilterType];
-        reading.name = NSLocalizedString(@"Blood glucose level", nil);
-    }
-    reading.mmoValue = [NSNumber numberWithDouble:[[valueFormatter numberFromString:mmoValue] doubleValue]];
-    reading.mgValue = [NSNumber numberWithDouble:[[valueFormatter numberFromString:mgValue] doubleValue]];
-    reading.timestamp = self.date;
-    
-    if(!notes.length) notes = nil;
-    reading.notes = notes;
-    
-    // Save our geotag data
-    if(![self.lat isEqual:reading.lat] || ![self.lon isEqual:reading.lon])
-    {
-        reading.lat = self.lat;
-        reading.lon = self.lon;
+        *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No applicable MOC present"}];
     }
     
-    // Save our photo
-    if(!self.currentPhotoPath || ![self.currentPhotoPath isEqualToString:reading.photoPath])
-    {
-        // If a photo already exists for this entry remove it now
-        if(reading.photoPath)
-        {
-            [[UAMediaController sharedInstance] deleteImageWithFilename:reading.photoPath success:nil failure:nil];
-        }
-        
-        reading.photoPath = self.currentPhotoPath;
-    }
-    
-    NSArray *tags = [[UATagController sharedInstance] fetchTagsInString:notes];
-    [[UATagController sharedInstance] assignTags:tags toEvent:reading];
-    
-    [self.moc save:&*error];
-    return reading;
+    return nil;
 }
 
-// UI
+#pragma mark - UI
 - (void)changeDate:(id)sender
 {
     self.date = [sender date];
