@@ -310,7 +310,8 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+    NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
+    NSNumberFormatter *glucoseFormatter = [UAHelper glucoseNumberFormatter];
     
     if(indexPath.row%2 == 0)
     {
@@ -331,18 +332,18 @@
         
         if(totalReadings)
         {
-            [cell setAverageGlucoseValue:[NSNumber numberWithDouble:readingsAvg] withFormatter:valueFormatter];
-            [cell setDeviationValue:[NSNumber numberWithDouble:readingsDeviation] withFormatter:valueFormatter];
+            [cell setAverageGlucoseValue:[NSNumber numberWithDouble:readingsAvg] withFormatter:glucoseFormatter];
+            [cell setDeviationValue:[NSNumber numberWithDouble:readingsDeviation] withFormatter:glucoseFormatter];
         }
         else
         {
-            [cell setAverageGlucoseValue:[NSNumber numberWithDouble:0.0] withFormatter:valueFormatter];
-            [cell setDeviationValue:[NSNumber numberWithDouble:0.0] withFormatter:valueFormatter];
+            [cell setAverageGlucoseValue:[NSNumber numberWithDouble:0.0] withFormatter:glucoseFormatter];
+            [cell setDeviationValue:[NSNumber numberWithDouble:0.0] withFormatter:glucoseFormatter];
         }
         [cell setMealValue:[NSNumber numberWithDouble:totalGrams] withFormatter:valueFormatter];
         [cell setActivityValue:totalMinutes];
-        [cell setLowGlucoseValue:[NSNumber numberWithDouble:lowGlucose] withFormatter:valueFormatter];
-        [cell setHighGlucoseValue:[NSNumber numberWithDouble:highGlucose] withFormatter:valueFormatter];
+        [cell setLowGlucoseValue:[NSNumber numberWithDouble:lowGlucose] withFormatter:glucoseFormatter];
+        [cell setHighGlucoseValue:[NSNumber numberWithDouble:highGlucose] withFormatter:glucoseFormatter];
         cell.monthLabel.text = key;
         
         return cell;

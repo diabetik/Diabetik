@@ -56,7 +56,7 @@
     {
         self.title = NSLocalizedString(@"Edit Medicine", nil);
         
-        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+        NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
         
         UAMedicine *medicine = (UAMedicine *)theEvent;
         if(medicine)
@@ -159,7 +159,7 @@
     NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
-        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+        NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
 
         UAMedicine *medicine = (UAMedicine *)[self event];
         if(!medicine)

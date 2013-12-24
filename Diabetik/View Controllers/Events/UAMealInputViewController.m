@@ -164,7 +164,7 @@
     [cell setDrawsBorder:YES];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+    NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
     if(indexPath.row == 0)
     {
         UITextField *textField = (UITextField *)cell.control;
@@ -249,7 +249,7 @@
     {
         if(grams > 0)
         {
-            NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+            NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
             
             return [NSString stringWithFormat:NSLocalizedString(@"Yum! I just ate %@ with %@ grams and recorded it with Diabetik", nil), name, [valueFormatter stringFromNumber:[NSNumber numberWithDouble:grams]]];
         }
@@ -267,7 +267,7 @@
     {
         if(grams > 0)
         {
-            NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+            NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
             
             return [NSString stringWithFormat:NSLocalizedString(@"Yum! I just ate %@ with %@ grams and recorded it with @diabetikapp", nil), name, [valueFormatter stringFromNumber:[NSNumber numberWithDouble:grams]]];
         }
@@ -405,7 +405,7 @@
     }
     else if(textField.tag == 1)
     {
-        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+        NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
         
         grams = [[valueFormatter numberFromString:textField.text] doubleValue];
     }

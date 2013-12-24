@@ -387,7 +387,9 @@
 }
 - (void)configureCell:(UITableViewCell *)aCell forTableview:(UITableView *)aTableView atIndexPath:(NSIndexPath *)indexPath
 {
-    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+    NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
+    NSNumberFormatter *glucoseFormatter = [UAHelper glucoseNumberFormatter];
+    
     if([[aCell class] isEqual:[UATimelineViewCell class]])
     {
         indexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
@@ -444,7 +446,7 @@
             UAReading *reading = (UAReading *)object;
             
             cell.descriptionLabel.text = NSLocalizedString(@"Blood glucose level", nil);
-            cell.valueLabel.text = [valueFormatter stringFromNumber:[reading value]];
+            cell.valueLabel.text = [glucoseFormatter stringFromNumber:[reading value]];
             cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconBlood.png"];
             
             if(![UAHelper isBGLevelSafe:[[reading value] doubleValue]])
