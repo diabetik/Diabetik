@@ -97,14 +97,15 @@
     [selectedMeals removeAllObjects];
     
     // Set some default values
+    NSNumber *targetBG = [[NSUserDefaults standardUserDefaults] valueForKey:kTargetBGKey];
     if([UAHelper userBGUnit] == BGTrackingUnitMMO)
     {
-        targetGlucose = @0;
+        targetGlucose = targetBG ? targetBG : @6.5;
         correctiveFactor = @10;
     }
     else
     {
-        targetGlucose = @0;
+        targetGlucose = targetBG ? targetBG : @117;
         correctiveFactor = @100;
     }
     currentGlucose = @0;
@@ -210,30 +211,25 @@
 #pragma mark - UITableViewDataSource methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
     if(section == 0)
     {
-        return 2;
+        return 3;
     }
     else if(section == 1)
     {
         return 2;
-    }
-    else if(section == 2)
-    {
-        return 1+[latestEvents count];
     }
     
     return 0;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if(section == 0) return NSLocalizedString(@"Blood glucose", nil);
-    if(section == 1) return NSLocalizedString(@"Factors", nil);
-    if(section == 2) return NSLocalizedString(@"Carbohydrates", nil);
+    if(section == 0) return NSLocalizedString(@"Constants", nil);
+    if(section == 1) return NSLocalizedString(@"Input", nil);
     
     return @"";
 }
@@ -264,21 +260,33 @@
         
         if(indexPath.row == 0)
         {
-            cell.textLabel.text = NSLocalizedString(@"Current blood glucose", nil);
-            
-            NSLog(@"%@ %@", currentGlucose, [valueFormatter stringFromNumber:currentGlucose]);
-            UITextField *textField = (UITextField *)cell.accessoryControl;
-            textField.text = [valueFormatter stringFromNumber:currentGlucose];
-            textField.tag = 0;
-            textField.delegate = self;
-        }
-        else if(indexPath.row == 1)
-        {
             cell.textLabel.text = NSLocalizedString(@"Target blood glucose", nil);
             
             UITextField *textField = (UITextField *)cell.accessoryControl;
             textField.text = [valueFormatter stringFromNumber:targetGlucose];
             textField.tag = 1;
+            textField.delegate = self;
+        }
+        else if(indexPath.row == 1)
+        {
+            cell.textLabel.text = NSLocalizedString(@"Carbohydrate Ratio", nil);
+            cell.detailTextLabel.text = NSLocalizedString(@"1u insulin for every X grams", nil);
+            
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            textField.text = [valueFormatter stringFromNumber:carbohydrateRatio];
+            textField.tag = 3;
+            textField.delegate = self;
+        }
+        else if(indexPath.row == 2)
+        {
+            NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
+            
+            cell.textLabel.text = NSLocalizedString(@"Correction Factor", nil);
+            cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"1u insulin for every X %@", nil), unit];
+            
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            textField.text = [valueFormatter stringFromNumber:correctiveFactor];
+            textField.tag = 4;
             textField.delegate = self;
         }
     }
@@ -292,29 +300,30 @@
         [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        
         if(indexPath.row == 0)
         {
-            cell.textLabel.text = NSLocalizedString(@"Carbohydrate Ratio", nil);
-            cell.detailTextLabel.text = NSLocalizedString(@"1u insulin for every X grams", nil);
+            cell.textLabel.text = NSLocalizedString(@"Current blood glucose", nil);
             
+            NSLog(@"%@ %@", currentGlucose, [valueFormatter stringFromNumber:currentGlucose]);
             UITextField *textField = (UITextField *)cell.accessoryControl;
-            textField.text = [valueFormatter stringFromNumber:carbohydrateRatio];
-            textField.tag = 3;
+            textField.text = [valueFormatter stringFromNumber:currentGlucose];
+            textField.tag = 0;
             textField.delegate = self;
         }
         else if(indexPath.row == 1)
         {
-            NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
-            
-            cell.textLabel.text = NSLocalizedString(@"Correction Factor", nil);
-            cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"1u insulin for every X %@", nil), unit];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.text = NSLocalizedString(@"Total carbohydrates", nil);
+            cell.detailTextLabel.text = NSLocalizedString(@"Enter or select below", nil);
             
             UITextField *textField = (UITextField *)cell.accessoryControl;
-            textField.text = [valueFormatter stringFromNumber:correctiveFactor];
-            textField.tag = 4;
+            textField.text = [valueFormatter stringFromNumber:totalCarbs];
+            textField.tag = 2;
             textField.delegate = self;
         }
     }
+    /*
     else if(indexPath.section == 2)
     {
         if(indexPath.row == 0)
@@ -367,6 +376,7 @@
             }
         }
     }
+    */
     
     return cell;
 }

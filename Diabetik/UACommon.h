@@ -106,5 +106,6 @@ static NSString * const kSettingsChangedNotification = @"kSettingsChangedNotific
 static NSString * const kMinHealthyBGKey = @"kMinHealthyBGKey";
 static NSString * const kMaxHealthyBGKey = @"kMaxHealthyBGKey";
 static NSString * const kBGTrackingUnitKey = @"kBGTrackingUnit";
+static NSString * const kTargetBGKey = @"kTargetBGKey";
 
 #endif
