@@ -105,13 +105,22 @@
                 weakSelf.type = [[event type] integerValue];
                 usingSmartInput = YES;
                 
-                UAEventInputViewCell *cell = (UAEventInputViewCell *)[weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-                weakSelf.previouslyActiveControlIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
-                [cell.control becomeFirstResponder];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    __strong typeof(weakSelf) strongSelf = weakSelf;
+                    
+                    UAEventInputViewCell *cell = (UAEventInputViewCell *)[strongSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
+                    strongSelf.previouslyActiveControlIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+                    [cell.control becomeFirstResponder];
+                });
                 
             } failure:^{
-                UAEventInputViewCell *cell = (UAEventInputViewCell *)[weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                [cell.control becomeFirstResponder];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    __strong typeof(weakSelf) strongSelf = weakSelf;
+                    
+                    UAEventInputViewCell *cell = (UAEventInputViewCell *)[strongSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                    [cell.control becomeFirstResponder];
+                });
             }];
         }
     }
