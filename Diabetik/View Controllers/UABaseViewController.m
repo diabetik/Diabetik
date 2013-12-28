@@ -270,10 +270,6 @@
 #pragma mark - Logic
 - (void)keyboardWillBeShown:(NSNotification*)aNotification
 {
-    // STUB
-}
-- (void)keyboardWasShown:(NSNotification*)aNotification
-{
     NSDictionary *info = [aNotification userInfo];
     CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
@@ -285,6 +281,10 @@
     
     CGRect aRect = self.view.frame;
     aRect.size.height -= keyboardSize.height;
+}
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    // STUB
 }
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {

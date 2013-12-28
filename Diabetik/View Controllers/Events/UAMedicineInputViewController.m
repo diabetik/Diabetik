@@ -69,6 +69,16 @@
     
     return self;
 }
+- (id)initWithAmount:(NSNumber *)amount
+{
+    self = [self init];
+    if(self)
+    {
+        _amount = [amount stringValue];
+    }
+    
+    return self;
+}
 - (void)viewWillAppear:(BOOL)animated
 {
     NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];

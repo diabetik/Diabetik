@@ -29,6 +29,7 @@
 #import "UAJournalViewController.h"
 #import "UATimelineViewController.h"
 #import "UAExportViewController.h"
+#import "UAInsulinCalculatorViewController.h"
 
 #import "UASideMenuCell.h"
 #import "UASideMenuAccountCell.h"
@@ -123,7 +124,7 @@
 {
     if(section == 0)
     {
-        return 5;
+        return 6;
     }
     else if(section == 1)
     {
@@ -162,23 +163,29 @@
         }
         else if(indexPath.row == 1)
         {
-            cell.textLabel.text = NSLocalizedString(@"Reminders", nil);
+            cell.textLabel.text = NSLocalizedString(@"Insulin Calculator", nil);
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconRemindersHighlighted"];
         }
         else if(indexPath.row == 2)
         {
+            cell.textLabel.text = NSLocalizedString(@"Reminders", nil);
+            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders"];
+            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconRemindersHighlighted"];
+        }
+        else if(indexPath.row == 3)
+        {
             cell.textLabel.text = NSLocalizedString(@"Export", @"Menu item to take users to the export screen");
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconExport"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconExportHighlighted"];
         }
-        else if(indexPath.row == 3)
+        else if(indexPath.row == 4)
         {
             cell.textLabel.text = NSLocalizedString(@"Credits", @"Menu item to show users the application credits");
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconCredits"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconCreditsHighlighted"];
         }
-        else if(indexPath.row == 4)
+        else if(indexPath.row == 5)
         {
             cell.textLabel.text = NSLocalizedString(@"Settings", nil);
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconSettings"];
@@ -274,7 +281,16 @@
         {
             [navigationController popToRootViewControllerAnimated:NO];
         }
+        
         else if(indexPath.row == 1)
+        {
+            if(![[navigationController topViewController] isKindOfClass:[UAInsulinCalculatorViewController class]])
+            {
+                UAInsulinCalculatorViewController *vc = [[UAInsulinCalculatorViewController alloc] init];
+                [navigationController pushViewController:vc animated:NO];
+            }
+        }
+        else if(indexPath.row == 2)
         {
             if(![[navigationController topViewController] isKindOfClass:[UARemindersViewController class]])
             {
@@ -282,7 +298,7 @@
                 [navigationController pushViewController:vc animated:NO];
             }
         }
-        else if(indexPath.row == 2)
+        else if(indexPath.row == 3)
         {
             if(![[navigationController topViewController] isKindOfClass:[UAExportViewController class]])
             {
@@ -290,11 +306,11 @@
                 [navigationController pushViewController:vc animated:NO];
             }
         }
-        else if(indexPath.row == 3)
+        else if(indexPath.row == 4)
         {
             [self showCredits];
         }
-        else if(indexPath.row == 4)
+        else if(indexPath.row == 5)
         {
             if(![[navigationController topViewController] isKindOfClass:[UASettingsViewController class]])
             {
