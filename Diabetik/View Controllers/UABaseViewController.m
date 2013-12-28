@@ -49,7 +49,7 @@
                                                    object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(coreDataDidChange:)
-                                                     name:NSManagedObjectContextObjectsDidChangeNotification
+                                                     name:NSManagedObjectContextDidSaveNotification
                                                    object:nil];
         
         self.automaticallyAdjustsScrollViewInsets = YES;
