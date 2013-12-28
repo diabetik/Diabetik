@@ -238,23 +238,14 @@
     
     return returnArray;
 }
-- (UAEvent *)fetchEventWithExternalGUID:(NSString *)guid inContext:(NSManagedObjectContext *)moc
-{
-    NSArray *objects = [self fetchEventsWithPredicate:[NSPredicate predicateWithFormat:@"externalGUID == %@", guid] inContext:moc];
-    if (objects != nil && [objects count] > 0)
-    {
-        return [objects objectAtIndex:0];
-    }
-    
-    return nil;
-}
-- (NSArray *)fetchEventsWithPredicate:(NSPredicate *)predicate inContext:(NSManagedObjectContext *)moc
+- (NSArray *)fetchEventsWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)moc
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
     [request setEntity:entity];
     [request setPredicate:predicate];
+    [request setSortDescriptors:sortDescriptors];
     
     // Execute the fetch.
     NSError *error = nil;

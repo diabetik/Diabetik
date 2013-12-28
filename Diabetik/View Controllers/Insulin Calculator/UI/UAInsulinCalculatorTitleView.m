@@ -53,30 +53,17 @@
 {
     [super layoutSubviews];
     
-    void (^layoutBlock)(void) = ^void(void) {
-        if(_subtitleLabel.text.length)
-        {
-            _titleLabel.font = [UAFont standardDemiBoldFontWithSize:12.0f];
-            _titleLabel.frame = CGRectMake(0.0f, 2.0f, self.bounds.size.width, 16.0f);
-            _subtitleLabel.frame = CGRectMake(0.0f, 20.0f, self.bounds.size.width, 16.0f);
-            _subtitleLabel.hidden = NO;
-        }
-        else
-        {
-            _titleLabel.font = [UAFont standardDemiBoldFontWithSize:17.0f];
-            _titleLabel.frame = self.bounds;
-        }
-    };
-    
-    if((_subtitleLabel.hidden && _subtitleLabel.text.length) || (!_subtitleLabel.hidden && !_subtitleLabel.text.length))
+    if(_subtitleLabel.text.length)
     {
-        [UIView animateWithDuration:0.5 animations:^{
-            layoutBlock();
-        }];
+        _titleLabel.font = [UAFont standardDemiBoldFontWithSize:12.0f];
+        _titleLabel.frame = CGRectMake(0.0f, 2.0f, self.bounds.size.width, 16.0f);
+        _subtitleLabel.frame = CGRectMake(0.0f, 20.0f, self.bounds.size.width, 16.0f);
+        _subtitleLabel.hidden = NO;
     }
     else
     {
-        layoutBlock();
+        _titleLabel.font = [UAFont standardDemiBoldFontWithSize:17.0f];
+        _titleLabel.frame = self.bounds;
     }
 }
 

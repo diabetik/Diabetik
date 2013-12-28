@@ -107,5 +107,7 @@ static NSString * const kMinHealthyBGKey = @"kMinHealthyBGKey";
 static NSString * const kMaxHealthyBGKey = @"kMaxHealthyBGKey";
 static NSString * const kBGTrackingUnitKey = @"kBGTrackingUnit";
 static NSString * const kTargetBGKey = @"kTargetBGKey";
+static NSString * const kCarbohydrateRatioKey = @"kCarbohydrateRatioKey";
+static NSString * const kCorrectiveFactorKey = @"kCorrectiveFactorKey";
 
 #endif

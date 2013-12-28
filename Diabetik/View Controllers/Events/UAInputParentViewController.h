@@ -54,6 +54,7 @@
 // Setup
 - (id)initWithEventType:(NSInteger)eventType;
 - (id)initWithEvent:(UAEvent *)aEvent;
+- (id)initWithMedicineAmount:(NSNumber *)amount;
 - (void)performSetup;
 
 // Logic

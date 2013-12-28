@@ -64,7 +64,6 @@
     self = [super init];
     if (self)
     {
-        //_moc = aMOC;
         isAddingQuickEntry = NO;
         isAnimatingAddEntry = NO;
         isBeingPopped = NO;
@@ -132,6 +131,22 @@
         [self performSetup];
     }
     
+    return self;
+}
+- (id)initWithMedicineAmount:(NSNumber *)amount
+{
+    self = [super init];
+    if (self)
+    {
+        isAddingQuickEntry = NO;
+        isAnimatingAddEntry = NO;
+        isBeingPopped = NO;
+        
+        UAMedicineInputViewController *vc = [[UAMedicineInputViewController alloc] initWithAmount:amount];
+        self.viewControllers = [NSMutableArray arrayWithObject:vc];
+        
+        [self performSetup];
+    }
     return self;
 }
 - (void)performSetup

@@ -42,7 +42,7 @@
             NSError *error = nil;
             NSMutableArray *representations = [NSMutableArray array];
             
-            NSArray *events = [[UAEventController sharedInstance] fetchEventsWithPredicate:nil inContext:childMOC];
+            NSArray *events = [[UAEventController sharedInstance] fetchEventsWithPredicate:nil sortDescriptors:nil inContext:childMOC];
             if(events)
             {
                 for(UAEvent *event in events)
