@@ -111,15 +111,21 @@
             // Perform a Smart Input calculation
             __weak typeof(self) weakSelf = self;
             [[UAEventController sharedInstance] attemptSmartInputWithExistingEntries:unsavedEntries success:^(UAMedicine *event) {
-                weakSelf.name = [event name];
-                weakSelf.type = [[event type] integerValue];
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                
+                strongSelf.name = [event name];
+                strongSelf.type = [[event type] integerValue];
                 usingSmartInput = YES;
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     __strong typeof(weakSelf) strongSelf = weakSelf;
                     
-                    UAEventInputViewCell *cell = (UAEventInputViewCell *)[strongSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-                    strongSelf.previouslyActiveControlIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+                    [strongSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+                                                withRowAnimation:UITableViewRowAnimationNone];
+                    
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+                    UAEventInputViewCell *cell = (UAEventInputViewCell *)[strongSelf.tableView cellForRowAtIndexPath:indexPath];
+                    strongSelf.previouslyActiveControlIndexPath = indexPath;
                     [cell.control becomeFirstResponder];
                 });
                 
@@ -144,7 +150,7 @@
     UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
     // Select our first input field
-    if(editing)
+    if(editing && !isFirstLoad)
     {
         [cell.control becomeFirstResponder];
     }
