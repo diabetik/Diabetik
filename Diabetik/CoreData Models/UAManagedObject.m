@@ -148,8 +148,6 @@
     NSString *class = [dict objectForKey:@"class"];
     UAManagedObject *object = nil;
     
-    NSLog(@"%@", class);
-    
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"UABaseObject" inManagedObjectContext:context];
     if(entity)
