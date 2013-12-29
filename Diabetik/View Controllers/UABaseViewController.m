@@ -180,14 +180,29 @@
 #pragma mark - Autorotation
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        return YES;
+    }
+
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 - (BOOL)shouldAutorotate
 {
-    return YES;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        return YES;
+    }
+    
+    return NO;
 }
 - (NSUInteger)supportedInterfaceOrientations
 {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        return UIInterfaceOrientationMaskAll;
+    }
+    
     return UIInterfaceOrientationMaskPortrait;
 }
 

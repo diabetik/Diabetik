@@ -240,8 +240,7 @@
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
     UAAppDelegate *delegate = (UAAppDelegate*)[[UIApplication sharedApplication] delegate];
-    //[delegate.viewController showLeftPanel:YES];
-    [delegate.viewController presentMenuViewController];
+    [(REFrostedViewController *)delegate.viewController presentMenuViewController];
 }
 - (void)showRelativeTimeline:(UAShortcutButton *)sender
 {

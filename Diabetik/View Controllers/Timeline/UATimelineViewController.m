@@ -564,7 +564,17 @@
     if(object)
     {
         UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithEvent:(UAEvent *)object];
-        [self.navigationController pushViewController:vc animated:YES];
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
+            nvc.modalPresentationStyle = UIModalPresentationPageSheet;
+            [self presentViewController:nvc animated:YES completion:nil];
+        }
+        else
+        {
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

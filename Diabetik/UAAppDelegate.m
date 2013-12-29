@@ -96,17 +96,27 @@
     UAJournalViewController *journalViewController = [[UAJournalViewController alloc] init];
     UANavigationController *navigationController = [[UANavigationController alloc] initWithRootViewController:journalViewController];
     
-    self.viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] init]];
-    self.viewController.direction = REFrostedViewControllerDirectionLeft;
-    self.viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
-    self.viewController.liveBlur = NO;
-    self.viewController.limitMenuViewSize = YES;
-    self.viewController.blurSaturationDeltaFactor = 0.25f;
-    self.viewController.blurRadius = 10.0f;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UISplitViewController *splitViewController = [[UISplitViewController alloc] initWithNibName:nil bundle:nil];
+        splitViewController.viewControllers = @[[[UASideMenuViewController alloc] init], navigationController];
+        self.viewController = splitViewController;
+    }
+    else
+    {
+        REFrostedViewController *viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] init]];
+        viewController.direction = REFrostedViewControllerDirectionLeft;
+        viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
+        viewController.liveBlur = NO;
+        viewController.limitMenuViewSize = YES;
+        viewController.blurSaturationDeltaFactor = 0.25f;
+        viewController.blurRadius = 10.0f;
+        self.viewController = viewController;
+    }
     
     [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
-
+    
     // Fetch and cache default keyboard sizes after our view hierarchy has been setup
     [[UAKeyboardController sharedInstance] fetchKeyboardSize];
     

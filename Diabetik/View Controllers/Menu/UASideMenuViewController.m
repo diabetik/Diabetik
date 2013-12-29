@@ -61,14 +61,17 @@
     UASideMenuHeaderView *headerView = [[UASideMenuHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 150.0f)];
     
     self.tableView.tableHeaderView = headerView;
-    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.opaque = NO;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.backgroundView = nil;
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorColor = [UIColor colorWithWhite:0.0f alpha:0.08f];
     
-    self.view.backgroundColor = [UIColor clearColor];
+    // We only want to make the tableview transparent for iPhone devices (where blur is displayed)
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        self.tableView.backgroundColor = [UIColor clearColor];
+        self.tableView.backgroundView = nil;
+        self.view.backgroundColor = [UIColor clearColor];
+    }
     
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self.tableView reloadData];
@@ -90,11 +93,20 @@
 - (void)showCredits
 {
     UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
-    UINavigationController *navigationController = (UINavigationController *)appDelegate.viewController.contentViewController;
+    UIView *targetView = nil;
+
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        targetView = [(UINavigationController *)[(REFrostedViewController *)appDelegate.viewController contentViewController] view];
+    }
+    else
+    {
+        targetView = appDelegate.viewController.view;
+    }
     
-    UAModalView *modalView = [[UAModalView alloc] initWithFrame:CGRectMake(0, 0, navigationController.view.frame.size.width, navigationController.view.frame.size.height)];
+    UAModalView *modalView = [[UAModalView alloc] initWithFrame:CGRectMake(0, 0, targetView.frame.size.width, targetView.frame.size.height)];
     modalView.delegate = self;
-    [navigationController.view addSubview:modalView];
+    [targetView addSubview:modalView];
     UACreditsTooltipView *introductionView = [[UACreditsTooltipView alloc] initWithFrame:CGRectMake(0, 0, modalView.contentView.bounds.size.width, modalView.contentView.bounds.size.height)];
     [[modalView contentView] addSubview:introductionView];
     [modalView present];
@@ -271,15 +283,25 @@
     [super tableView:aTableView didSelectRowAtIndexPath:indexPath];
     
     UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
-    UINavigationController *navigationController = (UINavigationController *)appDelegate.viewController.contentViewController;
+    UINavigationController *navigationController = nil;
+    BOOL animateViewControllerChange = NO;
     
-    [appDelegate.viewController hideMenuViewController];
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        navigationController = (UINavigationController *)[(REFrostedViewController *)appDelegate.viewController contentViewController];
+        [(REFrostedViewController *)appDelegate.viewController hideMenuViewController];
+    }
+    else
+    {
+        navigationController = [(UISplitViewController *)appDelegate.viewController viewControllers][1];
+        animateViewControllerChange = YES;
+    }
     
     if(indexPath.section == 0)
     {
         if(indexPath.row == 0)
         {
-            [navigationController popToRootViewControllerAnimated:NO];
+            [navigationController popToRootViewControllerAnimated:animateViewControllerChange];
         }
         
         else if(indexPath.row == 1)
@@ -287,7 +309,7 @@
             if(![[navigationController topViewController] isKindOfClass:[UAInsulinCalculatorViewController class]])
             {
                 UAInsulinCalculatorViewController *vc = [[UAInsulinCalculatorViewController alloc] init];
-                [navigationController pushViewController:vc animated:NO];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
         }
         else if(indexPath.row == 2)
@@ -295,7 +317,7 @@
             if(![[navigationController topViewController] isKindOfClass:[UARemindersViewController class]])
             {
                 UARemindersViewController *vc = [[UARemindersViewController alloc] init];
-                [navigationController pushViewController:vc animated:NO];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
         }
         else if(indexPath.row == 3)
@@ -303,7 +325,7 @@
             if(![[navigationController topViewController] isKindOfClass:[UAExportViewController class]])
             {
                 UAExportViewController *vc = [[UAExportViewController alloc] init];
-                [navigationController pushViewController:vc animated:NO];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
         }
         else if(indexPath.row == 4)
@@ -315,7 +337,7 @@
             if(![[navigationController topViewController] isKindOfClass:[UASettingsViewController class]])
             {
                 UASettingsViewController *vc = [[UASettingsViewController alloc] init];
-                [navigationController pushViewController:vc animated:NO];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
         }
     }
@@ -327,12 +349,12 @@
             if([reminder.type integerValue] == kReminderTypeDate || [reminder.type integerValue] == kReminderTypeRepeating)
             {
                 UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithReminder:reminder];
-                [navigationController pushViewController:vc animated:NO];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
             else
             {
                 UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] initWithReminder:reminder];
-                [navigationController pushViewController:vc animated:NO];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
         }
     }

@@ -39,26 +39,32 @@
         _dateLabel.textColor = [UIColor colorWithRed:98.0f/255.0f green:102.0f/255.0f blue:102.0f/255.0f alpha:1.0f];
         _dateLabel.textAlignment = NSTextAlignmentCenter;
         _dateLabel.backgroundColor = [UIColor clearColor];
+        _dateLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:_dateLabel];
         
         UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.0f, self.frame.size.width, 0.5f)];
         topBorder.backgroundColor = [UIColor colorWithRed:204.0f/255.0f green:205.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
+        topBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:topBorder];
         
         UIView *overviewContainer = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.5f, self.frame.size.width, 31.0f)];
         overviewContainer.backgroundColor = [UIColor whiteColor];
+        overviewContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:overviewContainer];
         
         UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 41.5f + overviewContainer.bounds.size.height, self.frame.size.width, 0.5f)];
         bottomBorder.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
+        bottomBorder.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:bottomBorder];
         
         UIView *leftSeparator = [[UIView alloc] initWithFrame:CGRectMake(106.0f, 41.5f, 0.5f, overviewContainer.bounds.size.height)];
         leftSeparator.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
+        leftSeparator.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
         [self.contentView addSubview:leftSeparator];
         
         UIView *rightSeparator = [[UIView alloc] initWithFrame:CGRectMake(212.0f, 41.5f, 0.5f, overviewContainer.bounds.size.height)];
         rightSeparator.backgroundColor = [UIColor colorWithRed:230.0f/255.0f green:230.0f/255.0f blue:230.0f/255.0f alpha:1.0f];
+        rightSeparator.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [self.contentView addSubview:rightSeparator];
         
         _glucoseStatView = [[UATimelineStatView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 105.0f, overviewContainer.bounds.size.height)];
