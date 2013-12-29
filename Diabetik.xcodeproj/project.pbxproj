@@ -167,6 +167,9 @@
 		539E1CCF17B7FEA10059ED17 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E1CCE17B7FEA10059ED17 /* UIImage+ImageEffects.m */; };
 		539E1CD117B7FEDD0059ED17 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539E1CD017B7FEDD0059ED17 /* Accelerate.framework */; };
 		539E9FA4184B8C22009803D1 /* UITextView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E9FA3184B8C22009803D1 /* UITextView+Extension.m */; };
+		53A5D6BF1870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6B91870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m */; };
+		53A5D6C01870D5950077DFBE /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */; };
+		53A5D6C11870D5950077DFBE /* UAInsulinCalculatorTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */; };
 		53B53ADF18672B0A00773EE7 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ABD18672B0A00773EE7 /* AFHTTPRequestOperation.m */; };
 		53B53AE018672B0A00773EE7 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ABF18672B0A00773EE7 /* AFHTTPRequestOperationManager.m */; };
 		53B53AE118672B0A00773EE7 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AC118672B0A00773EE7 /* AFHTTPSessionManager.m */; };
@@ -183,9 +186,6 @@
 		53B53AEC18672B0A00773EE7 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AD918672B0A00773EE7 /* UIImageView+AFNetworking.m */; };
 		53B53AED18672B0A00773EE7 /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ADC18672B0A00773EE7 /* UIProgressView+AFNetworking.m */; };
 		53B53AEE18672B0A00773EE7 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ADE18672B0A00773EE7 /* UIWebView+AFNetworking.m */; };
-		53B53AFB1867329D00773EE7 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AF81867329D00773EE7 /* UAInsulinCalculatorTextFieldViewCell.m */; };
-		53B53AFC1867329D00773EE7 /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AFA1867329D00773EE7 /* UAInsulinCalculatorViewController.m */; };
-		53B53B031867370E00773EE7 /* UAInsulinCalculatorTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53B021867370E00773EE7 /* UAInsulinCalculatorTitleView.m */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
 		53BAD21F1847FF3B007F2977 /* UASideMenuHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BAD21E1847FF3B007F2977 /* UASideMenuHeaderView.m */; };
 		53D5C4C2184129840000CB86 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C1184129840000CB86 /* Dropbox.framework */; };
@@ -504,6 +504,12 @@
 		539E9FA2184B8C22009803D1 /* UITextView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Extension.h"; sourceTree = "<group>"; };
 		539E9FA3184B8C22009803D1 /* UITextView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Extension.m"; sourceTree = "<group>"; };
 		539E9FA7184BAA20009803D1 /* UACredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACredentials.h; sourceTree = "<group>"; };
+		53A5D6B81870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTextFieldViewCell.h; sourceTree = "<group>"; };
+		53A5D6B91870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTextFieldViewCell.m; sourceTree = "<group>"; };
+		53A5D6BA1870D5950077DFBE /* UAInsulinCalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorViewController.h; sourceTree = "<group>"; };
+		53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorViewController.m; sourceTree = "<group>"; };
+		53A5D6BD1870D5950077DFBE /* UAInsulinCalculatorTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTitleView.h; sourceTree = "<group>"; };
+		53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTitleView.m; sourceTree = "<group>"; };
 		53AE668A178727D800DE66D9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		53B53ABC18672B0A00773EE7 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		53B53ABD18672B0A00773EE7 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
@@ -539,12 +545,6 @@
 		53B53ADC18672B0A00773EE7 /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
 		53B53ADD18672B0A00773EE7 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		53B53ADE18672B0A00773EE7 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
-		53B53AF71867329D00773EE7 /* UAInsulinCalculatorTextFieldViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTextFieldViewCell.h; sourceTree = "<group>"; };
-		53B53AF81867329D00773EE7 /* UAInsulinCalculatorTextFieldViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTextFieldViewCell.m; sourceTree = "<group>"; };
-		53B53AF91867329D00773EE7 /* UAInsulinCalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorViewController.h; sourceTree = "<group>"; };
-		53B53AFA1867329D00773EE7 /* UAInsulinCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorViewController.m; sourceTree = "<group>"; };
-		53B53B011867370E00773EE7 /* UAInsulinCalculatorTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTitleView.h; sourceTree = "<group>"; };
-		53B53B021867370E00773EE7 /* UAInsulinCalculatorTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTitleView.m; sourceTree = "<group>"; };
 		53B576751709DF02007322EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		53BAD21D1847FF3B007F2977 /* UASideMenuHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuHeaderView.h; sourceTree = "<group>"; };
 		53BAD21E1847FF3B007F2977 /* UASideMenuHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuHeaderView.m; sourceTree = "<group>"; };
@@ -857,7 +857,7 @@
 		533F324F1773266600AD89E2 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				53B53AF51867329D00773EE7 /* Insulin Calculator */,
+				53A5D6B61870D5950077DFBE /* Insulin Calculator */,
 				533F32591773266600AD89E2 /* Add Entry */,
 				533F325E1773266600AD89E2 /* Events */,
 				533F328B1773266600AD89E2 /* Export */,
@@ -1361,6 +1361,35 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		53A5D6B61870D5950077DFBE /* Insulin Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				53A5D6B71870D5950077DFBE /* Cells */,
+				53A5D6BA1870D5950077DFBE /* UAInsulinCalculatorViewController.h */,
+				53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */,
+				53A5D6BC1870D5950077DFBE /* UI */,
+			);
+			path = "Insulin Calculator";
+			sourceTree = "<group>";
+		};
+		53A5D6B71870D5950077DFBE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				53A5D6B81870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.h */,
+				53A5D6B91870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		53A5D6BC1870D5950077DFBE /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				53A5D6BD1870D5950077DFBE /* UAInsulinCalculatorTitleView.h */,
+				53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		53B53ABB18672B0A00773EE7 /* AFNetworking */ = {
 			isa = PBXGroup;
 			children = (
@@ -1407,35 +1436,6 @@
 				53B53ADE18672B0A00773EE7 /* UIWebView+AFNetworking.m */,
 			);
 			path = "UIKit+AFNetworking";
-			sourceTree = "<group>";
-		};
-		53B53AF51867329D00773EE7 /* Insulin Calculator */ = {
-			isa = PBXGroup;
-			children = (
-				53B53AFD1867358B00773EE7 /* UI */,
-				53B53AF61867329D00773EE7 /* Cells */,
-				53B53AF91867329D00773EE7 /* UAInsulinCalculatorViewController.h */,
-				53B53AFA1867329D00773EE7 /* UAInsulinCalculatorViewController.m */,
-			);
-			path = "Insulin Calculator";
-			sourceTree = "<group>";
-		};
-		53B53AF61867329D00773EE7 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				53B53AF71867329D00773EE7 /* UAInsulinCalculatorTextFieldViewCell.h */,
-				53B53AF81867329D00773EE7 /* UAInsulinCalculatorTextFieldViewCell.m */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		53B53AFD1867358B00773EE7 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				53B53B011867370E00773EE7 /* UAInsulinCalculatorTitleView.h */,
-				53B53B021867370E00773EE7 /* UAInsulinCalculatorTitleView.m */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		53BAD21C1847FECB007F2977 /* UI */ = {
@@ -1677,7 +1677,6 @@
 				533F347D1773266600AD89E2 /* UAHelper.m in Sources */,
 				53B53AEA18672B0A00773EE7 /* UIAlertView+AFNetworking.m in Sources */,
 				537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */,
-				53B53AFB1867329D00773EE7 /* UAInsulinCalculatorTextFieldViewCell.m in Sources */,
 				533F349C1773266600AD89E2 /* VKRSAppSoundPlayer.m in Sources */,
 				53B53AE618672B0A00773EE7 /* AFURLResponseSerialization.m in Sources */,
 				531026521849135E001C5766 /* UAMenuAccountAvatarView.m in Sources */,
@@ -1702,12 +1701,12 @@
 				53B53AEC18672B0A00773EE7 /* UIImageView+AFNetworking.m in Sources */,
 				53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */,
 				533F34B21773266600AD89E2 /* UABGInputViewController.m in Sources */,
-				53B53AFC1867329D00773EE7 /* UAInsulinCalculatorViewController.m in Sources */,
 				53B53AEE18672B0A00773EE7 /* UIWebView+AFNetworking.m in Sources */,
 				533F34B31773266600AD89E2 /* UAInputBaseViewController.m in Sources */,
 				53D5C4FD184132B50000CB86 /* Appirater.m in Sources */,
 				533F34B41773266600AD89E2 /* UAInputParentViewController.m in Sources */,
 				531D4D84184D372800ABAEC3 /* UIImage+REFrostedViewController.m in Sources */,
+				53A5D6BF1870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m in Sources */,
 				533F34B51773266600AD89E2 /* UAMealInputViewController.m in Sources */,
 				533F34B61773266600AD89E2 /* UAMedicineInputViewController.m in Sources */,
 				533F34B71773266600AD89E2 /* UANoteInputViewController.m in Sources */,
@@ -1760,7 +1759,9 @@
 				533F34DF1773266600AD89E2 /* UASettingsViewController.m in Sources */,
 				533F34E01773266600AD89E2 /* UATimelineHeaderViewCell.m in Sources */,
 				533F34E11773266600AD89E2 /* UATimelineViewCell.m in Sources */,
+				53A5D6C11870D5950077DFBE /* UAInsulinCalculatorTitleView.m in Sources */,
 				533F34E21773266600AD89E2 /* UATimelineTableHeaderView.m in Sources */,
+				53A5D6C01870D5950077DFBE /* UAInsulinCalculatorViewController.m in Sources */,
 				53B53AE118672B0A00773EE7 /* AFHTTPSessionManager.m in Sources */,
 				533F34E31773266600AD89E2 /* UATimelineViewController.m in Sources */,
 				53BAD21F1847FF3B007F2977 /* UASideMenuHeaderView.m in Sources */,
@@ -1788,7 +1789,6 @@
 				534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */,
 				53B53AE818672B0A00773EE7 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				533F356717736C5500AD89E2 /* UANavSubtitleHeaderView.m in Sources */,
-				53B53B031867370E00773EE7 /* UAInsulinCalculatorTitleView.m in Sources */,
 				53B53AE918672B0A00773EE7 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
 				53B53AE718672B0A00773EE7 /* AFURLSessionManager.m in Sources */,
 				533F356817736C5500AD89E2 /* UAUIHintView.m in Sources */,
