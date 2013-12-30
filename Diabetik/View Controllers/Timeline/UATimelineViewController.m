@@ -438,7 +438,8 @@
             UAMeal *meal = (UAMeal *)object;
             cell.valueLabel.text = [valueFormatter stringFromNumber:[meal grams]];
             cell.valueLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconMeal.png"];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconMeal"];
+            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconMealHighlighted"];
             cell.descriptionLabel.text = [meal name];
         }
         else if([object isKindOfClass:[UAReading class]])
@@ -447,7 +448,8 @@
             
             cell.descriptionLabel.text = NSLocalizedString(@"Blood glucose level", nil);
             cell.valueLabel.text = [glucoseFormatter stringFromNumber:[reading value]];
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconBlood.png"];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconBlood"];
+            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconBloodHighlighted"];
             
             if(![UAHelper isBGLevelSafe:[[reading value] doubleValue]])
             {
@@ -464,7 +466,8 @@
             
             cell.valueLabel.text = [valueFormatter stringFromNumber:[medicine amount]];
             cell.valueLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconMedicine.png"];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconMedicine"];
+            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconMedicineHighlighted"];
             cell.descriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", [medicine name], [[UAEventController sharedInstance] medicineTypeHR:[[medicine type] integerValue]]];
         }
         else if([object isKindOfClass:[UAActivity class]])
@@ -472,14 +475,16 @@
             UAActivity *activity = (UAActivity *)object;
             
             cell.descriptionLabel.text = [activity name];
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconActivity.png"];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconActivity"];
+            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconActivityHighlighted"];
             cell.valueLabel.text = [UAHelper formatMinutes:[[activity minutes] doubleValue]];
             cell.valueLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
         }
         else if([object isKindOfClass:[UANote class]])
         {
             UANote *note = (UANote *)object;
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconNote.png"];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconNote"];
+            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconNoteHighlighted"];
             cell.descriptionLabel.text = [note name];
         }
         
@@ -514,7 +519,7 @@
         if([stats count] && indexPath.section <= [stats count]-1)
         {
             NSDictionary *section = [stats objectAtIndex:indexPath.section];
-            [cell.glucoseStatView setText:[NSString stringWithFormat:@"%@ %@", [valueFormatter stringFromNumber:section[@"reading"]], [NSLocalizedString(@"Avg.", @"Abbreviation for average") lowercaseString]]];
+            [cell.glucoseStatView setText:[NSString stringWithFormat:@"%@ %@", [glucoseFormatter stringFromNumber:section[@"reading"]], [NSLocalizedString(@"Avg.", @"Abbreviation for average") lowercaseString]]];
             [cell.activityStatView setText:[UAHelper formatMinutes:[[section valueForKey:@"activity"] integerValue]]];
             [cell.mealStatView setText:[NSString stringWithFormat:@"%@ %@", [valueFormatter stringFromNumber:section[@"meal"]], [NSLocalizedString(@"Carbs", nil) lowercaseString]]];
         }
