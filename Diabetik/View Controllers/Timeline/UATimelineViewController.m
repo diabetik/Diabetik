@@ -30,6 +30,7 @@
 #import "UAActivityInputViewController.h"
 #import "UANoteInputViewController.h"
 #import "UATagController.h"
+#import "UAAddEntryListViewController.h"
 
 #import "UAMeal.h"
 #import "UAReading.h"
@@ -65,6 +66,7 @@
 @property (nonatomic, strong) UADetailViewController *detailViewController;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *moc;
+@property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
 
 @property (nonatomic, assign) NSInteger relativeDays;
 
@@ -380,10 +382,24 @@
     
     allowReportRotation = NO;
     
-    UAAddEntryModalView *modalView = [[UAAddEntryModalView alloc] initWithFrame:self.navigationController.view.bounds];
-    modalView.delegate = self;
-    [self.navigationController.view addSubview:modalView];
-    [modalView present];
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        UAAddEntryModalView *modalView = [[UAAddEntryModalView alloc] initWithFrame:self.navigationController.view.bounds];
+        modalView.delegate = self;
+        [self.navigationController.view addSubview:modalView];
+        [modalView present];
+    }
+    else
+    {
+        if(!self.addEntryPopoverController)
+        {
+            UAAddEntryListViewController *vc = [[UAAddEntryListViewController alloc] initWithStyle:UITableViewStylePlain];
+            self.addEntryPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
+            [self.addEntryPopoverController setPopoverContentSize:CGSizeMake(320.0f, 225.0f)];
+            [self.addEntryPopoverController setDelegate:self];
+        }
+        [self.addEntryPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
 }
 - (void)configureCell:(UITableViewCell *)aCell forTableview:(UITableView *)aTableView atIndexPath:(NSIndexPath *)indexPath
 {
@@ -885,6 +901,12 @@
 - (void)didDismissReportsController:(UAReportsViewController *)controller
 {
     self.reportsVC = nil;
+}
+
+#pragma mark - UIPopoverControllerDelegate methods
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.addEntryPopoverController = nil;
 }
 
 #pragma mark - Autorotation

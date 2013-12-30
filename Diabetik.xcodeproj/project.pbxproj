@@ -170,6 +170,7 @@
 		53A5D6BF1870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6B91870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m */; };
 		53A5D6C01870D5950077DFBE /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */; };
 		53A5D6C11870D5950077DFBE /* UAInsulinCalculatorTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */; };
+		53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5284818717597004E7F01 /* UAAddEntryListViewController.m */; };
 		53B53ADF18672B0A00773EE7 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ABD18672B0A00773EE7 /* AFHTTPRequestOperation.m */; };
 		53B53AE018672B0A00773EE7 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ABF18672B0A00773EE7 /* AFHTTPRequestOperationManager.m */; };
 		53B53AE118672B0A00773EE7 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AC118672B0A00773EE7 /* AFHTTPSessionManager.m */; };
@@ -511,6 +512,8 @@
 		53A5D6BD1870D5950077DFBE /* UAInsulinCalculatorTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTitleView.h; sourceTree = "<group>"; };
 		53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTitleView.m; sourceTree = "<group>"; };
 		53AE668A178727D800DE66D9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		53B5284718717597004E7F01 /* UAAddEntryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryListViewController.h; sourceTree = "<group>"; };
+		53B5284818717597004E7F01 /* UAAddEntryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryListViewController.m; sourceTree = "<group>"; };
 		53B53ABC18672B0A00773EE7 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		53B53ABD18672B0A00773EE7 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		53B53ABE18672B0A00773EE7 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -880,6 +883,8 @@
 				533F325B1773266600AD89E2 /* UAAddEntryModalButton.m */,
 				533F325C1773266600AD89E2 /* UAAddEntryModalView.h */,
 				533F325D1773266600AD89E2 /* UAAddEntryModalView.m */,
+				53B5284718717597004E7F01 /* UAAddEntryListViewController.h */,
+				53B5284818717597004E7F01 /* UAAddEntryListViewController.m */,
 			);
 			path = "Add Entry";
 			sourceTree = "<group>";
@@ -1684,6 +1689,7 @@
 				53B53AE518672B0A00773EE7 /* AFURLRequestSerialization.m in Sources */,
 				533F34A21773266600AD89E2 /* MBProgressHUD.m in Sources */,
 				531D4D83184D372800ABAEC3 /* REFrostedViewController.m in Sources */,
+				53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */,
 				533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */,
 				533F34A41773266600AD89E2 /* UIImage+Resize.m in Sources */,
 				533F34A81773266600AD89E2 /* UAAddEntryModalButton.m in Sources */,

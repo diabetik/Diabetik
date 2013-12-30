@@ -25,6 +25,7 @@
 #import "UAJournalMonthViewCell.h"
 #import "UAIntroductionTooltipView.h"
 #import "UAAddEntryModalView.h"
+#import "UAAddEntryListViewController.h"
 
 #import "UABGInputViewController.h"
 #import "UAMealInputViewController.h"
@@ -48,6 +49,8 @@
     double todaysHighest, sevenDaysHighest, fourteenDaysHighest;
     NSInteger todaysCount, sevenDaysCount, fourteenDaysCount;
 }
+@property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
+
 @end
 
 @implementation UAJournalViewController
@@ -230,10 +233,24 @@
 {
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
-    UAAddEntryModalView *modalView = [[UAAddEntryModalView alloc] initWithFrame:self.navigationController.view.bounds];
-    modalView.delegate = self;
-    [self.navigationController.view addSubview:modalView];
-    [modalView present];
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        UAAddEntryModalView *modalView = [[UAAddEntryModalView alloc] initWithFrame:self.navigationController.view.bounds];
+        modalView.delegate = self;
+        [self.navigationController.view addSubview:modalView];
+        [modalView present];
+    }
+    else
+    {
+        if(!self.addEntryPopoverController)
+        {
+            UAAddEntryListViewController *vc = [[UAAddEntryListViewController alloc] initWithStyle:UITableViewStylePlain];
+            self.addEntryPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
+            [self.addEntryPopoverController setPopoverContentSize:CGSizeMake(320.0f, 225.0f)];
+            [self.addEntryPopoverController setDelegate:self];
+        }
+        [self.addEntryPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
 }
 - (void)showSideMenu:(id)sender
 {
@@ -380,11 +397,15 @@
         if(vc)
         {
             UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-            [self presentViewController:nvc animated:YES completion:^{
-                
-            }];
+            [self presentViewController:nvc animated:YES completion:nil];
         }
     }
+}
+
+#pragma mark - UIPopoverControllerDelegate methods
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.addEntryPopoverController = nil;
 }
 
 #pragma mark - Helpers
