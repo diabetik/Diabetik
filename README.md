@@ -7,7 +7,7 @@ An open-source effort to improve diabetes management on the iPhone.
 How you can contribute
 ======================
 
-* **Development.** Diabetik is an on-going effort to improve diabetes management on the iPhone. We welcome support and pull requests!
+* **Development.** Diabetik is an on-going effort to improve diabetes management on the iPhone. We welcome support and pull requests! If you're looking for something to help with, take a look at our [todo list](https://github.com/NialG/Diabetik/issues?labels=todo&page=1&state=open). If you see something that's unassigned and think you can help, feel free to dive right in!
 * **Translations.** We're always looking for translators to help localise the application. If you'd like to get involved in our collaborative effort please visit our [CrowdIn project](http://crowdin.net/project/diabetik) page.
 * **Support.** Join [our community](http://diabetikapp.com/community) and help users with any issues they may encounter.
 
