@@ -537,23 +537,30 @@
 }
 - (void)activateTargetViewController
 {
+    UAInputBaseViewController *activeVC = nil;
+    UAInputBaseViewController *targetVC = [self targetViewController];
+    
     BOOL currentlyEditing = NO;
     for(UAInputBaseViewController *vc in self.viewControllers)
     {
         if(vc.activeControlIndexPath != nil)
         {
             currentlyEditing = YES;
+            activeVC = vc;
         }
-        [vc willBecomeInactive];
+        
+        if(![vc isEqual:targetVC]) [vc willBecomeInactive];
     }
     
-    UAInputBaseViewController *targetVC = [self targetViewController];
-    [targetVC didBecomeActive:currentlyEditing];
-    
-    self.navigationController.navigationBar.barTintColor = [targetVC barTintColor];
-    
-    [self updateNavigationBar];
-    [self updateKeyboardButtons];
+    if(![activeVC isEqual:targetVC])
+    {
+        [targetVC didBecomeActive:currentlyEditing];
+        
+        self.navigationController.navigationBar.barTintColor = [targetVC barTintColor];
+        
+        [self updateNavigationBar];
+        [self updateKeyboardButtons];
+    }
 }
 - (void)handleBack:(id)sender
 {
