@@ -99,11 +99,11 @@
 {
     [super layoutSubviews];
     
-    CGFloat segmentWidth = (self.bounds.size.width/3.0f)-2.0f;
+    CGFloat segmentWidth = floorf((self.bounds.size.width/3.0f)-2.0f);
     
     _glucoseStatView.frame = CGRectMake(0.0f, 0.0f, segmentWidth, overviewContainer.bounds.size.height);
-    _activityStatView.frame = CGRectMake(segmentWidth + 1.0f, 0.0f, segmentWidth, overviewContainer.bounds.size.height);
-    _mealStatView.frame = CGRectMake((segmentWidth+ 1.0f)*2.0f, 0.0f, segmentWidth, overviewContainer.bounds.size.height);
+    _activityStatView.frame = CGRectMake(segmentWidth, 0.0f, segmentWidth, overviewContainer.bounds.size.height);
+    _mealStatView.frame = CGRectMake((segmentWidth)*2.0f, 0.0f, segmentWidth, overviewContainer.bounds.size.height);
     
     leftSeparator.frame = CGRectMake(segmentWidth+0.5f, 41.5f, 0.5f, overviewContainer.bounds.size.height);
     rightSeparator.frame = CGRectMake((segmentWidth+0.5f)*2.0f, 41.5f, 0.5f, overviewContainer.bounds.size.height);

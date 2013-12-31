@@ -218,6 +218,12 @@
 {
     [super viewWillDisappear:animated];
     
+    if ([self.addEntryPopoverController isPopoverVisible])
+    {
+        [self.addEntryPopoverController dismissPopoverAnimated:YES];
+    }
+    self.addEntryPopoverController = nil;
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)dealloc
@@ -437,6 +443,7 @@
             [self.addEntryPopoverController setPopoverContentSize:CGSizeMake(320.0f, 225.0f)];
             [self.addEntryPopoverController setDelegate:self];
         }
+        
         [self.addEntryPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
 }

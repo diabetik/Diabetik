@@ -137,6 +137,16 @@
     
     [self refreshView];
 }
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    if ([self.addEntryPopoverController isPopoverVisible])
+    {
+        [self.addEntryPopoverController dismissPopoverAnimated:YES];
+    }
+    self.addEntryPopoverController = nil;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

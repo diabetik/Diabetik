@@ -210,7 +210,7 @@
 #pragma mark - UI
 - (UIColor *)barTintColor
 {
-    return [UIColor colorWithRed:126.0f/255.0f green:113.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+    return [UIColor colorWithRed:105.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
 }
 
 #pragma mark - UITableViewDatasource methods

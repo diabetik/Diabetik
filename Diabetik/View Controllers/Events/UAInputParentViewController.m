@@ -552,15 +552,12 @@
         if(![vc isEqual:targetVC]) [vc willBecomeInactive];
     }
     
-    if(![activeVC isEqual:targetVC])
-    {
-        [targetVC didBecomeActive:currentlyEditing];
+    if(![activeVC isEqual:targetVC]) [targetVC didBecomeActive:currentlyEditing];
         
-        self.navigationController.navigationBar.barTintColor = [targetVC barTintColor];
-        
-        [self updateNavigationBar];
-        [self updateKeyboardButtons];
-    }
+    self.navigationController.navigationBar.barTintColor = [targetVC barTintColor];
+    
+    [self updateNavigationBar];
+    [self updateKeyboardButtons];
 }
 - (void)handleBack:(id)sender
 {
