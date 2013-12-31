@@ -42,7 +42,7 @@
 {
     [super layoutSubviews];
     
-    imageView.frame = CGRectMake(self.frame.size.width/2.0f - 70.0f/2.0f, self.frame.size.height/2.0f - 70.0f/2.0f, 70.0f, 70.0f);
+    imageView.frame = CGRectMake(self.frame.size.width/2.0f - 90.0f/2.0f, self.frame.size.height/2.0f - 90.0f/2.0f, 90.0f, 90.0f);
 }
 
 #pragma mark - Logic

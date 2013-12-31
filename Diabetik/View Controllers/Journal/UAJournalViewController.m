@@ -73,6 +73,18 @@
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf reloadViewData:note];
         }];
+        
+        // Menu items
+        UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
+        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
+        
+        // Don't setup our menu bar button item for iPad users, as this is handled by our UISplitViewControllerDelegate
+        if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+        {
+            UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconListMenu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showSideMenu:)];
+            [self.navigationItem setLeftBarButtonItem:menuBarButtonItem animated:NO];
+        }
+        
     }
     return self;
 }
@@ -132,12 +144,6 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UAJournalMonthViewCell class] forCellReuseIdentifier:@"UAJournalMonthViewCell"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UAJournalSpacerViewCell"];
-    
-    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
-    [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
-    
-    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconListMenu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showSideMenu:)];
-    [self.navigationItem setLeftBarButtonItem:menuBarButtonItem animated:NO];
     
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenStarterTooltip])
     {

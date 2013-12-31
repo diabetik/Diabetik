@@ -41,7 +41,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.backgroundColor = [UIColor clearColor];//[UIColor colorWithRed:36.0f/255.0f green:36.0f/255.0f blue:36.0f/255.0f alpha:1.0f];
+        self.backgroundColor = [UIColor clearColor];
         self.buttons = theButtons;
         
         _controlContainer = [[UIView alloc] initWithFrame:CGRectMake(frame.size.width - (26.0f+12.0f), 0.0f, (26.0f+12.0f), kAccessoryViewHeight)];
@@ -52,14 +52,17 @@
         backingView.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.08f];
         [self addSubview:backingView];
         
-        _keyboardToggleButton = [[UIButton alloc] initWithFrame:_controlContainer.bounds];
-        [_keyboardToggleButton setImage:[UIImage imageNamed:@"KeyboardDismissDownButton.png"] forState:UIControlStateNormal];
-        [_keyboardToggleButton setImage:[UIImage imageNamed:@"KeyboardDismissDownButtonPressed.png"] forState:UIControlStateHighlighted];
-        [_keyboardToggleButton addTarget:self action:@selector(keyboardTogglePress:) forControlEvents:UIControlEventTouchUpInside];
-        [_keyboardToggleButton setAdjustsImageWhenHighlighted:NO];
-        [_keyboardToggleButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0f)];
-        
-        [_controlContainer addSubview:_keyboardToggleButton];
+        // The iPad has a dismiss button on the keyboard by default, so we only use the keyboard toggle for the iPhone
+        if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+        {
+            _keyboardToggleButton = [[UIButton alloc] initWithFrame:_controlContainer.bounds];
+            [_keyboardToggleButton setImage:[UIImage imageNamed:@"KeyboardDismissDownButton.png"] forState:UIControlStateNormal];
+            [_keyboardToggleButton setImage:[UIImage imageNamed:@"KeyboardDismissDownButtonPressed.png"] forState:UIControlStateHighlighted];
+            [_keyboardToggleButton addTarget:self action:@selector(keyboardTogglePress:) forControlEvents:UIControlEventTouchUpInside];
+            [_keyboardToggleButton setAdjustsImageWhenHighlighted:NO];
+            [_keyboardToggleButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0f)];
+            [_controlContainer addSubview:_keyboardToggleButton];
+        }
         
         keyboardSwipeGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipeGesture:)];
         keyboardSwipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
@@ -70,12 +73,6 @@
         {
             [self addSubview:button];
         }
-        
-        /*
-        UIImageView *shadowImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AddEntryKeyboardShadow.png"]];
-        shadowImageView.frame = CGRectMake(0.0f, _controlContainer.frame.size.height, self.frame.size.width, 4.0f);
-        [self addSubview:shadowImageView];
-        */
         
         [self setNeedsLayout];
     }

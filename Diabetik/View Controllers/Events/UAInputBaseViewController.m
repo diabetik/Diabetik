@@ -442,6 +442,7 @@
         {
             imagePickerController = [[UIImagePickerController alloc] init];
             imagePickerController.delegate = self;
+            imagePickerController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
         if(actionSheet.tag == kExistingImageActionSheetTag)
@@ -458,21 +459,9 @@
                 if(image)
                 {
                     TGRImageViewController *viewController = [[TGRImageViewController alloc] initWithImage:image];
-                    // Don't forget to set ourselves as the transition delegate
                     viewController.transitioningDelegate = self;
                     
                     [self presentViewController:viewController animated:YES completion:nil];
-                    
-                    /*
-                    CGRect originalButtonFrame = [(UAInputParentViewController *)self.parentViewController photoButton].frame;
-                    CGRect photoButtonFrame = [[(UAInputParentViewController *)self.parentViewController keyboardBackingView] convertRect:originalButtonFrame toView:self.parentViewController.view];
-                    UAImageViewController *vc = [[UAImageViewController alloc] initWithImage:image];
-                    [self.parentViewController addChildViewController:vc];
-                    [self.parentViewController.view addSubview:vc.view];
-                    [vc presentFromRect:photoButtonFrame];
-                    
-                    [vc didMoveToParentViewController:self.parentViewController.parentViewController];
-                    */
                 }
             }
             else if(buttonIndex == 2)
@@ -504,9 +493,7 @@
             
             if(buttonIndex != actionSheet.cancelButtonIndex)
             {
-                [self.navigationController presentViewController:imagePickerController animated:YES completion:^{
-                    // STUB
-                }];
+                [self.navigationController presentViewController:imagePickerController animated:YES completion:nil];
             }
         }
     }

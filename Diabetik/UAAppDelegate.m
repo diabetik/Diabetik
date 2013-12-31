@@ -100,6 +100,7 @@
     {
         UISplitViewController *splitViewController = [[UISplitViewController alloc] initWithNibName:nil bundle:nil];
         splitViewController.viewControllers = @[[[UASideMenuViewController alloc] init], navigationController];
+        splitViewController.delegate = self;
         self.viewController = splitViewController;
     }
     else
@@ -228,6 +229,27 @@
     
     // Charts
     [ShinobiCharts setTheme:[SChartiOS7Theme new]];
+}
+
+#pragma mark - UISplitViewControllerDelegate method
+- (void)splitViewController:(UISplitViewController *)svc
+     willHideViewController:(UIViewController *)aViewController
+          withBarButtonItem:(UIBarButtonItem *)barButtonItem
+       forPopoverController:(UIPopoverController *)pc
+{
+    UINavigationController *nvc = svc.viewControllers[1];
+    UIViewController *vc = nvc.viewControllers[0];
+    
+    barButtonItem.image = [[UIImage imageNamed:@"NavBarIconListMenu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    vc.navigationItem.leftBarButtonItem = barButtonItem;
+}
+- (void)splitViewController:(UISplitViewController *)svc
+     willShowViewController:(UIViewController *)aViewController
+  invalidatingBarButtonItem:(UIBarButtonItem *)button
+{
+    UINavigationController *nvc = svc.viewControllers[1];
+    UIViewController *vc = nvc.viewControllers[0];
+    vc.navigationItem.leftBarButtonItem = nil;
 }
 
 #pragma mark - Location services

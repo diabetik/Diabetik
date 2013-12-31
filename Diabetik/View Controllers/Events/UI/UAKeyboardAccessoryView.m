@@ -35,11 +35,17 @@
     self = [super initWithFrame:CGRectMake(0, 0, aBackingView.frame.size.width, 48.0f)];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
-        self.autoresizingMask = UIViewAutoresizingFlexibleRightMargin;
+        self.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
         
         _backingView = aBackingView;        
         
-        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.frame.size.width - 50.0f, self.frame.size.height)];
+        CGRect contentViewFrame = CGRectMake(0.0f, 0.0f, self.frame.size.width, self.frame.size.height);
+        if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+        {
+            contentViewFrame.size.width -= 50.0f;
+        }
+        _contentView = [[UIView alloc] initWithFrame:contentViewFrame];
+        _contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self addSubview:_contentView];
     }
     return self;
@@ -48,11 +54,15 @@
 #pragma mark - Logic
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    CGRect button = CGRectMake(self.frame.size.width - self.backingView.keyboardToggleButton.frame.size.width, 0.0f, self.backingView.keyboardToggleButton.frame.size.width, self.frame.size.height);
-    
-    if(CGRectContainsPoint(button, point))
+    // Make sure we're not tapping our keyboard dismiss button
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
     {
-        return NO;
+        CGRect button = CGRectMake(self.frame.size.width - self.backingView.keyboardToggleButton.frame.size.width, 0.0f, self.backingView.keyboardToggleButton.frame.size.width, self.frame.size.height);
+        
+        if(CGRectContainsPoint(button, point))
+        {
+            return NO;
+        }
     }
     
     BOOL pointInsideContentViewChild = NO;

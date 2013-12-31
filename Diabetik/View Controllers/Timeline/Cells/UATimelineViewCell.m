@@ -61,7 +61,7 @@
         _iconImageView.contentMode = UIViewContentModeCenter;
         [self.contentView addSubview:_iconImageView];
         
-        _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectMake(96.0f, 13.0f, 175.0f, 19.0f)];
+        _descriptionLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _descriptionLabel.text = @"Entry description";
         _descriptionLabel.backgroundColor = [UIColor clearColor];
         _descriptionLabel.font = [UAFont standardMediumFontWithSize:16.0f];
@@ -98,6 +98,18 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
+    _descriptionLabel.frame = CGRectMake(96.0f, 13.0f, self.bounds.size.width-96.0f-kHorizontalMargin, 19.0f);
+    
+    if(self.notesLabel)
+    {
+        CGRect notesFrame = [self.notesLabel.text boundingRectWithSize:CGSizeMake(self.notesLabel.bounds.size.width, CGFLOAT_MAX)
+                                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                            attributes:@{NSFontAttributeName:kNotesFont}
+                                                               context:nil];
+        
+        self.notesLabel.frame = CGRectMake(ceilf(self.notesLabel.frame.origin.x), ceilf(self.notesLabel.frame.origin.y), ceilf(self.notesLabel.frame.size.width), ceilf(notesFrame.size.height));
+    }
     
     if(cellPosition == UACellBackgroundViewPositionBottom)
     {
@@ -144,7 +156,7 @@
         {
             if(!self.notesLabel)
             {
-                self.notesLabel = [[UILabel alloc] initWithFrame:CGRectMake(96.0f, 36.0f, 205.0f, 17.0f)];
+                self.notesLabel = [[UILabel alloc] initWithFrame:CGRectMake(96.0f, 36.0f, self.bounds.size.width-96.0f-kHorizontalMargin, 17.0f)];
                 self.notesLabel.text = @"Entry description";
                 self.notesLabel.backgroundColor = [UIColor clearColor];
                 self.notesLabel.font = kNotesFont;
@@ -157,12 +169,6 @@
                 [self addSubview:self.notesLabel];
             }
             
-            CGRect notesFrame = [notes boundingRectWithSize:CGSizeMake(205.0f, CGFLOAT_MAX)
-                                                    options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                 attributes:@{NSFontAttributeName:kNotesFont}
-                                                    context:nil];
-            
-            self.notesLabel.frame = CGRectMake(ceilf(self.notesLabel.frame.origin.x), ceilf(self.notesLabel.frame.origin.y), ceilf(self.notesLabel.frame.size.width), ceilf(notesFrame.size.height));
             self.notesLabel.text = notes;
         }
         else
@@ -170,7 +176,7 @@
             [self.notesLabel removeFromSuperview], self.notesLabel = nil;
         }
 
-        [self setNeedsDisplay];
+        [self setNeedsLayout];
     }
 }
 
@@ -220,14 +226,14 @@
 }
 
 #pragma mark - Helpers
-+ (CGFloat)additionalHeightWithMetaData:(NSDictionary *)data
++ (CGFloat)additionalHeightWithMetaData:(NSDictionary *)data width:(CGFloat)width
 {
     CGFloat height = 0.0f;
 
     NSString *notes = [data objectForKey:@"notes"];
     if(notes)
     {
-        CGRect notesFrame = [notes boundingRectWithSize:CGSizeMake(205.0f, CGFLOAT_MAX)
+        CGRect notesFrame = [notes boundingRectWithSize:CGSizeMake(width-96.0f-kHorizontalMargin, CGFLOAT_MAX)
                                                 options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                              attributes:@{NSFontAttributeName:kNotesFont}
                                                 context:nil];

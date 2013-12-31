@@ -36,6 +36,6 @@
 - (void)setCellStyleWithIndexPath:(NSIndexPath *)indexPath andTotalRows:(NSInteger)totalRows;
 
 // Helpers
-+ (CGFloat)additionalHeightWithMetaData:(NSDictionary *)data;
++ (CGFloat)additionalHeightWithMetaData:(NSDictionary *)data width:(CGFloat)width;
 
 @end

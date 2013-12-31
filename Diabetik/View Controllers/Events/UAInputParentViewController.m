@@ -238,6 +238,11 @@
         }
         
         CGSize keyboardSize = [[UAKeyboardController sharedInstance] keyboardSize];
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            keyboardSize = CGSizeMake(self.view.bounds.size.width, 200);
+        }
+        
         NSArray *buttons = @[self.locationButton, self.photoButton, reminderButton, tweetButton, likeButton, deleteButton];
         self.keyboardBackingView = [[UAKeyboardBackingView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - keyboardSize.height, keyboardSize.width, keyboardSize.height) andButtons:buttons];
         self.keyboardBackingView.delegate = self;
@@ -918,9 +923,8 @@
     NSDate *date = [[NSDate date] dateByAddingMinutes:minutes];
     UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithDate:date];
     UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-    [self presentViewController:nvc animated:YES completion:^{
-        // STUB
-    }];
+    nvc.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 #pragma mark - Helpers

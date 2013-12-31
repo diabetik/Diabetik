@@ -18,10 +18,10 @@
     {
         self.contentMode = UIViewContentModeScaleAspectFit;
         self.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-        self.layer.cornerRadius = 35.0f;
+        self.layer.cornerRadius = 45.0f;
         self.layer.masksToBounds = YES;
         self.layer.borderColor = [UIColor whiteColor].CGColor;
-        self.layer.borderWidth = 2.0f;
+        self.layer.borderWidth = 4.0f;
         self.clipsToBounds = YES;
     }
     

@@ -589,7 +589,7 @@
         if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
             UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-            nvc.modalPresentationStyle = UIModalPresentationPageSheet;
+            nvc.modalPresentationStyle = UIModalPresentationFormSheet;
             [self presentViewController:nvc animated:YES completion:nil];
         }
         else
@@ -615,7 +615,7 @@
             baseHeight = 46.0f;
         }
         
-        CGFloat height = baseHeight + [UATimelineViewCell additionalHeightWithMetaData:[self metaDataForTableView:tableView cellAtIndexPath:adjustedIndexPath]];
+        CGFloat height = baseHeight + [UATimelineViewCell additionalHeightWithMetaData:[self metaDataForTableView:tableView cellAtIndexPath:adjustedIndexPath] width:self.tableView.bounds.size.width];
         return height;
     }
     

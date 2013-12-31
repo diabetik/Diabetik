@@ -44,6 +44,7 @@
     if(vc)
     {
         UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
+        nvc.modalPresentationStyle = UIModalPresentationFormSheet;
         [self presentViewController:nvc animated:YES completion:nil];
     }
 }
