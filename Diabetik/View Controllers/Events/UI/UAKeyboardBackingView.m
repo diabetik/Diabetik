@@ -56,8 +56,8 @@
         if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
         {
             _keyboardToggleButton = [[UIButton alloc] initWithFrame:_controlContainer.bounds];
-            [_keyboardToggleButton setImage:[UIImage imageNamed:@"KeyboardDismissDownButton.png"] forState:UIControlStateNormal];
-            [_keyboardToggleButton setImage:[UIImage imageNamed:@"KeyboardDismissDownButtonPressed.png"] forState:UIControlStateHighlighted];
+            [_keyboardToggleButton setImage:[UIImage imageNamed:@"KeyboardDismissDownButton"] forState:UIControlStateNormal];
+            [_keyboardToggleButton setImage:[UIImage imageNamed:@"KeyboardDismissDownButtonPressed"] forState:UIControlStateHighlighted];
             [_keyboardToggleButton addTarget:self action:@selector(keyboardTogglePress:) forControlEvents:UIControlEventTouchUpInside];
             [_keyboardToggleButton setAdjustsImageWhenHighlighted:NO];
             [_keyboardToggleButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 10.0f)];

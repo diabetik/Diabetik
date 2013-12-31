@@ -323,25 +323,25 @@
     {
         UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] init];
         UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-        [self.navigationController presentViewController:nvc animated:YES completion:^{
-            // STUB
-        }];
+        nvc.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        [self.navigationController presentViewController:nvc animated:YES completion:nil];
     }
     else if(buttonIndex == 1)
     {
         UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] init];
         UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-        [self.navigationController presentViewController:nvc animated:YES completion:^{
-            // STUB
-        }];
+        nvc.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        [self.navigationController presentViewController:nvc animated:YES completion:nil];
     }
     else if(buttonIndex == 2)
     {
         UARuleReminderViewController *vc = [[UARuleReminderViewController alloc] init];
         UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-        [self.navigationController presentViewController:nvc animated:YES completion:^{
-            // STUB
-        }];
+        nvc.modalPresentationStyle = UIModalPresentationFormSheet;
+        
+        [self.navigationController presentViewController:nvc animated:YES completion:nil];
     }
 }
 

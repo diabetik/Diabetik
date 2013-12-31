@@ -110,7 +110,7 @@
         viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
         viewController.liveBlur = NO;
         viewController.limitMenuViewSize = YES;
-        viewController.blurSaturationDeltaFactor = 0.25f;
+        viewController.blurSaturationDeltaFactor = 3.0f;
         viewController.blurRadius = 10.0f;
         self.viewController = viewController;
     }
@@ -250,6 +250,10 @@
     UINavigationController *nvc = svc.viewControllers[1];
     UIViewController *vc = nvc.viewControllers[0];
     vc.navigationItem.leftBarButtonItem = nil;
+}
+- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
+{
+    return NO;
 }
 
 #pragma mark - Location services

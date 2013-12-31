@@ -88,7 +88,7 @@
     if(controlView)
     {
         UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, (controlView.frame.size.width < kMaxAccessoryWidth ? controlView.frame.size.width+10.0f : kMaxAccessoryWidth), self.frame.size.height)];
-        containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        containerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         
         controlView.frame = CGRectMake(floorf(containerView.frame.size.width - controlView.frame.size.width - 15.0f), floorf(containerView.frame.size.height/2-controlView.frame.size.height/2), controlView.frame.size.width, controlView.frame.size.height);
         [containerView addSubview:controlView];

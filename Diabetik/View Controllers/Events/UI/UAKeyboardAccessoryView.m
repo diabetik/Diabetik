@@ -54,7 +54,6 @@
 #pragma mark - Logic
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    // Make sure we're not tapping our keyboard dismiss button
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
     {
         CGRect button = CGRectMake(self.frame.size.width - self.backingView.keyboardToggleButton.frame.size.width, 0.0f, self.backingView.keyboardToggleButton.frame.size.width, self.frame.size.height);

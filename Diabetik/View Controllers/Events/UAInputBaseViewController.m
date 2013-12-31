@@ -60,6 +60,13 @@
         self.autocompleteTagBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
         self.autocompleteTagBar.showTagButton = YES;
         self.autocompleteTagBar.delegate = self;
+        
+        dummyNotesTextView = [[UANotesTextView alloc] initWithFrame:CGRectZero];
+        dummyNotesTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        dummyNotesTextView.scrollEnabled = NO;
+        dummyNotesTextView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        dummyNotesTextView.autocorrectionType = UITextAutocorrectionTypeYes;
+        dummyNotesTextView.font = [UAFont standardMediumFontWithSize:16.0f];
     }
     return self;
 }
@@ -261,8 +268,7 @@
 {
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textView.tag inSection:0];
     
-    //NSIndexPath *indexPath = [self.tableView indexPathForCell:(UAEventInputViewCell *)[[textView superview] superview]];
-    //[self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    [textView reloadInputViews];
 }
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
@@ -291,7 +297,7 @@
     // Finally, update our tableview
     [UIView setAnimationsEnabled:NO];
     [self.tableView beginUpdates];
-    textViewHeight = [textView height];
+    //textViewHeight = [textView height];
     [self.tableView endUpdates];
     [UIView setAnimationsEnabled:YES];
 }
@@ -301,6 +307,8 @@
 {
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:textField.tag inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    
+    [textField reloadInputViews];
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -341,7 +349,7 @@
                 textView.text = [textView.text stringByReplacingCharactersInRange:NSMakeRange(range.location+1, range.length-1) withString:[NSString stringWithFormat:@"%@ ", suggestion]];
             }
             
-            textViewHeight = textView.intrinsicContentSize.height;
+            //textViewHeight = textView.intrinsicContentSize.height;
             notes = textView.text;
             
             //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];

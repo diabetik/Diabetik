@@ -67,8 +67,10 @@
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *moc;
 @property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
-
 @property (nonatomic, assign) NSInteger relativeDays;
+
+// Logic
+- (void)showReports;
 
 @end
 
@@ -120,9 +122,21 @@
 {
     [super viewDidLoad];
     
+    __weak typeof(self) weakSelf = self;
+    
     // Setup our nav bar buttons
     UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
-    [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        //UIBarButtonItem *reportsBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showReports)];
+        //[self.navigationItem setRightBarButtonItems:@[addBarButtonItem, reportsBarButtonItem]];
+        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
+    }
+    else
+    {
+        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
+    }
     
     // Setup our search bar
     searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
@@ -132,28 +146,27 @@
     self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
     self.searchDisplayController.delegate = self;
-    //self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
     self.tableView.tableHeaderView = searchBar;
     self.tableView.backgroundColor = self.view.backgroundColor;
     
-    //self.tableView.contentOffset = CGPointMake(0.0f, searchBar.bounds.size.height);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
     self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // Footer view
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-    UILabel *footerLabel = [[UILabel alloc] initWithFrame:footerView.frame];
-    footerLabel.text = NSLocalizedString(@"Rotate to view reports", nil);
-    footerLabel.textAlignment = NSTextAlignmentCenter;
-    footerLabel.backgroundColor = [UIColor clearColor];
-    footerLabel.font = [UAFont standardRegularFontWithSize:14.0f];
-    footerLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-    footerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [footerView addSubview:footerLabel];
-    self.tableView.tableFooterView = footerView;
-    
-    __weak typeof(self) weakSelf = self;
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+        UILabel *footerLabel = [[UILabel alloc] initWithFrame:footerView.frame];
+        footerLabel.text = NSLocalizedString(@"Rotate to view reports", nil);
+        footerLabel.textAlignment = NSTextAlignmentCenter;
+        footerLabel.backgroundColor = [UIColor clearColor];
+        footerLabel.font = [UAFont standardRegularFontWithSize:14.0f];
+        footerLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        footerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [footerView addSubview:footerLabel];
+        self.tableView.tableFooterView = footerView;
+    }
     
     // Notifications
     applicationResumeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:@"applicationResumed" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -181,10 +194,14 @@
     self.navigationController.navigationBar.tintColor = defaultTintColor;
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]};
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(orientationChanged:)
-                                                 name:@"UIDeviceOrientationDidChangeNotification"
-                                               object:nil];
+    // Only listen out for orientation changes if we're not using an iPad
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(orientationChanged:)
+                                                     name:@"UIDeviceOrientationDidChangeNotification"
+                                                   object:nil];
+    }
     
     // Setup other table styling
     if(!noEntriesView)
@@ -246,6 +263,28 @@
     {
         self.tableView.alpha = 0.0f;
         noEntriesView.alpha = 1.0f;
+    }
+}
+- (void)showReports
+{
+    if(!self.reportsVC)
+    {
+        self.reportsVC = [[UAReportsViewController alloc] initFromDate:fromDate toDate:toDate];
+        self.reportsVC.delegate = self;
+    }
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:self.reportsVC];
+        nvc.modalPresentationStyle = UIModalPresentationPageSheet;
+        
+        [self presentViewController:nvc animated:YES completion:nil];
+    }
+    else
+    {
+        self.reportsVC.view.frame = self.parentViewController.view.frame;
+        
+        [self presentViewController:self.reportsVC animated:NO completion:nil];
     }
 }
 - (void)setDateRangeForRelativeDays:(NSInteger)days
@@ -921,11 +960,7 @@
 
     if(UIInterfaceOrientationIsLandscape(appOrientation) && !self.reportsVC)
     {
-        self.reportsVC = [[UAReportsViewController alloc] initFromDate:fromDate toDate:toDate];
-        self.reportsVC.delegate = self;
-        self.reportsVC.view.frame = self.parentViewController.view.frame;
-        
-        [self presentViewController:self.reportsVC animated:NO completion:nil];
+        [self showReports];
     }
 }
 

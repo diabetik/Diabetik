@@ -42,7 +42,7 @@
     self = [super init];
     if (self)
     {
-        self.title = NSLocalizedString(@"Add a Meal", nil);
+        self.title = NSLocalizedString(@"Add Food", nil);
         
         _type = 0;
         grams = 0;
@@ -54,7 +54,7 @@
     self = [super initWithEvent:theEvent];
     if(self)
     {
-        self.title = NSLocalizedString(@"Edit Meal", nil);
+        self.title = NSLocalizedString(@"Edit Food", nil);
         
         UAMeal *meal = (UAMeal *)[self event];
         if(meal)
@@ -161,8 +161,7 @@
 }
 - (void)configureAppearanceForTableViewCell:(UAEventInputViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    [cell setDrawsBorder:YES];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell resetCell];
     
     NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
     if(indexPath.row == 0)
@@ -173,7 +172,6 @@
         textField.autocorrectionType = UITextAutocorrectionTypeYes;
         textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         textField.delegate = self;
-        textField.inputView = nil;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
         self.autocompleteBar.frame = accessoryView.contentView.bounds;
@@ -188,13 +186,11 @@
         textField.placeholder = NSLocalizedString(@"grams (optional)", @"Amount of carbs in grams (this field is optional)");
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.delegate = self;
-        textField.inputView = nil;
         
         if(grams > 0)
         {
             textField.text = [valueFormatter stringFromNumber:[NSNumber numberWithDouble:grams]];
         }
-        textField.inputAccessoryView = nil;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Carbs", @"Amount of carbohydrates")];
     }
@@ -207,7 +203,6 @@
         textField.keyboardType = UIKeyboardTypeAlphabet;
         textField.clearButtonMode = UITextFieldViewModeNever;
         textField.delegate = self;
-        textField.inputView = nil;
         
         UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];
         [datePicker setDate:self.date];
@@ -223,7 +218,6 @@
         UANotesTextView *textView = (UANotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
-        textViewHeight = textView.contentSize.height;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
         self.autocompleteTagBar.frame = accessoryView.contentView.bounds;
@@ -318,7 +312,9 @@
     float height = 0.0;
     if(indexPath.row == 3)
     {
-        height = textViewHeight;
+        dummyNotesTextView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width-88.0f, 0.0f);
+        dummyNotesTextView.text = notes;
+        height = [dummyNotesTextView height];
     }
     else if(indexPath.row == 4)
     {

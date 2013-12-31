@@ -72,6 +72,10 @@
         self.tableView.backgroundView = nil;
         self.view.backgroundColor = [UIColor clearColor];
     }
+    else
+    {
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self.tableView reloadData];

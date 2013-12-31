@@ -187,8 +187,7 @@
 }
 - (void)configureAppearanceForTableViewCell:(UAEventInputViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    [cell setDrawsBorder:YES];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell resetCell];
     
     if(indexPath.row == 0)
     {
@@ -204,7 +203,6 @@
         textField.text = value;
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.delegate = self;
-        textField.inputView = nil;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Value", nil)];
     }
@@ -223,7 +221,6 @@
         [datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
         [datePicker addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
         textField.inputView = datePicker;
-        textField.inputAccessoryView = nil;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Date", nil)];
     }
@@ -232,7 +229,6 @@
         UANotesTextView *textView = (UANotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
-        textViewHeight = textView.intrinsicContentSize.height;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
         self.autocompleteTagBar.frame = accessoryView.contentView.bounds;
@@ -310,7 +306,9 @@
     float height = 0.0;
     if(indexPath.row == 2)
     {
-        height = textViewHeight;
+        dummyNotesTextView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width-88.0f, 0.0f);
+        dummyNotesTextView.text = notes;
+        height = [dummyNotesTextView height];
     }
     else if(indexPath.row == 3)
     {
