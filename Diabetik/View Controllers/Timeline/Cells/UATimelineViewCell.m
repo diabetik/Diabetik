@@ -25,7 +25,7 @@
 #define kNotesFont [UAFont standardRegularFontWithSize:13.0f]
 #define kNotesBottomVerticalPadding 13.0f
 #define kBottomVerticalPadding 12.0f
-#define kHorizontalMargin 8.0f
+#define kHorizontalMargin 16.0f
 
 #define kInlinePhotoHeight 150.0f
 #define kInlinePhotoInset 5.0f
@@ -70,7 +70,7 @@
         _descriptionLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.contentView addSubview:_descriptionLabel];
         
-        _valueLabel = [[UILabel alloc] initWithFrame:CGRectMake(60.0f, 13.0f, 240.0f, 19.0f)];
+        _valueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _valueLabel.text = @"0.0";
         _valueLabel.backgroundColor = [UIColor clearColor];
         _valueLabel.textAlignment = NSTextAlignmentRight;
@@ -99,13 +99,23 @@
 {
     [super layoutSubviews];
     
-    _descriptionLabel.frame = CGRectMake(96.0f, 13.0f, self.bounds.size.width-96.0f-kHorizontalMargin, 19.0f);
-    
-    if(self.notesLabel)
+    CGRect descriptionLabelFrame = CGRectMake(96.0f, 13.0f, ceilf(self.bounds.size.width-96.0f-kHorizontalMargin), 19.0f);
+    if(self.valueLabel && self.valueLabel.text)
+    {
+        CGRect valueFrame = [self.valueLabel.text boundingRectWithSize:CGSizeMake(self.valueLabel.bounds.size.width, CGFLOAT_MAX)
+                                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                            attributes:@{NSFontAttributeName:self.valueLabel.font}
+                                                               context:nil];
+        descriptionLabelFrame.size.width -= ceilf(valueFrame.size.width + 10.0f);
+    }
+    _descriptionLabel.frame = descriptionLabelFrame;
+    _valueLabel.frame = CGRectMake(96.0f, 13.0f, ceilf(self.bounds.size.width-96.0f-kHorizontalMargin), 19.0f);
+
+    if(self.notesLabel && self.notesLabel.text)
     {
         CGRect notesFrame = [self.notesLabel.text boundingRectWithSize:CGSizeMake(self.notesLabel.bounds.size.width, CGFLOAT_MAX)
                                                                options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                            attributes:@{NSFontAttributeName:kNotesFont}
+                                                            attributes:@{NSFontAttributeName:self.notesLabel.font}
                                                                context:nil];
         
         self.notesLabel.frame = CGRectMake(ceilf(self.notesLabel.frame.origin.x), ceilf(self.notesLabel.frame.origin.y), ceilf(self.notesLabel.frame.size.width), ceilf(notesFrame.size.height));
