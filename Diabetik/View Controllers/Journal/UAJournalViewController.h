@@ -24,7 +24,7 @@
 #import "UABaseViewController.h"
 #import "UAAddEntryModalView.h"
 
-@interface UAJournalViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UAModalViewDelegate, UAAddEntryModalDelegate>
+@interface UAJournalViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIPopoverControllerDelegate, UIActionSheetDelegate, UATooltipViewControllerDelegate, UAAddEntryModalDelegate>
 
 // Logic
 - (OrderedDictionary *)fetchReadingData;

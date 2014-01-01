@@ -157,15 +157,13 @@
 }
 - (void)configureAppearanceForTableViewCell:(UAEventInputViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    [cell setDrawsBorder:YES];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell resetCell];
     
     if(indexPath.row == 0)
     {
         UITextField *textField = (UITextField *)cell.control;
         textField.placeholder = NSLocalizedString(@"Title", nil);
         textField.text = title;
-        textField.clearButtonMode = UITextFieldViewModeNever;
         textField.delegate = self;
         textField.inputView = nil;
         textField.inputAccessoryView = nil;
@@ -196,10 +194,10 @@
         UANotesTextView *textView = (UANotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
-        textViewHeight = textView.contentSize.height;
+        textView.inputView = nil;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        self.autocompleteTagBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height);
+        self.autocompleteTagBar.frame = accessoryView.contentView.bounds;
         [accessoryView.contentView addSubview:self.autocompleteTagBar];
         textView.inputAccessoryView = accessoryView;
         
@@ -212,7 +210,7 @@
 #pragma mark - UI
 - (UIColor *)barTintColor
 {
-    return [UIColor colorWithRed:126.0f/255.0f green:113.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+    return [UIColor colorWithRed:105.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
 }
 
 #pragma mark - UITableViewDatasource methods
@@ -253,7 +251,9 @@
     float height = 0.0;
     if(indexPath.row == 2)
     {
-        height = textViewHeight;
+        dummyNotesTextView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width-88.0f, 0.0f);
+        dummyNotesTextView.text = notes;
+        height = [dummyNotesTextView height];
     }
     
     if(height < 44.0f) height = 44.0f;

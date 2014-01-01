@@ -28,6 +28,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
+        self.contentMode = UIViewContentModeRedraw;
 
         self.title = title;
         self.message = message;

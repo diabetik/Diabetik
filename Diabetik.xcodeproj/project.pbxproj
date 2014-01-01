@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5301AED5185A08A0005F4CF4 /* UACoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301AED4185A08A0005F4CF4 /* UACoreDataController.m */; };
 		5301AED8185A0D36005F4CF4 /* UASettingsiCloudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301AED7185A0D36005F4CF4 /* UASettingsiCloudViewController.m */; };
+		5304B5BB18745DCF00184544 /* UATooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304B5BA18745DCF00184544 /* UATooltipView.m */; };
 		530603A4167FCFFA00EFBE8B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530603A3167FCFFA00EFBE8B /* CoreLocation.framework */; };
 		531026521849135E001C5766 /* UAMenuAccountAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 531026511849135E001C5766 /* UAMenuAccountAvatarView.m */; };
 		531D4D81184D372800ABAEC3 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D76184D372800ABAEC3 /* RECommonFunctions.m */; };
@@ -143,7 +144,7 @@
 		533F356717736C5500AD89E2 /* UANavSubtitleHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354917736C5500AD89E2 /* UANavSubtitleHeaderView.m */; };
 		533F356817736C5500AD89E2 /* UAUIHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354B17736C5500AD89E2 /* UAUIHintView.m */; };
 		533F356917736C5500AD89E2 /* UANavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354E17736C5500AD89E2 /* UANavigationController.m */; };
-		533F356A17736C5500AD89E2 /* UAModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355217736C5500AD89E2 /* UAModalView.m */; };
+		533F356A17736C5500AD89E2 /* UATooltipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355217736C5500AD89E2 /* UATooltipViewController.m */; };
 		533F356B17736C5500AD89E2 /* UACreditsTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355417736C5500AD89E2 /* UACreditsTooltipView.m */; };
 		533F356C17736C5500AD89E2 /* UAExportTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355617736C5500AD89E2 /* UAExportTooltipView.m */; };
 		533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355817736C5500AD89E2 /* UAIntroductionTooltipView.m */; };
@@ -167,6 +168,10 @@
 		539E1CCF17B7FEA10059ED17 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E1CCE17B7FEA10059ED17 /* UIImage+ImageEffects.m */; };
 		539E1CD117B7FEDD0059ED17 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539E1CD017B7FEDD0059ED17 /* Accelerate.framework */; };
 		539E9FA4184B8C22009803D1 /* UITextView+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 539E9FA3184B8C22009803D1 /* UITextView+Extension.m */; };
+		53A5D6BF1870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6B91870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m */; };
+		53A5D6C01870D5950077DFBE /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */; };
+		53A5D6C11870D5950077DFBE /* UAInsulinCalculatorTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */; };
+		53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5284818717597004E7F01 /* UAAddEntryListViewController.m */; };
 		53B53ADF18672B0A00773EE7 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ABD18672B0A00773EE7 /* AFHTTPRequestOperation.m */; };
 		53B53AE018672B0A00773EE7 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ABF18672B0A00773EE7 /* AFHTTPRequestOperationManager.m */; };
 		53B53AE118672B0A00773EE7 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AC118672B0A00773EE7 /* AFHTTPSessionManager.m */; };
@@ -215,6 +220,8 @@
 		5301AED4185A08A0005F4CF4 /* UACoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UACoreDataController.m; sourceTree = "<group>"; };
 		5301AED6185A0D36005F4CF4 /* UASettingsiCloudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsiCloudViewController.h; sourceTree = "<group>"; };
 		5301AED7185A0D36005F4CF4 /* UASettingsiCloudViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsiCloudViewController.m; sourceTree = "<group>"; };
+		5304B5B918745DCF00184544 /* UATooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATooltipView.h; sourceTree = "<group>"; };
+		5304B5BA18745DCF00184544 /* UATooltipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATooltipView.m; sourceTree = "<group>"; };
 		530603A3167FCFFA00EFBE8B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		531026501849135E001C5766 /* UAMenuAccountAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMenuAccountAvatarView.h; sourceTree = "<group>"; };
 		531026511849135E001C5766 /* UAMenuAccountAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMenuAccountAvatarView.m; sourceTree = "<group>"; };
@@ -463,8 +470,8 @@
 		533F354B17736C5500AD89E2 /* UAUIHintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAUIHintView.m; sourceTree = "<group>"; };
 		533F354D17736C5500AD89E2 /* UANavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANavigationController.h; sourceTree = "<group>"; };
 		533F354E17736C5500AD89E2 /* UANavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANavigationController.m; sourceTree = "<group>"; };
-		533F355117736C5500AD89E2 /* UAModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAModalView.h; sourceTree = "<group>"; };
-		533F355217736C5500AD89E2 /* UAModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAModalView.m; sourceTree = "<group>"; };
+		533F355117736C5500AD89E2 /* UATooltipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATooltipViewController.h; sourceTree = "<group>"; };
+		533F355217736C5500AD89E2 /* UATooltipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATooltipViewController.m; sourceTree = "<group>"; };
 		533F355317736C5500AD89E2 /* UACreditsTooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACreditsTooltipView.h; sourceTree = "<group>"; };
 		533F355417736C5500AD89E2 /* UACreditsTooltipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UACreditsTooltipView.m; sourceTree = "<group>"; };
 		533F355517736C5500AD89E2 /* UAExportTooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAExportTooltipView.h; sourceTree = "<group>"; };
@@ -503,7 +510,15 @@
 		539E9FA2184B8C22009803D1 /* UITextView+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Extension.h"; sourceTree = "<group>"; };
 		539E9FA3184B8C22009803D1 /* UITextView+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Extension.m"; sourceTree = "<group>"; };
 		539E9FA7184BAA20009803D1 /* UACredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACredentials.h; sourceTree = "<group>"; };
+		53A5D6B81870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTextFieldViewCell.h; sourceTree = "<group>"; };
+		53A5D6B91870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTextFieldViewCell.m; sourceTree = "<group>"; };
+		53A5D6BA1870D5950077DFBE /* UAInsulinCalculatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorViewController.h; sourceTree = "<group>"; };
+		53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorViewController.m; sourceTree = "<group>"; };
+		53A5D6BD1870D5950077DFBE /* UAInsulinCalculatorTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTitleView.h; sourceTree = "<group>"; };
+		53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTitleView.m; sourceTree = "<group>"; };
 		53AE668A178727D800DE66D9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		53B5284718717597004E7F01 /* UAAddEntryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryListViewController.h; sourceTree = "<group>"; };
+		53B5284818717597004E7F01 /* UAAddEntryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryListViewController.m; sourceTree = "<group>"; };
 		53B53ABC18672B0A00773EE7 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		53B53ABD18672B0A00773EE7 /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		53B53ABE18672B0A00773EE7 /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -854,6 +869,7 @@
 		533F324F1773266600AD89E2 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				53A5D6B61870D5950077DFBE /* Insulin Calculator */,
 				533F32591773266600AD89E2 /* Add Entry */,
 				533F325E1773266600AD89E2 /* Events */,
 				533F328B1773266600AD89E2 /* Export */,
@@ -876,6 +892,8 @@
 				533F325B1773266600AD89E2 /* UAAddEntryModalButton.m */,
 				533F325C1773266600AD89E2 /* UAAddEntryModalView.h */,
 				533F325D1773266600AD89E2 /* UAAddEntryModalView.m */,
+				53B5284718717597004E7F01 /* UAAddEntryListViewController.h */,
+				53B5284818717597004E7F01 /* UAAddEntryListViewController.m */,
 			);
 			path = "Add Entry";
 			sourceTree = "<group>";
@@ -1278,6 +1296,8 @@
 				533F355817736C5500AD89E2 /* UAIntroductionTooltipView.m */,
 				533F355917736C5500AD89E2 /* UARemindersTooltipView.h */,
 				533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */,
+				5304B5B918745DCF00184544 /* UATooltipView.h */,
+				5304B5BA18745DCF00184544 /* UATooltipView.m */,
 			);
 			path = Tooltips;
 			sourceTree = "<group>";
@@ -1285,8 +1305,8 @@
 		533F355017736C5500AD89E2 /* Modal view */ = {
 			isa = PBXGroup;
 			children = (
-				533F355117736C5500AD89E2 /* UAModalView.h */,
-				533F355217736C5500AD89E2 /* UAModalView.m */,
+				533F355117736C5500AD89E2 /* UATooltipViewController.h */,
+				533F355217736C5500AD89E2 /* UATooltipViewController.m */,
 			);
 			path = "Modal view";
 			sourceTree = "<group>";
@@ -1357,6 +1377,35 @@
 				53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */,
 				53949905184A98B400FF20D1 /* UASettingsViewCell.h */,
 				53949906184A98B400FF20D1 /* UASettingsViewCell.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		53A5D6B61870D5950077DFBE /* Insulin Calculator */ = {
+			isa = PBXGroup;
+			children = (
+				53A5D6B71870D5950077DFBE /* Cells */,
+				53A5D6BA1870D5950077DFBE /* UAInsulinCalculatorViewController.h */,
+				53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */,
+				53A5D6BC1870D5950077DFBE /* UI */,
+			);
+			path = "Insulin Calculator";
+			sourceTree = "<group>";
+		};
+		53A5D6B71870D5950077DFBE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				53A5D6B81870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.h */,
+				53A5D6B91870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		53A5D6BC1870D5950077DFBE /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				53A5D6BD1870D5950077DFBE /* UAInsulinCalculatorTitleView.h */,
+				53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1515,7 +1564,7 @@
 								enabled = 0;
 							};
 							com.apple.iCloud = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -1656,6 +1705,7 @@
 				53B53AE518672B0A00773EE7 /* AFURLRequestSerialization.m in Sources */,
 				533F34A21773266600AD89E2 /* MBProgressHUD.m in Sources */,
 				531D4D83184D372800ABAEC3 /* REFrostedViewController.m in Sources */,
+				53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */,
 				533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */,
 				533F34A41773266600AD89E2 /* UIImage+Resize.m in Sources */,
 				533F34A81773266600AD89E2 /* UAAddEntryModalButton.m in Sources */,
@@ -1676,8 +1726,10 @@
 				53B53AEE18672B0A00773EE7 /* UIWebView+AFNetworking.m in Sources */,
 				533F34B31773266600AD89E2 /* UAInputBaseViewController.m in Sources */,
 				53D5C4FD184132B50000CB86 /* Appirater.m in Sources */,
+				5304B5BB18745DCF00184544 /* UATooltipView.m in Sources */,
 				533F34B41773266600AD89E2 /* UAInputParentViewController.m in Sources */,
 				531D4D84184D372800ABAEC3 /* UIImage+REFrostedViewController.m in Sources */,
+				53A5D6BF1870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m in Sources */,
 				533F34B51773266600AD89E2 /* UAMealInputViewController.m in Sources */,
 				533F34B61773266600AD89E2 /* UAMedicineInputViewController.m in Sources */,
 				533F34B71773266600AD89E2 /* UANoteInputViewController.m in Sources */,
@@ -1730,7 +1782,9 @@
 				533F34DF1773266600AD89E2 /* UASettingsViewController.m in Sources */,
 				533F34E01773266600AD89E2 /* UATimelineHeaderViewCell.m in Sources */,
 				533F34E11773266600AD89E2 /* UATimelineViewCell.m in Sources */,
+				53A5D6C11870D5950077DFBE /* UAInsulinCalculatorTitleView.m in Sources */,
 				533F34E21773266600AD89E2 /* UATimelineTableHeaderView.m in Sources */,
+				53A5D6C01870D5950077DFBE /* UAInsulinCalculatorViewController.m in Sources */,
 				53B53AE118672B0A00773EE7 /* AFHTTPSessionManager.m in Sources */,
 				533F34E31773266600AD89E2 /* UATimelineViewController.m in Sources */,
 				53BAD21F1847FF3B007F2977 /* UASideMenuHeaderView.m in Sources */,
@@ -1762,7 +1816,7 @@
 				53B53AE718672B0A00773EE7 /* AFURLSessionManager.m in Sources */,
 				533F356817736C5500AD89E2 /* UAUIHintView.m in Sources */,
 				533F356917736C5500AD89E2 /* UANavigationController.m in Sources */,
-				533F356A17736C5500AD89E2 /* UAModalView.m in Sources */,
+				533F356A17736C5500AD89E2 /* UATooltipViewController.m in Sources */,
 				533F356B17736C5500AD89E2 /* UACreditsTooltipView.m in Sources */,
 				531D4D85184D372800ABAEC3 /* UIView+REFrostedViewController.m in Sources */,
 				53B53AE418672B0A00773EE7 /* AFURLConnectionOperation.m in Sources */,
@@ -1845,12 +1899,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
@@ -1870,9 +1924,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = Diabetik/Diabetik.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1885,7 +1938,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Diabetik/Diabetik-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1897,9 +1950,9 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = "Beta Release";
@@ -1916,7 +1969,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1928,7 +1981,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1954,12 +2007,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
@@ -1979,9 +2032,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = Diabetik/Diabetik.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1991,7 +2043,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Diabetik/Diabetik-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -2004,9 +2056,9 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2016,9 +2068,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_ENTITLEMENTS = Diabetik/Diabetik.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2030,7 +2081,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "RELEASE_BUILD=1";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Diabetik/Diabetik-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -2042,9 +2093,9 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "DCF8D6C3-0348-45A9-B966-E34CA3067D7F";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

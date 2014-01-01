@@ -64,7 +64,6 @@
     self = [super init];
     if (self)
     {
-        //_moc = aMOC;
         isAddingQuickEntry = NO;
         isAnimatingAddEntry = NO;
         isBeingPopped = NO;
@@ -132,6 +131,22 @@
         [self performSetup];
     }
     
+    return self;
+}
+- (id)initWithMedicineAmount:(NSNumber *)amount
+{
+    self = [super init];
+    if (self)
+    {
+        isAddingQuickEntry = NO;
+        isAnimatingAddEntry = NO;
+        isBeingPopped = NO;
+        
+        UAMedicineInputViewController *vc = [[UAMedicineInputViewController alloc] initWithAmount:amount];
+        self.viewControllers = [NSMutableArray arrayWithObject:vc];
+        
+        [self performSetup];
+    }
     return self;
 }
 - (void)performSetup
@@ -223,6 +238,11 @@
         }
         
         CGSize keyboardSize = [[UAKeyboardController sharedInstance] keyboardSize];
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            keyboardSize = CGSizeMake(self.view.bounds.size.width, 200);
+        }
+        
         NSArray *buttons = @[self.locationButton, self.photoButton, reminderButton, tweetButton, likeButton, deleteButton];
         self.keyboardBackingView = [[UAKeyboardBackingView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - keyboardSize.height, keyboardSize.width, keyboardSize.height) andButtons:buttons];
         self.keyboardBackingView.delegate = self;
@@ -235,9 +255,9 @@
     // Setup our scroll view
     if(!self.scrollView)
     {
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.view.bounds.size.height - self.keyboardBackingView.bounds.size.height + kAccessoryViewHeight)];
+        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.keyboardBackingView.bounds.size.height + kAccessoryViewHeight - self.topLayoutGuide.length)];
         self.scrollView.delegate = self;
-        self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        //self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         self.scrollView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
         self.scrollView.alwaysBounceHorizontal = YES;
         self.scrollView.directionalLockEnabled = YES;
@@ -326,7 +346,7 @@
 {
     [super viewWillLayoutSubviews];
     
-    self.scrollView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.view.bounds.size.height - self.keyboardBackingView.bounds.size.height + kAccessoryViewHeight - self.topLayoutGuide.length);
+    self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.keyboardBackingView.bounds.size.height + kAccessoryViewHeight - self.topLayoutGuide.length);
 }
 
 #pragma mark - Logic
@@ -517,19 +537,23 @@
 }
 - (void)activateTargetViewController
 {
+    UAInputBaseViewController *activeVC = nil;
+    UAInputBaseViewController *targetVC = [self targetViewController];
+    
     BOOL currentlyEditing = NO;
     for(UAInputBaseViewController *vc in self.viewControllers)
     {
         if(vc.activeControlIndexPath != nil)
         {
             currentlyEditing = YES;
+            activeVC = vc;
         }
-        [vc willBecomeInactive];
+        
+        if(![vc isEqual:targetVC]) [vc willBecomeInactive];
     }
     
-    UAInputBaseViewController *targetVC = [self targetViewController];
-    [targetVC didBecomeActive:currentlyEditing];
-    
+    if(![activeVC isEqual:targetVC]) [targetVC didBecomeActive:currentlyEditing];
+        
     self.navigationController.navigationBar.barTintColor = [targetVC barTintColor];
     
     [self updateNavigationBar];
@@ -903,9 +927,8 @@
     NSDate *date = [[NSDate date] dateByAddingMinutes:minutes];
     UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithDate:date];
     UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-    [self presentViewController:nvc animated:YES completion:^{
-        // STUB
-    }];
+    nvc.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 #pragma mark - Helpers
@@ -946,6 +969,7 @@
     return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
 
+/*
 #pragma mark - Autorotation
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -959,6 +983,7 @@
 {
     return UIInterfaceOrientationMaskPortrait;
 }
+ */
 
 #pragma mark - UIViewController methods
 - (UIStatusBarStyle)preferredStatusBarStyle

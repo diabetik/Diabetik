@@ -79,6 +79,7 @@
         
         UIImageView *chevron = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"JournalIconChevron"]];
         chevron.frame = CGRectMake(self.bounds.size.width - 30.0f, 12.0f, 13.0f, 20.0f);
+        chevron.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [self.contentView addSubview:chevron];
         
         CGFloat y = 46.0f;

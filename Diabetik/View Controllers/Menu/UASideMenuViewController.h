@@ -19,9 +19,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UAModalView.h"
 
-@interface UASideMenuViewController : UABaseTableViewController <UAModalViewDelegate>
+@interface UASideMenuViewController : UABaseTableViewController <UATooltipViewControllerDelegate>
 
 // UI
 - (void)showCredits;

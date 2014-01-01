@@ -39,6 +39,8 @@
         textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
         textField.text = @"";
+        textField.inputView = nil;
+        textField.inputAccessoryView = nil;
         
         self.control = textField;
     }

@@ -25,6 +25,7 @@
 #import "UAJournalMonthViewCell.h"
 #import "UAIntroductionTooltipView.h"
 #import "UAAddEntryModalView.h"
+#import "UAAddEntryListViewController.h"
 
 #import "UABGInputViewController.h"
 #import "UAMealInputViewController.h"
@@ -44,10 +45,14 @@
     
     id settingsChangeNotifier;
     
+    UAShortcutButton *todayButton, *sevenDayButton, *fourteenDayButton;
+    
     double todaysMean, sevenDaysMean, fourteenDaysMean;
     double todaysHighest, sevenDaysHighest, fourteenDaysHighest;
     NSInteger todaysCount, sevenDaysCount, fourteenDaysCount;
 }
+@property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
+
 @end
 
 @implementation UAJournalViewController
@@ -70,6 +75,18 @@
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf reloadViewData:note];
         }];
+        
+        // Menu items
+        UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
+        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
+        
+        // Don't setup our menu bar button item for iPad users, as this is handled by our UISplitViewControllerDelegate
+        if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+        {
+            UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconListMenu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showSideMenu:)];
+            [self.navigationItem setLeftBarButtonItem:menuBarButtonItem animated:NO];
+        }
+        
     }
     return self;
 }
@@ -86,9 +103,7 @@
     headerView.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
     headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
-    CGFloat buttonWidth = floorf(self.view.frame.size.width/3.0f);
-    
-    UAShortcutButton *todayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonWidth, 119.0f)];
+    todayButton = [[UAShortcutButton alloc] initWithFrame:CGRectZero];
     [todayButton setTitle:[NSLocalizedString(@"Today", nil) uppercaseString] forState:UIControlStateNormal];
     [todayButton setImage:[UIImage imageNamed:@"JournalShortcutToday"] forState:UIControlStateNormal];
     [todayButton setImage:[UIImage imageNamed:@"JournalShortcutTodaySelected"] forState:UIControlStateHighlighted];
@@ -97,7 +112,7 @@
     [todayButton addTarget:self action:@selector(showRelativeTimeline:) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:todayButton];
     
-    UAShortcutButton *sevenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(buttonWidth, 0.0f, buttonWidth, 119.0f)];
+    sevenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectZero];
     [sevenDayButton setTitle:[NSLocalizedString(@"Past 7 Days", nil) uppercaseString] forState:UIControlStateNormal];
     [sevenDayButton setImage:[UIImage imageNamed:@"JournalShortcut7Days"] forState:UIControlStateNormal];
     [sevenDayButton setImage:[UIImage imageNamed:@"JournalShortcut7DaysSelected"] forState:UIControlStateHighlighted];
@@ -106,7 +121,7 @@
     [sevenDayButton addTarget:self action:@selector(showRelativeTimeline:) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:sevenDayButton];
     
-    UAShortcutButton *fourteenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(buttonWidth*2, 0.0f, buttonWidth, 119.0f)];
+    fourteenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectZero];
     [fourteenDayButton setTitle:[NSLocalizedString(@"Past 14 days", nil) uppercaseString] forState:UIControlStateNormal];
     [fourteenDayButton setImage:[UIImage imageNamed:@"JournalShortcut14Days"] forState:UIControlStateNormal];
     [fourteenDayButton setImage:[UIImage imageNamed:@"JournalShortcut14DaysSelected"] forState:UIControlStateHighlighted];
@@ -122,6 +137,16 @@
     
     [self refreshView];
 }
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    if ([self.addEntryPopoverController isPopoverVisible])
+    {
+        [self.addEntryPopoverController dismissPopoverAnimated:YES];
+    }
+    self.addEntryPopoverController = nil;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -130,18 +155,21 @@
     [self.tableView registerClass:[UAJournalMonthViewCell class] forCellReuseIdentifier:@"UAJournalMonthViewCell"];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UAJournalSpacerViewCell"];
     
-    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
-    [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
-    
-    UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconListMenu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showSideMenu:)];
-    [self.navigationItem setLeftBarButtonItem:menuBarButtonItem animated:NO];
-    
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenStarterTooltip])
     {
         [self showTips];
     }
     
     [self reloadViewData:nil];
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    CGFloat buttonWidth = floorf(self.view.frame.size.width/3.0f);
+    todayButton.frame = CGRectMake(0.0f, 0.0f, buttonWidth, 119.0f);
+    sevenDayButton.frame = CGRectMake(buttonWidth, 0.0f, buttonWidth, 119.0f);
+    fourteenDayButton.frame = CGRectMake(buttonWidth*2.0f, 0.0f, buttonWidth, 119.0f);
 }
 
 #pragma mark - Logic
@@ -230,18 +258,33 @@
 {
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
-    UAAddEntryModalView *modalView = [[UAAddEntryModalView alloc] initWithFrame:self.navigationController.view.bounds];
-    modalView.delegate = self;
-    [self.navigationController.view addSubview:modalView];
-    [modalView present];
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        UAAddEntryModalView *modalView = [[UAAddEntryModalView alloc] initWithFrame:self.navigationController.view.bounds];
+        modalView.delegate = self;
+        [self.navigationController.view addSubview:modalView];
+        [modalView present];
+    }
+    else
+    {
+        if(!self.addEntryPopoverController)
+        {
+            UAAddEntryListViewController *vc = [[UAAddEntryListViewController alloc] initWithStyle:UITableViewStylePlain];
+            self.addEntryPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
+            [self.addEntryPopoverController setPopoverContentSize:CGSizeMake(320.0f, 225.0f)];
+            [self.addEntryPopoverController setDelegate:self];
+            
+            vc.parentPopoverController = self.addEntryPopoverController;
+        }
+        [self.addEntryPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
 }
 - (void)showSideMenu:(id)sender
 {
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
     UAAppDelegate *delegate = (UAAppDelegate*)[[UIApplication sharedApplication] delegate];
-    //[delegate.viewController showLeftPanel:YES];
-    [delegate.viewController presentMenuViewController];
+    [(REFrostedViewController *)delegate.viewController presentMenuViewController];
 }
 - (void)showRelativeTimeline:(UAShortcutButton *)sender
 {
@@ -253,12 +296,12 @@
 }
 - (void)showTips
 {
-    UAModalView *modalView = [[UAModalView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.view.frame.size.width, self.navigationController.view.frame.size.height)];
-    modalView.delegate = self;
-    [self.navigationController.view addSubview:modalView];
+    UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
+    UIViewController *targetVC = appDelegate.viewController;
     
-    UAIntroductionTooltipView *introductionView = [[UAIntroductionTooltipView alloc] initWithFrame:CGRectMake(0, 0, modalView.contentView.bounds.size.width, modalView.contentView.bounds.size.height)];
-    [[modalView contentView] addSubview:introductionView];
+    UATooltipViewController *modalView = [[UATooltipViewController alloc] initWithParentVC:targetVC andDelegate:self];
+    UAIntroductionTooltipView *tooltipView = [[UAIntroductionTooltipView alloc] initWithFrame:CGRectZero];
+    [modalView setContentView:tooltipView];
     [modalView present];
 }
 
@@ -310,7 +353,8 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+    NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
+    NSNumberFormatter *glucoseFormatter = [UAHelper glucoseNumberFormatter];
     
     if(indexPath.row%2 == 0)
     {
@@ -331,18 +375,18 @@
         
         if(totalReadings)
         {
-            [cell setAverageGlucoseValue:[NSNumber numberWithDouble:readingsAvg] withFormatter:valueFormatter];
-            [cell setDeviationValue:[NSNumber numberWithDouble:readingsDeviation] withFormatter:valueFormatter];
+            [cell setAverageGlucoseValue:[NSNumber numberWithDouble:readingsAvg] withFormatter:glucoseFormatter];
+            [cell setDeviationValue:[NSNumber numberWithDouble:readingsDeviation] withFormatter:glucoseFormatter];
         }
         else
         {
-            [cell setAverageGlucoseValue:[NSNumber numberWithDouble:0.0] withFormatter:valueFormatter];
-            [cell setDeviationValue:[NSNumber numberWithDouble:0.0] withFormatter:valueFormatter];
+            [cell setAverageGlucoseValue:[NSNumber numberWithDouble:0.0] withFormatter:glucoseFormatter];
+            [cell setDeviationValue:[NSNumber numberWithDouble:0.0] withFormatter:glucoseFormatter];
         }
         [cell setMealValue:[NSNumber numberWithDouble:totalGrams] withFormatter:valueFormatter];
         [cell setActivityValue:totalMinutes];
-        [cell setLowGlucoseValue:[NSNumber numberWithDouble:lowGlucose] withFormatter:valueFormatter];
-        [cell setHighGlucoseValue:[NSNumber numberWithDouble:highGlucose] withFormatter:valueFormatter];
+        [cell setLowGlucoseValue:[NSNumber numberWithDouble:lowGlucose] withFormatter:glucoseFormatter];
+        [cell setHighGlucoseValue:[NSNumber numberWithDouble:highGlucose] withFormatter:glucoseFormatter];
         cell.monthLabel.text = key;
         
         return cell;
@@ -359,11 +403,11 @@
     return nil;
 }
 
-#pragma mark - UAModalViewDelegate methods
-- (void)willDisplayModalView:(UAModalView *)aModal
+#pragma mark - UAModalViewControllerDelegate methods
+- (void)willDisplayModalView:(UATooltipViewController *)aModalController
 {
 }
-- (void)didDismissModalView:(UAModalView *)aModal
+- (void)didDismissModalView:(UATooltipViewController *)aModalController
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenStarterTooltip];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -380,11 +424,15 @@
         if(vc)
         {
             UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-            [self presentViewController:nvc animated:YES completion:^{
-                
-            }];
+            [self presentViewController:nvc animated:YES completion:nil];
         }
     }
+}
+
+#pragma mark - UIPopoverControllerDelegate methods
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.addEntryPopoverController = nil;
 }
 
 #pragma mark - Helpers

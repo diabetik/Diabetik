@@ -30,7 +30,8 @@
 // Views
 #import "UABaseViewController.h"
 #import "UAAlertMessageView.h"
-#import "UAModalView.h"
+#import "UATooltipViewController.h"
+#import "UATooltipView.h"
 #import "UAUIHintView.h"
 
 // Controls

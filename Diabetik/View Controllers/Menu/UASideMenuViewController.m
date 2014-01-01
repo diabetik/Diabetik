@@ -29,6 +29,7 @@
 #import "UAJournalViewController.h"
 #import "UATimelineViewController.h"
 #import "UAExportViewController.h"
+#import "UAInsulinCalculatorViewController.h"
 
 #import "UASideMenuCell.h"
 #import "UASideMenuAccountCell.h"
@@ -60,14 +61,21 @@
     UASideMenuHeaderView *headerView = [[UASideMenuHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 150.0f)];
     
     self.tableView.tableHeaderView = headerView;
-    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.opaque = NO;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.backgroundView = nil;
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorColor = [UIColor colorWithWhite:0.0f alpha:0.08f];
     
-    self.view.backgroundColor = [UIColor clearColor];
+    // We only want to make the tableview transparent for iPhone devices (where blur is displayed)
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        self.tableView.backgroundColor = [UIColor clearColor];
+        self.tableView.backgroundView = nil;
+        self.view.backgroundColor = [UIColor clearColor];
+    }
+    else
+    {
+        self.view.backgroundColor = [UIColor whiteColor];
+    }
     
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         [self.tableView reloadData];
@@ -89,13 +97,11 @@
 - (void)showCredits
 {
     UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
-    UINavigationController *navigationController = (UINavigationController *)appDelegate.viewController.contentViewController;
+    UIViewController *targetVC = appDelegate.viewController;
     
-    UAModalView *modalView = [[UAModalView alloc] initWithFrame:CGRectMake(0, 0, navigationController.view.frame.size.width, navigationController.view.frame.size.height)];
-    modalView.delegate = self;
-    [navigationController.view addSubview:modalView];
-    UACreditsTooltipView *introductionView = [[UACreditsTooltipView alloc] initWithFrame:CGRectMake(0, 0, modalView.contentView.bounds.size.width, modalView.contentView.bounds.size.height)];
-    [[modalView contentView] addSubview:introductionView];
+    UATooltipViewController *modalView = [[UATooltipViewController alloc] initWithParentVC:targetVC andDelegate:self];
+    UACreditsTooltipView *introductionView = [[UACreditsTooltipView alloc] initWithFrame:CGRectZero];
+    [modalView setContentView:introductionView];
     [modalView present];
 }
 
@@ -123,7 +129,7 @@
 {
     if(section == 0)
     {
-        return 5;
+        return 6;
     }
     else if(section == 1)
     {
@@ -162,23 +168,29 @@
         }
         else if(indexPath.row == 1)
         {
+            cell.textLabel.text = NSLocalizedString(@"Insulin Calculator", nil);
+            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconCalculator"];
+            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconCalculatorHighlighted"];
+        }
+        else if(indexPath.row == 2)
+        {
             cell.textLabel.text = NSLocalizedString(@"Reminders", nil);
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconRemindersHighlighted"];
         }
-        else if(indexPath.row == 2)
+        else if(indexPath.row == 3)
         {
             cell.textLabel.text = NSLocalizedString(@"Export", @"Menu item to take users to the export screen");
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconExport"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconExportHighlighted"];
         }
-        else if(indexPath.row == 3)
+        else if(indexPath.row == 4)
         {
             cell.textLabel.text = NSLocalizedString(@"Credits", @"Menu item to show users the application credits");
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconCredits"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconCreditsHighlighted"];
         }
-        else if(indexPath.row == 4)
+        else if(indexPath.row == 5)
         {
             cell.textLabel.text = NSLocalizedString(@"Settings", nil);
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconSettings"];
@@ -264,42 +276,61 @@
     [super tableView:aTableView didSelectRowAtIndexPath:indexPath];
     
     UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
-    UINavigationController *navigationController = (UINavigationController *)appDelegate.viewController.contentViewController;
+    UINavigationController *navigationController = nil;
+    BOOL animateViewControllerChange = NO;
     
-    [appDelegate.viewController hideMenuViewController];
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        navigationController = (UINavigationController *)[(REFrostedViewController *)appDelegate.viewController contentViewController];
+        [(REFrostedViewController *)appDelegate.viewController hideMenuViewController];
+    }
+    else
+    {
+        navigationController = [(UISplitViewController *)appDelegate.viewController viewControllers][1];
+        animateViewControllerChange = YES;
+    }
     
     if(indexPath.section == 0)
     {
         if(indexPath.row == 0)
         {
-            [navigationController popToRootViewControllerAnimated:NO];
+            [navigationController popToRootViewControllerAnimated:animateViewControllerChange];
         }
+        
         else if(indexPath.row == 1)
         {
-            if(![[navigationController topViewController] isKindOfClass:[UARemindersViewController class]])
+            if(![[navigationController topViewController] isKindOfClass:[UAInsulinCalculatorViewController class]])
             {
-                UARemindersViewController *vc = [[UARemindersViewController alloc] init];
-                [navigationController pushViewController:vc animated:NO];
+                UAInsulinCalculatorViewController *vc = [[UAInsulinCalculatorViewController alloc] init];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
         }
         else if(indexPath.row == 2)
         {
-            if(![[navigationController topViewController] isKindOfClass:[UAExportViewController class]])
+            if(![[navigationController topViewController] isKindOfClass:[UARemindersViewController class]])
             {
-                UAExportViewController *vc = [[UAExportViewController alloc] init];
-                [navigationController pushViewController:vc animated:NO];
+                UARemindersViewController *vc = [[UARemindersViewController alloc] init];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
         }
         else if(indexPath.row == 3)
         {
-            [self showCredits];
+            if(![[navigationController topViewController] isKindOfClass:[UAExportViewController class]])
+            {
+                UAExportViewController *vc = [[UAExportViewController alloc] init];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
+            }
         }
         else if(indexPath.row == 4)
+        {
+            [self showCredits];
+        }
+        else if(indexPath.row == 5)
         {
             if(![[navigationController topViewController] isKindOfClass:[UASettingsViewController class]])
             {
                 UASettingsViewController *vc = [[UASettingsViewController alloc] init];
-                [navigationController pushViewController:vc animated:NO];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
         }
     }
@@ -311,23 +342,23 @@
             if([reminder.type integerValue] == kReminderTypeDate || [reminder.type integerValue] == kReminderTypeRepeating)
             {
                 UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithReminder:reminder];
-                [navigationController pushViewController:vc animated:NO];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
             else
             {
                 UALocationReminderViewController *vc = [[UALocationReminderViewController alloc] initWithReminder:reminder];
-                [navigationController pushViewController:vc animated:NO];
+                [navigationController pushViewController:vc animated:animateViewControllerChange];
             }
         }
     }
 }
 
-#pragma mark - UAModalViewDelegate methods
-- (void)willDisplayModalView:(UAModalView *)aModal
+#pragma mark - UAModalViewControllerDelegate methods
+- (void)willDisplayModalView:(UATooltipViewController *)aModalController
 {
     // STUB
 }
-- (void)didDismissModalView:(UAModalView *)aModal
+- (void)didDismissModalView:(UATooltipViewController *)aModalController
 {
     // STUB
 }

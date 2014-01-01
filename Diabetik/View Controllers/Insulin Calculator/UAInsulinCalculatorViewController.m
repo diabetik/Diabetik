@@ -18,21 +18,25 @@
 //  limitations under the License.
 //
 
-#import "UAInsulinCalculatorViewController.h"
 #import "UAEventController.h"
-
 #import "UAMeal.h"
 #import "UAReading.h"
 
+#import "UAInsulinCalculatorViewController.h"
+#import "UAInputParentViewController.h"
+
+#import "UAInsulinCalculatorTitleView.h"
 #import "UAInsulinCalculatorTextFieldViewCell.h"
 
 @interface UAInsulinCalculatorViewController ()
 {
     NSArray *latestEvents;
     NSNumberFormatter *valueFormatter;
+    NSDateFormatter *dateFormatter;
+    UIBarButtonItem *rightBarButtonItem;
     NSIndexPath *activeIndexPath;
+    UAInsulinCalculatorTitleView *titleView;
     
-    id accountSwitchNotifier, settingsChangeNotifier;
     UILabel *totalLabel;
     UIToolbar *toolbar;
     
@@ -40,6 +44,7 @@
     NSNumber *totalCarbs;
     NSNumber *currentGlucose, *targetGlucose;
     NSNumber *correctiveFactor, *carbohydrateRatio;
+    NSNumber *calculatedInsulin;
 }
 
 // Logic
@@ -49,30 +54,23 @@
 @end
 
 @implementation UAInsulinCalculatorViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC andAccount:(UAAccount *)anAccount
+- (id)init
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        _moc = aMOC;
         selectedMeals = [NSMutableDictionary dictionary];
+        calculatedInsulin = nil;
 
         valueFormatter = [[NSNumberFormatter alloc] init];
         [valueFormatter setMaximumFractionDigits:3];
+        [valueFormatter setPaddingCharacter:@"0"];
+        [valueFormatter setMinimumIntegerDigits:1];
         
-        self.title = NSLocalizedString(@"Insulin calculator", nil);
-        
-        // Setup notifications
-        __weak typeof(self) weakSelf = self;
-        accountSwitchNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kAccountsSwitchedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf setupView];
-        }];
-        settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSignificantSettingsChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            [weakSelf setupView];
-        }];
+        dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterLongStyle];
+        [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
         
         [self setupView];
     }
@@ -85,64 +83,35 @@
     // Setup header buttons
     if([self isPresentedModally])
     {
-        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconCancel.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconCancel"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
         [self.navigationItem setLeftBarButtonItem:cancelBarButtonItem animated:NO];
     }
     
-    /*
-    UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconSave.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(addReminder:)];
-    [self.navigationItem setRightBarButtonItem:saveBarButtonItem animated:NO];
-    */
-}
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:accountSwitchNotifier];
-    [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];
-}
-- (void)loadView
-{
-    UIView *baseView = [[UIView alloc] initWithFrame:CGRectZero];
-    baseView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"NavBarIconAdd"] style:UIBarButtonItemStyleBordered target:self action:@selector(addEntry:)];
+    [self.navigationItem setRightBarButtonItem:rightBarButtonItem animated:NO];
     
-    self.tableView = [[UITableView alloc] initWithFrame:baseView.frame style:tableStyle];
-    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.backgroundView = nil;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.separatorColor = [UIColor colorWithRed:189.0f/255.0f green:189.0f/255.0f blue:189.0f/255.0f alpha:1.0f];
-    [baseView addSubview:self.tableView];
+    // Setup our title
+    titleView = [[UAInsulinCalculatorTitleView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f)];
+    self.navigationItem.titleView = titleView;
     
-    // Setup our toolbar
-    toolbar = [[UIToolbar alloc] initWithFrame:CGRectZero];
-    toolbar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+    // Setup our footer-based warning label
+    UILabel *warningLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width-40.0f, 0.0f)];
+    warningLabel.numberOfLines = 0;
+    warningLabel.textAlignment = NSTextAlignmentCenter;
+    warningLabel.backgroundColor = [UIColor clearColor];
+    warningLabel.font = [UAFont standardRegularFontWithSize:14.0f];
+    warningLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+    warningLabel.text = NSLocalizedString(@"Calculations use the following formula:\n\n((currentBG-targetBG)/correctiveFactor) + (carbohydrates/carbohydrateRatio)", nil);
+    [warningLabel sizeToFit];
     
-    NSMutableArray *items = [NSMutableArray array];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, warningLabel.frame.size.height+20.0f)];
+    warningLabel.frame = CGRectMake(floorf(self.view.frame.size.width/2.0f - warningLabel.frame.size.width/2), 0.0f, warningLabel.frame.size.width, warningLabel.frame.size.height);
+    footerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    [footerView addSubview:warningLabel];
     
-    UIButton *settingsButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 16.0f, 16.0f)];
-    [settingsButton setImage:[UIImage imageNamed:@"ToolbarIconSettings.png"] forState:UIControlStateNormal];
-    [settingsButton setImage:[UIImage imageNamed:@"ToolbarIconSettingsPressed.png"] forState:UIControlStateHighlighted];
-    [settingsButton addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];
+    self.tableView.tableFooterView = footerView;
     
-    UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithCustomView:settingsButton];
-    [items addObject:settings];
-    [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
-    
-    totalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0 , 11.0f, 200.0f, 21.0f)];
-    [totalLabel setFont:[UIFont fontWithName:@"Helvetica-Bold" size:18]];
-    [totalLabel setBackgroundColor:[UIColor clearColor]];
-    [totalLabel setTextColor:[UIColor whiteColor]];
-    [totalLabel setText:@""];
-    [totalLabel setTextAlignment:NSTextAlignmentCenter];
-    
-    [items addObject:[[UIBarButtonItem alloc] initWithCustomView:totalLabel]];
-    [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
-    
-    [toolbar setItems:items animated:YES];
-    [baseView addSubview:toolbar];
-    
-    self.view = baseView;
+    [self recalculate];
 }
 - (void)viewWillLayoutSubviews
 {
@@ -158,29 +127,30 @@
     latestEvents = nil;    
     [selectedMeals removeAllObjects];
     
-    /*
     // Set some default values
+    NSNumber *targetBG = [[NSUserDefaults standardUserDefaults] valueForKey:kTargetBGKey];
+    NSNumber *storedCarbohydrateRatio = [[NSUserDefaults standardUserDefaults] valueForKey:kCarbohydrateRatioKey];
+    NSNumber *storedCorrectiveFactor = [[NSUserDefaults standardUserDefaults] valueForKey:kCorrectiveFactorKey];
     if([UAHelper userBGUnit] == BGTrackingUnitMMO)
     {
-        targetGlucose = ([account.insulinMMOTargetBG doubleValue] == 0) ? [NSNumber numberWithDouble:6.5] : account.insulinMMOTargetBG;
-        correctiveFactor = [NSNumber numberWithDouble:10.0];
+        targetGlucose = targetBG ? targetBG : @6.5;
+        correctiveFactor = storedCorrectiveFactor ? storedCorrectiveFactor : @10;
     }
     else
     {
-        targetGlucose = ([account.insulinMGTargetBG doubleValue] == 0) ? [NSNumber numberWithDouble:117.0] : account.insulinMGTargetBG;
-        correctiveFactor = [NSNumber numberWithDouble:100.0];
+        targetGlucose = targetBG ? targetBG : @117;
+        correctiveFactor = storedCorrectiveFactor ? storedCorrectiveFactor : @100;
     }
-    currentGlucose = [NSNumber numberWithDouble:0.0];
-    totalCarbs = [NSNumber numberWithDouble:0.0];
-    carbohydrateRatio = [NSNumber numberWithDouble:20.0];
+    carbohydrateRatio = storedCarbohydrateRatio ? storedCarbohydrateRatio : @10;
+    currentGlucose = nil;
+    totalCarbs = nil;
     
     // Fetch our latest glucose reading to try to pre-determine glucose reading
-    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterType == %d && timestamp >= %@", ReadingFilterType, [NSDate dateWithHoursBeforeNow:24]];
     if(predicate)
     {
         // Take our latest blood glucose reading
-        NSArray *previousGlucoseReadings = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate inContext:_moc];
+        NSArray *previousGlucoseReadings = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate sortDescriptors:nil inContext:[[UACoreDataController sharedInstance] managedObjectContext]];
         if(previousGlucoseReadings)
         {
             UAReading *reading = (UAReading *)[previousGlucoseReadings objectAtIndex:0];
@@ -192,12 +162,13 @@
     predicate = [NSPredicate predicateWithFormat:@"filterType == %d && timestamp >= %@", MealFilterType, [NSDate dateWithHoursBeforeNow:24]];
     if(predicate)
     {
-        latestEvents = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate inContext:_moc];
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+        
+        latestEvents = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate sortDescriptors:@[sortDescriptor] inContext:[[UACoreDataController sharedInstance] managedObjectContext]];
     }
     
     // Update our UI
     [[self tableView] reloadData];
-     */
 }
 - (void)recalculate
 {
@@ -222,23 +193,40 @@
     double insulinForCorrection = ([currentGlucose doubleValue] - [targetGlucose doubleValue]) / [correctiveFactor doubleValue];
     double insulinForCarbs = [totalCarbs doubleValue]/[carbohydrateRatio doubleValue];
     double insulinTotal = insulinForCarbs + insulinForCorrection;
-    
-    totalLabel.text = [NSString stringWithFormat:@"%@ + %@ = %@", [valueFormatter stringFromNumber:[NSNumber numberWithDouble:insulinForCorrection]], [valueFormatter stringFromNumber:[NSNumber numberWithDouble:insulinForCarbs]], [valueFormatter stringFromNumber:[NSNumber numberWithDouble:insulinTotal]]];
-    NSLog(@"cor: %f carbs: %f total: %f", insulinForCorrection, insulinForCarbs, insulinTotal);
+    if([totalCarbs doubleValue] > 0 && insulinTotal >= 0)
+    {
+        [titleView setSubtitle:[NSString stringWithFormat:@"%@ + %@ = %@", [valueFormatter stringFromNumber:[NSNumber numberWithDouble:insulinForCorrection]], [valueFormatter stringFromNumber:[NSNumber numberWithDouble:insulinForCarbs]], [valueFormatter stringFromNumber:[NSNumber numberWithDouble:insulinTotal]]]];
+        
+        calculatedInsulin = @(insulinTotal);
+        [rightBarButtonItem setEnabled:YES];
+    }
+    else
+    {
+        [rightBarButtonItem setEnabled:NO];
+        [titleView setSubtitle:nil];
+        calculatedInsulin = nil;
+    }
 }
 
 #pragma mark - UI
-- (void)showDetails:(id)sender
+- (void)addEntry:(id)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"About Insulin Calculation", nil)
-                                                        message:NSLocalizedString(@"Calculations use the following formula:\n\n((currentBG-targetBG)/correctiveFactor) + (carbohydrates/carbohydrateRatio)\n\nIf in doubt, consult your doctor", nil)
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"Ok", nil)
-                                              otherButtonTitles:nil];
-    [alertView show];
+    if(calculatedInsulin)
+    {
+        UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithMedicineAmount:calculatedInsulin];
+        UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
+        [self presentViewController:nvc animated:YES completion:nil];
+    }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                            message:NSLocalizedString(@"Please complete all required fields", nil)
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Ok", nil)
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
 }
-
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [[self view] endEditing:YES];
@@ -249,9 +237,11 @@
 {
     [self.view endEditing:YES];
     
-    if(indexPath.section == 1 && indexPath.row > 0)
+    [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if(indexPath.section == 1 && indexPath.row > 1)
     {
-        UAEvent *event = [latestEvents objectAtIndex:indexPath.row-1];
+        UAEvent *event = [latestEvents objectAtIndex:indexPath.row-2];
         if([selectedMeals objectForKey:event.guid])
         {
             [selectedMeals removeObjectForKey:event.guid];
@@ -267,10 +257,19 @@
             totalCarbs = [NSNumber numberWithDouble:0.0];
         }
         
-        [aTableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-
         // Attempt a recalculation
         [self recalculate];
+        
+        [aTableView reloadRowsAtIndexPaths:@[indexPath, [NSIndexPath indexPathForRow:1 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+    }
+    else
+    {
+        UAInsulinCalculatorTextFieldViewCell *cell = (UAInsulinCalculatorTextFieldViewCell *)[aTableView cellForRowAtIndexPath:indexPath];
+        if (cell && cell.accessoryControl)
+        {
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            [textField becomeFirstResponder];
+        }
     }
 }
 
@@ -287,15 +286,15 @@
     }
     else if(section == 1)
     {
-        return 2;
+        return 2+[latestEvents count];
     }
     
     return 0;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if(section == 0) return NSLocalizedString(@"Input", nil);
-    if(section == 1) return NSLocalizedString(@"Factors", nil);
+    if(section == 0) return NSLocalizedString(@"Constants", nil);
+    if(section == 1) return NSLocalizedString(@"Input", nil);
     
     return @"";
 }
@@ -321,43 +320,61 @@
             cell = [[UAInsulinCalculatorTextFieldViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorInputCell"];
         }
         [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
-        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if(indexPath.row == 0)
         {
-            cell.textLabel.text = NSLocalizedString(@"Current BG", nil);
-            
-            NSLog(@"%@ %@", currentGlucose, [valueFormatter stringFromNumber:currentGlucose]);
-            UITextField *textField = (UITextField *)cell.accessoryControl;
-            textField.text = [valueFormatter stringFromNumber:currentGlucose];
-            textField.tag = 0;
-            textField.delegate = self;
-        }
-        else if(indexPath.row == 1)
-        {
-            cell.textLabel.text = NSLocalizedString(@"Target BG", nil);
+            cell.textLabel.text = NSLocalizedString(@"Target blood glucose", nil);
+            cell.detailTextLabel.text = nil;
             
             UITextField *textField = (UITextField *)cell.accessoryControl;
             textField.text = [valueFormatter stringFromNumber:targetGlucose];
             textField.tag = 1;
             textField.delegate = self;
         }
-        else if(indexPath.row == 2)
+        else if(indexPath.row == 1)
         {
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.textLabel.text = NSLocalizedString(@"Total carbohydrates", nil);
+            cell.textLabel.text = NSLocalizedString(@"Carbohydrate Ratio", nil);
+            cell.detailTextLabel.text = NSLocalizedString(@"1u insulin for every X grams", nil);
             
             UITextField *textField = (UITextField *)cell.accessoryControl;
-            textField.text = [valueFormatter stringFromNumber:totalCarbs];
-            textField.tag = 2;
+            textField.text = [valueFormatter stringFromNumber:carbohydrateRatio];
+            textField.tag = 3;
+            textField.delegate = self;
+        }
+        else if(indexPath.row == 2)
+        {
+            NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
+            
+            cell.textLabel.text = NSLocalizedString(@"Correction Factor", nil);
+            cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"1u insulin for every X %@", nil), unit];
+            
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            textField.text = [valueFormatter stringFromNumber:correctiveFactor];
+            textField.tag = 4;
             textField.delegate = self;
         }
     }
-    /*
     else if(indexPath.section == 1)
     {
         if(indexPath.row == 0)
+        {
+            cell = (UAInsulinCalculatorTextFieldViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UACalculatorInputCell"];
+            if (!cell)
+            {
+                cell = [[UAInsulinCalculatorTextFieldViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorInputCell"];
+            }
+            [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.text = NSLocalizedString(@"Current blood glucose", nil);
+            cell.detailTextLabel.text = nil;
+            
+            UITextField *textField = (UITextField *)cell.accessoryControl;
+            textField.text = [valueFormatter stringFromNumber:currentGlucose];
+            textField.tag = 0;
+            textField.delegate = self;
+        }
+        else if(indexPath.row == 1)
         {
             cell = (UAInsulinCalculatorTextFieldViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UACalculatorInputCell"];
             if (!cell)
@@ -380,66 +397,32 @@
             cell = [aTableView dequeueReusableCellWithIdentifier:@"UACalculatorCell"];
             if (!cell)
             {
-                cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UACalculatorCell"];
+                cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorCell"];
             }
             [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
             cell.accessoryType = UITableViewCellAccessoryNone;
             
-            UAEvent *event = [latestEvents objectAtIndex:indexPath.row-1];
-            if([event isKindOfClass:[UAMeal class]])
+            UAMeal *meal = (UAMeal *)[latestEvents objectAtIndex:indexPath.row-2];
+            cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@g)", meal.name, [valueFormatter stringFromNumber:meal.grams]];
+            cell.detailTextLabel.text = [dateFormatter stringFromDate:meal.timestamp];
+            cell.imageView.image = [UIImage imageNamed:@"TimelineIconMeal"];
+            
+            if([selectedMeals objectForKey:meal.guid])
             {
-                UAMeal *meal = (UAMeal *)event;
-                cell.textLabel.text = [NSString stringWithFormat:@"%@ (%@g)", meal.name, [valueFormatter stringFromNumber:meal.grams]];
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+                cell.textLabel.alpha = 1;
+                cell.detailTextLabel.alpha = 1;
             }
             else
             {
-                cell.textLabel.text = event.name;
+                cell.textLabel.alpha = 0.6;
+                cell.detailTextLabel.alpha = 0.6;
             }
-            
-            if([selectedMeals objectForKey:event.guid])
-            {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            }
-        }
-    }
-    */
-    else if(indexPath.section == 1)
-    {
-        cell = (UAInsulinCalculatorTextFieldViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UACalculatorInputCell"];
-        if (!cell)
-        {
-            cell = [[UAInsulinCalculatorTextFieldViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorInputCell"];
-        }
-        [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        if(indexPath.row == 0)
-        {
-            cell.textLabel.text = NSLocalizedString(@"Carbohydrate Ratio", nil);
-            cell.detailTextLabel.text = NSLocalizedString(@"1u insulin for every X grams", nil);
-            
-            UITextField *textField = (UITextField *)cell.accessoryControl;
-            textField.text = [valueFormatter stringFromNumber:carbohydrateRatio];
-            textField.tag = 3;
-            textField.delegate = self;
-        }
-        else if(indexPath.row == 1)
-        {
-            NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
-            
-            cell.textLabel.text = NSLocalizedString(@"Correction Factor", nil);
-            cell.detailTextLabel.text = [NSString stringWithFormat:NSLocalizedString(@"1u insulin for every X %@", nil), unit];
-            
-            UITextField *textField = (UITextField *)cell.accessoryControl;
-            textField.text = [valueFormatter stringFromNumber:correctiveFactor];
-            textField.tag = 4;
-            textField.delegate = self;
         }
     }
     
     return cell;
 }
-
 - (void)keyboardWillBeShown:(NSNotification *)aNotification
 {
     [super keyboardWillBeShown:aNotification];
@@ -480,6 +463,11 @@
     else if(textField.tag == 1)
     {
         targetGlucose = [valueFormatter numberFromString:textField.text];
+        
+        if(targetGlucose)
+        {
+            [[NSUserDefaults standardUserDefaults] setValue:targetGlucose forKey:kTargetBGKey];
+        }
     }
     else if(textField.tag == 2)
     {
@@ -491,10 +479,20 @@
     else if(textField.tag == 3)
     {
         carbohydrateRatio = [valueFormatter numberFromString:textField.text];
+        
+        if(carbohydrateRatio)
+        {
+            [[NSUserDefaults standardUserDefaults] setValue:carbohydrateRatio forKey:kCarbohydrateRatioKey];
+        }
     }
     else if(textField.tag == 4)
     {
         correctiveFactor = [valueFormatter numberFromString:textField.text];
+        
+        if(correctiveFactor)
+        {
+            [[NSUserDefaults standardUserDefaults] setValue:correctiveFactor forKey:kCorrectiveFactorKey];
+        }
     }
     
     activeIndexPath = nil;

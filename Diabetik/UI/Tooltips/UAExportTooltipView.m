@@ -20,6 +20,13 @@
 
 #import "UAExportTooltipView.h"
 
+@interface UAExportTooltipView ()
+{
+    UIView *containerView, *border;
+    UILabel *header, *content;
+}
+@end
+
 @implementation UAExportTooltipView
 
 #pragma mark - Logic
@@ -27,15 +34,14 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
-        CGFloat contentHeight = 200.0f, headerHeight = 30.0f;
-        
-        UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, floorf(self.frame.size.height/2 - ((contentHeight+headerHeight)/2)), self.frame.size.width, contentHeight+headerHeight)];
-        UIView *border = [[UIView alloc] initWithFrame:CGRectMake(floorf(self.frame.size.width/2 - 20), headerHeight+10, 40, 2)];
+        containerView = [[UIView alloc] initWithFrame:CGRectZero];
+        border = [[UIView alloc] initWithFrame: CGRectZero];
         border.backgroundColor = [UIColor colorWithRed:234.0f/255.0f green:237.0f/255.0f blue:236.0f/255.0f alpha:1.0f];
         [containerView addSubview:border];
         
-        UILabel *header = [[UILabel alloc] initWithFrame:CGRectMake(floorf(self.frame.size.width/2 - 225/2), 0, 225, headerHeight)];
+        header = [[UILabel alloc] initWithFrame:CGRectZero];
         header.backgroundColor = [UIColor clearColor];
         header.textColor = [UIColor colorWithRed:18.0f/255.0f green:185.0f/255.0f blue:139.0f/255.0f alpha:1.0f];
         header.numberOfLines = 1;
@@ -46,7 +52,7 @@
         header.minimumScaleFactor = 0.5f;
         [containerView addSubview:header];
         
-        UILabel *content = [[UILabel alloc] initWithFrame:CGRectMake(floorf(self.frame.size.width/2 - 225/2), headerHeight+20, 225, contentHeight)];
+        content = [[UILabel alloc] initWithFrame:CGRectZero];
         content.backgroundColor = [UIColor clearColor];
         content.textColor = [UIColor colorWithRed:115.0f/255.0f green:128.0f/255.0f blue:123.0f/255.0f alpha:1.0f];
         content.numberOfLines = 0;
@@ -58,5 +64,17 @@
         
     }
     return self;
+}
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    CGFloat contentHeight = 200.0f, headerHeight = 30.0f;
+    
+    border.frame = CGRectMake(floorf(self.frame.size.width/2 - 20), headerHeight+10, 40, 2);
+    containerView.frame = CGRectMake(0, floorf(self.frame.size.height/2 - ((contentHeight+headerHeight)/2)), self.frame.size.width, contentHeight+headerHeight);
+    header.frame = CGRectMake(floorf(self.frame.size.width/2 - 225/2), 0, 225, headerHeight);
+    content.frame = CGRectMake(floorf(self.frame.size.width/2 - 225/2), headerHeight+20, 225, contentHeight);
+    
 }
 @end

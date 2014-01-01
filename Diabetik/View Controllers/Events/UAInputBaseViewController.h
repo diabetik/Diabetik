@@ -49,8 +49,8 @@
     UIImagePickerController *imagePickerController;
     NSDateFormatter *dateFormatter;
     NSString *notes;
+    UANotesTextView *dummyNotesTextView;
     
-    CGFloat textViewHeight;
     BOOL usingSmartInput;
 }
 @property (nonatomic, strong) UAEvent *event;

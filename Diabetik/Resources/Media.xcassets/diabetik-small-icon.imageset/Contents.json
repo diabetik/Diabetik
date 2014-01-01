@@ -3,12 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "diabetik-small-icon.png"
+      "filename" : "40x40.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "diabetik-small-icon@2x.png"
+      "filename" : "80x80.png"
     }
   ],
   "info" : {

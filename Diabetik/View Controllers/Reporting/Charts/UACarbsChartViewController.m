@@ -51,6 +51,10 @@
     
     NSMutableArray *formattedData = [NSMutableArray array];
     OrderedDictionary *dictionary = [OrderedDictionary dictionary];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+    theData = [theData sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
     for(UAEvent *event in theData)
     {
         if([event.timestamp isEarlierThanDate:minDate]) minDate = event.timestamp;
@@ -60,7 +64,7 @@
         NSString *key = [dateFormatter stringFromDate:event.timestamp];
         if(!(data = [dictionary objectForKey:key]))
         {
-            data = [NSMutableDictionary dictionaryWithDictionary:@{@"date": event.timestamp, @"morningTotal": [NSNumber numberWithDouble:0.0], @"afternoonTotal": [NSNumber numberWithDouble:0.0], @"eveningTotal": [NSNumber numberWithDouble:0.0], @"readingsTotal": [NSNumber numberWithDouble:0.0], @"readingsCount": [NSNumber numberWithInteger:0]}];
+            data = [NSMutableDictionary dictionaryWithDictionary:@{@"date": [event.timestamp dateAtStartOfDay], @"morningTotal": [NSNumber numberWithDouble:0.0], @"afternoonTotal": [NSNumber numberWithDouble:0.0], @"eveningTotal": [NSNumber numberWithDouble:0.0], @"readingsTotal": [NSNumber numberWithDouble:0.0], @"readingsCount": [NSNumber numberWithInteger:0]}];
         }
         
         if([event isKindOfClass:[UAMeal class]])
@@ -98,7 +102,7 @@
         
         [dictionary setObject:data forKey:key];
     }
-
+    
     trendline = [[UALineFitCalculator alloc] init];
     double x = 0;
     for(NSString *key in dictionary)
@@ -144,8 +148,6 @@
 {
     // Don't allow us to setup our chart more than once
     if(self.chart) return;
-    
-    NSLog(@"%@", chartData[@"data"]);
     
     if([[chartData objectForKey:@"data"] count])
     {
@@ -246,8 +248,8 @@
     SChartDataPoint *point = [[SChartDataPoint alloc] init];
     
     NSDictionary *info = (NSDictionary *)[[chartData objectForKey:@"data"] objectAtIndex:dataIndex];
-    point.xValue = [[info objectForKey:@"date"] dateAtStartOfDay];
-    NSLog(@"%@", point.xValue);
+    point.xValue = [info objectForKey:@"date"];
+    
     if(seriesIndex == 0)
     {
         point.yValue = [info objectForKey:@"morningTotal"];

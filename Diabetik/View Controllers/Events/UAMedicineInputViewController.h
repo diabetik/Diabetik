@@ -28,6 +28,9 @@
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, assign) NSInteger type;
 
+// Setup
+- (id)initWithAmount:(NSNumber *)amount;
+
 // Logic
 - (void)selectType:(UIButton *)sender;
 

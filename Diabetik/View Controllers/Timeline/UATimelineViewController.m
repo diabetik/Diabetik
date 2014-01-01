@@ -30,6 +30,7 @@
 #import "UAActivityInputViewController.h"
 #import "UANoteInputViewController.h"
 #import "UATagController.h"
+#import "UAAddEntryListViewController.h"
 
 #import "UAMeal.h"
 #import "UAReading.h"
@@ -65,8 +66,11 @@
 @property (nonatomic, strong) UADetailViewController *detailViewController;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSManagedObjectContext *moc;
-
+@property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
 @property (nonatomic, assign) NSInteger relativeDays;
+
+// Logic
+- (void)showReports;
 
 @end
 
@@ -118,9 +122,21 @@
 {
     [super viewDidLoad];
     
+    __weak typeof(self) weakSelf = self;
+    
     // Setup our nav bar buttons
     UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
-    [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        //UIBarButtonItem *reportsBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showReports)];
+        //[self.navigationItem setRightBarButtonItems:@[addBarButtonItem, reportsBarButtonItem]];
+        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
+    }
+    else
+    {
+        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
+    }
     
     // Setup our search bar
     searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
@@ -130,28 +146,27 @@
     self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
     self.searchDisplayController.delegate = self;
-    //self.searchDisplayController.displaysSearchBarInNavigationBar = YES;
     self.tableView.tableHeaderView = searchBar;
     self.tableView.backgroundColor = self.view.backgroundColor;
     
-    //self.tableView.contentOffset = CGPointMake(0.0f, searchBar.bounds.size.height);
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
     self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // Footer view
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-    UILabel *footerLabel = [[UILabel alloc] initWithFrame:footerView.frame];
-    footerLabel.text = NSLocalizedString(@"Rotate to view reports", nil);
-    footerLabel.textAlignment = NSTextAlignmentCenter;
-    footerLabel.backgroundColor = [UIColor clearColor];
-    footerLabel.font = [UAFont standardRegularFontWithSize:14.0f];
-    footerLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
-    footerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    [footerView addSubview:footerLabel];
-    self.tableView.tableFooterView = footerView;
-    
-    __weak typeof(self) weakSelf = self;
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
+        UILabel *footerLabel = [[UILabel alloc] initWithFrame:footerView.frame];
+        footerLabel.text = NSLocalizedString(@"Rotate to view reports", nil);
+        footerLabel.textAlignment = NSTextAlignmentCenter;
+        footerLabel.backgroundColor = [UIColor clearColor];
+        footerLabel.font = [UAFont standardRegularFontWithSize:14.0f];
+        footerLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        footerLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [footerView addSubview:footerLabel];
+        self.tableView.tableFooterView = footerView;
+    }
     
     // Notifications
     applicationResumeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:@"applicationResumed" object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
@@ -179,10 +194,14 @@
     self.navigationController.navigationBar.tintColor = defaultTintColor;
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]};
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(orientationChanged:)
-                                                 name:@"UIDeviceOrientationDidChangeNotification"
-                                               object:nil];
+    // Only listen out for orientation changes if we're not using an iPad
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(orientationChanged:)
+                                                     name:@"UIDeviceOrientationDidChangeNotification"
+                                                   object:nil];
+    }
     
     // Setup other table styling
     if(!noEntriesView)
@@ -198,6 +217,12 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
+    if ([self.addEntryPopoverController isPopoverVisible])
+    {
+        [self.addEntryPopoverController dismissPopoverAnimated:YES];
+    }
+    self.addEntryPopoverController = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -244,6 +269,28 @@
     {
         self.tableView.alpha = 0.0f;
         noEntriesView.alpha = 1.0f;
+    }
+}
+- (void)showReports
+{
+    if(!self.reportsVC)
+    {
+        self.reportsVC = [[UAReportsViewController alloc] initFromDate:fromDate toDate:toDate];
+        self.reportsVC.delegate = self;
+    }
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:self.reportsVC];
+        nvc.modalPresentationStyle = UIModalPresentationPageSheet;
+        
+        [self presentViewController:nvc animated:YES completion:nil];
+    }
+    else
+    {
+        self.reportsVC.view.frame = self.parentViewController.view.frame;
+        
+        [self presentViewController:self.reportsVC animated:NO completion:nil];
     }
 }
 - (void)setDateRangeForRelativeDays:(NSInteger)days
@@ -380,14 +427,33 @@
     
     allowReportRotation = NO;
     
-    UAAddEntryModalView *modalView = [[UAAddEntryModalView alloc] initWithFrame:self.navigationController.view.bounds];
-    modalView.delegate = self;
-    [self.navigationController.view addSubview:modalView];
-    [modalView present];
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        UAAddEntryModalView *modalView = [[UAAddEntryModalView alloc] initWithFrame:self.navigationController.view.bounds];
+        modalView.delegate = self;
+        [self.navigationController.view addSubview:modalView];
+        [modalView present];
+    }
+    else
+    {
+        if(!self.addEntryPopoverController)
+        {
+            UAAddEntryListViewController *vc = [[UAAddEntryListViewController alloc] initWithStyle:UITableViewStylePlain];
+            self.addEntryPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
+            [self.addEntryPopoverController setPopoverContentSize:CGSizeMake(320.0f, 225.0f)];
+            [self.addEntryPopoverController setDelegate:self];
+            
+            vc.parentPopoverController = self.addEntryPopoverController;
+        }
+        
+        [self.addEntryPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
 }
 - (void)configureCell:(UITableViewCell *)aCell forTableview:(UITableView *)aTableView atIndexPath:(NSIndexPath *)indexPath
 {
-    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+    NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
+    NSNumberFormatter *glucoseFormatter = [UAHelper glucoseNumberFormatter];
+    
     if([[aCell class] isEqual:[UATimelineViewCell class]])
     {
         indexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
@@ -436,7 +502,8 @@
             UAMeal *meal = (UAMeal *)object;
             cell.valueLabel.text = [valueFormatter stringFromNumber:[meal grams]];
             cell.valueLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconMeal.png"];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconMeal"];
+            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconMealHighlighted"];
             cell.descriptionLabel.text = [meal name];
         }
         else if([object isKindOfClass:[UAReading class]])
@@ -444,8 +511,9 @@
             UAReading *reading = (UAReading *)object;
             
             cell.descriptionLabel.text = NSLocalizedString(@"Blood glucose level", nil);
-            cell.valueLabel.text = [valueFormatter stringFromNumber:[reading value]];
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconBlood.png"];
+            cell.valueLabel.text = [glucoseFormatter stringFromNumber:[reading value]];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconBlood"];
+            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconBloodHighlighted"];
             
             if(![UAHelper isBGLevelSafe:[[reading value] doubleValue]])
             {
@@ -462,7 +530,8 @@
             
             cell.valueLabel.text = [valueFormatter stringFromNumber:[medicine amount]];
             cell.valueLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconMedicine.png"];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconMedicine"];
+            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconMedicineHighlighted"];
             cell.descriptionLabel.text = [NSString stringWithFormat:@"%@ (%@)", [medicine name], [[UAEventController sharedInstance] medicineTypeHR:[[medicine type] integerValue]]];
         }
         else if([object isKindOfClass:[UAActivity class]])
@@ -470,14 +539,16 @@
             UAActivity *activity = (UAActivity *)object;
             
             cell.descriptionLabel.text = [activity name];
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconActivity.png"];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconActivity"];
+            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconActivityHighlighted"];
             cell.valueLabel.text = [UAHelper formatMinutes:[[activity minutes] doubleValue]];
             cell.valueLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:170.0f/255.0f alpha:1.0f];
         }
         else if([object isKindOfClass:[UANote class]])
         {
             UANote *note = (UANote *)object;
-            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconNote.png"];
+            cell.iconImageView.image = [UIImage imageNamed:@"TimelineIconNote"];
+            cell.iconImageView.highlightedImage = [UIImage imageNamed:@"TimelineIconNoteHighlighted"];
             cell.descriptionLabel.text = [note name];
         }
         
@@ -512,7 +583,7 @@
         if([stats count] && indexPath.section <= [stats count]-1)
         {
             NSDictionary *section = [stats objectAtIndex:indexPath.section];
-            [cell.glucoseStatView setText:[NSString stringWithFormat:@"%@ %@", [valueFormatter stringFromNumber:section[@"reading"]], [NSLocalizedString(@"Avg.", @"Abbreviation for average") lowercaseString]]];
+            [cell.glucoseStatView setText:[NSString stringWithFormat:@"%@ %@", [glucoseFormatter stringFromNumber:section[@"reading"]], [NSLocalizedString(@"Avg.", @"Abbreviation for average") lowercaseString]]];
             [cell.activityStatView setText:[UAHelper formatMinutes:[[section valueForKey:@"activity"] integerValue]]];
             [cell.mealStatView setText:[NSString stringWithFormat:@"%@ %@", [valueFormatter stringFromNumber:section[@"meal"]], [NSLocalizedString(@"Carbs", nil) lowercaseString]]];
         }
@@ -562,7 +633,17 @@
     if(object)
     {
         UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithEvent:(UAEvent *)object];
-        [self.navigationController pushViewController:vc animated:YES];
+        
+        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
+            nvc.modalPresentationStyle = UIModalPresentationFormSheet;
+            [self presentViewController:nvc animated:YES completion:nil];
+        }
+        else
+        {
+            [self.navigationController pushViewController:vc animated:YES];
+        }
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -582,7 +663,7 @@
             baseHeight = 46.0f;
         }
         
-        CGFloat height = baseHeight + [UATimelineViewCell additionalHeightWithMetaData:[self metaDataForTableView:tableView cellAtIndexPath:adjustedIndexPath]];
+        CGFloat height = baseHeight + [UATimelineViewCell additionalHeightWithMetaData:[self metaDataForTableView:tableView cellAtIndexPath:adjustedIndexPath] width:self.tableView.bounds.size.width];
         return height;
     }
     
@@ -875,6 +956,12 @@
     self.reportsVC = nil;
 }
 
+#pragma mark - UIPopoverControllerDelegate methods
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    self.addEntryPopoverController = nil;
+}
+
 #pragma mark - Autorotation
 - (void)orientationChanged:(NSNotification *)note
 {
@@ -882,11 +969,7 @@
 
     if(UIInterfaceOrientationIsLandscape(appOrientation) && !self.reportsVC)
     {
-        self.reportsVC = [[UAReportsViewController alloc] initFromDate:fromDate toDate:toDate];
-        self.reportsVC.delegate = self;
-        self.reportsVC.view.frame = self.parentViewController.view.frame;
-        
-        [self presentViewController:self.reportsVC animated:NO completion:nil];
+        [self showReports];
     }
 }
 

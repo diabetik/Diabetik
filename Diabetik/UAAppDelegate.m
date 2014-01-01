@@ -61,10 +61,10 @@
 
     // Initialise Appirater
     [Appirater setAppId:@"634983291"];
-    [Appirater setDaysUntilPrompt:7];
-    [Appirater setUsesUntilPrompt:10];
+    [Appirater setDaysUntilPrompt:4];
+    [Appirater setUsesUntilPrompt:5];
     [Appirater setSignificantEventsUntilPrompt:-1];
-    [Appirater setTimeBeforeReminding:2];
+    [Appirater setTimeBeforeReminding:1];
     [Appirater setDebug:NO];
     
     // Is this a first run experience?
@@ -96,17 +96,28 @@
     UAJournalViewController *journalViewController = [[UAJournalViewController alloc] init];
     UANavigationController *navigationController = [[UANavigationController alloc] initWithRootViewController:journalViewController];
     
-    self.viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] init]];
-    self.viewController.direction = REFrostedViewControllerDirectionLeft;
-    self.viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
-    self.viewController.liveBlur = NO;
-    self.viewController.limitMenuViewSize = YES;
-    self.viewController.blurSaturationDeltaFactor = 0.25f;
-    self.viewController.blurRadius = 10.0f;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        UISplitViewController *splitViewController = [[UISplitViewController alloc] initWithNibName:nil bundle:nil];
+        splitViewController.viewControllers = @[[[UASideMenuViewController alloc] init], navigationController];
+        splitViewController.delegate = self;
+        self.viewController = splitViewController;
+    }
+    else
+    {
+        REFrostedViewController *viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] init]];
+        viewController.direction = REFrostedViewControllerDirectionLeft;
+        viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
+        viewController.liveBlur = NO;
+        viewController.limitMenuViewSize = YES;
+        viewController.blurSaturationDeltaFactor = 3.0f;
+        viewController.blurRadius = 10.0f;
+        self.viewController = viewController;
+    }
     
     [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
-
+    
     // Fetch and cache default keyboard sizes after our view hierarchy has been setup
     [[UAKeyboardController sharedInstance] fetchKeyboardSize];
     
@@ -190,7 +201,8 @@
                                           kUseSmartInputKey: @YES,
                                               kUseSoundsKey: @YES,
                                           kShowInlineImages: @YES,
-                                         
+                                    kFilterSearchResultsKey: @YES,
+                                        
                                          USMCloudEnabledKey: @NO // iCloud is disabled by default
      }];
     
@@ -220,6 +232,31 @@
     [ShinobiCharts setTheme:[SChartiOS7Theme new]];
 }
 
+#pragma mark - UISplitViewControllerDelegate method
+- (void)splitViewController:(UISplitViewController *)svc
+     willHideViewController:(UIViewController *)aViewController
+          withBarButtonItem:(UIBarButtonItem *)barButtonItem
+       forPopoverController:(UIPopoverController *)pc
+{
+    UINavigationController *nvc = svc.viewControllers[1];
+    UIViewController *vc = nvc.viewControllers[0];
+    
+    barButtonItem.image = [[UIImage imageNamed:@"NavBarIconListMenu"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    vc.navigationItem.leftBarButtonItem = barButtonItem;
+}
+- (void)splitViewController:(UISplitViewController *)svc
+     willShowViewController:(UIViewController *)aViewController
+  invalidatingBarButtonItem:(UIBarButtonItem *)button
+{
+    UINavigationController *nvc = svc.viewControllers[1];
+    UIViewController *vc = nvc.viewControllers[0];
+    vc.navigationItem.leftBarButtonItem = nil;
+}
+- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
+{
+    return NO;
+}
+ 
 #pragma mark - Location services
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {

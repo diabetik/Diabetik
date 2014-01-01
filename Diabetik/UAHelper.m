@@ -39,16 +39,29 @@
     
     return value;
 }
++ (NSNumberFormatter *)standardNumberFormatter
+{
+    static dispatch_once_t pred;
+    static NSNumberFormatter *standardFormatter = nil;
+    dispatch_once(&pred, ^{
+        standardFormatter = [[NSNumberFormatter alloc] init];
+    });
+    [standardFormatter setAlwaysShowsDecimalSeparator:NO];
+    [standardFormatter setMaximumFractionDigits:4];
+    
+    return standardFormatter;
+}
 + (NSNumberFormatter *)glucoseNumberFormatter
 {
     static dispatch_once_t pred;
-    static NSNumberFormatter *formatter = nil;
+    static NSNumberFormatter *glucoseFormatter = nil;
     dispatch_once(&pred, ^{
-        formatter = [[NSNumberFormatter alloc] init];
+        glucoseFormatter = [[NSNumberFormatter alloc] init];
     });
-    [formatter setMaximumFractionDigits:[UAHelper userBGUnit] == BGTrackingUnitMG ? 0 : 2];
+    [glucoseFormatter setAlwaysShowsDecimalSeparator:NO];
+    [glucoseFormatter setMaximumFractionDigits:[UAHelper userBGUnit] == BGTrackingUnitMG ? 0 : 2];
     
-    return formatter;
+    return glucoseFormatter;
 }
 
 #pragma mark - Converts

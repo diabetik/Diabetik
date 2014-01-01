@@ -42,7 +42,7 @@
     self = [super init];
     if (self)
     {
-        self.title = NSLocalizedString(@"Add a Meal", nil);
+        self.title = NSLocalizedString(@"Add Food", nil);
         
         _type = 0;
         grams = 0;
@@ -54,7 +54,7 @@
     self = [super initWithEvent:theEvent];
     if(self)
     {
-        self.title = NSLocalizedString(@"Edit Meal", nil);
+        self.title = NSLocalizedString(@"Edit Food", nil);
         
         UAMeal *meal = (UAMeal *)[self event];
         if(meal)
@@ -161,10 +161,9 @@
 }
 - (void)configureAppearanceForTableViewCell:(UAEventInputViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    [cell setDrawsBorder:YES];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell resetCell];
     
-    NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+    NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
     if(indexPath.row == 0)
     {
         UITextField *textField = (UITextField *)cell.control;
@@ -173,10 +172,9 @@
         textField.autocorrectionType = UITextAutocorrectionTypeYes;
         textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         textField.delegate = self;
-        textField.inputView = nil;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        self.autocompleteBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height);
+        self.autocompleteBar.frame = accessoryView.contentView.bounds;
         [accessoryView.contentView addSubview:self.autocompleteBar];
         textField.inputAccessoryView = accessoryView;
         
@@ -188,13 +186,11 @@
         textField.placeholder = NSLocalizedString(@"grams (optional)", @"Amount of carbs in grams (this field is optional)");
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.delegate = self;
-        textField.inputView = nil;
         
         if(grams > 0)
         {
             textField.text = [valueFormatter stringFromNumber:[NSNumber numberWithDouble:grams]];
         }
-        textField.inputAccessoryView = nil;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Carbs", @"Amount of carbohydrates")];
     }
@@ -207,7 +203,6 @@
         textField.keyboardType = UIKeyboardTypeAlphabet;
         textField.clearButtonMode = UITextFieldViewModeNever;
         textField.delegate = self;
-        textField.inputView = nil;
         
         UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];
         [datePicker setDate:self.date];
@@ -223,10 +218,9 @@
         UANotesTextView *textView = (UANotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
-        textViewHeight = textView.contentSize.height;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        self.autocompleteTagBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height);
+        self.autocompleteTagBar.frame = accessoryView.contentView.bounds;
         [accessoryView.contentView addSubview:self.autocompleteTagBar];
         textView.inputAccessoryView = accessoryView;
         
@@ -249,7 +243,7 @@
     {
         if(grams > 0)
         {
-            NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+            NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
             
             return [NSString stringWithFormat:NSLocalizedString(@"Yum! I just ate %@ with %@ grams and recorded it with Diabetik", nil), name, [valueFormatter stringFromNumber:[NSNumber numberWithDouble:grams]]];
         }
@@ -267,7 +261,7 @@
     {
         if(grams > 0)
         {
-            NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+            NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
             
             return [NSString stringWithFormat:NSLocalizedString(@"Yum! I just ate %@ with %@ grams and recorded it with @diabetikapp", nil), name, [valueFormatter stringFromNumber:[NSNumber numberWithDouble:grams]]];
         }
@@ -318,7 +312,9 @@
     float height = 0.0;
     if(indexPath.row == 3)
     {
-        height = textViewHeight;
+        dummyNotesTextView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width-88.0f, 0.0f);
+        dummyNotesTextView.text = notes;
+        height = [dummyNotesTextView height];
     }
     else if(indexPath.row == 4)
     {
@@ -343,6 +339,47 @@
     
     return nil;
 }
+- (void)autocompleteBar:(UAAutocompleteBar *)theAutocompleteBar didSelectSuggestion:(NSString *)suggestion
+{
+    if([theAutocompleteBar isEqual:self.autocompleteBar])
+    {
+        __weak typeof(self) weakSelf = self;
+        
+        // If we're auto-selecting a previous meal, fetch and populate it's carb count too!
+        NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+        if(moc)
+        {
+            [moc performBlockAndWait:^{
+                
+                NSFetchRequest *request = [[NSFetchRequest alloc] init];
+                NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
+                [request setEntity:entity];
+                [request setReturnsDistinctResults:YES];
+                
+                NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterType == %d && name == %@", MealFilterType, suggestion];
+                [request setPredicate:predicate];
+                
+                NSError *error = nil;
+                NSArray *objects = [moc executeFetchRequest:request error:&error];
+                if (objects != nil && [objects count] > 0)
+                {
+                    UAMeal *meal = (UAMeal *)objects[0];
+                    if(meal)
+                    {
+                        grams = [meal.grams doubleValue];
+                        
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            __strong typeof(weakSelf) strongSelf = self;
+                            [strongSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+                        });
+                    }
+                }
+            }];
+        }
+    }
+    
+    [super autocompleteBar:theAutocompleteBar didSelectSuggestion:suggestion];
+}
 
 #pragma mark - UITextFieldDelegate methods
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -364,7 +401,7 @@
     }
     else if(textField.tag == 1)
     {
-        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+        NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
         
         grams = [[valueFormatter numberFromString:textField.text] doubleValue];
     }

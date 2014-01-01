@@ -26,6 +26,7 @@
 + (NSString *)formatMinutes:(double)minutes;
 + (NSNumber *)formatBGReadingWithValue:(NSNumber *)value inUnit:(NSInteger)unit;
 + (NSNumberFormatter *)glucoseNumberFormatter;
++ (NSNumberFormatter *)standardNumberFormatter;
 
 // Converters
 + (NSNumber *)convertBGValue:(NSNumber *)value fromUnit:(NSInteger)fromUnit toUnit:(NSInteger)toUnit;

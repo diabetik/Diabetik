@@ -134,10 +134,10 @@
 }
 - (void)buttonPressed:(UIButton *)sender
 {
-    if([self.delegate respondsToSelector:@selector(didSelectAutocompleteSuggestion:)])
+    if([self.delegate respondsToSelector:@selector(autocompleteBar:didSelectSuggestion:)])
     {
         NSString *suggestion = [sender titleForState:UIControlStateNormal];
-        [self.delegate performSelector:@selector(didSelectAutocompleteSuggestion:) withObject:suggestion];
+        [self.delegate autocompleteBar:self didSelectSuggestion:suggestion];
         
         [self showSuggestionsForInput:@""];
     }

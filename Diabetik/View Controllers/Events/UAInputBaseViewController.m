@@ -60,6 +60,13 @@
         self.autocompleteTagBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
         self.autocompleteTagBar.showTagButton = YES;
         self.autocompleteTagBar.delegate = self;
+        
+        dummyNotesTextView = [[UANotesTextView alloc] initWithFrame:CGRectZero];
+        dummyNotesTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        dummyNotesTextView.scrollEnabled = NO;
+        dummyNotesTextView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
+        dummyNotesTextView.autocorrectionType = UITextAutocorrectionTypeYes;
+        dummyNotesTextView.font = [UAFont standardMediumFontWithSize:16.0f];
     }
     return self;
 }
@@ -261,8 +268,7 @@
 {
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textView.tag inSection:0];
     
-    //NSIndexPath *indexPath = [self.tableView indexPathForCell:(UAEventInputViewCell *)[[textView superview] superview]];
-    //[self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+    [textView reloadInputViews];
 }
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
@@ -291,7 +297,7 @@
     // Finally, update our tableview
     [UIView setAnimationsEnabled:NO];
     [self.tableView beginUpdates];
-    textViewHeight = [textView height];
+    //textViewHeight = [textView height];
     [self.tableView endUpdates];
     [UIView setAnimationsEnabled:YES];
 }
@@ -301,6 +307,8 @@
 {
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:textField.tag inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    
+    [textField reloadInputViews];
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -313,7 +321,7 @@
 {
     return nil;
 }
-- (void)didSelectAutocompleteSuggestion:(NSString *)suggestion
+- (void)autocompleteBar:(UAAutocompleteBar *)autocompleteBar didSelectSuggestion:(NSString *)suggestion
 {
     [self.tableView scrollToRowAtIndexPath:self.activeControlIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
     
@@ -341,7 +349,7 @@
                 textView.text = [textView.text stringByReplacingCharactersInRange:NSMakeRange(range.location+1, range.length-1) withString:[NSString stringWithFormat:@"%@ ", suggestion]];
             }
             
-            textViewHeight = textView.intrinsicContentSize.height;
+            //textViewHeight = textView.intrinsicContentSize.height;
             notes = textView.text;
             
             //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
@@ -442,6 +450,7 @@
         {
             imagePickerController = [[UIImagePickerController alloc] init];
             imagePickerController.delegate = self;
+            imagePickerController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         
         if(actionSheet.tag == kExistingImageActionSheetTag)
@@ -458,21 +467,9 @@
                 if(image)
                 {
                     TGRImageViewController *viewController = [[TGRImageViewController alloc] initWithImage:image];
-                    // Don't forget to set ourselves as the transition delegate
                     viewController.transitioningDelegate = self;
                     
                     [self presentViewController:viewController animated:YES completion:nil];
-                    
-                    /*
-                    CGRect originalButtonFrame = [(UAInputParentViewController *)self.parentViewController photoButton].frame;
-                    CGRect photoButtonFrame = [[(UAInputParentViewController *)self.parentViewController keyboardBackingView] convertRect:originalButtonFrame toView:self.parentViewController.view];
-                    UAImageViewController *vc = [[UAImageViewController alloc] initWithImage:image];
-                    [self.parentViewController addChildViewController:vc];
-                    [self.parentViewController.view addSubview:vc.view];
-                    [vc presentFromRect:photoButtonFrame];
-                    
-                    [vc didMoveToParentViewController:self.parentViewController.parentViewController];
-                    */
                 }
             }
             else if(buttonIndex == 2)
@@ -504,9 +501,7 @@
             
             if(buttonIndex != actionSheet.cancelButtonIndex)
             {
-                [self.navigationController presentViewController:imagePickerController animated:YES completion:^{
-                    // STUB
-                }];
+                [self.navigationController presentViewController:imagePickerController animated:YES completion:nil];
             }
         }
     }
@@ -520,11 +515,12 @@
     }
     return nil;
 }
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
     if ([dismissed isKindOfClass:TGRImageViewController.class]) {
         
         UIImageView *imageView = [[(UAInputParentViewController *)self.parentViewController photoButton] fullsizeImageView];
+        
         return [[TGRImageZoomAnimationController alloc] initWithReferenceImageView:imageView];
     }
     return nil;
@@ -585,19 +581,19 @@
 #pragma mark - Notifications
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
-    [parentVC.keyboardBackingView setKeyboardState:kKeyboardShown];
+    // STUB
 }
 - (void)keyboardWillBeShown:(NSNotification *)aNotification
 {
-    // STUB
+    [parentVC.keyboardBackingView setKeyboardState:kKeyboardShown];
 }
 - (void)keyboardWillBeHidden:(NSNotification *)aNotification
 {
-    // STUB
+    [parentVC.keyboardBackingView setKeyboardState:kKeyboardHidden];
 }
 - (void)keyboardWasHidden:(NSNotification *)aNotification
 {
-    [parentVC.keyboardBackingView setKeyboardState:kKeyboardHidden];
+    // STUB
 }
 
 #pragma mark - Accessors

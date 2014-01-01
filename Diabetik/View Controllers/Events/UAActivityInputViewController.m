@@ -154,8 +154,7 @@
 }
 - (void)configureAppearanceForTableViewCell:(UAEventInputViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    [cell setDrawsBorder:YES];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell resetCell];
     
     if(indexPath.row == 0)
     {
@@ -165,10 +164,9 @@
         textField.autocorrectionType = UITextAutocorrectionTypeYes;
         textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         textField.delegate = self;
-        textField.inputView = nil;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        self.autocompleteBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height);
+        self.autocompleteBar.frame = accessoryView.contentView.bounds;
         [accessoryView.contentView addSubview:self.autocompleteBar];
         textField.inputAccessoryView = accessoryView;
         
@@ -182,7 +180,6 @@
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         textField.delegate = self;
-        textField.inputView = nil;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Time", nil)];
     }
@@ -195,7 +192,6 @@
         textField.keyboardType = UIKeyboardTypeAlphabet;
         textField.clearButtonMode = UITextFieldViewModeNever;
         textField.delegate = self;
-        textField.inputView = nil;
         
         UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];
         [datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
@@ -210,10 +206,9 @@
         UANotesTextView *textView = (UANotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
-        textViewHeight = textView.intrinsicContentSize.height;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        self.autocompleteTagBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height);
+        self.autocompleteBar.frame = accessoryView.contentView.bounds;
         [accessoryView.contentView addSubview:self.autocompleteTagBar];
         textView.inputAccessoryView = accessoryView;
         
@@ -288,7 +283,9 @@
     float height = 0.0;
     if(indexPath.row == 3)
     {
-        height = textViewHeight;
+        dummyNotesTextView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width-88.0f, 0.0f);
+        dummyNotesTextView.text = notes;
+        height = [dummyNotesTextView height];
     }
     else if(indexPath.row == 4)
     {

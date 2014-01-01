@@ -56,7 +56,7 @@
     {
         self.title = NSLocalizedString(@"Edit Medicine", nil);
         
-        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+        NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
         
         UAMedicine *medicine = (UAMedicine *)theEvent;
         if(medicine)
@@ -65,6 +65,16 @@
             _name = medicine.name;
             _amount = [valueFormatter stringFromNumber:medicine.amount];
         }
+    }
+    
+    return self;
+}
+- (id)initWithAmount:(NSNumber *)amount
+{
+    self = [self init];
+    if(self)
+    {
+        _amount = [amount stringValue];
     }
     
     return self;
@@ -101,17 +111,32 @@
             // Perform a Smart Input calculation
             __weak typeof(self) weakSelf = self;
             [[UAEventController sharedInstance] attemptSmartInputWithExistingEntries:unsavedEntries success:^(UAMedicine *event) {
-                weakSelf.name = [event name];
-                weakSelf.type = [[event type] integerValue];
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                
+                strongSelf.name = [event name];
+                strongSelf.type = [[event type] integerValue];
                 usingSmartInput = YES;
                 
-                UAEventInputViewCell *cell = (UAEventInputViewCell *)[weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:0]];
-                weakSelf.previouslyActiveControlIndexPath = [NSIndexPath indexPathForRow:1 inSection:0];
-                [cell.control becomeFirstResponder];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    __strong typeof(weakSelf) strongSelf = weakSelf;
+                    
+                    [strongSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+                                                withRowAnimation:UITableViewRowAnimationNone];
+                    
+                    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+                    UAEventInputViewCell *cell = (UAEventInputViewCell *)[strongSelf.tableView cellForRowAtIndexPath:indexPath];
+                    strongSelf.previouslyActiveControlIndexPath = indexPath;
+                    [cell.control becomeFirstResponder];
+                });
                 
             } failure:^{
-                UAEventInputViewCell *cell = (UAEventInputViewCell *)[weakSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-                [cell.control becomeFirstResponder];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    __strong typeof(weakSelf) strongSelf = weakSelf;
+                    
+                    UAEventInputViewCell *cell = (UAEventInputViewCell *)[strongSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                    [cell.control becomeFirstResponder];
+                });
             }];
         }
     }
@@ -125,7 +150,7 @@
     UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     
     // Select our first input field
-    if(editing)
+    if(editing && !isFirstLoad)
     {
         [cell.control becomeFirstResponder];
     }
@@ -159,7 +184,7 @@
     NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
-        NSNumberFormatter *valueFormatter = [UAHelper glucoseNumberFormatter];
+        NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
 
         UAMedicine *medicine = (UAMedicine *)[self event];
         if(!medicine)
@@ -249,8 +274,7 @@
 }
 - (void)configureAppearanceForTableViewCell:(UAEventInputViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    [cell setDrawsBorder:YES];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell resetCell];
     
     if(indexPath.row == 0)
     {
@@ -259,7 +283,6 @@
         textField.text = self.name;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
         textField.delegate = self;
-        textField.inputView = nil;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
         self.autocompleteBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height);
@@ -276,7 +299,6 @@
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.delegate = self;
-        textField.inputView = nil;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Amount", nil)];
         
@@ -343,7 +365,6 @@
         [datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
         [datePicker addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
         textField.inputView = datePicker;
-        textField.inputAccessoryView = nil;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Date", nil)];
     }
@@ -352,7 +373,6 @@
         UANotesTextView *textView = (UANotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
-        textViewHeight = textView.intrinsicContentSize.height;
         
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
         self.autocompleteTagBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height);
@@ -362,6 +382,7 @@
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Notes", nil)];
         [cell setDrawsBorder:NO];
     }
+    
     cell.control.tag = indexPath.row;
 }
 
@@ -432,7 +453,9 @@
     float height = 0.0;
     if(indexPath.row == 3)
     {
-        height = textViewHeight;
+        dummyNotesTextView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width-88.0f, 0.0f);
+        dummyNotesTextView.text = notes;
+        height = [dummyNotesTextView height];
     }
     
     if(height < 44.0f) height = 44.0f;

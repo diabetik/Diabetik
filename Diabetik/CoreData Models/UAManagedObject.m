@@ -157,19 +157,33 @@
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"guid = %@", guid];
         [request setPredicate:predicate];
         
-        // Execute the fetch.
-        NSError *error = nil;
-        NSArray *objects = [context executeFetchRequest:request error:&error];
-        if (objects != nil && [objects count] > 0)
-        {
-            object = [objects objectAtIndex:0];
+        @try {
+            
+            // Execute the fetch.
+            NSError *error = nil;
+            NSArray *objects = [context executeFetchRequest:request error:&error];
+            if (objects != nil && [objects count] > 0)
+            {
+                object = [objects objectAtIndex:0];
+            }
+            else
+            {
+                object = (UAManagedObject *)[NSEntityDescription insertNewObjectForEntityForName:class inManagedObjectContext:context];
+            }
+            
+            [object populateFromDictionaryRepresentation:dict];
+            
         }
-        else
-        {
-            object = (UAManagedObject *)[NSEntityDescription insertNewObjectForEntityForName:class inManagedObjectContext:context];
+        @catch (NSException *exception) {
+            
+            // STUB
+            
         }
-        
-        [object populateFromDictionaryRepresentation:dict];
+        @finally {
+            
+            // STUB
+            
+        }
     }
     
     return object;

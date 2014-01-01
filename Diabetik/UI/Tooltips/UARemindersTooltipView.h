@@ -19,7 +19,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UAModalView.h"
 
-@interface UARemindersTooltipView : UIView
+@interface UARemindersTooltipView : UATooltipView
 @end

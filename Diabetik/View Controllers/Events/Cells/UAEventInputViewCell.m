@@ -20,6 +20,9 @@
 
 #import "UAEventInputViewCell.h"
 
+@interface UAEventInputViewCell ()
+@end
+
 @implementation UAEventInputViewCell
 @synthesize control = _control;
 @synthesize label = _label;
@@ -53,6 +56,33 @@
 }
 
 #pragma mark - Logic
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    
+    [self resetCell];
+}
+- (void)resetCell
+{
+    [self setDrawsBorder:YES];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    id control = self.control;
+    if(control)
+    {
+        // This is a nasty hack for (what appears to be) a nasty Apple bug whereby input accessory views
+        // aren't correctly removed when set to nil. Instead, we set an empty UIView instance.
+        if([control respondsToSelector:@selector(setInputAccessoryView:)])
+        {
+            [control setInputAccessoryView:[[UIView alloc] initWithFrame:CGRectZero]];
+            if([control respondsToSelector:@selector(reloadInputViews)])
+            {
+                [control reloadInputViews];
+            }
+        }
+        if([control respondsToSelector:@selector(setInputView:)]) [control setInputView:nil];
+    }
+}
 - (void)layoutSubviews
 {
     [super layoutSubviews];

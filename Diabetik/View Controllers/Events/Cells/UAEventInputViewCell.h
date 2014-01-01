@@ -27,5 +27,6 @@
 
 // Logic
 - (void)setDrawsBorder:(BOOL)border;
+- (void)resetCell;
 
 @end

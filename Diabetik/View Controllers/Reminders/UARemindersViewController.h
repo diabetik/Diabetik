@@ -25,7 +25,7 @@
 #import "UALocationReminderViewController.h"
 #import "UARuleReminderViewController.h"
 
-@interface UARemindersViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UAModalViewDelegate>
+@interface UARemindersViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UATooltipViewControllerDelegate>
 
 // UI
 - (void)addReminder:(id)sender;

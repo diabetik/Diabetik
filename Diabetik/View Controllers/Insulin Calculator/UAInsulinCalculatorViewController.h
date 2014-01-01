@@ -21,9 +21,5 @@
 #import "UABaseViewController.h"
 
 @interface UAInsulinCalculatorViewController : UABaseTableViewController <UITextFieldDelegate>
-@property (nonatomic, retain) NSManagedObjectContext *moc;
-
-// Setup
-- (id)initWithMOC:(NSManagedObjectContext *)aMOC andAccount:(UAAccount *)anAccount;
 
 @end
