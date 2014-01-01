@@ -32,6 +32,18 @@
 
 @implementation UATooltipViewController
 
+static UIWindow *overlayWindow() {
+    static UIWindow *overlayWindow = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        overlayWindow = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        overlayWindow.backgroundColor = [UIColor clearColor];
+        overlayWindow.windowLevel = UIWindowLevelAlert;
+        overlayWindow.userInteractionEnabled = YES;
+    });
+    return overlayWindow;
+}
+
 #pragma mark - Setup
 - (id)initWithParentVC:(UIViewController *)parentVC andDelegate:(id <UATooltipViewControllerDelegate>)delegate
 {
@@ -91,7 +103,6 @@
 }
 - (void)setContentView:(UATooltipView *)view
 {
-    view.modalViewController = self;
     view.frame = CGRectMake(0, 0, self.contentContainerView.frame.size.width, self.contentContainerView.frame.size.height);
     [self.contentContainerView addSubview:view];
     

@@ -442,6 +442,8 @@
             self.addEntryPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
             [self.addEntryPopoverController setPopoverContentSize:CGSizeMake(320.0f, 225.0f)];
             [self.addEntryPopoverController setDelegate:self];
+            
+            vc.parentPopoverController = self.addEntryPopoverController;
         }
         
         [self.addEntryPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];

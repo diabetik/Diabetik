@@ -3,28 +3,30 @@
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 30/12/2013.
-//  Copyright (c) 2013 UglyApps. All rights reserved.
+//  Copyright 2013 Nial Giacomelli
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "UAAddEntryListViewController.h"
 #import "UAInputParentViewController.h"
 
 @interface UAAddEntryListViewController ()
-
 @end
 
 @implementation UAAddEntryListViewController
 
 #pragma mark - Setup
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if(self)
-    {
-    }
-    
-    return self;
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -44,9 +46,18 @@
     UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithEventType:indexPath.row];
     if(vc)
     {
-        UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-        nvc.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentViewController:nvc animated:YES completion:nil];
+        [self.parentPopoverController dismissPopoverAnimated:YES];
+        
+        // We need to present this view controller from the app delegate to stop the
+        // UIPopoverController from complaining about being in the progress of dismissal
+        UIViewController *rootVC = [[UAAppDelegate sharedAppDelegate] viewController];
+        
+        if(rootVC)
+        {
+            UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
+            nvc.modalPresentationStyle = UIModalPresentationFormSheet;
+            [rootVC presentViewController:nvc animated:YES completion:nil];
+        }
     }
 }
 
