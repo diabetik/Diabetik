@@ -969,6 +969,7 @@
     return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
 
+/*
 #pragma mark - Autorotation
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -982,6 +983,7 @@
 {
     return UIInterfaceOrientationMaskPortrait;
 }
+ */
 
 #pragma mark - UIViewController methods
 - (UIStatusBarStyle)preferredStatusBarStyle

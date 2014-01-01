@@ -515,11 +515,12 @@
     }
     return nil;
 }
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
+{
     if ([dismissed isKindOfClass:TGRImageViewController.class]) {
         
         UIImageView *imageView = [[(UAInputParentViewController *)self.parentViewController photoButton] fullsizeImageView];
+        
         return [[TGRImageZoomAnimationController alloc] initWithReferenceImageView:imageView];
     }
     return nil;
@@ -580,19 +581,19 @@
 #pragma mark - Notifications
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
-    [parentVC.keyboardBackingView setKeyboardState:kKeyboardShown];
+    // STUB
 }
 - (void)keyboardWillBeShown:(NSNotification *)aNotification
 {
-    // STUB
+    [parentVC.keyboardBackingView setKeyboardState:kKeyboardShown];
 }
 - (void)keyboardWillBeHidden:(NSNotification *)aNotification
 {
-    // STUB
+    [parentVC.keyboardBackingView setKeyboardState:kKeyboardHidden];
 }
 - (void)keyboardWasHidden:(NSNotification *)aNotification
 {
-    [parentVC.keyboardBackingView setKeyboardState:kKeyboardHidden];
+    // STUB
 }
 
 #pragma mark - Accessors

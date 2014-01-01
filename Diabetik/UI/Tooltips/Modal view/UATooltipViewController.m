@@ -66,7 +66,7 @@ static UIWindow *overlayWindow() {
     baseView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     self.pane = [[UAModalViewPane alloc] initWithFrame:CGRectZero];
-    self.pane.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.pane.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
     [baseView addSubview:self.pane];
     
     self.contentContainerView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -103,6 +103,7 @@ static UIWindow *overlayWindow() {
 }
 - (void)setContentView:(UATooltipView *)view
 {
+    view.modalViewController = self;
     view.frame = CGRectMake(0, 0, self.contentContainerView.frame.size.width, self.contentContainerView.frame.size.height);
     [self.contentContainerView addSubview:view];
     
@@ -119,7 +120,8 @@ static UIWindow *overlayWindow() {
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        self.pane.frame = CGRectInset(self.view.frame, 100, 100);
+        CGSize size = CGSizeMake(400.0f, 480.0f);
+        self.pane.frame = CGRectMake(self.view.bounds.size.width/2.0f - size.width/2.0f, self.view.bounds.size.height/2.0f - size.height/2.0f, size.width, size.height);
     }
     else
     {

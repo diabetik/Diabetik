@@ -182,7 +182,7 @@
 {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        return YES;
+        return (interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
     }
 
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
@@ -200,7 +200,7 @@
 {
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        return UIInterfaceOrientationMaskAll;
+        return UIInterfaceOrientationMaskAllButUpsideDown;
     }
     
     return UIInterfaceOrientationMaskPortrait;

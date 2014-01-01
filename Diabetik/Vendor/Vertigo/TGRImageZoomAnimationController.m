@@ -103,7 +103,7 @@
     toViewController.view.alpha = 0;
     [transitionContext.containerView addSubview:toViewController.view];
     [transitionContext.containerView sendSubviewToBack:toViewController.view];
-    
+
     // Compute the initial frame for the temporary view based on the image view
     // of the TGRImageViewController
     CGRect transitionViewInitialFrame = [fromViewController.imageView.image tgr_aspectFitRectForSize:fromViewController.imageView.bounds.size];
