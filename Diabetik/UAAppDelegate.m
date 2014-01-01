@@ -201,7 +201,8 @@
                                           kUseSmartInputKey: @YES,
                                               kUseSoundsKey: @YES,
                                           kShowInlineImages: @YES,
-                                         
+                                    kFilterSearchResultsKey: @YES,
+                                        
                                          USMCloudEnabledKey: @NO // iCloud is disabled by default
      }];
     
@@ -240,7 +241,7 @@
     UINavigationController *nvc = svc.viewControllers[1];
     UIViewController *vc = nvc.viewControllers[0];
     
-    barButtonItem.image = [[UIImage imageNamed:@"NavBarIconListMenu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    barButtonItem.image = [[UIImage imageNamed:@"NavBarIconListMenu"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     vc.navigationItem.leftBarButtonItem = barButtonItem;
 }
 - (void)splitViewController:(UISplitViewController *)svc
@@ -255,7 +256,7 @@
 {
     return NO;
 }
-
+ 
 #pragma mark - Location services
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
