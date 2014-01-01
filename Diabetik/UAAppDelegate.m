@@ -61,10 +61,10 @@
 
     // Initialise Appirater
     [Appirater setAppId:@"634983291"];
-    [Appirater setDaysUntilPrompt:7];
-    [Appirater setUsesUntilPrompt:10];
+    [Appirater setDaysUntilPrompt:4];
+    [Appirater setUsesUntilPrompt:5];
     [Appirater setSignificantEventsUntilPrompt:-1];
-    [Appirater setTimeBeforeReminding:2];
+    [Appirater setTimeBeforeReminding:1];
     [Appirater setDebug:NO];
     
     // Is this a first run experience?

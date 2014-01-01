@@ -169,8 +169,8 @@
         else if(indexPath.row == 1)
         {
             cell.textLabel.text = NSLocalizedString(@"Insulin Calculator", nil);
-            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders"];
-            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconRemindersHighlighted"];
+            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconCalculator"];
+            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconCalculatorHighlighted"];
         }
         else if(indexPath.row == 2)
         {

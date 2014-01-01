@@ -1887,12 +1887,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
@@ -1927,7 +1927,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Diabetik/Diabetik-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1958,7 +1958,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1970,7 +1970,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1996,12 +1996,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Nial Giacomelli (VF324MVMY7)";
 				COPY_PHASE_STRIP = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"/Applications/Spark Inspector.app/Contents/Resources/Frameworks\"";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "$(SRCROOT)/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
@@ -2033,7 +2033,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Diabetik/Diabetik-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -2072,7 +2072,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Diabetik/Diabetik-Prefix.pch";
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = "RELEASE_BUILD=1";
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)\"/OAuth2Client-master/**";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Diabetik/Diabetik-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
