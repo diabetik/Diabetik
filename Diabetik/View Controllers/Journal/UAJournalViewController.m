@@ -45,6 +45,8 @@
     
     id settingsChangeNotifier;
     
+    UAShortcutButton *todayButton, *sevenDayButton, *fourteenDayButton;
+    
     double todaysMean, sevenDaysMean, fourteenDaysMean;
     double todaysHighest, sevenDaysHighest, fourteenDaysHighest;
     NSInteger todaysCount, sevenDaysCount, fourteenDaysCount;
@@ -101,9 +103,7 @@
     headerView.backgroundColor = [UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f];
     headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     
-    CGFloat buttonWidth = floorf(self.view.frame.size.width/3.0f);
-    
-    UAShortcutButton *todayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, buttonWidth, 119.0f)];
+    todayButton = [[UAShortcutButton alloc] initWithFrame:CGRectZero];
     [todayButton setTitle:[NSLocalizedString(@"Today", nil) uppercaseString] forState:UIControlStateNormal];
     [todayButton setImage:[UIImage imageNamed:@"JournalShortcutToday"] forState:UIControlStateNormal];
     [todayButton setImage:[UIImage imageNamed:@"JournalShortcutTodaySelected"] forState:UIControlStateHighlighted];
@@ -112,7 +112,7 @@
     [todayButton addTarget:self action:@selector(showRelativeTimeline:) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:todayButton];
     
-    UAShortcutButton *sevenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(buttonWidth, 0.0f, buttonWidth, 119.0f)];
+    sevenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectZero];
     [sevenDayButton setTitle:[NSLocalizedString(@"Past 7 Days", nil) uppercaseString] forState:UIControlStateNormal];
     [sevenDayButton setImage:[UIImage imageNamed:@"JournalShortcut7Days"] forState:UIControlStateNormal];
     [sevenDayButton setImage:[UIImage imageNamed:@"JournalShortcut7DaysSelected"] forState:UIControlStateHighlighted];
@@ -121,7 +121,7 @@
     [sevenDayButton addTarget:self action:@selector(showRelativeTimeline:) forControlEvents:UIControlEventTouchUpInside];
     [headerView addSubview:sevenDayButton];
     
-    UAShortcutButton *fourteenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectMake(buttonWidth*2, 0.0f, buttonWidth, 119.0f)];
+    fourteenDayButton = [[UAShortcutButton alloc] initWithFrame:CGRectZero];
     [fourteenDayButton setTitle:[NSLocalizedString(@"Past 14 days", nil) uppercaseString] forState:UIControlStateNormal];
     [fourteenDayButton setImage:[UIImage imageNamed:@"JournalShortcut14Days"] forState:UIControlStateNormal];
     [fourteenDayButton setImage:[UIImage imageNamed:@"JournalShortcut14DaysSelected"] forState:UIControlStateHighlighted];
@@ -161,6 +161,15 @@
     }
     
     [self reloadViewData:nil];
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    CGFloat buttonWidth = floorf(self.view.frame.size.width/3.0f);
+    todayButton.frame = CGRectMake(0.0f, 0.0f, buttonWidth, 119.0f);
+    sevenDayButton.frame = CGRectMake(buttonWidth, 0.0f, buttonWidth, 119.0f);
+    fourteenDayButton.frame = CGRectMake(buttonWidth*2.0f, 0.0f, buttonWidth, 119.0f);
 }
 
 #pragma mark - Logic
