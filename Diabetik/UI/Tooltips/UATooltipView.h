@@ -1,9 +1,9 @@
 //
-//  UARemindersViewController.h
+//  UATooltipView.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 02/03/2013.
-//  Copyright 2013 Nial Giacomelli
+//  Created by Nial Giacomelli on 01/01/2014.
+//  Copyright 2014 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,18 +19,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UAUI.h"
 
-#import "UATimeReminderViewController.h"
-#import "UALocationReminderViewController.h"
-#import "UARuleReminderViewController.h"
-
-@interface UARemindersViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIActionSheetDelegate, UATooltipViewControllerDelegate>
-
-// UI
-- (void)addReminder:(id)sender;
-
-// Helpers
-- (NSInteger)adjustedSectionForSection:(NSInteger)section;
+@interface UATooltipView : UIView
+@property (nonatomic, weak) UATooltipViewController *modalViewController;
 
 @end

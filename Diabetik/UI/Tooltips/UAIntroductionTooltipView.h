@@ -19,7 +19,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UAModalView.h"
 
-@interface UAIntroductionTooltipView : UIView <UIScrollViewDelegate>
+@interface UAIntroductionTooltipView : UATooltipView <UIScrollViewDelegate>
 @end

@@ -19,7 +19,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "UAModalView.h"
 
-@interface UACreditsTooltipView : UIView
+@interface UACreditsTooltipView : UATooltipView
 @end

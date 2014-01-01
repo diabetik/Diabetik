@@ -353,12 +353,12 @@
 }
 - (void)showTips
 {
-    UAModalView *modalView = [[UAModalView alloc] initWithFrame:CGRectMake(0, 0, self.navigationController.view.frame.size.width, self.navigationController.view.frame.size.height)];
-    modalView.delegate = self;
-    [self.navigationController.view addSubview:modalView];
+    UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
+    UIViewController *targetVC = appDelegate.viewController;
     
-    UAExportTooltipView *tooltipView = [[UAExportTooltipView alloc] initWithFrame:CGRectMake(0, 0, modalView.contentView.bounds.size.width, modalView.contentView.bounds.size.height)];
-    [[modalView contentView] addSubview:tooltipView];
+    UATooltipViewController *modalView = [[UATooltipViewController alloc] initWithParentVC:targetVC andDelegate:self];
+    UAExportTooltipView *tooltipView = [[UAExportTooltipView alloc] initWithFrame:CGRectZero];
+    [modalView setContentView:tooltipView];
     [modalView present];
 }
 
@@ -860,12 +860,12 @@
     }
 }
 
-#pragma mark - UAModalViewDelegate methods
-- (void)willDisplayModalView:(UAModalView *)aModal
+#pragma mark - UAModalViewControllerDelegate methods
+- (void)willDisplayModalView:(UATooltipViewController *)aModalController
 {
     // STUB
 }
-- (void)didDismissModalView:(UAModalView *)aModal
+- (void)didDismissModalView:(UATooltipViewController *)aModalController
 {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenExportTooltip];
     [[NSUserDefaults standardUserDefaults] synchronize];

@@ -1,5 +1,5 @@
 //
-//  UAModalView.h
+//  UAModalViewController.h
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 29/12/2012.
@@ -20,20 +20,26 @@
 
 #import <UIKit/UIKit.h>
 
-@class UAModalView;
-@protocol UAModalViewDelegate <NSObject>
+@class UATooltipView;
+@class UATooltipViewController;
+@protocol UATooltipViewControllerDelegate <NSObject>
 
 @optional
-- (void)willDisplayModalView:(UAModalView *)aModal;
-- (void)didDismissModalView:(UAModalView *)aModal;
+- (void)willDisplayModalView:(UATooltipViewController *)aModalController;
+- (void)didDismissModalView:(UATooltipViewController *)aModalController;
 
 @end
 
 @class UAModalViewPane;
-@interface UAModalView : UIView
-@property (nonatomic, strong) UIView *contentView;
-@property (nonatomic, assign) id delegate;
+@interface UATooltipViewController : UABaseViewController
+@property (nonatomic, strong) UIView *contentContainerView;
+@property (nonatomic, assign) id<UATooltipViewControllerDelegate> delegate;
 
+// Setup
+- (id)initWithParentVC:(UIViewController *)parentVC andDelegate:(id <UATooltipViewControllerDelegate>)delegate;
+
+// Logic
+- (void)setContentView:(UATooltipView *)view;
 - (void)present;
 - (void)dismiss;
 

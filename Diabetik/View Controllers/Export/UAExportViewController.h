@@ -24,7 +24,7 @@
 #import "OrderedDictionary.h"
 #import "UAPDFDocument.h"
 
-@interface UAExportViewController : UABaseTableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate, UIPrintInteractionControllerDelegate, UAPDFDocumentDelegate>
+@interface UAExportViewController : UABaseTableViewController <UIActionSheetDelegate, MFMailComposeViewControllerDelegate, UIPrintInteractionControllerDelegate, UAPDFDocumentDelegate, UATooltipViewControllerDelegate>
 
 - (void)refreshView;
 

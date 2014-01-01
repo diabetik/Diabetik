@@ -19,11 +19,13 @@
 //
 
 #import "UAIntroductionTooltipView.h"
-#import "UAModalView.h"
 
 @interface UAIntroductionTooltipView ()
 {
     UIPageControl *pageControl;
+    UIScrollView *scrollView;
+    
+    NSInteger totalPages;
 }
 
 - (UIView *)pageForIndex:(NSInteger)index;
@@ -36,31 +38,46 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:frame];
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
+        scrollView = [[UIScrollView alloc] initWithFrame:frame];
         scrollView.pagingEnabled = YES;
         scrollView.showsHorizontalScrollIndicator = NO;
         scrollView.delegate = self;
         
-        NSInteger numPages = 3;
+        totalPages = 3;
         
         // Setup pages
-        for(int i = 0; i < numPages; i++)
+        for(int i = 0; i < totalPages; i++)
         {
             UIView *view = [self pageForIndex:i];
             [scrollView addSubview:view];
         }
-        
-        scrollView.contentSize = CGSizeMake((numPages+1) * self.frame.size.width, self.frame.size.height);
         [self addSubview:scrollView];
         
-        pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, self.frame.size.height-60, self.frame.size.width, 60)];
-        pageControl.numberOfPages = numPages;
+        pageControl = [[UIPageControl alloc] initWithFrame:CGRectZero];
+        pageControl.numberOfPages = totalPages;
         pageControl.currentPageIndicatorTintColor = [UIColor colorWithRed:18.0f/255.0f green:185.0f/255.0f blue:139.0f/255.0f alpha:1.0f];
         pageControl.pageIndicatorTintColor = [UIColor colorWithRed:18.0f/255.0f green:185.0f/255.0f blue:139.0f/255.0f alpha:0.25f];
-        
         [self addSubview:pageControl];
     }
     return self;
+}
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    scrollView.frame = self.bounds;
+    scrollView.contentSize = CGSizeMake((totalPages+1) * self.frame.size.width, self.frame.size.height);
+    pageControl.frame = CGRectMake(0, self.bounds.size.height-60, self.bounds.size.width, 60);
+    
+    NSInteger index = 0;
+    for(UIView *pageContainerView in scrollView.subviews)
+    {
+        pageContainerView.frame = CGRectMake(index*self.frame.size.width, 0, self.frame.size.width, self.frame.size.height);
+        
+        index++;
+    }
 }
 
 #pragma mark - Logic
@@ -68,9 +85,11 @@
 {
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(index*self.frame.size.width, 0, self.frame.size.width, self.frame.size.height)];
     
-    CGFloat contentHeight = 200.0f, headerHeight = 30.0f;
     
+    CGFloat contentHeight = 200.0f, headerHeight = 30.0f;
     UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0, floorf(self.frame.size.height/2 - ((contentHeight+headerHeight)/2)), self.frame.size.width, contentHeight+headerHeight)];
+    containerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    
     UIView *border = [[UIView alloc] initWithFrame:CGRectMake(floorf(self.frame.size.width/2 - 20), headerHeight+10, 40, 2)];
     border.backgroundColor = [UIColor colorWithRed:234.0f/255.0f green:237.0f/255.0f blue:236.0f/255.0f alpha:1.0f];
     [containerView addSubview:border];
@@ -126,8 +145,7 @@
     if(page > 2)
     {
         page = 2;
-        UAModalView *modalView = (UAModalView *)[[[self superview] superview] superview];
-        [modalView dismiss];
+        [self.modalViewController dismiss];
     }
     
     pageControl.currentPage = page;

@@ -20,5 +20,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UAExportTooltipView : UIView
+@interface UAExportTooltipView : UATooltipView
 @end

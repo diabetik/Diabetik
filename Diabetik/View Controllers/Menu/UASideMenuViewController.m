@@ -97,22 +97,11 @@
 - (void)showCredits
 {
     UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
-    UIView *targetView = nil;
-
-    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
-    {
-        targetView = [(UINavigationController *)[(REFrostedViewController *)appDelegate.viewController contentViewController] view];
-    }
-    else
-    {
-        targetView = appDelegate.viewController.view;
-    }
+    UIViewController *targetVC = appDelegate.viewController;
     
-    UAModalView *modalView = [[UAModalView alloc] initWithFrame:CGRectMake(0, 0, targetView.frame.size.width, targetView.frame.size.height)];
-    modalView.delegate = self;
-    [targetView addSubview:modalView];
-    UACreditsTooltipView *introductionView = [[UACreditsTooltipView alloc] initWithFrame:CGRectMake(0, 0, modalView.contentView.bounds.size.width, modalView.contentView.bounds.size.height)];
-    [[modalView contentView] addSubview:introductionView];
+    UATooltipViewController *modalView = [[UATooltipViewController alloc] initWithParentVC:targetVC andDelegate:self];
+    UACreditsTooltipView *introductionView = [[UACreditsTooltipView alloc] initWithFrame:CGRectZero];
+    [modalView setContentView:introductionView];
     [modalView present];
 }
 
@@ -364,12 +353,12 @@
     }
 }
 
-#pragma mark - UAModalViewDelegate methods
-- (void)willDisplayModalView:(UAModalView *)aModal
+#pragma mark - UAModalViewControllerDelegate methods
+- (void)willDisplayModalView:(UATooltipViewController *)aModalController
 {
     // STUB
 }
-- (void)didDismissModalView:(UAModalView *)aModal
+- (void)didDismissModalView:(UATooltipViewController *)aModalController
 {
     // STUB
 }
