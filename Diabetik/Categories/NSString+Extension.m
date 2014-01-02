@@ -27,6 +27,18 @@
     NSString *value = [self stringByReplacingOccurrencesOfString: @"\"" withString: @"\"\""];
     return [NSString stringWithFormat:@"\"%@\"", value];
 }
+- (NSArray *)characterArray
+{
+    NSRange theRange = {0, 1};
+    NSMutableArray * array = [NSMutableArray array];
+    for(NSInteger i = 0; i < [self length]; i++)
+    {
+        theRange.location = i;
+        [array addObject:[self substringWithRange:theRange]];
+    }
+    
+    return [NSArray arrayWithArray:array];
+}
 
 #pragma mark - Calculations
 - (NSUInteger)levenshteinDistanceToString:(NSString *)string
