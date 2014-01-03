@@ -554,6 +554,7 @@
 		53B576751709DF02007322EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		53BAD21D1847FF3B007F2977 /* UASideMenuHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuHeaderView.h; sourceTree = "<group>"; };
 		53BAD21E1847FF3B007F2977 /* UASideMenuHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuHeaderView.m; sourceTree = "<group>"; };
+		53CDF9DF18772C6E00F5FA48 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		53D5C4C1184129840000CB86 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
 		53D5C4C4184129EB0000CB86 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		53D5C4C6184129EB0000CB86 /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
@@ -1831,6 +1832,7 @@
 				533F30631773266500AD89E2 /* nl */,
 				533F31E71773266600AD89E2 /* sv */,
 				53AE668A178727D800DE66D9 /* cs */,
+				53CDF9DF18772C6E00F5FA48 /* pt-BR */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
