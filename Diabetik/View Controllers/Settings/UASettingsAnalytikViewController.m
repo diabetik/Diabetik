@@ -8,11 +8,14 @@
 
 #import "UASettingsAnalytikViewController.h"
 #import "UASettingsTextViewCell.h"
-#import "AFNetworking.h"
+#import "UASyncController.h"
+#import "MBProgressHUD.h"
 
 @interface UASettingsAnalytikViewController ()
 {
     UITextField *usernameTextField, *passwordTextField;
+    
+    BOOL isLoggedIn;
 }
 
 - (void)performLogin:(id)sender;
@@ -40,24 +43,39 @@
         passwordTextField.textAlignment = NSTextAlignmentCenter;
         passwordTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         passwordTextField.returnKeyType = UIReturnKeyDone;
+        
+        isLoggedIn = [[[UASyncController sharedInstance] analytikController] activeAccount] ? YES : NO;
     }
     return self;
 }
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Login", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(performLogin:)];
-}
 
 #pragma mark - Logic
-- (void)performLogin:(id)sender
+- (void)performLogin
 {
-    self.navigationItem.rightBarButtonItem.enabled = NO;
-    
     if(usernameTextField.text.length && passwordTextField.text.length)
     {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
+        UAAnalytikController *controller = [[UASyncController sharedInstance] analytikController];
+        [controller authorizeWithCredentials:@{@"email": usernameTextField.text, @"password": passwordTextField.text} success:^{
+            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+            isLoggedIn = YES;
+            [self.tableView reloadData];
+            
+        } failure:^(NSError *error) {
+            
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                message:[error localizedDescription]
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"Cancel"
+                                                      otherButtonTitles:nil];
+            [alertView show];
+            
+        }];
     }
     else
     {
@@ -67,32 +85,87 @@
                                                   cancelButtonTitle:@"Cancel"
                                                   otherButtonTitles:nil];
         [alertView show];
-        
-        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+}
+
+#pragma mark - UITableViewDelegate methods
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UAAnalytikController *controller = [[UASyncController sharedInstance] analytikController];
+    if(isLoggedIn)
+    {
+        if(indexPath.section == 0 && indexPath.row == 0)
+        {
+            [controller destroyCredentials];
+            
+            isLoggedIn = NO;
+            [aTableView reloadData];
+        }
+    }
+    else
+    {
+        if(indexPath.section == 1 && indexPath.row == 0)
+        {
+            [self performLogin];
+        }
     }
 }
 
 #pragma mark - UITableViewDataSource methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
 {
-    return 1;
+    if(isLoggedIn)
+    {
+        return 1;
+    }
+    
+    return 2;
 }
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    if(isLoggedIn)
+    {
+        return 1;
+    }
+    else
+    {
+        if(section == 0)
+        {
+            return 2;
+        }
+    }
+    
+    return 1;
 }
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
 {
-    if(section == 0)
+    if(isLoggedIn)
     {
-        return NSLocalizedString(@"Credentials", nil);
+        if(section == 0)
+        {
+            return NSLocalizedString(@"Options", nil);
+        }
+    }
+    else
+    {
+        if(section == 0)
+        {
+            return NSLocalizedString(@"Credentials", nil);
+        }
     }
     
     return @"";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 40.0f;
+    if(section == 0)
+    {
+        return 40.0f;
+    }
+    
+    return 0.0f;
 }
 - (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section
 {
@@ -102,21 +175,48 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UASettingsTextViewCell *cell = (UASettingsTextViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
-    if (cell == nil)
-    {
-        cell = [[UASettingsTextViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UASettingCell"];
-    }
+    UITableViewCell *cell = nil;
     
-    if(indexPath.section == 0)
+    if(isLoggedIn)
     {
-        if(indexPath.row == 0)
+        cell = [aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
+        if (cell == nil)
         {
-            cell.accessoryView = usernameTextField;
+            cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UASettingCell"];
         }
-        else if(indexPath.row == 1)
+
+        cell.textLabel.text = NSLocalizedString(@"Logout", nil);
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    else
+    {
+        if(indexPath.section == 0)
         {
-            cell.accessoryView = passwordTextField;
+            cell = [aTableView dequeueReusableCellWithIdentifier:@"UALoginCredentialsCell"];
+            if (cell == nil)
+            {
+                cell = [[UASettingsTextViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UALoginCredentialsCell"];
+            }
+            
+            if(indexPath.row == 0)
+            {
+                cell.accessoryView = usernameTextField;
+            }
+            else if(indexPath.row == 1)
+            {
+                cell.accessoryView = passwordTextField;
+            }
+        }
+        else if(indexPath.section == 1)
+        {
+            cell = [aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
+            if (cell == nil)
+            {
+                cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UASettingCell"];
+            }
+            
+            cell.textLabel.text = @"Login";
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
         }
     }
     

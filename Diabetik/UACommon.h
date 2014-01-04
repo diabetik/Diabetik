@@ -81,9 +81,14 @@ static NSString * const kRunKeeperAuthURL = @"https://runkeeper.com/apps/authori
 static NSString * const kRunKeeperTokenURL = @"https://runkeeper.com/apps/token";
 static NSString * const kRunKeeperServiceIdentifier = @"RunKeeper";
 
+// Analytik
+static NSString * const kAnalytikServiceIdentifier = @"Analytik";
+static NSString * const kAnalytikAPIURL = @"http://api.analytikhq.com/api/v1/";
+
 // Notifications
 static NSString * const kRemindersUpdatedNotification = @"com.uglyapps.reminders.updated";
 static NSString * const kSignificantSettingsChangeNotification = @"com.uglyapps.settings.change";
+static NSString * const kSettingsChangedNotification = @"com.uglyapps.settings.change";
 static NSString * const kDropboxLinkNotification = @"com.uglyapps.dropbox.linked";
 static NSString * const kRunKeeperLinkNotification = @"com.uglyapps.runkeeper.linked";
 static NSString * const kRunKeeperLinkFailedNotification = @"com.uglyapps.runkeeper.link-failed";
@@ -100,8 +105,6 @@ static NSString * const kHasSeenAddDragUIHint = @"kHasSeenAddDragUIHint";
 static NSString * const kFilterSearchResultsKey = @"kFilterSearchResultsKey";
 static NSString * const kReportsDefaultKey = @"kReportsDefaultKey";
 static NSString * const kShowInlineImages = @"kShowInlineImages";
-
-static NSString * const kSettingsChangedNotification = @"kSettingsChangedNotification";
 
 static NSString * const kMinHealthyBGKey = @"kMinHealthyBGKey";
 static NSString * const kMaxHealthyBGKey = @"kMaxHealthyBGKey";
