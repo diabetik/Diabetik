@@ -18,7 +18,9 @@
     BOOL isLoggedIn;
 }
 
-- (void)performLogin:(id)sender;
+// Logic
+- (void)performLogin;
+
 @end
 
 @implementation UASettingsAnalytikViewController
@@ -34,13 +36,11 @@
         usernameTextField = [[UITextField alloc] initWithFrame:CGRectZero];
         usernameTextField.placeholder = NSLocalizedString(@"Email", nil);
         usernameTextField.keyboardType = UIKeyboardTypeEmailAddress;
-        usernameTextField.textAlignment = NSTextAlignmentCenter;
         usernameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         
         passwordTextField = [[UITextField alloc] initWithFrame:CGRectZero];
         passwordTextField.placeholder = NSLocalizedString(@"Password", nil);
         passwordTextField.secureTextEntry = YES;
-        passwordTextField.textAlignment = NSTextAlignmentCenter;
         passwordTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         passwordTextField.returnKeyType = UIReturnKeyDone;
         
@@ -63,6 +63,9 @@
             
             isLoggedIn = YES;
             [self.tableView reloadData];
+            
+            usernameTextField.text = @"";
+            passwordTextField.text = @"";
             
         } failure:^(NSError *error) {
             
@@ -186,7 +189,6 @@
         }
 
         cell.textLabel.text = NSLocalizedString(@"Logout", nil);
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
     else
     {
@@ -216,7 +218,6 @@
             }
             
             cell.textLabel.text = @"Login";
-            cell.textLabel.textAlignment = NSTextAlignmentCenter;
         }
     }
     

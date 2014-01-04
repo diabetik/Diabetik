@@ -182,26 +182,26 @@
         /*
         if(indexPath.row == 0)
         {
-            cell.imageView.image = [UIImage imageNamed:@"icloud-small-icon"];
+            cell.imageView.image = [UIImage imageNamed:@"iCloudSmallIcon"];
             cell.textLabel.text = NSLocalizedString(@"iCloud settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         */
         if(indexPath.row == 0)
         {
-            cell.imageView.image = [UIImage imageNamed:@"diabetik-small-icon"];
+            cell.imageView.image = [UIImage imageNamed:@"diabetikSmallIcon"];
             cell.textLabel.text = NSLocalizedString(@"Backup settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         else if(indexPath.row == 1)
         {
-            cell.imageView.image = [UIImage imageNamed:@"dropbox-small-icon"];
+            cell.imageView.image = [UIImage imageNamed:@"dropboxSmallIcon"];
             cell.textLabel.text = NSLocalizedString(@"Dropbox settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         else if(indexPath.row == 2)
         {
-            cell.imageView.image = [UIImage imageNamed:@"dropbox-small-icon"];
+            cell.imageView.image = [UIImage imageNamed:@"analytikSmallIcon"];
             cell.textLabel.text = NSLocalizedString(@"Analytik settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }

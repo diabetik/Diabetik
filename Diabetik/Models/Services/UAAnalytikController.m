@@ -38,21 +38,29 @@
               [SSKeychain setPassword:credentials[@"password"] forService:kAnalytikServiceIdentifier account:credentials[@"email"] error:&error];
               if(!error)
               {
-                  successBlock();
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      successBlock();
+                  });
               }
               else
               {
-                  failureBlock(error);
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      failureBlock(error);
+                  });
               }
           }
           else
           {
-              failureBlock(error);
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  failureBlock(error);
+              });
           }
           
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        failureBlock(error);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            failureBlock(error);
+        });
         
     }];
 }
