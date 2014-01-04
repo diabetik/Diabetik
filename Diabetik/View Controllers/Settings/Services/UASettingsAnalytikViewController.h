@@ -1,8 +1,8 @@
 //
-//  UASyncController.h
+//  UASettingsAnalytikViewController.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 04/01/2014.
+//  Created by Nial Giacomelli on 22/12/2013.
 //  Copyright 2013 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,8 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "UAAnalytikController.h"
+#import "UABaseViewController.h"
 
-@interface UASyncController : NSObject
-
-+ (id)sharedInstance;
-
-// Logic
-- (void)sync;
-
-// Accessors
-- (UAAnalytikController *)analytikController;
+@interface UASettingsAnalytikViewController : UABaseTableViewController
 
 @end
