@@ -21,6 +21,10 @@
 #import <Foundation/Foundation.h>
 #import "UAEvent.h"
 #import "UAMedicine.h"
+#import "UAMeal.h"
+#import "UAActivity.h"
+#import "UAReading.h"
+#import "UANote.h"
 
 @class UAAccount;
 @interface UAEventController : NSObject

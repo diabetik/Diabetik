@@ -26,6 +26,9 @@
 - (void)authorizeWithCredentials:(NSDictionary *)credentials
                          success:(void (^)(void))successBlock
                          failure:(void (^)(NSError *))failureBlock;
+- (void)syncFromDate:(NSDate *)fromDate
+             success:(void (^)(void))successBlock
+             failure:(void (^)(NSError *))failureBlock;
 - (void)destroyCredentials;
 
 // Helpers

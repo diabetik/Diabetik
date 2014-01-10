@@ -90,18 +90,6 @@
     [UALocationController sharedInstance];
     [UASyncController sharedInstance];
     
-    [[UASyncController sharedInstance] sync];
-    
-    /*
-    UAAnalytikController *analytik = [[UAAnalytikController alloc] init];
-    [analytik authorizeWithCredentials:@{@"email": @"nial.david.giacomelli@gmail.com", @"password": @"r0b0tdogpunchmachfine"} success:^{
-        NSLog(@"Successful authentication");
-    } failure:^(NSError *error) {
-        NSLog(@"Failed to auth: %@", [error localizedDescription]);
-    }];
-    */
-    
-    
     // Setup our backup controller
     self.backupController = [[UABackupController alloc] init];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

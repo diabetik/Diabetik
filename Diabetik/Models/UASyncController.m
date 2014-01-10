@@ -22,6 +22,11 @@
 #import "UAAnalytikController.h"
 #import "UASyncController.h"
 
+@interface UASyncController ()
+@property (nonatomic, strong) NSTimer *syncTimer;
+
+@end
+
 @implementation UASyncController
 
 + (id)sharedInstance
@@ -34,13 +39,40 @@
     return _sharedObject;
 }
 
+#pragma mark - Setup
+- (id)init
+{
+    self = [super init];
+    if(self)
+    {
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            self.syncTimer = [NSTimer scheduledTimerWithTimeInterval:5*60
+                                                              target:strongSelf
+                                                            selector:@selector(sync)
+                                                            userInfo:nil
+                                                             repeats:YES];
+            
+            [self sync];
+        });
+    }
+    
+    return self;
+}
+
 #pragma mark - Logic
 - (void)sync
 {
     // Have we got an Analytik API account setup?
     if([[self analytikController] activeAccount])
     {
-        NSLog(@"Has got an Analytik API account");
+        NSLog(@"Attemping Analytik sync");
+        [[self analytikController] syncFromDate:[NSDate distantPast] success:^{
+            NSLog(@"Analytik sync was successful");
+        } failure:^(NSError *error) {
+            NSLog(@"Analytik sync failed");
+        }];
     }
 }
 
