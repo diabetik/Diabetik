@@ -307,54 +307,50 @@
 }
 - (void)performSearchWithText:(NSString *)searchText
 {
-    NSArray *tags = [[UATagController sharedInstance] fetchTokensInString:searchText withPrefix:@""];
-    NSArray *existingTags = [[UATagController sharedInstance] fetchExistingTagsWithStrings:tags];
-    
-    NSString *term = [searchText lowercaseString];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name BEGINSWITH[cd] %@", term];
-    if(existingTags && [existingTags count])
+    if(searchText && searchText.length)
     {
-        predicate = [NSPredicate predicateWithFormat:@"self.name BEGINSWITH[cd] %@ OR SUBQUERY(self.tags, $tag, $tag.nameLC IN %@).@count >= %d", term, tags, [tags count]];
-    }
+        NSString *regex = [NSString stringWithFormat:@".*?%@.*?", [searchText lowercaseString]];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name MATCHES[cd] %@ OR self.notes MATCHES[cd] %@", regex, regex];
 
-    if(predicate)
-    {
-        NSMutableArray *newResults = [NSMutableArray array];
-        NSMutableArray *newHeaders = [NSMutableArray array];
-        if(self.fetchedResultsController && [[self.fetchedResultsController fetchedObjects] count])
+        if(predicate)
         {
-            for(id<NSFetchedResultsSectionInfo> section in [self.fetchedResultsController sections])
+            NSMutableArray *newResults = [NSMutableArray array];
+            NSMutableArray *newHeaders = [NSMutableArray array];
+            if(self.fetchedResultsController && [[self.fetchedResultsController fetchedObjects] count])
             {
-                NSArray *matchingObjects = [[section objects] filteredArrayUsingPredicate:predicate];
-                if(matchingObjects && [matchingObjects count])
+                for(id<NSFetchedResultsSectionInfo> section in [self.fetchedResultsController sections])
                 {
-                    NSMutableArray *objects = [NSMutableArray array];
-                    for(id object in [section objects])
+                    NSArray *matchingObjects = [[section objects] filteredArrayUsingPredicate:predicate];
+                    if(matchingObjects && [matchingObjects count])
                     {
-                        NSInteger indexOfObject = [matchingObjects indexOfObject:object];
-                        BOOL relevant = indexOfObject != NSNotFound;
-                        if(![[NSUserDefaults standardUserDefaults] boolForKey:kFilterSearchResultsKey] || ([[NSUserDefaults standardUserDefaults] boolForKey:kFilterSearchResultsKey] && relevant))
+                        NSMutableArray *objects = [NSMutableArray array];
+                        for(id object in [section objects])
                         {
-                            [objects addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", [NSNumber numberWithBool:relevant], @"relevant", nil]];
+                            NSInteger indexOfObject = [matchingObjects indexOfObject:object];
+                            BOOL relevant = indexOfObject != NSNotFound;
+                            if(![[NSUserDefaults standardUserDefaults] boolForKey:kFilterSearchResultsKey] || ([[NSUserDefaults standardUserDefaults] boolForKey:kFilterSearchResultsKey] && relevant))
+                            {
+                                [objects addObject:[NSDictionary dictionaryWithObjectsAndKeys:object, @"object", [NSNumber numberWithBool:relevant], @"relevant", nil]];
+                            }
                         }
+                        
+                        [newHeaders addObject:[section name]];
+                        [newResults addObject:objects];
                     }
-                    
-                    [newHeaders addObject:[section name]];
-                    [newResults addObject:objects];
                 }
+                
+                searchResults = newResults;
+                searchResultHeaders = newHeaders;
+                
+                NSMutableArray *stats = [NSMutableArray array];
+                for(NSArray *results in searchResults)
+                {
+                    [stats addObject:[self calculatedStatsForObjects:results]];
+                }
+                searchResultSectionStats = [NSArray arrayWithArray:stats];
+                
+                return;
             }
-            
-            searchResults = newResults;
-            searchResultHeaders = newHeaders;
-            
-            NSMutableArray *stats = [NSMutableArray array];
-            for(NSArray *results in searchResults)
-            {
-                [stats addObject:[self calculatedStatsForObjects:results]];
-            }
-            searchResultSectionStats = [NSArray arrayWithArray:stats];
-            
-            return;
         }
     }
     

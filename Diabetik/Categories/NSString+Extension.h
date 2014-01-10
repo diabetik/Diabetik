@@ -22,7 +22,11 @@
 
 @interface NSString (Extension)
 
+// Transforms
 - (NSString *)escapedForCSV;
+- (NSArray *)characterArray;
+
+// Levenshtein
 - (NSUInteger)levenshteinDistanceToString:(NSString *)string;
 
 @end

@@ -356,6 +356,9 @@
                 [request setEntity:entity];
                 [request setReturnsDistinctResults:YES];
                 
+                NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:NO];
+                [request setSortDescriptors:@[sortDescriptor]];
+                
                 NSPredicate *predicate = [NSPredicate predicateWithFormat:@"filterType == %d && name == %@", MealFilterType, suggestion];
                 [request setPredicate:predicate];
                 
