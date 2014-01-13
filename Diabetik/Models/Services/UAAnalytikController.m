@@ -29,10 +29,8 @@
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) AFHTTPRequestOperationManager *operationManager;
 
-// Logic
-- (void)syncEventBatch:(NSArray *)events;
-
 // Helpers
+- (NSArray *)eventsToSyncFromDate:(NSDate *)fromDate;
 - (NSDictionary *)representationForEvent:(UAEvent *)event;
 - (NSError *)responseError:(NSDictionary *)response;
 
@@ -102,32 +100,28 @@
              success:(void (^)(void))successBlock
              failure:(void (^)(NSError *))failureBlock
 {
+    __weak typeof(self) weakSelf = self;
+    
     NSDictionary *account = [self activeAccount];
     if(account)
     {
-        NSLog(@"Got account");
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"modifiedTimestamp >= %@ OR timestamp >= %@", fromDate, fromDate];
-        
         NSManagedObjectContext *moc = [self managedObjectContext];
         if(moc)
         {
-                    NSLog(@"Got MOC");
             [moc performBlock:^{
                
-                NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:YES];
-                NSArray *events = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate
-                                                                               sortDescriptors:@[sortDescriptor]
-                                                                                     inContext:moc];
+                __strong typeof(weakSelf) strongSelf = self;
                 
+                NSArray *events = [strongSelf eventsToSyncFromDate:fromDate];
                 if(events)
                 {
-                    NSLog(@"Got events");
+                    NSLog(@"%d events found for sync", [events count]);
                     @autoreleasepool {
                         
                         NSMutableArray *batch = [NSMutableArray array];
                         for(UAEvent *event in events)
                         {
-                            NSDictionary *representation = [self representationForEvent:event];
+                            NSDictionary *representation = [strongSelf representationForEvent:event];
                             if(representation)
                             {
                                 [batch addObject:representation];
@@ -162,7 +156,6 @@
                             
                             if(jsonData && !error)
                             {
-                                
                                 NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
                                 NSDictionary *parameters = @{@"email": account[@"email"],
                                                              @"password": account[@"password"],
@@ -172,9 +165,17 @@
                                                  parameters:parameters
                                                     success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                                         
+                                                    
                                                         successBlock();
                                                         
                                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                    
+                                    // If our authentication credentials are invalid, destroy them
+                                    if([error code] == 1)
+                                    {
+                                        [strongSelf destroyCredentials];
+                                    }
+                                    
                                     failureBlock(error);
                                 }];
                             }
@@ -183,31 +184,49 @@
                                 failureBlock(error);
                             }
                         }
+                        else
+                        {
+                            // We couldn't find anything to sync, so let's consider that a success!
+                            successBlock();
+                        }
                     }
                 }
-                
+                else
+                {
+                    // We're up to date, there's nothing to sync!
+                    successBlock();
+                }
             }];
+        }
+        else
+        {
+            NSError *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"Unable to fetch a suitable MOC"}];
+            failureBlock(error);
         }
     }
     else
     {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSError *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No valid Analytik credentials found"}];
-            
-            failureBlock(error);
-        });
+        NSError *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No valid Analytik credentials found"}];
+        
+        failureBlock(error);
     }
 }
 - (void)destroyCredentials
 {
-    NSArray *accounts = [SSKeychain accountsForService:kAnalytikServiceIdentifier];
-    if(accounts && [accounts count])
-    {
-        for(NSDictionary *account in accounts)
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSArray *accounts = [SSKeychain accountsForService:kAnalytikServiceIdentifier];
+        if(accounts && [accounts count])
         {
-            [SSKeychain deletePasswordForService:kAnalytikServiceIdentifier account:account[kSSKeychainAccountKey]];
+            for(NSDictionary *account in accounts)
+            {
+                [SSKeychain deletePasswordForService:kAnalytikServiceIdentifier account:account[kSSKeychainAccountKey]];
+            }
         }
-    }
+        
+        // Remove our sync timestamp data
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kAnalytikLastSyncTimestampKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    });
 }
 
 #pragma mark - Accessors
@@ -231,8 +250,35 @@
     
     return _managedObjectContext;
 }
+- (BOOL)needsToSyncFromDate:(NSDate *)date
+{
+    if([self activeAccount] && [self eventsToSyncFromDate:date])
+    {
+        return YES;
+    }
+    
+    return NO;
+}
 
 #pragma mark - Helpers
+- (NSArray *)eventsToSyncFromDate:(NSDate *)fromDate
+{
+    __block NSArray *events = nil;
+    NSManagedObjectContext *moc = [self managedObjectContext];
+    if(moc)
+    {
+        [moc performBlockAndWait:^{
+            
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp >= %@", fromDate];
+            NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:YES];
+            events = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate
+                                                                  sortDescriptors:@[sortDescriptor]
+                                                                        inContext:moc];
+        }];
+    }
+    
+    return events;
+}
 - (NSDictionary *)representationForEvent:(UAEvent *)event
 {
     NSMutableDictionary *representation = [NSMutableDictionary dictionary];
@@ -268,7 +314,7 @@
     if([response isKindOfClass:[NSDictionary class]] && response[@"error"])
     {
         NSString *errorMessage = [NSString stringWithFormat:NSLocalizedString(@"The Analytik API responded with the following error: %@", nil), response[@"error"][@"message"]];
-        return [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
+        return [NSError errorWithDomain:kErrorDomain code:[response[@"error"][@"code"] integerValue] userInfo:@{NSLocalizedDescriptionKey: errorMessage}];
     }
     else
     {

@@ -35,6 +35,33 @@
 @dynamic tags;
 
 #pragma mark - Logic
+- (void)willSave
+{
+    [super willSave];
+    
+    if([self isInserted] || [self isUpdated] || [self isDeleted])
+    {
+        BOOL shouldUpdateLastSyncTS = NO;
+        NSNumber *lastSyncTimestamp = [[NSUserDefaults standardUserDefaults] valueForKey:kAnalytikLastSyncTimestampKey];
+        if(lastSyncTimestamp)
+        {
+            if([lastSyncTimestamp integerValue] > [[self timestamp] timeIntervalSince1970])
+            {
+                shouldUpdateLastSyncTS = YES;
+            }
+        }
+        else
+        {
+            shouldUpdateLastSyncTS = YES;
+        }
+        
+        if(shouldUpdateLastSyncTS)
+        {
+            NSLog(@"Setting last sync timestamp to: %@", [self timestamp]);
+            [[NSUserDefaults standardUserDefaults] setInteger:[[self timestamp] timeIntervalSince1970] forKey:kAnalytikLastSyncTimestampKey];
+        }
+    }
+}
 - (void)prepareForDeletion
 {
     [super prepareForDeletion];

@@ -79,6 +79,9 @@
             usernameTextField.text = @"";
             passwordTextField.text = @"";
             
+            // Force a sync operation
+            [[UASyncController sharedInstance] sync];
+            
         } failure:^(NSError *error) {
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];

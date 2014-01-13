@@ -23,6 +23,9 @@
 #import "UASyncController.h"
 
 @interface UASyncController ()
+{
+    __block UIBackgroundTaskIdentifier backgroundTask;
+}
 @property (nonatomic, strong) NSTimer *syncTimer;
 
 @end
@@ -46,33 +49,63 @@
     if(self)
     {
         __weak typeof(self) weakSelf = self;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidEnterBackgroundNotification
+                                                          object:nil
+                                                           queue:[NSOperationQueue mainQueue]
+                                                      usingBlock:^(NSNotification *note) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            self.syncTimer = [NSTimer scheduledTimerWithTimeInterval:5*60
-                                                              target:strongSelf
-                                                            selector:@selector(sync)
-                                                            userInfo:nil
-                                                             repeats:YES];
-            
-            [self sync];
-        });
+            [strongSelf sync];
+        }];
     }
     
     return self;
+}
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Logic
 - (void)sync
 {
-    // Have we got an Analytik API account setup?
-    if([[self analytikController] activeAccount])
+    NSDate *syncFromDate = [[NSDate date] dateBySubtractingDays:90];
+    NSNumber *lastSyncTimestamp = [[NSUserDefaults standardUserDefaults] valueForKey:kAnalytikLastSyncTimestampKey];
+    if(lastSyncTimestamp)
     {
-        NSLog(@"Attemping Analytik sync");
-        [[self analytikController] syncFromDate:[NSDate distantPast] success:^{
-            NSLog(@"Analytik sync was successful");
-        } failure:^(NSError *error) {
-            NSLog(@"Analytik sync failed");
+        syncFromDate = [NSDate dateWithTimeIntervalSince1970:[lastSyncTimestamp integerValue]];
+    }
+
+    // Check if we actually have anything to sync
+    if([[self analytikController] needsToSyncFromDate:syncFromDate])
+    {
+        UIApplication *application = [UIApplication sharedApplication];
+        backgroundTask = [application beginBackgroundTaskWithExpirationHandler:^{
+            [application endBackgroundTask:backgroundTask];
+            backgroundTask = UIBackgroundTaskInvalid;
         }];
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            
+            NSLog(@"Attemping Analytik sync from date: %@", syncFromDate);
+            [[self analytikController] syncFromDate:syncFromDate success:^{
+                NSLog(@"Analytik sync was successful");
+                
+                [[NSUserDefaults standardUserDefaults] setInteger:[[NSDate date] timeIntervalSince1970] forKey:kAnalytikLastSyncTimestampKey];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                // Finish up our background task
+                [application endBackgroundTask:backgroundTask];
+                backgroundTask = UIBackgroundTaskInvalid;
+                
+            } failure:^(NSError *error) {
+                NSLog(@"Analytik sync failed: %@", [error localizedDescription]);
+                
+                // Finish up our background task
+                [application endBackgroundTask:backgroundTask];
+                backgroundTask = UIBackgroundTaskInvalid;
+            }];
+            
+        });
     }
 }
 

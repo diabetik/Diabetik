@@ -31,6 +31,9 @@
              failure:(void (^)(NSError *))failureBlock;
 - (void)destroyCredentials;
 
+// Accessors
+- (BOOL)needsToSyncFromDate:(NSDate *)date;
+
 // Helpers
 - (NSDictionary *)activeAccount;
 
