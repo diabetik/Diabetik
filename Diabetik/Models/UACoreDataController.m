@@ -47,6 +47,8 @@
     self = [super init];
     if(self)
     {
+        [self managedObjectContext];
+        
         /*
         self.ubiquityStoreManager = [[UbiquityStoreManager alloc] initStoreNamed:@"Diabetik"
                                                           withManagedObjectModel:nil

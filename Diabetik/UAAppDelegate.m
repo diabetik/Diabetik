@@ -79,17 +79,12 @@
     
     [self setupDefaultConfigurationValues];
     [self setupStyling];
-    [self setupSFX];
-    [self setupDropbox];
     
-    // Call various singletons
+    // Wake up singletons
     [UACoreDataController sharedInstance];
-    [UAReminderController sharedInstance];
-    [UAEventController sharedInstance];
-    [UALocationController sharedInstance];
+    [self setBackupController:[[UABackupController alloc] init]];
     
     // Setup our backup controller
-    self.backupController = [[UABackupController alloc] init];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.tintColor = kDefaultTintColor;
     
@@ -115,11 +110,22 @@
         self.viewController = viewController;
     }
     
+    // Delay launch on non-essential classes
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        [strongSelf setupSFX];
+        [strongSelf setupDropbox];
+        
+        // Call various singletons
+        [UAReminderController sharedInstance];
+        [UALocationController sharedInstance];
+        [[UAKeyboardController sharedInstance] fetchKeyboardSize];
+    });
+    
     [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
-    
-    // Fetch and cache default keyboard sizes after our view hierarchy has been setup
-    [[UAKeyboardController sharedInstance] fetchKeyboardSize];
     
     // Let Appirater know our application has launched
     [Appirater appLaunched:YES];
@@ -166,26 +172,30 @@
 #pragma mark - Logic
 - (void)setupDropbox
 {
-    // Ditch out if we haven't been provided credentials
-    if(!kDropboxAppKey || !kDropboxSecret || ![kDropboxAppKey length] || ![kDropboxSecret length]) return;
-    
-    DBAccountManager *accountMgr = [[DBAccountManager alloc] initWithAppKey:kDropboxAppKey secret:kDropboxSecret];
-    [DBAccountManager setSharedManager:accountMgr];
-    DBAccount *account = accountMgr.linkedAccount;
-    
-    if (account)
-    {
-        DBFilesystem *filesystem = [[DBFilesystem alloc] initWithAccount:account];
-        [DBFilesystem setSharedFilesystem:filesystem];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Ditch out if we haven't been provided credentials
+        if(!kDropboxAppKey || !kDropboxSecret || ![kDropboxAppKey length] || ![kDropboxSecret length]) return;
+        
+        DBAccountManager *accountMgr = [[DBAccountManager alloc] initWithAppKey:kDropboxAppKey secret:kDropboxSecret];
+        [DBAccountManager setSharedManager:accountMgr];
+        DBAccount *account = accountMgr.linkedAccount;
+        
+        if (account)
+        {
+            DBFilesystem *filesystem = [[DBFilesystem alloc] initWithAccount:account];
+            [DBFilesystem setSharedFilesystem:filesystem];
+        }
+    });
 }
 - (void)setupSFX
 {
-    [[VKRSAppSoundPlayer sharedInstance] addSoundWithFilename:@"tap" andExtension:@"caf"];
-    [[VKRSAppSoundPlayer sharedInstance] addSoundWithFilename:@"pop-view" andExtension:@"caf"];
-    [[VKRSAppSoundPlayer sharedInstance] addSoundWithFilename:@"tap-significant" andExtension:@"caf"];
-    [[VKRSAppSoundPlayer sharedInstance] addSoundWithFilename:@"success" andExtension:@"caf"];
-    [[VKRSAppSoundPlayer sharedInstance] setSoundsEnabled:[[NSUserDefaults standardUserDefaults] boolForKey:kUseSoundsKey]];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[VKRSAppSoundPlayer sharedInstance] addSoundWithFilename:@"tap" andExtension:@"caf"];
+        [[VKRSAppSoundPlayer sharedInstance] addSoundWithFilename:@"pop-view" andExtension:@"caf"];
+        [[VKRSAppSoundPlayer sharedInstance] addSoundWithFilename:@"tap-significant" andExtension:@"caf"];
+        [[VKRSAppSoundPlayer sharedInstance] addSoundWithFilename:@"success" andExtension:@"caf"];
+        [[VKRSAppSoundPlayer sharedInstance] setSoundsEnabled:[[NSUserDefaults standardUserDefaults] boolForKey:kUseSoundsKey]];
+    });
 }
 - (void)setupDefaultConfigurationValues
 {

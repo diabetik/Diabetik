@@ -44,12 +44,6 @@
     if(self)
     {
         self.keyboardSize = CGSizeZero;
-        
-        // Create an invisible UITextField and add it to our root window's view hierarchy
-        _dummyTextField = [[UITextField alloc] initWithFrame:CGRectZero];
-        _dummyTextField.hidden = YES;
-        
-        [[[[UIApplication sharedApplication] delegate] window] addSubview:_dummyTextField];
     }
     
     return self;
@@ -58,12 +52,17 @@
 #pragma mark - Logic
 - (void)fetchKeyboardSize
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillPresent:)
-                                                 name:UIKeyboardWillShowNotification object:nil];
-    
-    // Ask the keyboard to appear
-    [self.dummyTextField becomeFirstResponder];
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:strongSelf
+                                                 selector:@selector(keyboardWillPresent:)
+                                                     name:UIKeyboardWillShowNotification object:nil];
+        
+        // Ask the keyboard to appear
+        [strongSelf.dummyTextField becomeFirstResponder];
+    });
 }
 - (void)keyboardWillPresent:(NSNotification *)notification
 {
@@ -76,6 +75,21 @@
     
     // Remove ourselves as an observer to avoid interrupting legitimate keyboard usage
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
+
+#pragma mark - Accessors
+- (UITextField *)dummyTextField
+{
+    if(!_dummyTextField)
+    {
+        // Create an invisible UITextField and add it to our root window's view hierarchy
+        _dummyTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _dummyTextField.hidden = YES;
+        
+        [[[[UIApplication sharedApplication] delegate] window] addSubview:_dummyTextField];
+    }
+    
+    return _dummyTextField;
 }
 
 @end

@@ -41,12 +41,14 @@
     if (!self.soundsEnabled) return;
     
     VKRSSound *soundToPlay = [self.sounds objectForKey:sound];
-    
-    if ([self.soundsToPlay count] == 0) {        
-        [soundToPlay play];
+    if(soundToPlay)
+    {
+        if ([self.soundsToPlay count] == 0) {
+            [soundToPlay play];
+        }
+        
+        [self.soundsToPlay addObject:soundToPlay];
     }
-    
-    [self.soundsToPlay addObject:soundToPlay];
 }
 - (void)addSoundWithFilename:(NSString *)filename andExtension:(NSString *)extension
 {

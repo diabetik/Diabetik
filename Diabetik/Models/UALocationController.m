@@ -56,15 +56,20 @@
     self = [super init];
     if(self)
     {
-        _locationManager = [[CLLocationManager alloc] init];
-        _locationManager.delegate = self;
-        _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-        
-        _geocoder = [[CLGeocoder alloc] init];
-     
         lastLocation = nil;
         locationFetchTimer = nil;
         isFetchingUserLocation = NO;
+        
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            __strong typeof (weakSelf) strongSelf = weakSelf;
+            
+            strongSelf.geocoder = [[CLGeocoder alloc] init];
+            
+            strongSelf.locationManager = [[CLLocationManager alloc] init];
+            strongSelf.locationManager.delegate = strongSelf;
+            strongSelf.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
+        });
     }
     
     return self;
@@ -233,4 +238,5 @@
         }
     }
 }
+
 @end
