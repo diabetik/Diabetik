@@ -305,6 +305,11 @@
         if([reading mgValue]) representation[@"mgValue"] = [reading mgValue];
         if([reading mmoValue]) representation[@"mmoValue"] = [reading mmoValue];
     }
+    else if([event isKindOfClass:[UAActivity class]])
+    {
+        UAActivity *activity = (UAActivity *)event;
+        if([activity minutes]) representation[@"mins"] = [activity minutes];
+    }
     
     return representation;
 }
