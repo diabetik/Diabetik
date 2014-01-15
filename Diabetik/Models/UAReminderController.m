@@ -23,12 +23,9 @@
 #import "UAAppDelegate.h"
 
 @interface UAReminderController ()
-{
-    NSCalendar *calendar;
-    
-    NSDateFormatter *dateFormatter;
-    NSDateFormatter *timeFormatter;
-}
+@property (nonatomic, strong) NSCalendar *calendar;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic, strong) NSDateFormatter *timeFormatter;
 
 - (void)cacheReminders;
 @end
@@ -36,6 +33,10 @@
 @implementation UAReminderController
 @synthesize reminders = _reminders;
 @synthesize ungroupedReminders = _ungroupedReminders;
+
+@synthesize calendar = _calendar;
+@synthesize dateFormatter = _dateFormatter;
+@synthesize timeFormatter = _timeFormatter;
 
 + (id)sharedInstance
 {
@@ -53,24 +54,21 @@
     self = [super init];
     if(self)
     {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(cacheReminders)
-                                                     name:kRemindersUpdatedNotification
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(updateRemindersBasedOnCoreDataNotification:)
-                                                     name:USMStoreDidImportChangesNotification
-                                                   object:nil];
-        
-        dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-        [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-        
-        timeFormatter = [[NSDateFormatter alloc] init];
-        [timeFormatter setTimeStyle:NSDateFormatterMediumStyle];
-        
-        calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        [self deleteExpiredReminders];
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            __strong typeof (weakSelf) strongSelf = weakSelf;
+            
+            [[NSNotificationCenter defaultCenter] addObserver:strongSelf
+                                                     selector:@selector(cacheReminders)
+                                                         name:kRemindersUpdatedNotification
+                                                       object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:strongSelf
+                                                     selector:@selector(updateRemindersBasedOnCoreDataNotification:)
+                                                         name:USMStoreDidImportChangesNotification
+                                                       object:nil];
+            
+            [strongSelf deleteExpiredReminders];
+        });
     }
     
     return self;
@@ -226,12 +224,12 @@
 {
     if([aReminder.type integerValue] == kReminderTypeDate)
     {
-        return [dateFormatter stringFromDate:aReminder.date];
+        return [self.dateFormatter stringFromDate:aReminder.date];
     }
     else if([aReminder.type integerValue] == kReminderTypeRepeating)
     {
         NSString *days = [[UAReminderController sharedInstance] formattedRepeatingDaysWithFlags:[aReminder.days integerValue]];
-        return [days stringByAppendingFormat:@", %@", [timeFormatter stringFromDate:aReminder.date]];
+        return [days stringByAppendingFormat:@", %@", [self.timeFormatter stringFromDate:aReminder.date]];
     }
     else if([aReminder.type integerValue] == kReminderTypeLocation)
     {
@@ -339,16 +337,16 @@
         {
             if(days[i])
             {
-                NSDateComponents *dateComponents = [calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit) fromDate:aReminder.date];
+                NSDateComponents *dateComponents = [self.calendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSWeekCalendarUnit|NSWeekdayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit) fromDate:aReminder.date];
                 dateComponents.weekday = i+1;
                 
-                NSDate *notificationDate = [calendar dateFromComponents:dateComponents];
+                NSDate *notificationDate = [self.calendar dateFromComponents:dateComponents];
                 if(notificationDate)
                 {
                     if([notificationDate isEarlierThanDate:[NSDate date]])
                     {
                         dateComponents.week++;
-                        notificationDate = [calendar dateFromComponents:dateComponents];
+                        notificationDate = [self.calendar dateFromComponents:dateComponents];
                     }
                     
                     if(notificationDate) 
@@ -396,6 +394,38 @@
     [self deleteExpiredReminders];
 }
 
+#pragma mark - Accessors
+- (NSDateFormatter *)dateFormatter
+{
+    if(!_dateFormatter)
+    {
+        _dateFormatter = [[NSDateFormatter alloc] init];
+        [_dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [_dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    }
+    
+    return _dateFormatter;
+}
+- (NSDateFormatter *)timeFormatter
+{
+    if(!_timeFormatter)
+    {
+        _timeFormatter = [[NSDateFormatter alloc] init];
+        [_timeFormatter setTimeStyle:NSDateFormatterMediumStyle];
+    }
+    
+    return _timeFormatter;
+}
+- (NSCalendar *)calendar
+{
+    if(!_calendar)
+    {
+        _calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    }
+    
+    return _calendar;
+}
+
 #pragma mark - Helpers
 - (UAReminder *)fetchReminderWithID:(NSString *)reminderID
 {
@@ -439,7 +469,7 @@
 }
 - (NSDate *)generateNotificationDateWithDate:(NSDate *)date
 {
-    NSDateComponents *dateComponents = [calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
+    NSDateComponents *dateComponents = [self.calendar components:(NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:date];
     
     NSDateComponents *dateComps = [[NSDateComponents alloc] init];
     [dateComps setDay:[dateComponents day]];
@@ -449,7 +479,7 @@
     [dateComps setMinute:[dateComponents minute]];
     [dateComps setSecond:0];
     
-    NSDate *notificationDate = [calendar dateFromComponents:dateComps];
+    NSDate *notificationDate = [self.calendar dateFromComponents:dateComps];
     
     return notificationDate;
 }
