@@ -20,6 +20,6 @@
 
 #import "UABaseViewController.h"
 
-@interface UASettingsAnalytikViewController : UABaseTableViewController
+@interface UASettingsAnalytikViewController : UABaseTableViewController <UITextFieldDelegate>
 
 @end

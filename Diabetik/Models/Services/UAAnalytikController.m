@@ -25,9 +25,15 @@
 #import "UAEventController.h"
 
 @interface UAAnalytikController ()
+{
+    AFHTTPRequestOperationManager *liveOperationManager;
+    AFHTTPRequestOperationManager *stagingOperationManager;
+}
 @property (nonatomic, strong) NSOperationQueue *operationQueue;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) AFHTTPRequestOperationManager *operationManager;
+
+// Accessors
+- (AFHTTPRequestOperationManager *)operationManager;
 
 // Helpers
 - (NSArray *)eventsToSyncFromDate:(NSDate *)fromDate;
@@ -38,28 +44,13 @@
 
 @implementation UAAnalytikController
 
-#pragma mark - Setup
-- (id)init
-{
-    self = [super init];
-    if(self) {
-        
-        NSURL *baseURL = [NSURL URLWithString:kAnalytikAPIURL];
-        
-        self.operationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
-        self.operationManager.operationQueue = [self operationQueue];
-    }
-    
-    return self;
-}
-
 #pragma mark - Logic
 - (void)authorizeWithCredentials:(NSDictionary *)credentials
                          success:(void (^)(void))successBlock
                          failure:(void (^)(NSError *))failureBlock
 {
     NSDictionary *parameters = @{@"email": credentials[@"email"], @"password": credentials[@"password"]};
-
+    
     [self.operationManager POST:[NSString stringWithFormat:@"%@user/validate", kAnalytikAPIURL]
        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
@@ -146,43 +137,29 @@
                                                        @"minHealthyBG": [defaults valueForKey:kMinHealthyBGKey],
                                                        @"maxHealthyBG": [defaults valueForKey:kMaxHealthyBGKey],
                                                        };
-                            NSDictionary *post = @{@"metadata": metadata,
-                                                   @"events": batch};
+                            NSDictionary *data = @{@"metadata": metadata, @"events": batch};
+                        
+                            NSDictionary *parameters = @{@"email": account[@"email"],
+                                                         @"password": account[@"password"],
+                                                         @"data": data};
                             
-                            NSError *error = nil;
-                            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:post
-                                                                               options:0
-                                                                                 error:&error];
-                            
-                            if(jsonData && !error)
-                            {
-                                NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-                                NSDictionary *parameters = @{@"email": account[@"email"],
-                                                             @"password": account[@"password"],
-                                                             @"data": json};
-                                
-                                [self.operationManager POST:@"records"
-                                                 parameters:parameters
-                                                    success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                                        
+                            [self.operationManager POST:@"records"
+                                             parameters:parameters
+                                                success:^(AFHTTPRequestOperation *operation, id responseObject) {
                                                     
-                                                        successBlock();
-                                                        
-                                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                    
-                                    // If our authentication credentials are invalid, destroy them
-                                    if([error code] == 1)
-                                    {
-                                        [strongSelf destroyCredentials];
-                                    }
-                                    
-                                    failureBlock(error);
-                                }];
-                            }
-                            else
-                            {
+                                                
+                                                    successBlock();
+                                                    
+                            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                                
+                                // If our authentication credentials are invalid, destroy them
+                                if([error code] == 401)
+                                {
+                                    [strongSelf destroyCredentials];
+                                }
+                                
                                 failureBlock(error);
-                            }
+                            }];
                         }
                         else
                         {
@@ -230,6 +207,36 @@
 }
 
 #pragma mark - Accessors
+- (AFHTTPRequestOperationManager *)operationManager
+{
+    if([[NSUserDefaults standardUserDefaults] boolForKey:kAnalytikUseStagingServerKey])
+    {
+        NSURL *baseURL = [NSURL URLWithString:kAnalytikStagingAPIURL];
+        if(!stagingOperationManager)
+        {
+            stagingOperationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+            stagingOperationManager.operationQueue = [self operationQueue];
+            stagingOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        }
+        
+        return stagingOperationManager;
+        
+    }
+    else
+    {
+        NSURL *baseURL = [NSURL URLWithString:kAnalytikAPIURL];
+        if(!liveOperationManager)
+        {
+            liveOperationManager = [[AFHTTPRequestOperationManager alloc] initWithBaseURL:baseURL];
+            liveOperationManager.operationQueue = [self operationQueue];
+            liveOperationManager.requestSerializer = [AFJSONRequestSerializer serializer];
+        }
+        
+        return liveOperationManager;
+    }
+    
+    return nil;
+}
 - (NSOperationQueue *)operationQueue
 {
     if(!_operationQueue)

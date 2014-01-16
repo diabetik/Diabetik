@@ -49,12 +49,15 @@
         usernameTextField.placeholder = NSLocalizedString(@"Email", nil);
         usernameTextField.keyboardType = UIKeyboardTypeEmailAddress;
         usernameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        usernameTextField.returnKeyType = UIReturnKeyNext;
+        usernameTextField.delegate = self;
         
         passwordTextField = [[UITextField alloc] initWithFrame:CGRectZero];
         passwordTextField.placeholder = NSLocalizedString(@"Password", nil);
         passwordTextField.secureTextEntry = YES;
         passwordTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         passwordTextField.returnKeyType = UIReturnKeyDone;
+        passwordTextField.delegate = self;
         
         isLoggedIn = [[[UASyncController sharedInstance] analytikController] activeAccount] ? YES : NO;
     }
@@ -64,6 +67,8 @@
 #pragma mark - Logic
 - (void)performLogin
 {
+    [self.view endEditing:YES];
+    
     if(usernameTextField.text.length && passwordTextField.text.length)
     {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -106,6 +111,38 @@
     }
 }
 
+#pragma mark - UI
+- (void)toggleStagingServer:(id)sender
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    // Remove our sync timestamp data
+    [defaults removeObjectForKey:kAnalytikLastSyncTimestampKey];
+    
+    BOOL value = [defaults boolForKey:kAnalytikUseStagingServerKey];
+    [defaults setBool:!value forKey:kAnalytikUseStagingServerKey];
+    [defaults synchronize];
+    
+    // Force a sync operation
+    [[UASyncController sharedInstance] sync];
+}
+
+#pragma mark - UITextFieldDelegate methods
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    if([textField isEqual:usernameTextField])
+    {
+        [passwordTextField becomeFirstResponder];
+    }
+    else
+    {
+        [textField resignFirstResponder];
+        [self performLogin];
+    }
+    
+    return YES;
+}
+
 #pragma mark - UITableViewDelegate methods
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -114,7 +151,7 @@
     UAAnalytikController *controller = [[UASyncController sharedInstance] analytikController];
     if(isLoggedIn)
     {
-        if(indexPath.section == 0 && indexPath.row == 0)
+        if(indexPath.section == 0 && indexPath.row == 1)
         {
             [controller destroyCredentials];
             
@@ -145,7 +182,7 @@
 {
     if(isLoggedIn)
     {
-        return 1;
+        return 2;
     }
     else
     {
@@ -197,13 +234,34 @@
     
     if(isLoggedIn)
     {
-        cell = [aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
-        if (cell == nil)
+        if(indexPath.section == 0)
         {
-            cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UASettingCell"];
-        }
+            if(indexPath.row == 0)
+            {
+                cell = [aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
+                if (cell == nil)
+                {
+                    cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UASettingCell"];
+                }
+                cell.textLabel.text = NSLocalizedString(@"Send to staging server", nil);
+                
+                UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
+                [switchControl addTarget:self action:@selector(toggleStagingServer:) forControlEvents:UIControlEventTouchUpInside];
+                cell.accessoryView = switchControl;
+                
+                [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kAnalytikUseStagingServerKey]];
+            }
+            else if(indexPath.row == 1)
+            {
+                cell = [aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
+                if (cell == nil)
+                {
+                    cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UASettingCell"];
+                }
 
-        cell.textLabel.text = NSLocalizedString(@"Logout", nil);
+                cell.textLabel.text = NSLocalizedString(@"Logout", nil);
+            }
+        }
     }
     else
     {

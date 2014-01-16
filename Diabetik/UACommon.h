@@ -84,7 +84,9 @@ static NSString * const kRunKeeperServiceIdentifier = @"RunKeeper";
 // Analytik
 static NSString * const kAnalytikServiceIdentifier = @"Analytik";
 static NSString * const kAnalytikAPIURL = @"http://api.analytikhq.com/api/v1/";
+static NSString * const kAnalytikStagingAPIURL = @"http://api-staging.analytikhq.com/api/v1/";
 static NSString * const kAnalytikLastSyncTimestampKey = @"kAnalytikLastSyncTimestampKey";
+static NSString * const kAnalytikUseStagingServerKey = @"kAnalytikUseStagingServerKey";
 
 // Notifications
 static NSString * const kRemindersUpdatedNotification = @"com.uglyapps.reminders.updated";
