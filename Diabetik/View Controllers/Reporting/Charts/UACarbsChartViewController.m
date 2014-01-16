@@ -196,7 +196,7 @@
 }
 
 #pragma mark - SChartDataSource methods
-- (int)numberOfSeriesInSChart:(ShinobiChart *)chart
+- (NSInteger)numberOfSeriesInSChart:(ShinobiChart *)chart
 {
     return 4;
 }
@@ -233,7 +233,7 @@
     
     return nil;
 }
-- (int)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(NSInteger)seriesIndex
+- (NSInteger)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(NSInteger)seriesIndex
 {
     NSInteger dataPoints = [[chartData objectForKey:@"data"] count];
     if(seriesIndex == 3 && dataPoints > 1)

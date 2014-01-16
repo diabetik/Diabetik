@@ -89,15 +89,15 @@
 }
 
 #pragma mark - SChartDataSource methods
-- (int)numberOfSeriesInSChart:(ShinobiChart *)chart
+- (NSInteger)numberOfSeriesInSChart:(ShinobiChart *)chart
 {
     return 1;
 }
-- (int)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(int)seriesIndex
+- (NSInteger)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(NSInteger)seriesIndex
 {
     return 2;
 }
-- (SChartSeries*)sChart:(ShinobiChart *)chart seriesAtIndex:(int)seriesIndex
+- (SChartSeries*)sChart:(ShinobiChart *)chart seriesAtIndex:(NSInteger)seriesIndex
 {
     SChartDonutSeries *series = [SChartDonutSeries new];
     series.style.showCrust = NO;
@@ -112,7 +112,7 @@
     
     return series;
 }
-- (id<SChartData>)sChart:(ShinobiChart *)chart dataPointAtIndex:(int)dataIndex forSeriesAtIndex:(int)seriesIndex
+- (id<SChartData>)sChart:(ShinobiChart *)chart dataPointAtIndex:(NSInteger)dataIndex forSeriesAtIndex:(NSInteger)seriesIndex
 {
     SChartRadialDataPoint *point = [SChartRadialDataPoint new];
     
@@ -129,7 +129,7 @@
     
     return point;
 }
-- (void)sChart:(ShinobiChart *)chart alterLabel:(UILabel *)label forDatapoint:(SChartRadialDataPoint *)datapoint atSliceIndex:(int)index inRadialSeries:(SChartRadialSeries *)series
+- (void)sChart:(ShinobiChart *)chart alterLabel:(UILabel *)label forDatapoint:(SChartRadialDataPoint *)datapoint atSliceIndex:(NSInteger)index inRadialSeries:(SChartRadialSeries *)series
 {
     //For our donut move our labels outside and use connecting lines
     if (datapoint.value.floatValue < 2.0f)

@@ -115,7 +115,7 @@
                     else
                     {
                         // Did this event happen within 3 hours (irrespective of date) from the current time?
-                        if(abs(eventHour-currentHour) <= numberOfSegments-1)
+                        if(fabs(eventHour-currentHour) <= numberOfSegments-1)
                         {
                             NSMutableArray *existingEvents = [previousEvents objectAtIndex:[[event type] integerValue]];
                             [existingEvents addObject:event];
@@ -147,7 +147,7 @@
                                     NSInteger eventHour = [eventComponents hour];
                                     
                                     // Remove any medication taken within 3 hours of this date/time
-                                    if(abs(eventHour-currentHour) <= numberOfSegments-1)
+                                    if(fabs(eventHour-currentHour) <= numberOfSegments-1)
                                     {
                                         [pEvents removeObject:pEvent];
                                     }
