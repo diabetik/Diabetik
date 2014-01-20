@@ -151,12 +151,25 @@
     UAAnalytikController *controller = [[UASyncController sharedInstance] analytikController];
     if(isLoggedIn)
     {
-        if(indexPath.section == 0 && indexPath.row == 1)
+        if(indexPath.section == 0)
         {
-            [controller destroyCredentials];
-            
-            isLoggedIn = NO;
-            [aTableView reloadData];
+            if(indexPath.row == 0)
+            {
+                NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                
+                // Remove our sync timestamp data
+                [defaults removeObjectForKey:kAnalytikLastSyncTimestampKey];
+                
+                // Force a sync operation
+                [[UASyncController sharedInstance] sync];
+            }
+            else if(indexPath.row == 1)
+            {
+                [controller destroyCredentials];
+                
+                isLoggedIn = NO;
+                [aTableView reloadData];
+            }
         }
     }
     else
@@ -188,7 +201,7 @@
     {
         if(section == 0)
         {
-            return 2;
+            return 3;
         }
     }
     
@@ -234,9 +247,47 @@
     
     if(isLoggedIn)
     {
+        cell = [aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
+        if (cell == nil)
+        {
+            cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UASettingCell"];
+        }
+        cell.accessoryView = nil;
+        
         if(indexPath.section == 0)
         {
             if(indexPath.row == 0)
+            {
+                cell.textLabel.text = NSLocalizedString(@"Resync entries", nil);
+            }
+            else if(indexPath.row == 1)
+            {
+                cell.textLabel.text = NSLocalizedString(@"Logout", nil);
+            }
+        }
+    }
+    else
+    {
+        if(indexPath.section == 0)
+        {
+            if(indexPath.row < 2)
+            {
+                cell = [aTableView dequeueReusableCellWithIdentifier:@"UALoginCredentialsCell"];
+                if (cell == nil)
+                {
+                    cell = [[UASettingsTextViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UALoginCredentialsCell"];
+                }
+                
+                if(indexPath.row == 0)
+                {
+                    cell.accessoryView = usernameTextField;
+                }
+                else if(indexPath.row == 1)
+                {
+                    cell.accessoryView = passwordTextField;
+                }
+            }
+            else
             {
                 cell = [aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
                 if (cell == nil)
@@ -251,36 +302,6 @@
                 
                 [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kAnalytikUseStagingServerKey]];
             }
-            else if(indexPath.row == 1)
-            {
-                cell = [aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
-                if (cell == nil)
-                {
-                    cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UASettingCell"];
-                }
-
-                cell.textLabel.text = NSLocalizedString(@"Logout", nil);
-            }
-        }
-    }
-    else
-    {
-        if(indexPath.section == 0)
-        {
-            cell = [aTableView dequeueReusableCellWithIdentifier:@"UALoginCredentialsCell"];
-            if (cell == nil)
-            {
-                cell = [[UASettingsTextViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UALoginCredentialsCell"];
-            }
-            
-            if(indexPath.row == 0)
-            {
-                cell.accessoryView = usernameTextField;
-            }
-            else if(indexPath.row == 1)
-            {
-                cell.accessoryView = passwordTextField;
-            }
         }
         else if(indexPath.section == 1)
         {
@@ -291,6 +312,7 @@
             }
             
             cell.textLabel.text = @"Login";
+            cell.accessoryView = nil;
         }
     }
     
