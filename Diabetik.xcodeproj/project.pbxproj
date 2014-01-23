@@ -211,6 +211,8 @@
 		53F2955D18786B560021F6FC /* UASettingsAnalytikViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2955818786B560021F6FC /* UASettingsAnalytikViewController.m */; };
 		53F2955E18786B560021F6FC /* UASettingsDropboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2955A18786B560021F6FC /* UASettingsDropboxViewController.m */; };
 		53F2955F18786B560021F6FC /* UASettingsiCloudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2955C18786B560021F6FC /* UASettingsiCloudViewController.m */; };
+		53F3D58B1891D16000B23065 /* Reachability-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53F3D5881891D16000B23065 /* Reachability-License.txt */; };
+		53F3D58C1891D16000B23065 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F3D58A1891D16000B23065 /* Reachability.m */; };
 		53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED118422B5B006736F5 /* TGRImageViewController.m */; };
 		53F78ED818422B5B006736F5 /* TGRImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F78ED218422B5B006736F5 /* TGRImageViewController.xib */; };
 		53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED418422B5B006736F5 /* TGRImageZoomAnimationController.m */; };
@@ -622,6 +624,9 @@
 		53F2955A18786B560021F6FC /* UASettingsDropboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsDropboxViewController.m; sourceTree = "<group>"; };
 		53F2955B18786B560021F6FC /* UASettingsiCloudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsiCloudViewController.h; sourceTree = "<group>"; };
 		53F2955C18786B560021F6FC /* UASettingsiCloudViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsiCloudViewController.m; sourceTree = "<group>"; };
+		53F3D5881891D16000B23065 /* Reachability-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Reachability-License.txt"; sourceTree = "<group>"; };
+		53F3D5891891D16000B23065 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		53F3D58A1891D16000B23065 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		53F78ED018422B5B006736F5 /* TGRImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGRImageViewController.h; sourceTree = "<group>"; };
 		53F78ED118422B5B006736F5 /* TGRImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGRImageViewController.m; sourceTree = "<group>"; };
 		53F78ED218422B5B006736F5 /* TGRImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TGRImageViewController.xib; sourceTree = "<group>"; };
@@ -824,6 +829,7 @@
 		533F32211773266600AD89E2 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				53F3D5871891D16000B23065 /* Reachability */,
 				53F29549187846C00021F6FC /* SSKeychain */,
 				53B53ABB18672B0A00773EE7 /* AFNetworking */,
 				53B53ACF18672B0A00773EE7 /* UIKit+AFNetworking */,
@@ -1560,6 +1566,16 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		53F3D5871891D16000B23065 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				53F3D5881891D16000B23065 /* Reachability-License.txt */,
+				53F3D5891891D16000B23065 /* Reachability.h */,
+				53F3D58A1891D16000B23065 /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
 		53F78ECF18422B5B006736F5 /* Vertigo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1684,6 +1700,7 @@
 				533F330B1773266600AD89E2 /* OpenSans-Regular.ttf in Resources */,
 				533F330C1773266600AD89E2 /* OpenSans-Semibold.ttf in Resources */,
 				533F330D1773266600AD89E2 /* OpenSans-SemiboldItalic.ttf in Resources */,
+				53F3D58B1891D16000B23065 /* Reachability-License.txt in Resources */,
 				53350EC917B6A86300223662 /* Media.xcassets in Resources */,
 				533F34761773266600AD89E2 /* notification.caf in Resources */,
 				53F78ED818422B5B006736F5 /* TGRImageViewController.xib in Resources */,
@@ -1726,6 +1743,7 @@
 			files = (
 				53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */,
 				533F32E91773266600AD89E2 /* NSDate+Extension.m in Sources */,
+				53F3D58C1891D16000B23065 /* Reachability.m in Sources */,
 				533F32EA1773266600AD89E2 /* NSString+Extension.m in Sources */,
 				533F32F51773266600AD89E2 /* UAActivity.m in Sources */,
 				53F78EDA18422B5B006736F5 /* UIImage+AspectFit.m in Sources */,

@@ -89,7 +89,7 @@
     UAGenericTableViewCell *cell = (UAGenericTableViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
     if (cell == nil)
     {
-        cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UASettingCell"];
+        cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UASettingCell"];
     }
     [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     
@@ -101,7 +101,6 @@
             if(indexPath.row == 0)
             {
                 cell.textLabel.text = NSLocalizedString(@"Link with Dropbox", nil);
-                cell.detailTextLabel.text = nil;
             }
         }
         else
@@ -109,9 +108,9 @@
             if(indexPath.row == 0)
             {
                 cell.textLabel.text = NSLocalizedString(@"Unlink Dropbox account", nil);
-                cell.detailTextLabel.text = [[account info] displayName];
             }
         }
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
 
     return cell;

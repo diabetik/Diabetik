@@ -42,34 +42,42 @@
             NSError *error = nil;
             NSMutableArray *representations = [NSMutableArray array];
             
-            NSArray *events = [[UAEventController sharedInstance] fetchEventsWithPredicate:nil sortDescriptors:nil inContext:childMOC];
-            if(events)
-            {
-                for(UAEvent *event in events)
+            @autoreleasepool {
+                NSArray *events = [[UAEventController sharedInstance] fetchEventsWithPredicate:nil sortDescriptors:nil inContext:childMOC];
+                if(events)
                 {
-                    NSDictionary *representation = [event dictionaryRepresentation];
-                    [representations addObject:representation];
+                    for(UAEvent *event in events)
+                    {
+                        NSDictionary *representation = [event dictionaryRepresentation];
+                        [representations addObject:representation];
+                        
+                        // Re-fault this object to conserve on memory
+                        [childMOC refreshObject:event mergeChanges:NO];
+                    }
                 }
             }
             
             if([representations count])
             {
-                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:representations];
+                NSDictionary *archive = @{@"metadata": @{@"version": @1}, @"objects": representations};
+                NSData *data = [NSKeyedArchiver archivedDataWithRootObject:archive];
                 
                 if([[DBFilesystem sharedFilesystem] completedFirstSync])
                 {
-                    DBPath *newPath =nil;
+                    DBPath *newPath = nil;
                     DBFile *file = nil;
                     
                     newPath = [[DBPath root] childPath:[NSString stringWithFormat:@"backup.dtk"]];
-                    [[DBFilesystem sharedFilesystem] deletePath:newPath error:nil];
-                    file = [[DBFilesystem sharedFilesystem] createFile:newPath error:&error];
-                    
-                    if(!error)
+                    if([[DBFilesystem sharedFilesystem] deletePath:newPath error:&error])
                     {
-                        [file writeData:data error:&error];
+                        file = [[DBFilesystem sharedFilesystem] createFile:newPath error:&error];
+                        
+                        if(!error)
+                        {
+                            [file writeData:data error:&error];
+                        }
+                        [file close];
                     }
-                    [file close];
                 }
                 else
                 {
@@ -106,15 +114,22 @@
                 NSData *data = [file readData:&error];
                 if(!error && data)
                 {
-                    NSArray *representations = (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
-                    
-                    for(NSDictionary *representation in representations)
-                    {
-                        [UAManagedObject createManagedObjectFromDictionaryRepresentation:representation inContext:childMOC];
+                    @try {
+                        
+                        NSDictionary *archive = (NSDictionary *)[NSKeyedUnarchiver unarchiveObjectWithData:data];
+                        
+                        for(NSDictionary *representation in archive[@"objects"])
+                        {
+                            [UAManagedObject createManagedObjectFromDictionaryRepresentation:representation inContext:childMOC];
+                        }
+                        [file close];
+                        
+                        [childMOC save:&error];
+                        
                     }
-                    [file close];
-                    
-                    [childMOC save:&error];
+                    @catch (NSException *exception) {
+                        
+                    }
                 }
                 else
                 {

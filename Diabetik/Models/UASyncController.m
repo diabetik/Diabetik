@@ -19,14 +19,20 @@
 //
 
 #import "SSKeychain.h"
+#import "Reachability.h"
+
 #import "UAAnalytikController.h"
 #import "UASyncController.h"
+#import "UABackupController.h"
 
 @interface UASyncController ()
 {
     __block UIBackgroundTaskIdentifier backgroundTask;
 }
 @property (nonatomic, strong) NSTimer *syncTimer;
+
+// Helpers
+- (BOOL)analytikRequiresSync;
 
 @end
 
@@ -54,7 +60,7 @@
                                                            queue:[NSOperationQueue mainQueue]
                                                       usingBlock:^(NSNotification *note) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf sync];
+            [strongSelf syncInBackground:YES];
         }];
     }
     
@@ -66,7 +72,68 @@
 }
 
 #pragma mark - Logic
-- (void)sync
+- (void)syncInBackground:(BOOL)backgroundSync
+{
+    BOOL analyticRequiresSync = [self analytikRequiresSync];
+    BOOL backupRequiresSync = [self backupRequiresSync];
+    
+    if(analyticRequiresSync || backupRequiresSync)
+    {
+        UIApplication *application = [UIApplication sharedApplication];
+        if(backgroundSync)
+        {
+            backgroundTask = [application beginBackgroundTaskWithExpirationHandler:^{
+                [application endBackgroundTask:backgroundTask];
+                backgroundTask = UIBackgroundTaskInvalid;
+            }];
+        }
+        
+        dispatch_group_t dispatchGroup = dispatch_group_create();
+        dispatch_group_async(dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            
+            if(backupRequiresSync)
+            {
+                dispatch_group_enter(dispatchGroup);
+                [self syncBackupWithCompletionHandler:^{
+                    dispatch_group_leave(dispatchGroup);
+                    
+                    NSLog(@"Sync'd backup");
+                }];
+            }
+            if(analyticRequiresSync)
+            {
+                dispatch_group_enter(dispatchGroup);
+                [self syncAnalytikWithCompletionHandler:^{
+                    dispatch_group_leave(dispatchGroup);
+                    
+                    NSLog(@"Sync'd Analytik");
+                }];
+            }
+        });
+        
+        dispatch_group_notify(dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            if(backgroundSync)
+            {
+                [application endBackgroundTask:backgroundTask];
+                backgroundTask = UIBackgroundTaskInvalid;
+            }
+        });
+    }
+}
+- (void)syncBackupWithCompletionHandler:(void (^)(void))completionBlock
+{
+    UABackupController *backupController = [[UABackupController alloc] init];
+    [backupController backupToDropbox:^(NSError *error) {
+        
+        NSTimeInterval timestamp = [[NSDate date] timeIntervalSince1970];
+        [[NSUserDefaults standardUserDefaults] setInteger:timestamp forKey:kLastBackupTimestamp];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        NSLog(@"No error: %@", error);
+        if(completionBlock) completionBlock();
+    }];
+}
+- (void)syncAnalytikWithCompletionHandler:(void (^)(void))completionBlock
 {
     NSDate *syncFromDate = [[NSDate date] dateBySubtractingDays:90];
     NSNumber *lastSyncTimestamp = [[NSUserDefaults standardUserDefaults] valueForKey:kAnalytikLastSyncTimestampKey];
@@ -74,16 +141,10 @@
     {
         syncFromDate = [NSDate dateWithTimeIntervalSince1970:[lastSyncTimestamp integerValue]];
     }
-
+    
     // Check if we actually have anything to sync
     if([[self analytikController] needsToSyncFromDate:syncFromDate])
     {
-        UIApplication *application = [UIApplication sharedApplication];
-        backgroundTask = [application beginBackgroundTaskWithExpirationHandler:^{
-            [application endBackgroundTask:backgroundTask];
-            backgroundTask = UIBackgroundTaskInvalid;
-        }];
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             
             NSLog(@"Attemping Analytik sync from date: %@", syncFromDate);
@@ -93,20 +154,60 @@
                 [[NSUserDefaults standardUserDefaults] setInteger:[[NSDate date] timeIntervalSince1970] forKey:kAnalytikLastSyncTimestampKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
-                // Finish up our background task
-                [application endBackgroundTask:backgroundTask];
-                backgroundTask = UIBackgroundTaskInvalid;
+                if(completionBlock) completionBlock();
                 
             } failure:^(NSError *error) {
                 NSLog(@"Analytik sync failed: %@", [error localizedDescription]);
                 
-                // Finish up our background task
-                [application endBackgroundTask:backgroundTask];
-                backgroundTask = UIBackgroundTaskInvalid;
+                if(completionBlock) completionBlock();
             }];
             
         });
     }
+    else
+    {
+        if(completionBlock) completionBlock();
+    }
+}
+
+#pragma mark - Helpers
+- (BOOL)analytikRequiresSync
+{
+    NSDate *syncFromDate = [[NSDate date] dateBySubtractingDays:90];
+    NSNumber *lastSyncTimestamp = [[NSUserDefaults standardUserDefaults] valueForKey:kAnalytikLastSyncTimestampKey];
+    if(lastSyncTimestamp)
+    {
+        syncFromDate = [NSDate dateWithTimeIntervalSince1970:[lastSyncTimestamp integerValue]];
+    }
+    
+    return [[self analytikController] needsToSyncFromDate:syncFromDate];
+}
+- (BOOL)backupRequiresSync
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults boolForKey:kAutomaticBackupEnabledKey])
+    {
+        NSInteger frequency = [defaults integerForKey:kAutomaticBackupFrequencyKey];
+        NSInteger lastBackupTimestamp = [defaults integerForKey:kLastBackupTimestamp];
+        NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
+        
+        NSLog(@"%f %ld %ld", (currentTimestamp-lastBackupTimestamp), (long)lastBackupTimestamp, (long)frequency);
+        if((currentTimestamp-lastBackupTimestamp) >= frequency)
+        {
+            BOOL requiresWifi = ![defaults boolForKey:kWWANAutomaticBackupEnabledKey];
+            Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
+            if(requiresWifi && ![reachability isReachableViaWiFi])
+            {
+                return NO;
+            }
+            
+            NSLog(@"SYNC");
+            
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 #pragma mark - Accessors

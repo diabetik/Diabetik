@@ -64,6 +64,12 @@ enum {
     Sunday = 128
 };
 
+enum BackupFrequency {
+    BackupOnClose = 0,
+    BackupOnceADay = 86400, // 24 hours in seconds
+    BackupOnceAWeek = 604800 // 1 week in seconds
+};
+
 typedef enum _EventFilterType {
     MedicineFilterType = 1,
     ReadingFilterType = 2,
@@ -108,6 +114,11 @@ static NSString * const kHasSeenAddDragUIHint = @"kHasSeenAddDragUIHint";
 static NSString * const kFilterSearchResultsKey = @"kFilterSearchResultsKey";
 static NSString * const kReportsDefaultKey = @"kReportsDefaultKey";
 static NSString * const kShowInlineImages = @"kShowInlineImages";
+
+static NSString * const kAutomaticBackupEnabledKey = @"kAutomaticBackupEnabledKey";
+static NSString * const kWWANAutomaticBackupEnabledKey = @"kWWANAutomaticBackupEnabledKey";
+static NSString * const kAutomaticBackupFrequencyKey = @"kAutomaticBackupFrequencyKey";
+static NSString * const kLastBackupTimestamp = @"kLastBackupTimestamp";
 
 static NSString * const kMinHealthyBGKey = @"kMinHealthyBGKey";
 static NSString * const kMaxHealthyBGKey = @"kMaxHealthyBGKey";

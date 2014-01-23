@@ -26,7 +26,9 @@
 + (id)sharedInstance;
 
 // Logic
-- (void)sync;
+- (void)syncInBackground:(BOOL)backgroundSync;
+- (void)syncAnalytikWithCompletionHandler:(void (^)(void))completionBlock;
+- (void)syncBackupWithCompletionHandler:(void (^)(void))completionBlock;
 
 // Accessors
 - (UAAnalytikController *)analytikController;

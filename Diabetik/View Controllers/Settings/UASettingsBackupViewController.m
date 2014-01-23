@@ -28,6 +28,9 @@
     UABackupController *backupController;
 }
 
+// UI
+- (void)toggleAutomaticBackup:(id)sender;
+
 @end
 
 @implementation UASettingsBackupViewController
@@ -65,24 +68,56 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - UI
+- (void)toggleAutomaticBackup:(id)sender
+{
+    BOOL automaticBackupEnabled = ![[NSUserDefaults standardUserDefaults] boolForKey:kAutomaticBackupEnabledKey];
+    [[NSUserDefaults standardUserDefaults] setBool:automaticBackupEnabled forKey:kAutomaticBackupEnabledKey];
+    
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+}
+- (void)toggleWWANBackup:(id)sender
+{
+    BOOL wwanBackupEnabled = ![[NSUserDefaults standardUserDefaults] boolForKey:kWWANAutomaticBackupEnabledKey];
+    [[NSUserDefaults standardUserDefaults] setBool:wwanBackupEnabled forKey:kWWANAutomaticBackupEnabledKey];
+}
+
 #pragma mark - UITableViewDataSource methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
 {
+    if(![[DBAccountManager sharedManager] linkedAccount])
+    {
+        return 1;
+    }
+    
     return 2;
 }
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if(section == 0)
+    {
+        if(![[DBAccountManager sharedManager] linkedAccount])
+        {
+            return 1;
+        }
+        else
+        {
+            return 2;
+        }
+    }
+    
+    BOOL automaticBackupsEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:kAutomaticBackupEnabledKey];
+    return automaticBackupsEnabled ? 5 : 1;
 }
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
 {
     if(section == 0)
     {
-        return NSLocalizedString(@"Manual backup", nil);
+        return NSLocalizedString(@"Backup", nil);
     }
     else if(section == 1)
     {
-        return NSLocalizedString(@"Restore", nil);
+        return NSLocalizedString(@"Backup options", nil);
     }
     
     return @"";
@@ -105,18 +140,88 @@
         cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UASettingCell"];
     }
     [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
+    cell.textLabel.textAlignment = NSTextAlignmentLeft;
+    cell.accessoryView = nil;
+    cell.accessoryType = nil;
+    cell.tag = 0;
     
-    if(indexPath.section == 0 && indexPath.row == 0)
+    if(indexPath.section == 0)
     {
-        cell.textLabel.text = NSLocalizedString(@"Perform manual backup", nil);
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
-        cell.detailTextLabel.text = nil;
+        DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
+        if(!account)
+        {
+            if(indexPath.row == 0)
+            {
+                cell.textLabel.text = NSLocalizedString(@"Setup Dropbox backup", nil);
+                cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                cell.detailTextLabel.text = nil;
+            }
+        }
+        else
+        {
+            if(indexPath.row == 0)
+            {
+                cell.textLabel.text = NSLocalizedString(@"Perform manual backup", nil);
+                cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                cell.detailTextLabel.text = nil;
+            }
+            else if(indexPath.row == 1)
+            {
+                cell.textLabel.text = NSLocalizedString(@"Restore from backup", nil);
+                cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                cell.detailTextLabel.text = nil;
+            }
+        }
     }
-    else if(indexPath.section == 1 && indexPath.row == 0)
+    else if(indexPath.section == 1)
     {
-        cell.textLabel.text = NSLocalizedString(@"Restore from backup", nil);
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
-        cell.detailTextLabel.text = nil;
+        if(indexPath.row == 0)
+        {
+            cell.textLabel.text = NSLocalizedString(@"Enable automatic backup", nil);
+            
+            UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
+            [switchControl addTarget:self action:@selector(toggleAutomaticBackup:) forControlEvents:UIControlEventTouchUpInside];
+            cell.accessoryView = switchControl;
+            
+            [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kAutomaticBackupEnabledKey]];
+        }
+        else if(indexPath.row == 1)
+        {
+            cell.textLabel.text = NSLocalizedString(@"Backup over 3G", nil);
+            
+            UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
+            [switchControl addTarget:self action:@selector(toggleWWANBackup:) forControlEvents:UIControlEventTouchUpInside];
+            cell.accessoryView = switchControl;
+            
+            [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kWWANAutomaticBackupEnabledKey]];
+        }
+        else if(indexPath.row == 2)
+        {
+            cell.textLabel.text = NSLocalizedString(@"Backup on close", nil);
+            cell.tag = BackupOnClose;
+            if([[NSUserDefaults standardUserDefaults] integerForKey:kAutomaticBackupFrequencyKey] == BackupOnClose)
+            {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
+        }
+        else if(indexPath.row == 3)
+        {
+            cell.textLabel.text = NSLocalizedString(@"Backup once a day", nil);
+            cell.tag = BackupOnceADay;
+            if([[NSUserDefaults standardUserDefaults] integerForKey:kAutomaticBackupFrequencyKey] == BackupOnceADay)
+            {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
+        }
+        else if(indexPath.row == 4)
+        {
+            cell.textLabel.text = NSLocalizedString(@"Backup once a week", nil);
+            cell.tag = BackupOnceAWeek;
+            if([[NSUserDefaults standardUserDefaults] integerForKey:kAutomaticBackupFrequencyKey] == BackupOnceAWeek)
+            {
+                cell.accessoryType = UITableViewCellAccessoryCheckmark;
+            }
+        }
     }
     
     return cell;
@@ -128,56 +233,62 @@
     [super tableView:aTableView didSelectRowAtIndexPath:indexPath];
     [aTableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if(indexPath.section == 0 && indexPath.row == 0)
+    if(![[DBAccountManager sharedManager] linkedAccount])
     {
-        DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
-        if(!account)
-        {
-            [[DBAccountManager sharedManager] linkFromController:self];
-        }
-        else
-        {
-            [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            [backupController backupToDropbox:^(NSError *error) {
-    
-                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-                
-                if(error)
-                {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
-                                                                        message:[NSString stringWithFormat:NSLocalizedString(@"It wasn't possible to export your backup to Dropbox. The following error occurred: %@", nil), [error localizedDescription]]
-                                                                       delegate:nil
-                                                              cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                              otherButtonTitles:nil];
-                    [alertView show];
-                }
-                else
-                {
-                    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Export successful", nil)
-                                                                        message:[NSString stringWithFormat:NSLocalizedString(@"Your backup has been exported successfully", nil), [error localizedDescription]]
-                                                                       delegate:nil
-                                                              cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                              otherButtonTitles:nil];
-                    [alertView show];
-                }
-            }];
-        }
+        [[DBAccountManager sharedManager] linkFromController:self];
     }
-    else if(indexPath.section == 1 && indexPath.row == 0)
+    else
     {
-        DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
-        if(!account)
+        if(indexPath.section == 0)
         {
-            [[DBAccountManager sharedManager] linkFromController:self];
+            if(indexPath.row == 0)
+            {
+                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+                [backupController backupToDropbox:^(NSError *error) {
+        
+                    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+                    
+                    if(error)
+                    {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                            message:[NSString stringWithFormat:NSLocalizedString(@"It wasn't possible to export your backup to Dropbox. The following error occurred: %@", nil), [error localizedDescription]]
+                                                                           delegate:nil
+                                                                  cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                                  otherButtonTitles:nil];
+                        [alertView show];
+                    }
+                    else
+                    {
+                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Export successful", nil)
+                                                                            message:[NSString stringWithFormat:NSLocalizedString(@"Your backup has been exported successfully", nil), [error localizedDescription]]
+                                                                           delegate:nil
+                                                                  cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                                  otherButtonTitles:nil];
+                        [alertView show];
+                    }
+                }];
+            }
+            else if(indexPath.row == 1)
+            {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Restore from backup", nil)
+                                                                    message:NSLocalizedString(@"Are you sure you'd like to restore from a previous backup? This cannot be undone.", nil)
+                                                                   delegate:self
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                          otherButtonTitles:NSLocalizedString(@"Restore", nil), nil];
+                [alertView show];
+            }
         }
-        else
+        else if(indexPath.section == 1)
         {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Restore from backup", nil)
-                                                                message:NSLocalizedString(@"Are you sure you'd like to restore from a previous backup? This cannot be undone.", nil)
-                                                               delegate:self
-                                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                                      otherButtonTitles:NSLocalizedString(@"Restore", nil), nil];
-            [alertView show];
+            if(indexPath.row > 0)
+            {
+                UITableViewCell *cell = [aTableView cellForRowAtIndexPath:indexPath];
+                if(cell)
+                {
+                    [[NSUserDefaults standardUserDefaults] setInteger:cell.tag forKey:kAutomaticBackupFrequencyKey];
+                    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+                }
+            }
         }
     }
 }

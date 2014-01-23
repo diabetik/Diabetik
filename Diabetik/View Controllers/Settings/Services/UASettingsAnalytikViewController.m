@@ -85,7 +85,7 @@
             passwordTextField.text = @"";
             
             // Force a sync operation
-            [[UASyncController sharedInstance] sync];
+            [[UASyncController sharedInstance] syncAnalytikWithCompletionHandler:nil];
             
         } failure:^(NSError *error) {
             
@@ -124,7 +124,7 @@
     [defaults synchronize];
     
     // Force a sync operation
-    [[UASyncController sharedInstance] sync];
+    [[UASyncController sharedInstance] syncAnalytikWithCompletionHandler:nil];
 }
 
 #pragma mark - UITextFieldDelegate methods
@@ -161,7 +161,7 @@
                 [defaults removeObjectForKey:kAnalytikLastSyncTimestampKey];
                 
                 // Force a sync operation
-                [[UASyncController sharedInstance] sync];
+                [[UASyncController sharedInstance] syncAnalytikWithCompletionHandler:nil];
             }
             else if(indexPath.row == 1)
             {
@@ -313,6 +313,7 @@
             
             cell.textLabel.text = @"Login";
             cell.accessoryView = nil;
+            cell.textLabel.textAlignment = NSTextAlignmentCenter;
         }
     }
     
