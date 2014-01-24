@@ -24,13 +24,13 @@ Legal stuff
 
 The Diabetik source code is provided under version 2.0 of the Apache License. While we have included various multimedia assets it is important to note that these require express written consent if they are to be included as part of any derivative work.
 
-	Copyright 2013 Nial Giacomelli
+	Copyright (c) 2013-2014 Nial Giacomelli
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
 	You may obtain a copy of the License at
 
-		http://www.apache.org/licenses/LICENSE-2.0
+	http://www.apache.org/licenses/LICENSE-2.0
 
 	Unless required by applicable law or agreed to in writing, software
 	distributed under the License is distributed on an "AS IS" BASIS,

@@ -3,7 +3,7 @@
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 30/03/2013.
-//  Copyright 2013 Nial Giacomelli
+//  Copyright (c) 2013-2014 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
