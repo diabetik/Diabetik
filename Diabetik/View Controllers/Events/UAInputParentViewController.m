@@ -159,6 +159,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(presentGeotagOptions:)
                                                  name:@"presentGeotagOptions" object:nil];
+    
 }
 - (void)dealloc
 {
@@ -969,21 +970,20 @@
     return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
 
-/*
 #pragma mark - Autorotation
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+- (void)orientationChanged:(NSNotification *)note
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    UIDeviceOrientation appOrientation = [[UIDevice currentDevice] orientation];
+    
+    if(UIInterfaceOrientationIsLandscape(appOrientation))
+    {
+        UAInputBaseViewController *vc = [self targetViewController];
+        if(vc)
+        {
+            [vc presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+        }
+    }
 }
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskPortrait;
-}
- */
 
 #pragma mark - UIViewController methods
 - (UIStatusBarStyle)preferredStatusBarStyle

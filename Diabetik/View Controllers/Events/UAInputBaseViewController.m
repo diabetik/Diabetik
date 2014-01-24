@@ -41,18 +41,20 @@
         
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasShown:)
-                                                     name:UIKeyboardDidShowNotification object:nil];
-        
+                                                     name:UIKeyboardDidShowNotification
+                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillBeShown:)
-                                                     name:UIKeyboardWillShowNotification object:nil];
+                                                     name:UIKeyboardWillShowNotification
+                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillBeHidden:)
-                                                     name:UIKeyboardWillHideNotification object:nil];
-        
+                                                     name:UIKeyboardWillHideNotification
+                                                   object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasHidden:)
-                                                     name:UIKeyboardDidHideNotification object:nil];
+                                                     name:UIKeyboardDidHideNotification
+                                                   object:nil];
         
         self.autocompleteBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
         self.autocompleteBar.showTagButton = NO;
@@ -392,6 +394,21 @@
         parentVC.locationButton.imageView.alpha = 1.0f;
     }];
 }
+- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType
+{
+    if([UIImagePickerController isSourceTypeAvailable:sourceType])
+    {
+        if(!imagePickerController)
+        {
+            imagePickerController = [[UIImagePickerController alloc] init];
+            imagePickerController.delegate = self;
+            imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+        }
+        imagePickerController.sourceType = sourceType;
+        
+        [self.navigationController presentViewController:imagePickerController animated:YES completion:nil];
+    }
+}
 
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
@@ -446,13 +463,6 @@
     }
     else
     {
-        if(!imagePickerController)
-        {
-            imagePickerController = [[UIImagePickerController alloc] init];
-            imagePickerController.delegate = self;
-            imagePickerController.modalPresentationStyle = UIModalPresentationFormSheet;
-        }
-        
         if(actionSheet.tag == kExistingImageActionSheetTag)
         {
             if(buttonIndex == actionSheet.destructiveButtonIndex)
@@ -474,39 +484,29 @@
             }
             else if(buttonIndex == 2)
             {
-                imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
             }
             else if(buttonIndex == 3)
             {
-                imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            }
-            
-            if(buttonIndex == 2 || buttonIndex == 3)
-            {
-                [self.navigationController presentViewController:imagePickerController animated:YES completion:^{
-                    // STUB
-                }];
+                [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
             }
         }
         else
         {
             if(buttonIndex == 0)
             {
-                imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
             }
             else if(buttonIndex == 1)
             {
-                imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            }
-            
-            if(buttonIndex != actionSheet.cancelButtonIndex)
-            {
-                [self.navigationController presentViewController:imagePickerController animated:YES completion:nil];
+                [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
             }
         }
     }
 }
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
+                                                                  presentingController:(UIViewController *)presenting
+                                                                      sourceController:(UIViewController *)source {
     if ([presented isKindOfClass:TGRImageViewController.class]) {
         
         UIImageView *imageView = [[(UAInputParentViewController *)self.parentViewController photoButton] fullsizeImageView];

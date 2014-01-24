@@ -95,8 +95,7 @@
     
     if(indexPath.section == 0)
     {
-        DBAccount *account = [[DBAccountManager sharedManager] linkedAccount];
-        if(!account)
+        if(![[DBAccountManager sharedManager] linkedAccount])
         {
             if(indexPath.row == 0)
             {

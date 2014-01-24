@@ -18,6 +18,7 @@
 //  limitations under the License.
 //
 
+#import <Dropbox/Dropbox.h>
 #import "SSKeychain.h"
 #import "Reachability.h"
 
@@ -184,26 +185,29 @@
 }
 - (BOOL)backupRequiresSync
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if([defaults boolForKey:kAutomaticBackupEnabledKey])
+    if(![[DBAccountManager sharedManager] linkedAccount])
     {
-        NSInteger frequency = [defaults integerForKey:kAutomaticBackupFrequencyKey];
-        NSInteger lastBackupTimestamp = [defaults integerForKey:kLastBackupTimestamp];
-        NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
-        
-        NSLog(@"%f %ld %ld", (currentTimestamp-lastBackupTimestamp), (long)lastBackupTimestamp, (long)frequency);
-        if((currentTimestamp-lastBackupTimestamp) >= frequency)
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if([defaults boolForKey:kAutomaticBackupEnabledKey])
         {
-            BOOL requiresWifi = ![defaults boolForKey:kWWANAutomaticBackupEnabledKey];
-            Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
-            if(requiresWifi && ![reachability isReachableViaWiFi])
+            NSInteger frequency = [defaults integerForKey:kAutomaticBackupFrequencyKey];
+            NSInteger lastBackupTimestamp = [defaults integerForKey:kLastBackupTimestamp];
+            NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
+            
+            NSLog(@"%f %ld %ld", (currentTimestamp-lastBackupTimestamp), (long)lastBackupTimestamp, (long)frequency);
+            if((currentTimestamp-lastBackupTimestamp) >= frequency)
             {
-                return NO;
+                BOOL requiresWifi = ![defaults boolForKey:kWWANAutomaticBackupEnabledKey];
+                Reachability *reachability = [Reachability reachabilityWithHostname:@"www.google.com"];
+                if(requiresWifi && ![reachability isReachableViaWiFi])
+                {
+                    return NO;
+                }
+                
+                NSLog(@"SYNC");
+                
+                return YES;
             }
-            
-            NSLog(@"SYNC");
-            
-            return YES;
         }
     }
     

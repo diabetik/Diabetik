@@ -83,6 +83,7 @@
 
 // Metadata
 - (void)requestCurrentLocation;
+- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType;
 
 // Social helpers
 - (NSString *)facebookSocialMessageText;
