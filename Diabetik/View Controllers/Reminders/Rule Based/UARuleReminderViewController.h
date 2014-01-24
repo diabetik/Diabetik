@@ -27,8 +27,4 @@
 // Setup
 - (id)initWithReminderRule:(UAReminderRule *)rule;
 
-// UI
-- (void)addTrigger:(id)sender;
-- (void)selectIntervalType:(UIButton *)sender;
-
 @end

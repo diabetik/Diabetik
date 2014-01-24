@@ -60,7 +60,7 @@
     warningLabel.text = NSLocalizedString(@"Restoring from backup will never delete existing data. If identical records are found the existing version will be overwritten. We advise backup restoration only be used when absolutely necessary.", nil);
     [warningLabel sizeToFit];
     
-    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, warningLabel.frame.size.height)];
+    UIView *footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, warningLabel.frame.size.height+20.0f)];
     warningLabel.frame = CGRectMake(floorf(self.view.frame.size.width/2.0f - warningLabel.frame.size.width/2), 0.0f, warningLabel.frame.size.width, warningLabel.frame.size.height);
     [footerView addSubview:warningLabel];
     

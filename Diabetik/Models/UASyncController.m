@@ -185,7 +185,7 @@
 }
 - (BOOL)backupRequiresSync
 {
-    if(![[DBAccountManager sharedManager] linkedAccount])
+    if([[DBAccountManager sharedManager] linkedAccount])
     {
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         if([defaults boolForKey:kAutomaticBackupEnabledKey])

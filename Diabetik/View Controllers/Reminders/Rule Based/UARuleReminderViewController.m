@@ -20,6 +20,7 @@
 
 #import "UARuleReminderViewController.h"
 #import "UAEventController.h"
+#import "UATagController.h"
 #import "UAReminderController.h"
 
 @interface UARuleReminderViewController ()
@@ -27,14 +28,20 @@
     NSString *ruleTitle;
     NSString *triggerClassName;
     NSString *triggerEventName;
+    NSString *triggerTag;
     NSInteger triggerIntervalType;
     double triggerInterval;
     BOOL triggerForAll;
     
     UAReminderRule *existingRule;
-    
-    UAAutocompleteBar *autocompleteBar;
+    UAAutocompleteBar *nameAutocompleteBar, *tagAutocompleteBar;
 }
+
+// UI
+- (void)addTrigger:(id)sender;
+- (void)selectIntervalType:(UIButton *)sender;
+- (void)toggleEntryTriggers:(id)sender;
+
 @end
 
 @implementation UARuleReminderViewController
@@ -50,13 +57,18 @@
         ruleTitle = nil;
         triggerClassName = @"UAMedicine";
         triggerEventName = nil;
+        triggerTag = nil;
         triggerIntervalType = kMinuteIntervalType;
         triggerInterval = 15;
         triggerForAll = YES;
         
-        autocompleteBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
-        autocompleteBar.showTagButton = NO;
-        autocompleteBar.delegate = self;
+        nameAutocompleteBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
+        nameAutocompleteBar.showTagButton = NO;
+        nameAutocompleteBar.delegate = self;
+        
+        tagAutocompleteBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
+        tagAutocompleteBar.showTagButton = NO;
+        tagAutocompleteBar.delegate = self;
     }
     return self;
 }
@@ -110,7 +122,7 @@
     BOOL completedRequiredFields = YES;
     if(triggerInterval <= 0) completedRequiredFields = NO;
     if(!ruleTitle || !ruleTitle.length) completedRequiredFields = NO;
-    if(!triggerForAll && (!triggerEventName || triggerEventName.length == 0)) completedRequiredFields = NO;
+    if(!triggerForAll && ((!triggerEventName || triggerEventName.length == 0) && (!triggerTag || triggerTag.length == 0))) completedRequiredFields = NO;
     
     if(completedRequiredFields)
     {
@@ -118,6 +130,10 @@
         if(triggerEventName && triggerEventName.length > 0)
         {
             predicateFormat = [predicateFormat stringByAppendingFormat:@" && name ==[cd] '%@'", triggerEventName];
+        }
+        if(triggerTag && triggerTag.length > 0)
+        {
+            predicateFormat = [predicateFormat stringByAppendingFormat:@" && ANY tags.nameLC = '%@'", [triggerTag lowercaseString]];
         }
         
         NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
@@ -162,6 +178,11 @@
                                                   otherButtonTitles:nil];
         [alertView show];
     }
+}
+- (void)toggleEntryTriggers:(id)sender
+{
+    triggerForAll = !triggerForAll;
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - Logic
@@ -213,6 +234,11 @@
             triggerEventName = value;
             triggerForAll = NO;
         }
+        else if([predicate.leftExpression.keyPath isEqualToString:@"tags.nameLC"])
+        {
+            triggerTag = value;
+            triggerForAll = NO;
+        }
     }
 }
 - (void)selectIntervalType:(UIButton *)sender
@@ -241,9 +267,9 @@
 }
 
 #pragma mark - UITableViewDelegate methods
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [aTableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if(indexPath.section == 0)
     {
@@ -260,15 +286,16 @@
                 break;
         }
         
-        [autocompleteBar showSuggestionsForInput:nil];
+        [nameAutocompleteBar showSuggestionsForInput:nil];
+        [aTableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationNone];
     }
     else if(indexPath.section == 1 && indexPath.row == 0)
     {
         triggerForAll = !triggerForAll;
         triggerEventName = nil;
+        
+        [aTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
     }
-    
-    [tableView reloadData];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -285,7 +312,7 @@
     else if(section == 1)
     {
         if(triggerForAll) return 1;
-        return 2;
+        return 3;
     }
     else if(section == 2)
     {
@@ -330,9 +357,14 @@
     {
         if(indexPath.row == 0)
         {
-            cell.textLabel.text = NSLocalizedString(@"Trigger for all entries of this type", nil);
+            cell.textLabel.text = NSLocalizedString(@"Trigger for all entries", nil);
             cell.accessoryView = nil;
-            cell.accessoryType = triggerForAll ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+
+            UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
+            [switchControl addTarget:self action:@selector(toggleEntryTriggers:) forControlEvents:UIControlEventTouchUpInside];
+            cell.accessoryView = switchControl;
+            
+            [switchControl setOn:triggerForAll];
         }
         else if(indexPath.row == 1)
         {
@@ -368,14 +400,38 @@
             textField.tag = 0;
             cell.accessoryView = textField;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            [autocompleteBar removeFromSuperview];
+            [nameAutocompleteBar removeFromSuperview];
             
             UIInputView *accessoryView = [[UIInputView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f) inputViewStyle:UIInputViewStyleDefault];
-            //UIView *accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-            //accessoryView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"GenericAccessoryViewBackground.png"]];
-            autocompleteBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width, accessoryView.frame.size.height);
-            [accessoryView addSubview:autocompleteBar];
+            nameAutocompleteBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width, accessoryView.frame.size.height);
+            [accessoryView addSubview:nameAutocompleteBar];
+            textField.inputAccessoryView = accessoryView;
+        }
+        else if(indexPath.row == 2)
+        {
+            cell.textLabel.text = NSLocalizedString(@"Tag", nil);
+            
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+            textField.delegate = self;
+            textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+            textField.text = triggerTag;
+            textField.placeholder = @"A specific entry tag";
+            textField.keyboardType = UIKeyboardTypeDefault;
+            textField.clearButtonMode = UITextFieldViewModeWhileEditing;
+            textField.adjustsFontSizeToFitWidth = NO;
+            textField.keyboardType = UIKeyboardTypeAlphabet;
+            textField.textAlignment = NSTextAlignmentRight;
+            textField.font = [UAFont standardMediumFontWithSize:16.0f];
+            textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
+            textField.autocorrectionType = UITextAutocorrectionTypeNo;
+            textField.tag = 1;
+            cell.accessoryView = textField;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [tagAutocompleteBar removeFromSuperview];
+            
+            UIInputView *accessoryView = [[UIInputView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f) inputViewStyle:UIInputViewStyleDefault];
+            tagAutocompleteBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width, accessoryView.frame.size.height);
+            [accessoryView addSubview:tagAutocompleteBar];
             textField.inputAccessoryView = accessoryView;
         }
     }
@@ -398,7 +454,9 @@
             textField.font = [UAFont standardMediumFontWithSize:16.0f];
             textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             textField.autocorrectionType = UITextAutocorrectionTypeDefault;
-            textField.tag = 1;
+            textField.tag = 2;
+            textField.inputAccessoryView = nil;
+            
             cell.accessoryView = textField;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
@@ -418,7 +476,9 @@
             textField.textAlignment = NSTextAlignmentRight;
             textField.font = [UAFont standardMediumFontWithSize:16.0f];
             textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
-            textField.tag = 2;
+            textField.tag = 3;
+            textField.inputAccessoryView = nil;
+            
             cell.accessoryView = textField;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
@@ -499,15 +559,21 @@
 
     if(indexPath.section == 1 && indexPath.row == 1)
     {
-        [autocompleteBar showSuggestionsForInput:newValue];
+        [nameAutocompleteBar showSuggestionsForInput:newValue];
+    }
+    else if(indexPath.section == 1 && indexPath.row == 2)
+    {
+        [tagAutocompleteBar showSuggestionsForInput:newValue];
     }
     
     return YES;
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    [autocompleteBar showSuggestionsForInput:nil];
-    [autocompleteBar fetchSuggestions];
+    [nameAutocompleteBar showSuggestionsForInput:nil];
+    [nameAutocompleteBar fetchSuggestions];
+    [tagAutocompleteBar showSuggestionsForInput:nil];
+    [tagAutocompleteBar fetchSuggestions];
     
     NSIndexPath *indexPath = [self.tableView indexPathForCell:(UITableViewCell *)textField.superview.superview.superview];
     self.activeControlIndexPath = indexPath;
@@ -520,9 +586,13 @@
     }
     else if(textField.tag == 1)
     {
-        ruleTitle = [textField text];
+        triggerTag = [textField text];
     }
     else if(textField.tag == 2)
+    {
+        ruleTitle = [textField text];
+    }
+    else if(textField.tag == 3)
     {
         triggerInterval = [[textField text] integerValue];
     }
@@ -539,17 +609,24 @@
 #pragma mark - UAAutocompleteBarDelegate methods
 - (NSArray *)suggestionsForAutocompleteBar:(UAAutocompleteBar *)theAutocompleteBar
 {
-    if([triggerClassName isEqualToString:@"UAMedicine"])
+    if([theAutocompleteBar isEqual:nameAutocompleteBar])
     {
-        return [[UAEventController sharedInstance] fetchKey:@"name" forEventsWithFilterType:MedicineFilterType];
+        if([triggerClassName isEqualToString:@"UAMedicine"])
+        {
+            return [[UAEventController sharedInstance] fetchKey:@"name" forEventsWithFilterType:MedicineFilterType];
+        }
+        if([triggerClassName isEqualToString:@"UAMeal"])
+        {
+            return [[UAEventController sharedInstance] fetchKey:@"name" forEventsWithFilterType:MealFilterType];
+        }
+        if([triggerClassName isEqualToString:@"UAActivity"])
+        {
+            return [[UAEventController sharedInstance] fetchKey:@"name" forEventsWithFilterType:ActivityFilterType];
+        }
     }
-    if([triggerClassName isEqualToString:@"UAMeal"])
+    else if([theAutocompleteBar isEqual:tagAutocompleteBar])
     {
-        return [[UAEventController sharedInstance] fetchKey:@"name" forEventsWithFilterType:MealFilterType];
-    }
-    if([triggerClassName isEqualToString:@"UAActivity"])
-    {
-        return [[UAEventController sharedInstance] fetchKey:@"name" forEventsWithFilterType:ActivityFilterType];
+        return [[UATagController sharedInstance] fetchAllTags];
     }
     
     return nil;
