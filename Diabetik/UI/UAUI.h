@@ -29,7 +29,7 @@
 
 // Views
 #import "UABaseViewController.h"
-#import "UAAlertMessageView.h"
+#import "UAViewControllerMessageView.h"
 #import "UATooltipViewController.h"
 #import "UATooltipView.h"
 #import "UAUIHintView.h"

@@ -138,7 +138,7 @@
 		533F356117736C5500AD89E2 /* UASlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353B17736C5500AD89E2 /* UASlider.m */; };
 		533F356217736C5500AD89E2 /* UAGenericTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F353E17736C5500AD89E2 /* UAGenericTableHeaderView.m */; };
 		533F356317736C5500AD89E2 /* UAGenericTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354017736C5500AD89E2 /* UAGenericTableViewCell.m */; };
-		533F356517736C5500AD89E2 /* UAAlertMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354517736C5500AD89E2 /* UAAlertMessageView.m */; };
+		533F356517736C5500AD89E2 /* UAViewControllerMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354517736C5500AD89E2 /* UAViewControllerMessageView.m */; };
 		533F356617736C5500AD89E2 /* UAFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354717736C5500AD89E2 /* UAFont.m */; };
 		533F356717736C5500AD89E2 /* UANavSubtitleHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354917736C5500AD89E2 /* UANavSubtitleHeaderView.m */; };
 		533F356817736C5500AD89E2 /* UAUIHintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F354B17736C5500AD89E2 /* UAUIHintView.m */; };
@@ -467,8 +467,8 @@
 		533F353E17736C5500AD89E2 /* UAGenericTableHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAGenericTableHeaderView.m; sourceTree = "<group>"; };
 		533F353F17736C5500AD89E2 /* UAGenericTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAGenericTableViewCell.h; sourceTree = "<group>"; };
 		533F354017736C5500AD89E2 /* UAGenericTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAGenericTableViewCell.m; sourceTree = "<group>"; };
-		533F354417736C5500AD89E2 /* UAAlertMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAlertMessageView.h; sourceTree = "<group>"; };
-		533F354517736C5500AD89E2 /* UAAlertMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAlertMessageView.m; sourceTree = "<group>"; };
+		533F354417736C5500AD89E2 /* UAViewControllerMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAViewControllerMessageView.h; sourceTree = "<group>"; };
+		533F354517736C5500AD89E2 /* UAViewControllerMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAViewControllerMessageView.m; sourceTree = "<group>"; };
 		533F354617736C5500AD89E2 /* UAFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAFont.h; sourceTree = "<group>"; };
 		533F354717736C5500AD89E2 /* UAFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAFont.m; sourceTree = "<group>"; };
 		533F354817736C5500AD89E2 /* UANavSubtitleHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANavSubtitleHeaderView.h; sourceTree = "<group>"; };
@@ -1300,8 +1300,8 @@
 		533F354317736C5500AD89E2 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
-				533F354417736C5500AD89E2 /* UAAlertMessageView.h */,
-				533F354517736C5500AD89E2 /* UAAlertMessageView.m */,
+				533F354417736C5500AD89E2 /* UAViewControllerMessageView.h */,
+				533F354517736C5500AD89E2 /* UAViewControllerMessageView.m */,
 				533F354617736C5500AD89E2 /* UAFont.h */,
 				533F354717736C5500AD89E2 /* UAFont.m */,
 				533F354817736C5500AD89E2 /* UANavSubtitleHeaderView.h */,
@@ -1906,7 +1906,7 @@
 				533F356217736C5500AD89E2 /* UAGenericTableHeaderView.m in Sources */,
 				533F356317736C5500AD89E2 /* UAGenericTableViewCell.m in Sources */,
 				531D4D82184D372800ABAEC3 /* REFrostedContainerViewController.m in Sources */,
-				533F356517736C5500AD89E2 /* UAAlertMessageView.m in Sources */,
+				533F356517736C5500AD89E2 /* UAViewControllerMessageView.m in Sources */,
 				533F356617736C5500AD89E2 /* UAFont.m in Sources */,
 				53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */,
 				534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */,

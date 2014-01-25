@@ -12,9 +12,7 @@
 #import "UATag.h"
 
 @interface UATagsViewController ()
-{
-    UAAlertMessageView *noTagsView;
-}
+@property (nonatomic, strong) UAViewControllerMessageView *noTagsMessageView;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 // Logic
@@ -45,36 +43,28 @@
 {
     [super viewWillAppear:animated];
     
-    if(!noTagsView)
+    if(!self.noTagsMessageView)
     {
-        noTagsView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero
-                                                         andTitle:NSLocalizedString(@"No Tags", @"Title of message shown when the user has yet to create any tags")
-                                                       andMessage:NSLocalizedString(@"You haven't tagged any entries yet!", nil)];
-        [self.view addSubview:noTagsView];
+        self.noTagsMessageView = [UAViewControllerMessageView addToViewController:self
+                                                                        withTitle:NSLocalizedString(@"No Tags", @"Title of message shown when the user has yet to create any tags")
+                                                                       andMessage:NSLocalizedString(@"You haven't tagged any entries yet!", nil)];
     }
     
     [self refreshView];
-}
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    
-    noTagsView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height-self.topLayoutGuide.length);
 }
 
 #pragma mark - Logic
 - (void)refreshView
 {
-    // Finally, if we have no data hide our tableview
     if([[[self fetchedResultsController] fetchedObjects] count])
     {
         self.tableView.alpha = 1.0f;
-        noTagsView.alpha = 0.0f;
+        self.noTagsMessageView.alpha = 0.0f;
     }
     else
     {
         self.tableView.alpha = 0.0f;
-        noTagsView.alpha = 1.0f;
+        self.noTagsMessageView.alpha = 1.0f;
     }
 }
 - (void)configureCell:(UITableViewCell *)aCell forTableview:(UITableView *)aTableView atIndexPath:(NSIndexPath *)indexPath

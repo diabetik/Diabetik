@@ -41,13 +41,13 @@
 {
     OrderedDictionary *reportData;
     NSMutableDictionary *selectedMonths;
-    UAAlertMessageView *noReportsView;
     
     BOOL exportPDF, exportCSV;
     
     NSDateFormatter *dateFormatter;
     NSDateFormatter *timeFormatter;
 }
+@property (nonatomic, strong) UAViewControllerMessageView *noReportsMessageView;
 
 // Logic
 - (NSArray *)fetchEventsFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate;
@@ -98,12 +98,6 @@
         [self showTips];
     }
 }
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    
-    noReportsView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height-self.topLayoutGuide.length);
-}
 - (void)reloadViewData:(NSNotification *)note
 {
     [super reloadViewData:note];
@@ -113,23 +107,22 @@
 }
 - (void)refreshView
 {
-    if(!noReportsView)
+    if(!self.noReportsMessageView)
     {
-        noReportsView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero
-                                                         andTitle:NSLocalizedString(@"No Reports", nil)
-                                                       andMessage:NSLocalizedString(@"You currently don't have any reports to export.", nil)];
-        [self.view addSubview:noReportsView];
+        self.noReportsMessageView = [UAViewControllerMessageView addToViewController:self
+                                                                           withTitle:NSLocalizedString(@"No Reports", nil)
+                                                                          andMessage:NSLocalizedString(@"You currently don't have any reports to export.", nil)];
     }
     
     if(!reportData)
     {
-        noReportsView.hidden = NO;
+        self.noReportsMessageView.hidden = NO;
         self.tableView.hidden = YES;
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
     else
     {
-        noReportsView.hidden = YES;
+        self.noReportsMessageView.hidden = YES;
         self.tableView.hidden = NO;
         self.navigationItem.rightBarButtonItem.enabled = YES;
     }

@@ -24,8 +24,8 @@
 @interface UARemindersViewController ()
 {
     id reminderUpdateNotifier;
-    UAAlertMessageView *noRemindersView;
 }
+@property (nonatomic, strong) UAViewControllerMessageView *noRemindersMessageView;
 @property (nonatomic, strong) NSArray *reminders;
 @property (nonatomic, strong) NSArray *rules;
 
@@ -80,12 +80,6 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:reminderUpdateNotifier];
 }
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    
-    noRemindersView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height-self.topLayoutGuide.length);
-}
 
 #pragma mark - Logic
 - (void)reloadViewData:(NSNotification *)note
@@ -99,23 +93,22 @@
 }
 - (void)updateView
 {
-    if(!noRemindersView)
+    if(!self.noRemindersMessageView)
     {
         // No entry label
-        noRemindersView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero
-                                                           andTitle:NSLocalizedString(@"No Reminders", nil)
-                                                         andMessage:NSLocalizedString(@"You currently don't have any reminders setup. To add one, tap the + icon.", nil)];
-        [noRemindersView setHidden:YES];
-        [self.view addSubview:noRemindersView];
+        self.noRemindersMessageView = [UAViewControllerMessageView addToViewController:self
+                                                                             withTitle:NSLocalizedString(@"No Reminders", nil)
+                                                                            andMessage:NSLocalizedString(@"You currently don't have any reminders setup. To add one, tap the + icon.", nil)];
+        [self.noRemindersMessageView setHidden:YES];
     }
  
     if((_reminders && [_reminders count]) || (_rules && [_rules count]))
     {
-        [noRemindersView setHidden:YES];
+        [self.noRemindersMessageView setHidden:YES];
     }
     else
     {
-        [noRemindersView setHidden:NO];
+        [self.noRemindersMessageView setHidden:NO];
     }
     
     [self.tableView setEditing:NO];

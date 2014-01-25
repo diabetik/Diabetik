@@ -9,5 +9,4 @@
 #import "UABaseViewController.h"
 
 @interface UATagsViewController : UABaseTableViewController <NSFetchedResultsControllerDelegate>
-
 @end

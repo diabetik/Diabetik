@@ -1,5 +1,5 @@
 //
-//  UAAlertMessageView.h
+//  UAViewControllerMessageView.h
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 05/04/2013.
@@ -20,10 +20,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UAAlertMessageView : UIView
+@interface UAViewControllerMessageView : UIView
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) NSString *message;
 
 // Setup
++ (id)addToViewController:(UIViewController *)vc withTitle:(NSString *)title andMessage:(NSString *)message;
 - (id)initWithFrame:(CGRect)frame andTitle:(NSString *)title andMessage:(NSString *)message;
+
 @end

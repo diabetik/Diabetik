@@ -1,5 +1,5 @@
 //
-//  UAAlertMessageView.m
+//  UAViewControllerMessageView.m
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 05/04/2013.
@@ -18,22 +18,41 @@
 //  limitations under the License.
 //
 
-#import "UAAlertMessageView.h"
+#import "UAViewControllerMessageView.h"
 
-@implementation UAAlertMessageView
+@implementation UAViewControllerMessageView
 
 #pragma mark - Setup
-- (id)initWithFrame:(CGRect)frame andTitle:(NSString *)title andMessage:(NSString *)message 
++ (id)addToViewController:(UIViewController *)vc withTitle:(NSString *)aTitle andMessage:(NSString *)aMessage
+{
+    UAViewControllerMessageView *instance = [[self alloc] initWithFrame:CGRectZero andTitle:aTitle andMessage:aMessage];
+    if(instance)
+    {
+        [vc.view addSubview:instance];
+        [vc.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide][view]|"
+                                                                        options:0
+                                                                        metrics:nil
+                                                                          views:@{@"view": instance, @"topLayoutGuide": vc.topLayoutGuide}]];
+        [vc.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[view]|"
+                                                                        options:0
+                                                                        metrics:nil
+                                                                          views:@{@"view": instance, @"topLayoutGuide": vc.topLayoutGuide, @"topLayoutGuide": vc.topLayoutGuide}]];
+    }
+    
+    return instance;
+}
+- (id)initWithFrame:(CGRect)frame andTitle:(NSString *)aTitle andMessage:(NSString *)aMessage
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
         self.contentMode = UIViewContentModeRedraw;
+        self.translatesAutoresizingMaskIntoConstraints = NO;
 
-        self.title = title;
-        self.message = message;
+        self.title = aTitle;
+        self.message = aMessage;
         
-        [self setNeedsDisplay];
+        //[self setNeedsDisplay];
     }
     return self;
 }

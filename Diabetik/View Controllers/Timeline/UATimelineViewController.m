@@ -42,8 +42,6 @@
 
 @interface UATimelineViewController ()
 {
-    UAAlertMessageView *noEntriesView;
-    
     UISearchBar *searchBar;
     UISearchDisplayController *searchDisplayController;
     NSArray *sectionStats;
@@ -61,10 +59,13 @@
 }
 @property (nonatomic, strong) UAReportsViewController *reportsVC;
 @property (nonatomic, strong) UADetailViewController *detailViewController;
+@property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
+
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSPredicate *timelinePredicate;
 @property (nonatomic, strong) NSManagedObjectContext *moc;
-@property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
+
+@property (nonatomic, strong) UAViewControllerMessageView *noEntriesMessageView;
 @property (nonatomic, assign) NSInteger relativeDays;
 
 // Setup
@@ -216,12 +217,11 @@
     }
     
     // Setup other table styling
-    if(!noEntriesView)
+    if(!self.noEntriesMessageView)
     {
-        noEntriesView = [[UAAlertMessageView alloc] initWithFrame:CGRectZero
-                                                         andTitle:NSLocalizedString(@"No Entries", @"Title of message shown when the user has yet to add any entries to their journal")
-                                                       andMessage:NSLocalizedString(@"You currently don't have any entries in your timeline. To add one, tap the + icon.", nil)];
-        [self.view addSubview:noEntriesView];
+        self.noEntriesMessageView = [UAViewControllerMessageView addToViewController:self
+                                                                           withTitle:NSLocalizedString(@"No Entries", @"Title of message shown when the user has yet to add any entries to their journal")
+                                                                          andMessage:NSLocalizedString(@"You currently don't have any entries in your timeline. To add one, tap the + icon.", nil)];
     }
     
     [self refreshView];
@@ -242,12 +242,6 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];
     [[NSNotificationCenter defaultCenter] removeObserver:applicationResumeNotifier];
-}
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    
-    noEntriesView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height-self.topLayoutGuide.length);
 }
 
 #pragma mark - Logic
@@ -275,12 +269,12 @@
     if([self hasSavedEvents])
     {
         self.tableView.alpha = 1.0f;
-        noEntriesView.alpha = 0.0f;
+        self.noEntriesMessageView.alpha = 0.0f;
     }
     else
     {
         self.tableView.alpha = 0.0f;
-        noEntriesView.alpha = 1.0f;
+        self.noEntriesMessageView.alpha = 1.0f;
     }
 }
 - (void)showReports
