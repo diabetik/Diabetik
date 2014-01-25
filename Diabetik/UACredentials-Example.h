@@ -23,6 +23,9 @@
 #ifndef Diabetik_UACredentials_h
 #define Diabetik_UACredentials_h
 
+// Google Analytics
+static NSString * const kGoogleAnalyticsTrackingID = @"";
+
 // HockeyApp
 static NSString * const kHockeyAppLiveIdentifierKey = @"";
 static NSString * const kHockeyAppBetaIdentifierKey = @"";

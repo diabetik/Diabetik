@@ -133,6 +133,8 @@
 }
 - (void)commonInit
 {
+    self.screenName = @"Timeline";
+    
     _reportsVC = nil;
     allowReportRotation = YES;
     

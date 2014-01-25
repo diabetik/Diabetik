@@ -52,7 +52,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(coreDataDidChange:)
                                                      name:NSManagedObjectContextDidSaveNotification
-                                                   object:nil];
+                                                   object:[[UACoreDataController sharedInstance] managedObjectContext]];
         
         self.automaticallyAdjustsScrollViewInsets = YES;
     }
@@ -72,6 +72,10 @@
 {
     [super viewWillAppear:animated];
     
+    if(!self.screenName)
+    {
+        self.screenName = self.title;
+    }
     isVisible = YES;
     
     if(!self.navigationItem.leftBarButtonItem && [self.navigationController.viewControllers count] > 1)

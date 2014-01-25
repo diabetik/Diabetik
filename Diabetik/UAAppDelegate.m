@@ -20,6 +20,7 @@
 
 #import <Dropbox/Dropbox.h>
 #import <ShinobiCharts/ShinobiChart.h>
+#import "GAI.h"
 #import "Appirater.h"
 
 #import "UAHelper.h"
@@ -60,6 +61,9 @@
         [[BITHockeyManager sharedHockeyManager] startManager];
     }
 
+    // Initialise the Google Analytics API
+    [[GAI sharedInstance] trackerWithTrackingId:kGoogleAnalyticsTrackingID];
+    
     // Initialise Appirater
     [Appirater setAppId:@"634983291"];
     [Appirater setDaysUntilPrompt:4];

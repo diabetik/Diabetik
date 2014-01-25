@@ -19,10 +19,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GAI.h"
+
 #import "UAUI.h"
 #import "UAHelper.h"
 
-@interface UABaseViewController : UIViewController <UIGestureRecognizerDelegate>
+@interface UABaseViewController : GAITrackedViewController <UIGestureRecognizerDelegate>
 {
     BOOL isVisible;
     BOOL isFirstLoad;

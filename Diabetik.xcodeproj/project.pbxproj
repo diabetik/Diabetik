@@ -175,6 +175,8 @@
 		53AE05CB18947AC70078B408 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE05C518947AC70078B408 /* TPKeyboardAvoidingScrollView.m */; };
 		53AE05CC18947AC70078B408 /* TPKeyboardAvoidingTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE05C718947AC70078B408 /* TPKeyboardAvoidingTableView.m */; };
 		53AE05CD18947AC70078B408 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE05C918947AC70078B408 /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
+		53AE05D618947F910078B408 /* libGoogleAnalyticsServices.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AE05D518947F910078B408 /* libGoogleAnalyticsServices.a */; };
+		53AE05D81894815D0078B408 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AE05D71894815D0078B408 /* AdSupport.framework */; };
 		53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5284818717597004E7F01 /* UAAddEntryListViewController.m */; };
 		53B53ADF18672B0A00773EE7 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ABD18672B0A00773EE7 /* AFHTTPRequestOperation.m */; };
 		53B53AE018672B0A00773EE7 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ABF18672B0A00773EE7 /* AFHTTPRequestOperationManager.m */; };
@@ -537,6 +539,14 @@
 		53AE05C718947AC70078B408 /* TPKeyboardAvoidingTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingTableView.m; sourceTree = "<group>"; };
 		53AE05C818947AC70078B408 /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
 		53AE05C918947AC70078B408 /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
+		53AE05CF18947F910078B408 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAI.h; sourceTree = "<group>"; };
+		53AE05D018947F910078B408 /* GAIDictionaryBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIDictionaryBuilder.h; sourceTree = "<group>"; };
+		53AE05D118947F910078B408 /* GAIFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAIFields.h; sourceTree = "<group>"; };
+		53AE05D218947F910078B408 /* GAILogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAILogger.h; sourceTree = "<group>"; };
+		53AE05D318947F910078B408 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITrackedViewController.h; sourceTree = "<group>"; };
+		53AE05D418947F910078B408 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GAITracker.h; sourceTree = "<group>"; };
+		53AE05D518947F910078B408 /* libGoogleAnalyticsServices.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAnalyticsServices.a; sourceTree = "<group>"; };
+		53AE05D71894815D0078B408 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		53AE668A178727D800DE66D9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		53B5284718717597004E7F01 /* UAAddEntryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryListViewController.h; sourceTree = "<group>"; };
 		53B5284818717597004E7F01 /* UAAddEntryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryListViewController.m; sourceTree = "<group>"; };
@@ -664,9 +674,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53AE05D81894815D0078B408 /* AdSupport.framework in Frameworks */,
 				53F78EE41842700D006736F5 /* libstdc++.6.0.9.dylib in Frameworks */,
 				53D5C4D618412A720000CB86 /* libc++.dylib in Frameworks */,
 				539E1CD117B7FEDD0059ED17 /* Accelerate.framework in Frameworks */,
+				53AE05D618947F910078B408 /* libGoogleAnalyticsServices.a in Frameworks */,
 				5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */,
 				533F07431708B71700B7BF55 /* CFNetwork.framework in Frameworks */,
 				532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */,
@@ -856,6 +868,7 @@
 		533F32211773266600AD89E2 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				53AE05CE18947F910078B408 /* GoogleAnalyticsSDK */,
 				53AE05C118947AC70078B408 /* TPKeyboardAvoiding */,
 				53F3D5871891D16000B23065 /* Reachability */,
 				53F29549187846C00021F6FC /* SSKeychain */,
@@ -1390,6 +1403,7 @@
 		538DBA76166F830300F0709F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53AE05D71894815D0078B408 /* AdSupport.framework */,
 				53F78EE518427791006736F5 /* ShinobiCharts.framework */,
 				53F78EE31842700C006736F5 /* libstdc++.6.0.9.dylib */,
 				53D5C4D518412A720000CB86 /* libc++.dylib */,
@@ -1482,6 +1496,20 @@
 				53AE05C918947AC70078B408 /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
 			);
 			path = TPKeyboardAvoiding;
+			sourceTree = "<group>";
+		};
+		53AE05CE18947F910078B408 /* GoogleAnalyticsSDK */ = {
+			isa = PBXGroup;
+			children = (
+				53AE05CF18947F910078B408 /* GAI.h */,
+				53AE05D018947F910078B408 /* GAIDictionaryBuilder.h */,
+				53AE05D118947F910078B408 /* GAIFields.h */,
+				53AE05D218947F910078B408 /* GAILogger.h */,
+				53AE05D318947F910078B408 /* GAITrackedViewController.h */,
+				53AE05D418947F910078B408 /* GAITracker.h */,
+				53AE05D518947F910078B408 /* libGoogleAnalyticsServices.a */,
+			);
+			path = GoogleAnalyticsSDK;
 			sourceTree = "<group>";
 		};
 		53B53ABB18672B0A00773EE7 /* AFNetworking */ = {
@@ -2084,6 +2112,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
+					/Users/nialgiacomelli/Git/Diabetik/Diabetik/Vendor/GoogleAnalyticsSDK,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -2189,6 +2218,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
+					/Users/nialgiacomelli/Git/Diabetik/Diabetik/Vendor/GoogleAnalyticsSDK,
 				);
 				OTHER_CFLAGS = "";
 				OTHER_LDFLAGS = (
@@ -2227,6 +2257,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
+					/Users/nialgiacomelli/Git/Diabetik/Diabetik/Vendor/GoogleAnalyticsSDK,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
