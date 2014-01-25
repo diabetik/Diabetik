@@ -23,6 +23,7 @@
 		532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EA4177D7DD1000D793F /* CoreText.framework */; };
 		532D0EA8177D7F64000D793F /* HockeyApp-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 532D0EA7177D7F64000D793F /* HockeyApp-License.txt */; };
 		532D720A1858BFD800ECBC97 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D72091858BFD800ECBC97 /* JRSwizzle.m */; };
+		533255651892E29400D28C34 /* UATagHighlightTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 533255641892E29400D28C34 /* UATagHighlightTextStorage.m */; };
 		53350EC917B6A86300223662 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53350EC817B6A86300223662 /* Media.xcassets */; };
 		53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */; };
 		533F07431708B71700B7BF55 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07421708B71700B7BF55 /* CFNetwork.framework */; };
@@ -169,6 +170,7 @@
 		53A5D6BF1870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6B91870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m */; };
 		53A5D6C01870D5950077DFBE /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */; };
 		53A5D6C11870D5950077DFBE /* UAInsulinCalculatorTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */; };
+		53AE05C0189459430078B408 /* UATagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE05BF189459430078B408 /* UATagsViewController.m */; };
 		53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5284818717597004E7F01 /* UAAddEntryListViewController.m */; };
 		53B53ADF18672B0A00773EE7 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ABD18672B0A00773EE7 /* AFHTTPRequestOperation.m */; };
 		53B53AE018672B0A00773EE7 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ABF18672B0A00773EE7 /* AFHTTPRequestOperationManager.m */; };
@@ -251,6 +253,8 @@
 		532D72081858BFD800ECBC97 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
 		532D72091858BFD800ECBC97 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		532D720E1858FEC300ECBC97 /* Diabetik.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Diabetik.entitlements; sourceTree = "<group>"; };
+		533255631892E29400D28C34 /* UATagHighlightTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATagHighlightTextStorage.h; sourceTree = "<group>"; };
+		533255641892E29400D28C34 /* UATagHighlightTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATagHighlightTextStorage.m; sourceTree = "<group>"; };
 		53350EC817B6A86300223662 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		533F07421708B71700B7BF55 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -519,6 +523,8 @@
 		53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorViewController.m; sourceTree = "<group>"; };
 		53A5D6BD1870D5950077DFBE /* UAInsulinCalculatorTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTitleView.h; sourceTree = "<group>"; };
 		53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTitleView.m; sourceTree = "<group>"; };
+		53AE05BE189459430078B408 /* UATagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATagsViewController.h; sourceTree = "<group>"; };
+		53AE05BF189459430078B408 /* UATagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATagsViewController.m; sourceTree = "<group>"; };
 		53AE668A178727D800DE66D9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
 		53B5284718717597004E7F01 /* UAAddEntryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryListViewController.h; sourceTree = "<group>"; };
 		53B5284818717597004E7F01 /* UAAddEntryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryListViewController.m; sourceTree = "<group>"; };
@@ -713,6 +719,15 @@
 			path = JRSwizzle;
 			sourceTree = "<group>";
 		};
+		533255621892E1CA00D28C34 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				533255631892E29400D28C34 /* UATagHighlightTextStorage.h */,
+				533255641892E29400D28C34 /* UATagHighlightTextStorage.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		533F30271773266500AD89E2 /* Diabetik */ = {
 			isa = PBXGroup;
 			children = (
@@ -891,6 +906,7 @@
 		533F324F1773266600AD89E2 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				53AE05BD189459360078B408 /* Tags */,
 				53A5D6B61870D5950077DFBE /* Insulin Calculator */,
 				533F32591773266600AD89E2 /* Add Entry */,
 				533F325E1773266600AD89E2 /* Events */,
@@ -1174,6 +1190,7 @@
 		533F32DD1773266600AD89E2 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
+				533255621892E1CA00D28C34 /* UI */,
 				533F32DE1773266600AD89E2 /* Cells */,
 				533F32E31773266600AD89E2 /* UATimelineTableHeaderView.h */,
 				533F32E41773266600AD89E2 /* UATimelineTableHeaderView.m */,
@@ -1428,6 +1445,15 @@
 				53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		53AE05BD189459360078B408 /* Tags */ = {
+			isa = PBXGroup;
+			children = (
+				53AE05BE189459430078B408 /* UATagsViewController.h */,
+				53AE05BF189459430078B408 /* UATagsViewController.m */,
+			);
+			path = Tags;
 			sourceTree = "<group>";
 		};
 		53B53ABB18672B0A00773EE7 /* AFNetworking */ = {
@@ -1826,6 +1852,7 @@
 				533F34CC1773266600AD89E2 /* UATimeReminderViewController.m in Sources */,
 				533F34CD1773266600AD89E2 /* UARemindersViewController.m in Sources */,
 				533F34CE1773266600AD89E2 /* UAChartCrosshairTooltip.m in Sources */,
+				53AE05C0189459430078B408 /* UATagsViewController.m in Sources */,
 				533F34CF1773266600AD89E2 /* UAChartLineCrosshair.m in Sources */,
 				53B53AE218672B0A00773EE7 /* AFNetworkReachabilityManager.m in Sources */,
 				533F34D01773266600AD89E2 /* UAAvgBloodGlucoseChartViewController.m in Sources */,
@@ -1866,6 +1893,7 @@
 				533F352617736C0600AD89E2 /* UAKeyboardController.m in Sources */,
 				533F352717736C0600AD89E2 /* UALocationController.m in Sources */,
 				533F352817736C0600AD89E2 /* UAMediaController.m in Sources */,
+				533255651892E29400D28C34 /* UATagHighlightTextStorage.m in Sources */,
 				533F352917736C0600AD89E2 /* UAReminderController.m in Sources */,
 				533F352B17736C0600AD89E2 /* UATagController.m in Sources */,
 				533F355C17736C5500AD89E2 /* UAAutocompleteBar.m in Sources */,

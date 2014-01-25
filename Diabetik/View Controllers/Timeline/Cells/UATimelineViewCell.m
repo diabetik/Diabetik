@@ -22,7 +22,11 @@
 #import "UATimelineViewCell.h"
 #import "UAMediaController.h"
 
-#define kNotesFont [UAFont standardRegularFontWithSize:13.0f]
+#import "UATimelineViewController.h"
+
+#import "UATagHighlightTextStorage.h"
+
+#define kNotesFont [UAFont standardRegularFontWithSize:14.0f]
 #define kNotesBottomVerticalPadding 13.0f
 #define kBottomVerticalPadding 12.0f
 #define kHorizontalMargin 16.0f
@@ -34,7 +38,7 @@
 {
     NSDate *date;
     UACellPosition cellPosition;
-    
+    UATagHighlightTextStorage *textStorage;
     UIView *bottomBorder;
 }
 @end
@@ -46,7 +50,6 @@
 @synthesize descriptionLabel = _descriptionLabel;
 @synthesize valueLabel = _valueLabel;
 @synthesize timestampLabel = _timestampLabel;
-@synthesize notesLabel = _notesLabel;
 
 #pragma mark - Setup
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -111,14 +114,14 @@
     _descriptionLabel.frame = descriptionLabelFrame;
     _valueLabel.frame = CGRectMake(96.0f, 13.0f, ceilf(self.bounds.size.width-96.0f-kHorizontalMargin), 19.0f);
 
-    if(self.notesLabel && self.notesLabel.text)
+    if(self.notesTextView && self.notesTextView.text)
     {
-        CGRect notesFrame = [self.notesLabel.text boundingRectWithSize:CGSizeMake(self.notesLabel.bounds.size.width, CGFLOAT_MAX)
-                                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                            attributes:@{NSFontAttributeName:self.notesLabel.font}
-                                                               context:nil];
+        CGRect notesFrame = [self.notesTextView.text boundingRectWithSize:CGSizeMake(self.notesTextView.bounds.size.width, CGFLOAT_MAX)
+                                                                  options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                               attributes:@{NSFontAttributeName:self.notesTextView.font}
+                                                                  context:nil];
         
-        self.notesLabel.frame = CGRectMake(ceilf(self.notesLabel.frame.origin.x), ceilf(self.notesLabel.frame.origin.y), ceilf(self.notesLabel.frame.size.width), ceilf(notesFrame.size.height));
+        self.notesTextView.frame = CGRectMake(ceilf(self.notesTextView.frame.origin.x), ceilf(self.notesTextView.frame.origin.y), ceilf(self.notesTextView.frame.size.width), ceilf(notesFrame.size.height));
     }
     
     if(cellPosition == UACellBackgroundViewPositionBottom)
@@ -141,9 +144,54 @@
 {
     [super prepareForReuse];
     
-    [self.notesLabel removeFromSuperview], self.notesLabel = nil;
+    if(self.notesTextView)
+    {
+        [self.notesTextView removeFromSuperview], self.notesTextView = nil;
+    }
     [self setPhotoImage:nil];
 }
+- (void)handleTapGesture:(UITapGestureRecognizer *)recognizer
+          withController:(UIViewController *)controller
+               indexPath:(NSIndexPath *)indexPath
+            andTableView:(UITableView *)tableView
+{
+    UITextView *textView = self.notesTextView;
+    
+    NSLayoutManager *layoutManager = textView.layoutManager;
+    CGPoint location = [recognizer locationInView:textView];
+    location.x -= textView.textContainerInset.left;
+    location.y -= textView.textContainerInset.top;
+    
+    NSUInteger characterIndex;
+    characterIndex = [layoutManager characterIndexForPoint:location
+                                           inTextContainer:textView.textContainer
+                  fractionOfDistanceBetweenInsertionPoints:NULL];
+    
+    BOOL didTapTag = NO;
+    if (CGRectContainsPoint(textView.bounds, location) && characterIndex < textView.textStorage.length)
+    {
+        NSRange range;
+        NSString *tagValue = [textView.attributedText attribute:@"tag" atIndex:characterIndex effectiveRange:&range];
+    
+        if(tagValue)
+        {
+            didTapTag = YES;
+            
+            UATimelineViewController *timelineVC = [[UATimelineViewController alloc] initWithTag:tagValue];
+            [controller.navigationController pushViewController:timelineVC animated:YES];
+        }
+    }
+    
+    if(!didTapTag)
+    {
+        [tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+        
+        id<UITableViewDelegate> delegate = tableView.delegate;
+        [delegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+    }
+}
+
+#pragma mark - Accessors
 - (void)setDate:(NSDate *)aDate
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -164,26 +212,43 @@
         NSString *notes = [data valueForKey:@"notes"];
         if(notes)
         {
-            if(!self.notesLabel)
+            if(self.notesTextView)
             {
-                self.notesLabel = [[UILabel alloc] initWithFrame:CGRectMake(96.0f, 36.0f, self.bounds.size.width-96.0f-kHorizontalMargin, 17.0f)];
-                self.notesLabel.text = @"Entry description";
-                self.notesLabel.backgroundColor = [UIColor clearColor];
-                self.notesLabel.font = kNotesFont;
-                self.notesLabel.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:171.0f/255.0f alpha:1.0f];
-                self.notesLabel.highlightedTextColor = [UIColor whiteColor];
-                self.notesLabel.shadowOffset = CGSizeMake(0.0f, 0.0f);
-                self.notesLabel.numberOfLines = 0;
-                self.notesLabel.lineBreakMode = NSLineBreakByWordWrapping;
-                self.notesLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-                [self addSubview:self.notesLabel];
+                [self.notesTextView removeFromSuperview];
+                self.notesTextView = nil;
             }
+        
+            CGRect frame = CGRectMake(96.0f, 36.0f, self.bounds.size.width-96.0f-kHorizontalMargin, 17.0f);
+            CGSize containerSize = CGSizeMake(frame.size.width,  CGFLOAT_MAX);
             
-            self.notesLabel.text = notes;
+            NSTextContainer *container = [[NSTextContainer alloc] initWithSize:containerSize];
+            container.widthTracksTextView = YES;
+            
+            NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+            [layoutManager addTextContainer:container];
+            
+            textStorage = [[UATagHighlightTextStorage alloc] init];
+            [textStorage appendAttributedString:[[NSAttributedString alloc] initWithString:notes]];
+            [textStorage addLayoutManager:layoutManager];
+        
+            self.notesTextView = [[UITextView alloc] initWithFrame:frame textContainer:container];
+            self.notesTextView.backgroundColor = [UIColor clearColor];
+            self.notesTextView.font = kNotesFont;
+            self.notesTextView.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:171.0f/255.0f alpha:1.0f];
+            self.notesTextView.editable = NO;
+            self.notesTextView.textContainer.lineFragmentPadding = 0;
+            self.notesTextView.textContainerInset = UIEdgeInsetsZero;
+            self.notesTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+            self.notesTextView.userInteractionEnabled = NO;
+            [self addSubview:self.notesTextView];
         }
         else
         {
-            [self.notesLabel removeFromSuperview], self.notesLabel = nil;
+            if(self.notesTextView)
+            {
+                [self.notesTextView removeFromSuperview];
+                self.notesTextView = nil;
+            }
         }
 
         [self setNeedsLayout];
@@ -217,6 +282,18 @@
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
 {
     [super setHighlighted:highlighted animated:animated];
+    
+    if(highlighted)
+    {
+        if(self.notesTextView)
+        {
+            self.notesTextView.textColor = [UIColor whiteColor];
+        }
+        else
+        {
+            self.notesTextView.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:171.0f/255.0f alpha:1.0f];
+        }
+    }
     
     bottomBorder.hidden = highlighted;
 }

@@ -27,11 +27,17 @@
 @property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) UILabel *valueLabel;
 @property (nonatomic, strong) UILabel *timestampLabel;
-@property (nonatomic, strong) UILabel *notesLabel;
+@property (nonatomic, strong) UITextView *notesTextView;
 
 // Logic
 - (void)setPhotoImage:(UIImage *)image;
 - (void)setMetaData:(NSDictionary *)data;
+- (void)handleTapGesture:(UITapGestureRecognizer *)recognizer
+          withController:(UIViewController *)controller
+               indexPath:(NSIndexPath *)indexPath
+            andTableView:(UITableView *)tableView;
+
+// Accessors
 - (void)setDate:(NSDate *)aDate;
 - (void)setCellStyleWithIndexPath:(NSIndexPath *)indexPath andTotalRows:(NSInteger)totalRows;
 

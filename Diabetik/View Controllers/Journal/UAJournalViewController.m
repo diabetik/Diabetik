@@ -311,10 +311,8 @@
     if(indexPath.row%2 == 0)
     {
         [super tableView:aTableView didSelectRowAtIndexPath:indexPath];
-        [aTableView deselectRowAtIndexPath:indexPath animated:YES];
         
         indexPath = [NSIndexPath indexPathForRow:indexPath.row/2 inSection:indexPath.section];
-        
         NSString *key = [[readings allKeys] objectAtIndex:indexPath.row];
         if(key)
         {

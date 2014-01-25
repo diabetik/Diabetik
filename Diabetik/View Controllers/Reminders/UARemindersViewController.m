@@ -255,7 +255,6 @@
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [super tableView:aTableView didSelectRowAtIndexPath:indexPath];
-    [aTableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSInteger adjustedSection = [self adjustedSectionForSection:indexPath.section];
     if(adjustedSection == kReminderTypeRule)

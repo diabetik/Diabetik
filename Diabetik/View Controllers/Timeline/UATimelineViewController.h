@@ -35,10 +35,10 @@
 // Setup
 - (id)initWithRelativeDays:(NSInteger)days;
 - (id)initWithDateFrom:(NSDate *)aFromDate to:(NSDate *)aToDate;
+- (id)initWithTag:(NSString *)tag;
 
 // Logic
 - (void)refreshView;
-- (void)setDateRangeForRelativeDays:(NSInteger)days;
 - (void)performSearchWithText:(NSString *)searchText;
 - (void)calculateSectionStats;
 
@@ -47,7 +47,6 @@
 - (void)configureCell:(UITableViewCell *)cell forTableview:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath;
 
 // Helpers
-- (NSPredicate *)timelinePredicate;
 - (NSDictionary *)metaDataForTableView:(UITableView *)tableView cellAtIndexPath:(NSIndexPath *)indexPath;
 - (BOOL)hasSavedEvents;
 

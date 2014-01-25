@@ -281,6 +281,16 @@
     edgePanGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:edgePanGestureRecognizer];
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
+    if(selectedIndexPath)
+    {
+        [self.tableView deselectRowAtIndexPath:selectedIndexPath animated:NO];
+    }
+}
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];

@@ -51,8 +51,6 @@
     NSArray *searchResultHeaders;
     NSArray *searchResultSectionStats;
     
-    NSDate *fromDate;
-    NSDate *toDate;
     NSDateFormatter *dateFormatter;
     BOOL allowReportRotation;
     BOOL isShowingChart;
@@ -61,16 +59,20 @@
     id applicationResumeNotifier;
     id orientationChangeNotifier;
 }
-
 @property (nonatomic, strong) UAReportsViewController *reportsVC;
 @property (nonatomic, strong) UADetailViewController *detailViewController;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSPredicate *timelinePredicate;
 @property (nonatomic, strong) NSManagedObjectContext *moc;
 @property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
 @property (nonatomic, assign) NSInteger relativeDays;
 
+// Setup
+- (void)commonInit;
+
 // Logic
 - (void)showReports;
+- (void)handleTapGesture:(UITapGestureRecognizer *)gestureRecognizer;
 
 @end
 
@@ -87,61 +89,72 @@
     self = [super initWithStyle:UITableViewStylePlain];
     if (self)
     {
-        _reportsVC = nil;
-        fromDate = nil;
-        toDate = nil;
+        [self commonInit];
         
-        [self setDateRangeForRelativeDays:days];
-        dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"d MMMM yyyy"];
-        
-        _relativeDays = days;
-        allowReportRotation = YES;
+        NSDate *fromDate = nil;
+        if(days > 0)
+        {
+            fromDate = [[[[NSDate date] dateAtStartOfDay] dateBySubtractingDays:days-1] dateAtEndOfDay];
+        }
+        else
+        {
+            fromDate = [[NSDate date] dateAtStartOfDay];
+        }
+        self.timelinePredicate = [NSPredicate predicateWithFormat:@"timestamp >= %@", fromDate];
     }
     
     return self;
 }
-- (id)initWithDateFrom:(NSDate *)aFromDate to:(NSDate *)aToDate
+- (id)initWithDateFrom:(NSDate *)fromDate to:(NSDate *)toDate
 {
     self = [super initWithStyle:UITableViewStylePlain];
     if (self)
     {
-        _reportsVC = nil;
-        fromDate = aFromDate;
-        toDate = aToDate;
-        
-        dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateFormat:@"d MMMM yyyy"];
-        
+        [self commonInit];
         _relativeDays = -1;
-        allowReportRotation = YES;
+        
+        self.timelinePredicate = [NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@", fromDate, toDate];
     }
     return self;
-}		
+}
+- (id)initWithTag:(NSString *)tag
+{
+    self = [super initWithStyle:UITableViewStylePlain];
+    if (self)
+    {
+        [self commonInit];
+        _relativeDays = -1;
+        
+        self.title = [NSString stringWithFormat:@"#%@", tag];
+        self.timelinePredicate = [NSPredicate predicateWithFormat:@"ANY tags.nameLC = %@", [tag lowercaseString]];
+    }
+    return self;
+}
+- (void)commonInit
+{
+    _reportsVC = nil;
+    allowReportRotation = YES;
+    
+    dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"d MMMM yyyy"];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     __weak typeof(self) weakSelf = self;
+
+    // Setup gesture recognizers
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    [self.tableView addGestureRecognizer:tapGesture];
     
     // Setup our nav bar buttons
     UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
-    
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        //UIBarButtonItem *reportsBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showReports)];
-        //[self.navigationItem setRightBarButtonItems:@[addBarButtonItem, reportsBarButtonItem]];
-        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
-    }
-    else
-    {
-        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
-    }
+    [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
     
     // Setup our search bar
     searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
     searchBar.delegate = self;
-    
     searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
@@ -174,7 +187,6 @@
         
         if(strongSelf.relativeDays > -1)
         {
-            [strongSelf setDateRangeForRelativeDays:strongSelf.relativeDays];
             [strongSelf reloadViewData:note];
         }
     }];
@@ -275,7 +287,11 @@
 {
     if(!self.reportsVC)
     {
-        self.reportsVC = [[UAReportsViewController alloc] initFromDate:fromDate toDate:toDate];
+        NSArray *entries = [[self fetchedResultsController] fetchedObjects];
+        NSDate *_fromDate = [(UAEvent *)[entries lastObject] timestamp];
+        NSDate *_toDate = [(UAEvent *)[entries firstObject] timestamp];
+        
+        self.reportsVC = [[UAReportsViewController alloc] initFromDate:_fromDate toDate:_toDate];
         self.reportsVC.delegate = self;
     }
     
@@ -293,17 +309,18 @@
         [self presentViewController:self.reportsVC animated:NO completion:nil];
     }
 }
-- (void)setDateRangeForRelativeDays:(NSInteger)days
+- (void)handleTapGesture:(UITapGestureRecognizer *)gestureRecognizer
 {
-    if(days > 0)
+    CGPoint point = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    if(indexPath)
     {
-        fromDate = [[[[NSDate date] dateAtStartOfDay] dateBySubtractingDays:days-1] dateAtEndOfDay];
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        if(cell && [cell isKindOfClass:[UATimelineViewCell class]])
+        {
+            [(UATimelineViewCell *)cell handleTapGesture:gestureRecognizer withController:self indexPath:indexPath andTableView:self.tableView];
+        }
     }
-    else
-    {
-        fromDate = [[NSDate date] dateAtStartOfDay];
-    }
-    toDate = [[NSDate date] dateAtEndOfDay];
 }
 - (void)performSearchWithText:(NSString *)searchText
 {
@@ -480,7 +497,7 @@
             cell.iconImageView.alpha = 0.35f;
             cell.timestampLabel.alpha = 0.35f;
             cell.descriptionLabel.alpha = 0.35f;
-            cell.notesLabel.alpha = 0.35f;
+            cell.notesTextView.alpha = 0.35f;
             cell.photoImageView.alpha = 0.35f;
         }
         else
@@ -489,7 +506,7 @@
             cell.iconImageView.alpha = 1.0f;
             cell.timestampLabel.alpha = 1.0f;
             cell.descriptionLabel.alpha = 1.0f;
-            cell.notesLabel.alpha = 1.0f;
+            cell.notesTextView.alpha = 1.0f;
             cell.photoImageView.alpha = 1.0f;
         }
         
@@ -609,8 +626,6 @@
     [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     
     if(indexPath.row == 0) return;
-    
-    [self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
     [self.view endEditing:YES];
     
     NSManagedObject *object = nil;
@@ -904,10 +919,6 @@
 }
 
 #pragma mark - Helpers
-- (NSPredicate *)timelinePredicate
-{
-    return [NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@", fromDate, toDate];
-}
 - (NSDictionary *)metaDataForTableView:(UITableView *)tableView cellAtIndexPath:(NSIndexPath *)indexPath
 {
     NSManagedObject *object = nil;
