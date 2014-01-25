@@ -21,6 +21,8 @@
 #import "UABaseViewController.h"
 #import "UAKeyboardController.h"
 
+#import "TPKeyboardAvoidingTableView.h"
+
 @interface UABaseViewController ()
 {
     UIView *dismissableOverlayView;
@@ -230,18 +232,16 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasShown:)
                                                      name:UIKeyboardDidShowNotification object:nil];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillBeShown:)
                                                      name:UIKeyboardWillShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWillBeHidden:)
                                                      name:UIKeyboardWillHideNotification object:nil];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(keyboardWasHidden:)
                                                      name:UIKeyboardDidHideNotification object:nil];
-        
+         
         UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconBack.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
         [self.navigationItem setBackBarButtonItem:backBarButtonItem];
     }
@@ -253,7 +253,7 @@
     UIView *baseView = [[UIView alloc] initWithFrame:CGRectZero];
     baseView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
-    self.tableView = [[UITableView alloc] initWithFrame:baseView.frame style:tableStyle];
+    self.tableView = [[TPKeyboardAvoidingTableView alloc] initWithFrame:baseView.frame style:tableStyle];
     self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -302,59 +302,7 @@
 #pragma mark - Logic
 - (void)keyboardWillBeShown:(NSNotification*)aNotification
 {
-    if(keyboardShown) return;
-    keyboardShown = YES;
-    
-    // Get the keyboard size
-    UIScrollView *tableView;
-    if([self.tableView.superview isKindOfClass:[UIScrollView class]])
-        tableView = (UIScrollView *)self.tableView.superview;
-    else
-        tableView = self.tableView;
-    NSDictionary *userInfo = [aNotification userInfo];
-    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardRect = [tableView.superview convertRect:[aValue CGRectValue] fromView:nil];
-    
-    // Get the keyboard's animation details
-    NSTimeInterval animationDuration;
-    [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
-    UIViewAnimationCurve animationCurve;
-    [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
-    
-    // Determine how much overlap exists between tableView and the keyboard
-    CGRect tableFrame = tableView.frame;
-    CGFloat tableLowerYCoord = tableFrame.origin.y + tableFrame.size.height;
-    keyboardOverlap = tableLowerYCoord - keyboardRect.origin.y;
-    if(self.inputAccessoryView && keyboardOverlap > 0)
-    {
-        CGFloat accessoryHeight = self.inputAccessoryView.frame.size.height;
-        keyboardOverlap -= accessoryHeight;
-        
-        tableView.contentInset = UIEdgeInsetsMake(0, 0, accessoryHeight, 0);
-        tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, accessoryHeight, 0);
-    }
-    
-    if(keyboardOverlap < 0) keyboardOverlap = 0;
-    if(keyboardOverlap != 0)
-    {
-        tableFrame.size.height -= keyboardOverlap;
-        
-        NSTimeInterval delay = 0;
-        if(keyboardRect.size.height)
-        {
-            delay = (1 - keyboardOverlap/keyboardRect.size.height)*animationDuration;
-            animationDuration = animationDuration * keyboardOverlap/keyboardRect.size.height;
-        }
-        
-        [UIView animateWithDuration:animationDuration delay:delay
-                            options:UIViewAnimationOptionBeginFromCurrentState
-                         animations:^{
-                             tableView.frame = tableFrame;
-                         }
-                         completion:^(BOOL finished){
-                             [self tableAnimationEnded:nil finished:nil contextInfo:nil];
-                         }];
-    }
+    // STUB
 }
 - (void)keyboardWasShown:(NSNotification*)aNotification
 {
@@ -362,52 +310,7 @@
 }
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
-    if(!keyboardShown) return;
-    
-    keyboardShown = NO;
-    
-    UIScrollView *tableView;
-    if([self.tableView.superview isKindOfClass:[UIScrollView class]])
-    {
-        tableView = (UIScrollView *)self.tableView.superview;
-    }
-    else
-    {
-        tableView = self.tableView;
-    }
-    
-    if(self.inputAccessoryView)
-    {
-        tableView.contentInset = UIEdgeInsetsZero;
-        tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
-    }
-    
-    if(keyboardOverlap == 0) return;
-    
-    // Get the size & animation details of the keyboard
-    NSDictionary *userInfo = [aNotification userInfo];
-    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGRect keyboardRect = [tableView.superview convertRect:[aValue CGRectValue] fromView:nil];
-    
-    NSTimeInterval animationDuration;
-    [[userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
-    UIViewAnimationCurve animationCurve;
-    [[userInfo objectForKey:UIKeyboardAnimationCurveUserInfoKey] getValue:&animationCurve];
-    
-    CGRect tableFrame = tableView.frame;
-    tableFrame.size.height += keyboardOverlap;
-    
-    if(keyboardRect.size.height)
-    {
-        animationDuration = animationDuration * keyboardOverlap/keyboardRect.size.height;
-    }
-    
-    [UIView animateWithDuration:animationDuration delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         tableView.frame = tableFrame;
-                     }
-                     completion:nil];
+    // STUB
 }
 - (void)keyboardWasHidden:(NSNotification*)aNotification
 {
