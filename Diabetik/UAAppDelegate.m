@@ -208,7 +208,8 @@
                                               kUseSoundsKey: @YES,
                                           kShowInlineImages: @YES,
                                     kFilterSearchResultsKey: @YES,
-                                        
+                                         
+                               kAutomaticBackupFrequencyKey: @(BackupOnceADay),
                                          USMCloudEnabledKey: @NO // iCloud is disabled by default
      }];
     
