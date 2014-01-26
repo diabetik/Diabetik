@@ -87,7 +87,7 @@
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = tag.name;
-    cell.badgeView.value = [NSString stringWithFormat:@"%d", [tag.events count]];
+    cell.badgeView.value = [NSString stringWithFormat:@"%lu", (unsigned long)[tag.events count]];
 }
 
 #pragma mark - UITableViewDataSource methods

@@ -84,18 +84,12 @@
     
     [self setupDefaultConfigurationValues];
     [self setupStyling];
-    [self setupSFX];
-    [self setupDropbox];
     
-    // Call various singletons
+    // Wake up singletons
     [UACoreDataController sharedInstance];
-    [UAReminderController sharedInstance];
-    [UAEventController sharedInstance];
-    [UALocationController sharedInstance];
-    [UASyncController sharedInstance];
+    [self setBackupController:[[UABackupController alloc] init]];
     
     // Setup our backup controller
-    self.backupController = [[UABackupController alloc] init];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.tintColor = kDefaultTintColor;
     
@@ -121,11 +115,25 @@
         self.viewController = viewController;
     }
     
+    // Delay launch on non-essential classes
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [strongSelf setupSFX];
+            [strongSelf setupDropbox];
+            
+            // Call various singletons
+            [UASyncController sharedInstance];
+            [UAReminderController sharedInstance];
+            [UALocationController sharedInstance];
+            [[UAKeyboardController sharedInstance] fetchKeyboardSize];
+        });
+    });
+    
     [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
-    
-    // Fetch and cache default keyboard sizes after our view hierarchy has been setup
-    [[UAKeyboardController sharedInstance] fetchKeyboardSize];
     
     // Let Appirater know our application has launched
     [Appirater appLaunched:YES];
