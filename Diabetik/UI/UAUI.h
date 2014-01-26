@@ -33,6 +33,7 @@
 #import "UATooltipViewController.h"
 #import "UATooltipView.h"
 #import "UAUIHintView.h"
+#import "UABadgeView.h"
 
 // Controls
 #import "UASlider.h"

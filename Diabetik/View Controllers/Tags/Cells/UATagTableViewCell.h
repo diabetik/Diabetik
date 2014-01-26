@@ -1,8 +1,8 @@
 //
-//  UATagsViewController.h
+//  UATagTableViewCell.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 25/01/2014.
+//  Created by Nial Giacomelli on 26/01/2014.
 //  Copyright (c) 2013-2014 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,9 @@
 //  limitations under the License.
 //
 
-#import "UABaseViewController.h"
+#import <UIKit/UIKit.h>
+#import "UABadgeView.h"
 
-@interface UATagsViewController : UABaseTableViewController <NSFetchedResultsControllerDelegate>
+@interface UATagTableViewCell : UAGenericTableViewCell
+@property (nonatomic, strong) UABadgeView *badgeView;
 @end

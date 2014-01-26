@@ -1,8 +1,8 @@
 //
-//  UATagsViewController.h
+//  UABadgeView.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 25/01/2014.
+//  Created by Nial Giacomelli on 26/01/2014.
 //  Copyright (c) 2013-2014 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,18 @@
 //  limitations under the License.
 //
 
-#import "UABaseViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface UATagsViewController : UABaseTableViewController <NSFetchedResultsControllerDelegate>
+@interface UABadgeView : UIView
+@property (nonatomic, strong) UIFont *font;
+@property (nonatomic, strong) UIColor *badgeColor;
+@property (nonatomic, strong) UIColor *textColor;
+@property (nonatomic, strong) UIColor *highlightedBadgeColor;
+@property (nonatomic, strong) UIColor *highlightedTextColor;
+@property (nonatomic, assign) CGFloat badgePadding;
+@property (nonatomic, assign) CGFloat badgeCornerRadius;
+
+@property (nonatomic, assign) BOOL highlighted;
+@property (nonatomic, strong) NSString *value;
+
 @end

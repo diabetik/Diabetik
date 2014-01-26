@@ -3,12 +3,25 @@
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 25/01/2014.
-//  Copyright (c) 2014 UglyApps. All rights reserved.
+//  Copyright (c) 2013-2014 Nial Giacomelli
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
 //
 
 #import "UATagsViewController.h"
 #import "UATimelineViewController.h"
 
+#import "UATagTableViewCell.h"
 #import "UATag.h"
 
 @interface UATagsViewController ()
@@ -69,10 +82,12 @@
 }
 - (void)configureCell:(UITableViewCell *)aCell forTableview:(UITableView *)aTableView atIndexPath:(NSIndexPath *)indexPath
 {
+    UATagTableViewCell *cell = (UATagTableViewCell *)aCell;
     UATag *tag = (UATag *)[self.fetchedResultsController objectAtIndexPath:indexPath];
     
-    aCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    aCell.textLabel.text = [NSString stringWithFormat:@"%@ %d", tag.name, [tag.events count]];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.textLabel.text = tag.name;
+    cell.badgeView.value = [NSString stringWithFormat:@"%d", [tag.events count]];
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -87,15 +102,15 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UAGenericTableViewCell *cell = nil;
-    cell = (UAGenericTableViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UATimelineViewCell"];
+    UATagTableViewCell *cell = nil;
+    cell = (UATagTableViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UATagTableViewCell"];
     if (cell == nil)
     {
-        cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UATimelineViewCell"];
+        cell = [[UATagTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UATagTableViewCell"];
     }
-    [(UAGenericTableViewCell *)cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
+    [(UATagTableViewCell *)cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     
-    [self configureCell:(UAGenericTableViewCell *)cell forTableview:aTableView atIndexPath:indexPath];
+    [self configureCell:(UATagTableViewCell *)cell forTableview:aTableView atIndexPath:indexPath];
     
     return cell;
 }

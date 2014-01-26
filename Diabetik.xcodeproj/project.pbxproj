@@ -17,6 +17,8 @@
 		531D4D84184D372800ABAEC3 /* UIImage+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D7C184D372800ABAEC3 /* UIImage+REFrostedViewController.m */; };
 		531D4D85184D372800ABAEC3 /* UIView+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D7E184D372800ABAEC3 /* UIView+REFrostedViewController.m */; };
 		531D4D86184D372800ABAEC3 /* UIViewController+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D80184D372800ABAEC3 /* UIViewController+REFrostedViewController.m */; };
+		53240A83189534BB00AEA9E8 /* UATagTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53240A82189534BB00AEA9E8 /* UATagTableViewCell.m */; };
+		53240A89189547EB00AEA9E8 /* UABadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53240A88189547EB00AEA9E8 /* UABadgeView.m */; };
 		5324AFFD16DE8BE40004A30F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324AFFC16DE8BE30004A30F /* libz.dylib */; };
 		5324D3B3175102730003F257 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324D3B2175102730003F257 /* AudioToolbox.framework */; };
 		5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */; };
@@ -250,6 +252,10 @@
 		531D4D7E184D372800ABAEC3 /* UIView+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+REFrostedViewController.m"; sourceTree = "<group>"; };
 		531D4D7F184D372800ABAEC3 /* UIViewController+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+REFrostedViewController.h"; sourceTree = "<group>"; };
 		531D4D80184D372800ABAEC3 /* UIViewController+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+REFrostedViewController.m"; sourceTree = "<group>"; };
+		53240A81189534BB00AEA9E8 /* UATagTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATagTableViewCell.h; sourceTree = "<group>"; };
+		53240A82189534BB00AEA9E8 /* UATagTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATagTableViewCell.m; sourceTree = "<group>"; };
+		53240A87189547EB00AEA9E8 /* UABadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UABadgeView.h; sourceTree = "<group>"; };
+		53240A88189547EB00AEA9E8 /* UABadgeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UABadgeView.m; sourceTree = "<group>"; };
 		5324AFFC16DE8BE30004A30F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		5324D3B2175102730003F257 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5326A32417CFB74900B5F4A2 /* Diabetik_1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diabetik_1.2.xcdatamodel; sourceTree = "<group>"; };
@@ -724,6 +730,15 @@
 				531D4D80184D372800ABAEC3 /* UIViewController+REFrostedViewController.m */,
 			);
 			path = REFrostedViewController;
+			sourceTree = "<group>";
+		};
+		53240A7F189534A800AEA9E8 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				53240A81189534BB00AEA9E8 /* UATagTableViewCell.h */,
+				53240A82189534BB00AEA9E8 /* UATagTableViewCell.m */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		532D0EA6177D7F64000D793F /* HockeyApp */ = {
@@ -1326,6 +1341,8 @@
 		533F354317736C5500AD89E2 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				53240A87189547EB00AEA9E8 /* UABadgeView.h */,
+				53240A88189547EB00AEA9E8 /* UABadgeView.m */,
 				533F354417736C5500AD89E2 /* UAViewControllerMessageView.h */,
 				533F354517736C5500AD89E2 /* UAViewControllerMessageView.m */,
 				533F354617736C5500AD89E2 /* UAFont.h */,
@@ -1477,6 +1494,7 @@
 		53AE05BD189459360078B408 /* Tags */ = {
 			isa = PBXGroup;
 			children = (
+				53240A7F189534A800AEA9E8 /* Cells */,
 				53AE05BE189459430078B408 /* UATagsViewController.h */,
 				53AE05BF189459430078B408 /* UATagsViewController.m */,
 			);
@@ -1823,6 +1841,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53240A83189534BB00AEA9E8 /* UATagTableViewCell.m in Sources */,
 				53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */,
 				533F32E91773266600AD89E2 /* NSDate+Extension.m in Sources */,
 				53F3D58C1891D16000B23065 /* Reachability.m in Sources */,
@@ -1926,6 +1945,7 @@
 				533F34D81773266600AD89E2 /* UADateButton.m in Sources */,
 				533F34D91773266600AD89E2 /* UADatePickerController.m in Sources */,
 				53F29548187845360021F6FC /* UAAnalytikController.m in Sources */,
+				53240A89189547EB00AEA9E8 /* UABadgeView.m in Sources */,
 				533F34DA1773266600AD89E2 /* UASettingsBackupViewController.m in Sources */,
 				53E915C318579A230025B465 /* UbiquityStoreManager.m in Sources */,
 				53F29551187846C00021F6FC /* SSKeychain.m in Sources */,
