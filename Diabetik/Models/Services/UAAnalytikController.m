@@ -209,7 +209,8 @@
 #pragma mark - Accessors
 - (AFHTTPRequestOperationManager *)operationManager
 {
-    if([[NSUserDefaults standardUserDefaults] boolForKey:kAnalytikUseStagingServerKey])
+    BOOL useStagingServer = NO; //[[NSUserDefaults standardUserDefaults] boolForKey:kAnalytikUseStagingServerKey];
+    if(useStagingServer)
     {
         NSURL *baseURL = [NSURL URLWithString:kAnalytikStagingAPIURL];
         if(!stagingOperationManager)
