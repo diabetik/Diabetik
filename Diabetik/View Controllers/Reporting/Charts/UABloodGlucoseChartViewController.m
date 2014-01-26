@@ -60,7 +60,7 @@
     
     trendline = [[UALineFitCalculator alloc] init];
     double x = 0;
-    for(int i = formattedData.count-1; i >= 0; i--)
+    for(NSInteger i = formattedData.count-1; i >= 0; i--)
     {
         UAReading *reading = (UAReading *)[formattedData objectAtIndex:i];
         [trendline addPoint:CGPointMake(x, [[reading value] doubleValue])];
@@ -142,13 +142,13 @@
 }
 
 #pragma mark - SChartDataSource methods
-- (int)numberOfSeriesInSChart:(ShinobiChart *)chart
+- (NSInteger)numberOfSeriesInSChart:(ShinobiChart *)chart
 {
     NSInteger dataPoints = [[chartData objectForKey:@"data"] count];
     
     return dataPoints > 1 ? 3 : 2;
 }
-- (SChartSeries*)sChart:(ShinobiChart *)chart seriesAtIndex:(int)seriesIndex
+- (SChartSeries*)sChart:(ShinobiChart *)chart seriesAtIndex:(NSInteger)seriesIndex
 {
     SChartSeries *series = nil;
     
@@ -208,7 +208,7 @@
     
     return series;
 }
-- (int)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(int)seriesIndex
+- (NSInteger)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(NSInteger)seriesIndex
 {
     NSInteger dataPoints = [[chartData objectForKey:@"data"] count];
     if(seriesIndex == 1)
@@ -218,7 +218,7 @@
     
     return dataPoints;
 }
-- (id<SChartData>)sChart:(ShinobiChart *)chart dataPointAtIndex:(int)dataIndex forSeriesAtIndex:(int)seriesIndex
+- (id<SChartData>)sChart:(ShinobiChart *)chart dataPointAtIndex:(NSInteger)dataIndex forSeriesAtIndex:(NSInteger)seriesIndex
 {
     SChartMultiYDataPoint *multiPoint = [[SChartMultiYDataPoint alloc] init];
     

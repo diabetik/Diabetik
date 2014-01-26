@@ -57,7 +57,7 @@
     [paragraphStyle setAlignment:NSTextAlignmentCenter];
     [paragraphStyle setLineBreakMode:NSLineBreakByClipping];
     
-    [[NSString stringWithFormat:@"%d", self.pageCount] drawInRect:CGRectMake(self.pageFrame.origin.x, self.pageFrame.origin.y + self.pageFrame.size.height - 32.0f, self.pageFrame.size.width, 32.0f)
+    [[NSString stringWithFormat:@"%ld", (long)self.pageCount] drawInRect:CGRectMake(self.pageFrame.origin.x, self.pageFrame.origin.y + self.pageFrame.size.height - 32.0f, self.pageFrame.size.width, 32.0f)
                                                    withAttributes:@{NSFontAttributeName: [UAFont standardDemiBoldFontWithSize:10.0f], NSParagraphStyleAttributeName: paragraphStyle}];
     
     self.pageCount ++;

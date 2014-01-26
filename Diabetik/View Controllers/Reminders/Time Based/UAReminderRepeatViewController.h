@@ -22,7 +22,7 @@
 #import "UAUI.h"
 
 @protocol UAReminderRepeatDelegate <NSObject>
-- (void)setReminderDays:(int)days;
+- (void)setReminderDays:(NSInteger)days;
 @end
 
 @interface UAReminderRepeatViewController : UABaseTableViewController

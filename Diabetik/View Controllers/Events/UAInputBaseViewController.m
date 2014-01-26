@@ -557,7 +557,7 @@
     if(image)
     {
         NSTimeInterval timestamp = [NSDate timeIntervalSinceReferenceDate];
-        NSString *filename = [NSString stringWithFormat:@"%d", (NSInteger)timestamp];
+        NSString *filename = [NSString stringWithFormat:@"%ld", (long)timestamp];
         
         __weak typeof(self) weakSelf = self;
         [[UAMediaController sharedInstance] saveImage:image withFilename:filename success:^{

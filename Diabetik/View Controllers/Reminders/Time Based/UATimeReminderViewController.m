@@ -349,7 +349,7 @@
 }
 
 #pragma mark - UAReminderRepeatDelegate
-- (void)setReminderDays:(int)newValue
+- (void)setReminderDays:(NSInteger)newValue
 {
     days = newValue;
     
