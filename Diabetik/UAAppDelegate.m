@@ -87,6 +87,7 @@
     
     // Wake up singletons
     [UACoreDataController sharedInstance];
+    [UAReminderController sharedInstance];
     [self setBackupController:[[UABackupController alloc] init]];
     
     // Setup our backup controller
@@ -126,7 +127,6 @@
             
             // Call various singletons
             [UASyncController sharedInstance];
-            [UAReminderController sharedInstance];
             [UALocationController sharedInstance];
             [[UAKeyboardController sharedInstance] fetchKeyboardSize];
         });

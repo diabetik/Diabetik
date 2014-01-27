@@ -24,39 +24,19 @@
 
 + (UIFont *)standardRegularFontWithSize:(CGFloat)size
 {
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-    {
-        return [UIFont fontWithName:@"AvenirNext-Regular" size:size];
-    }
-    
-    return [UIFont fontWithName:@"Futura-Medium" size:size];
+    return [UIFont fontWithName:@"AvenirNext-Regular" size:size];
 }
 + (UIFont *)standardMediumFontWithSize:(CGFloat)size
 {
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-    {
-        return [UIFont fontWithName:@"AvenirNext-Medium" size:size];
-    }
-    
-    return [UIFont fontWithName:@"Futura-Medium" size:size];
+    return [UIFont fontWithName:@"AvenirNext-Medium" size:size];
 }
 + (UIFont *)standardDemiBoldFontWithSize:(CGFloat)size
 {
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-    {
-        return [UIFont fontWithName:@"AvenirNext-DemiBold" size:size];
-    }
-    
-    return [UIFont fontWithName:@"Futura-Medium" size:size];
+    return [UIFont fontWithName:@"AvenirNext-DemiBold" size:size];
 }
 + (UIFont *)standardBoldFontWithSize:(CGFloat)size
 {
-    if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
-    {
-        return [UIFont fontWithName:@"AvenirNext-Bold" size:size];
-    }
-    
-    return [UIFont fontWithName:@"Futura-Medium" size:size];
+    return [UIFont fontWithName:@"AvenirNext-Bold" size:size];
 }
 
 @end

@@ -24,7 +24,7 @@
 @property (nonatomic, strong) NSMutableParagraphStyle *paragraphStyle;
 
 // Rendering
-- (void)drawRoundedRectWithContext:(CGContextRef)context withRect:(CGRect)rect;
+//- (void)drawRoundedRectWithContext:(CGContextRef)context withRect:(CGRect)rect;
 @end
 
 @implementation UABadgeView
@@ -36,9 +36,9 @@
     if(self)
     {
         self.backgroundColor = [UIColor clearColor];
-        _textColor = [UIColor blackColor];
-        _badgeColor = [UIColor colorWithRed:223.0f/255.0f green:225.0f/255.0f blue:224.0f/255.0f alpha:1.0f];
-        _highlightedTextColor = [UIColor colorWithRed:22.0f/255.0f green:211.0f/255.0f blue:160.0f/255.0f alpha:1.0f];;
+        _textColor = [UIColor colorWithRed:199.0f/255.0f green:199.0f/255.0f blue:204.0f/255.0f alpha:1.0f];
+        _badgeColor = [UIColor colorWithRed:199.0f/255.0f green:199.0f/255.0f blue:204.0f/255.0f alpha:1.0f];
+        _highlightedTextColor = [UIColor whiteColor];
         _highlightedBadgeColor = [UIColor whiteColor];
         
         _font = [UAFont standardRegularFontWithSize:12.0f];
@@ -48,6 +48,10 @@
         self.paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
         [self.paragraphStyle setAlignment:NSTextAlignmentCenter];
         [self.paragraphStyle setLineBreakMode:NSLineBreakByWordWrapping];
+        
+        self.layer.borderWidth = 2;
+        self.layer.borderColor = self.badgeColor.CGColor;
+        self.layer.cornerRadius = 5;
     }
     
     return self;
@@ -58,14 +62,15 @@
 {
     if(self.value)
     {
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        [self drawRoundedRectWithContext:context withRect:rect];
+        //CGContextRef context = UIGraphicsGetCurrentContext();
+        //[self drawRoundedRectWithContext:context withRect:rect];
         
         CGSize valueSize = [self.value sizeWithAttributes:@{NSFontAttributeName: self.font}];
         [self.value drawInRect:CGRectMake(self.badgePadding, (rect.size.height / 2.0) - (valueSize.height / 2.0), rect.size.width - (self.badgePadding*2.0f), valueSize.height)
                 withAttributes:@{NSFontAttributeName: self.font, NSForegroundColorAttributeName: self.highlighted ? self.highlightedTextColor : self.textColor, NSParagraphStyleAttributeName: self.paragraphStyle}];
     }
 }
+/*
 - (void)drawRoundedRectWithContext:(CGContextRef)context withRect:(CGRect)rect
 {
     CGContextSaveGState(context);
@@ -78,15 +83,17 @@
     CGFloat minY = CGRectGetMinY(rect) + puffer;
     
     CGContextBeginPath(context);
-    CGContextSetFillColorWithColor(context, self.highlighted ? [self.highlightedBadgeColor CGColor] : [self.badgeColor CGColor]);
+    CGContextSetLineWidth(context, 3);
+    CGContextSetStrokeColorWithColor(context, self.highlighted ? [self.highlightedBadgeColor CGColor] : [self.badgeColor CGColor]);
     CGContextAddArc(context, maxX-radius, minY+radius, radius, M_PI+(M_PI/2), 0, 0);
     CGContextAddArc(context, maxX-radius, maxY-radius, radius, 0, M_PI/2, 0);
     CGContextAddArc(context, minX+radius, maxY-radius, radius, M_PI/2, M_PI, 0);
     CGContextAddArc(context, minX+radius, minY+radius, radius, M_PI, M_PI+M_PI/2, 0);
-    CGContextFillPath(context);
+    CGContextStrokePath(context);
     
     CGContextRestoreGState(context);
 }
+*/
 
 #pragma mark - Accessors
 - (void)setValue:(NSString *)newValue
@@ -113,6 +120,9 @@
 - (void)setHighlighted:(BOOL)state
 {
     _highlighted = state;
+    
+    self.layer.borderColor = state ? self.highlightedBadgeColor.CGColor : self.badgeColor.CGColor;
+    
     [self setNeedsDisplay];
 }
 

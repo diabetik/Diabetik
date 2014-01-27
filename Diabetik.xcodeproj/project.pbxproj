@@ -10,7 +10,6 @@
 		5301AED5185A08A0005F4CF4 /* UACoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301AED4185A08A0005F4CF4 /* UACoreDataController.m */; };
 		5304B5BB18745DCF00184544 /* UATooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304B5BA18745DCF00184544 /* UATooltipView.m */; };
 		530603A4167FCFFA00EFBE8B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530603A3167FCFFA00EFBE8B /* CoreLocation.framework */; };
-		531026521849135E001C5766 /* UAMenuAccountAvatarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 531026511849135E001C5766 /* UAMenuAccountAvatarView.m */; };
 		531D4D81184D372800ABAEC3 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D76184D372800ABAEC3 /* RECommonFunctions.m */; };
 		531D4D82184D372800ABAEC3 /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D78184D372800ABAEC3 /* REFrostedContainerViewController.m */; };
 		531D4D83184D372800ABAEC3 /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D7A184D372800ABAEC3 /* REFrostedViewController.m */; };
@@ -94,7 +93,6 @@
 		533F34BF1773266600AD89E2 /* UAPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F328F1773266600AD89E2 /* UAPDFDocument.m */; };
 		533F34C01773266600AD89E2 /* UAJournalMonthViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32931773266600AD89E2 /* UAJournalMonthViewCell.m */; };
 		533F34C21773266600AD89E2 /* UAJournalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32971773266600AD89E2 /* UAJournalViewController.m */; };
-		533F34C31773266600AD89E2 /* UASideMenuAccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F329B1773266600AD89E2 /* UASideMenuAccountCell.m */; };
 		533F34C41773266600AD89E2 /* UASideMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F329D1773266600AD89E2 /* UASideMenuCell.m */; };
 		533F34C51773266600AD89E2 /* UASideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F329F1773266600AD89E2 /* UASideMenuViewController.m */; };
 		533F34C61773266600AD89E2 /* UALocationMapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32A41773266600AD89E2 /* UALocationMapPin.m */; };
@@ -198,7 +196,6 @@
 		53B53AEE18672B0A00773EE7 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ADE18672B0A00773EE7 /* UIWebView+AFNetworking.m */; };
 		53B53AF418672BE000773EE7 /* UASettingsTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
-		53BAD21F1847FF3B007F2977 /* UASideMenuHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BAD21E1847FF3B007F2977 /* UASideMenuHeaderView.m */; };
 		53D5C4C2184129840000CB86 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C1184129840000CB86 /* Dropbox.framework */; };
 		53D5C4C8184129EB0000CB86 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C4184129EB0000CB86 /* HockeySDK.framework */; };
 		53D5C4C9184129EB0000CB86 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4C6184129EB0000CB86 /* HockeySDK.xcconfig */; };
@@ -238,8 +235,6 @@
 		5304B5B918745DCF00184544 /* UATooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATooltipView.h; sourceTree = "<group>"; };
 		5304B5BA18745DCF00184544 /* UATooltipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATooltipView.m; sourceTree = "<group>"; };
 		530603A3167FCFFA00EFBE8B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		531026501849135E001C5766 /* UAMenuAccountAvatarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMenuAccountAvatarView.h; sourceTree = "<group>"; };
-		531026511849135E001C5766 /* UAMenuAccountAvatarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMenuAccountAvatarView.m; sourceTree = "<group>"; };
 		531D4D75184D372800ABAEC3 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
 		531D4D76184D372800ABAEC3 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
 		531D4D77184D372800ABAEC3 /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedContainerViewController.h; sourceTree = "<group>"; };
@@ -388,8 +383,6 @@
 		533F32931773266600AD89E2 /* UAJournalMonthViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAJournalMonthViewCell.m; sourceTree = "<group>"; };
 		533F32961773266600AD89E2 /* UAJournalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAJournalViewController.h; sourceTree = "<group>"; };
 		533F32971773266600AD89E2 /* UAJournalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAJournalViewController.m; sourceTree = "<group>"; };
-		533F329A1773266600AD89E2 /* UASideMenuAccountCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuAccountCell.h; sourceTree = "<group>"; };
-		533F329B1773266600AD89E2 /* UASideMenuAccountCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuAccountCell.m; sourceTree = "<group>"; };
 		533F329C1773266600AD89E2 /* UASideMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuCell.h; sourceTree = "<group>"; };
 		533F329D1773266600AD89E2 /* UASideMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuCell.m; sourceTree = "<group>"; };
 		533F329E1773266600AD89E2 /* UASideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuViewController.h; sourceTree = "<group>"; };
@@ -593,8 +586,6 @@
 		53B53AF218672BE000773EE7 /* UASettingsTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsTextViewCell.h; sourceTree = "<group>"; };
 		53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsTextViewCell.m; sourceTree = "<group>"; };
 		53B576751709DF02007322EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		53BAD21D1847FF3B007F2977 /* UASideMenuHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASideMenuHeaderView.h; sourceTree = "<group>"; };
-		53BAD21E1847FF3B007F2977 /* UASideMenuHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASideMenuHeaderView.m; sourceTree = "<group>"; };
 		53CDF9DF18772C6E00F5FA48 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		53D5C4C1184129840000CB86 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
 		53D5C4C4184129EB0000CB86 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
@@ -1078,7 +1069,6 @@
 		533F32981773266600AD89E2 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
-				53BAD21C1847FECB007F2977 /* UI */,
 				533F32991773266600AD89E2 /* Cells */,
 				533F329E1773266600AD89E2 /* UASideMenuViewController.h */,
 				533F329F1773266600AD89E2 /* UASideMenuViewController.m */,
@@ -1089,8 +1079,6 @@
 		533F32991773266600AD89E2 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				533F329A1773266600AD89E2 /* UASideMenuAccountCell.h */,
-				533F329B1773266600AD89E2 /* UASideMenuAccountCell.m */,
 				533F329C1773266600AD89E2 /* UASideMenuCell.h */,
 				533F329D1773266600AD89E2 /* UASideMenuCell.m */,
 			);
@@ -1578,17 +1566,6 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
-		53BAD21C1847FECB007F2977 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				53BAD21D1847FF3B007F2977 /* UASideMenuHeaderView.h */,
-				53BAD21E1847FF3B007F2977 /* UASideMenuHeaderView.m */,
-				531026501849135E001C5766 /* UAMenuAccountAvatarView.h */,
-				531026511849135E001C5766 /* UAMenuAccountAvatarView.m */,
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
 		53D5C4C3184129EB0000CB86 /* HockeySDK.embeddedframework */ = {
 			isa = PBXGroup;
 			children = (
@@ -1867,7 +1844,6 @@
 				537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */,
 				533F349C1773266600AD89E2 /* VKRSAppSoundPlayer.m in Sources */,
 				53B53AE618672B0A00773EE7 /* AFURLResponseSerialization.m in Sources */,
-				531026521849135E001C5766 /* UAMenuAccountAvatarView.m in Sources */,
 				533F349D1773266600AD89E2 /* VKRSSound.m in Sources */,
 				53B53AE518672B0A00773EE7 /* AFURLRequestSerialization.m in Sources */,
 				533F34A21773266600AD89E2 /* MBProgressHUD.m in Sources */,
@@ -1915,7 +1891,6 @@
 				533F34BF1773266600AD89E2 /* UAPDFDocument.m in Sources */,
 				533F34C01773266600AD89E2 /* UAJournalMonthViewCell.m in Sources */,
 				533F34C21773266600AD89E2 /* UAJournalViewController.m in Sources */,
-				533F34C31773266600AD89E2 /* UASideMenuAccountCell.m in Sources */,
 				533F34C41773266600AD89E2 /* UASideMenuCell.m in Sources */,
 				533F34C51773266600AD89E2 /* UASideMenuViewController.m in Sources */,
 				533F34C61773266600AD89E2 /* UALocationMapPin.m in Sources */,
@@ -1963,7 +1938,6 @@
 				53A5D6C01870D5950077DFBE /* UAInsulinCalculatorViewController.m in Sources */,
 				53B53AE118672B0A00773EE7 /* AFHTTPSessionManager.m in Sources */,
 				533F34E31773266600AD89E2 /* UATimelineViewController.m in Sources */,
-				53BAD21F1847FF3B007F2977 /* UASideMenuHeaderView.m in Sources */,
 				533F34E41773266600AD89E2 /* UABaseViewController.m in Sources */,
 				533F352417736C0600AD89E2 /* UABackupController.m in Sources */,
 				533F352517736C0600AD89E2 /* UAEventController.m in Sources */,

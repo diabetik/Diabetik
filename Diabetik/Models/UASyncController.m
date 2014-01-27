@@ -194,7 +194,6 @@
             NSInteger lastBackupTimestamp = [defaults integerForKey:kLastBackupTimestamp];
             NSTimeInterval currentTimestamp = [[NSDate date] timeIntervalSince1970];
             
-            NSLog(@"%f %ld %ld", (currentTimestamp-lastBackupTimestamp), (long)lastBackupTimestamp, (long)frequency);
             if((currentTimestamp-lastBackupTimestamp) >= frequency)
             {
                 BOOL requiresWifi = ![defaults boolForKey:kWWANAutomaticBackupEnabledKey];
@@ -203,8 +202,6 @@
                 {
                     return NO;
                 }
-                
-                NSLog(@"SYNC");
                 
                 return YES;
             }

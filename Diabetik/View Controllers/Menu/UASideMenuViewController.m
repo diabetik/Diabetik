@@ -33,8 +33,6 @@
 #import "UATagsViewController.h"
 
 #import "UASideMenuCell.h"
-#import "UASideMenuAccountCell.h"
-#import "UASideMenuHeaderView.h"
 
 @interface UASideMenuViewController ()
 {
@@ -59,9 +57,7 @@
 {
     [super viewDidLoad];
     
-    UASideMenuHeaderView *headerView = [[UASideMenuHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 150.0f)];
-    
-    self.tableView.tableHeaderView = headerView;
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.tableView.frame.size.width, 44.0f)];
     self.tableView.opaque = NO;
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorColor = [UIColor colorWithWhite:0.0f alpha:0.08f];
@@ -79,7 +75,10 @@
     }
     
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        [self.tableView reloadData];
+        NSLog(@"Reminders updated: %@", [[UAReminderController sharedInstance] ungroupedReminders]);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
     }];
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -176,8 +175,8 @@
         else if(indexPath.row == 2)
         {
             cell.textLabel.text = NSLocalizedString(@"Tags", nil);
-            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconReminders"];
-            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconRemindersHighlighted"];
+            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconTags"];
+            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconTagsHighlighted"];
         }
         else if(indexPath.row == 3)
         {
@@ -202,6 +201,8 @@
             cell.textLabel.text = NSLocalizedString(@"Settings", nil);
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconSettings"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconSettingsHighlighted"];
+            cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 999);
+            cell.co
         }
     }
     else if(indexPath.section == 1)
@@ -249,6 +250,9 @@
     CGFloat height = [self tableView:aTableView heightForHeaderInSection:section];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0.0f, height-23.0f, aTableView.frame.size.width, height)];
+    view.backgroundColor = [UIColor clearColor];
+    
+    /*
     view.backgroundColor = [UIColor colorWithWhite:0.0f alpha:0.08f];
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(43.0f, 0.0f, aTableView.frame.size.width, height)];
@@ -259,6 +263,7 @@
     
     //[view addSubview:imageView];
     [view addSubview:label];
+     */
     
     return view;
 }
@@ -272,7 +277,7 @@
 {
     if(indexPath.section != 2)
     {
-        return 44.0f;
+        return 55.0f;
     }
     
     return 50.0f;

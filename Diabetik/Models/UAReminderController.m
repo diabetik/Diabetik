@@ -54,21 +54,17 @@
     self = [super init];
     if(self)
     {
-        __weak typeof(self) weakSelf = self;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            __strong typeof (weakSelf) strongSelf = weakSelf;
-            
-            [[NSNotificationCenter defaultCenter] addObserver:strongSelf
-                                                     selector:@selector(cacheReminders)
-                                                         name:kRemindersUpdatedNotification
-                                                       object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:strongSelf
-                                                     selector:@selector(updateRemindersBasedOnCoreDataNotification:)
-                                                         name:USMStoreDidImportChangesNotification
-                                                       object:nil];
-            
-            [strongSelf deleteExpiredReminders];
-        });
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(cacheReminders)
+                                                     name:kRemindersUpdatedNotification
+                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(updateRemindersBasedOnCoreDataNotification:)
+                                                     name:USMStoreDidImportChangesNotification
+                                                   object:nil];
+        
+        [self cacheReminders];
+        [self deleteExpiredReminders];
     }
     
     return self;
