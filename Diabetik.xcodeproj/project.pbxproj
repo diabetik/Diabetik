@@ -196,6 +196,7 @@
 		53B53AEE18672B0A00773EE7 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53ADE18672B0A00773EE7 /* UIWebView+AFNetworking.m */; };
 		53B53AF418672BE000773EE7 /* UASettingsTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
+		53BE89EE18983E650035CF4A /* UASettingsEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */; };
 		53D5C4C2184129840000CB86 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C1184129840000CB86 /* Dropbox.framework */; };
 		53D5C4C8184129EB0000CB86 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C4184129EB0000CB86 /* HockeySDK.framework */; };
 		53D5C4C9184129EB0000CB86 /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4C6184129EB0000CB86 /* HockeySDK.xcconfig */; };
@@ -586,6 +587,8 @@
 		53B53AF218672BE000773EE7 /* UASettingsTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsTextViewCell.h; sourceTree = "<group>"; };
 		53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsTextViewCell.m; sourceTree = "<group>"; };
 		53B576751709DF02007322EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		53BE89EC18983E650035CF4A /* UASettingsEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsEntryViewController.h; sourceTree = "<group>"; };
+		53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsEntryViewController.m; sourceTree = "<group>"; };
 		53CDF9DF18772C6E00F5FA48 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		53D5C4C1184129840000CB86 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
 		53D5C4C4184129EB0000CB86 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
@@ -1204,6 +1207,8 @@
 				53F2955618786B560021F6FC /* Services */,
 				533F32D11773266600AD89E2 /* UASettingsBackupViewController.h */,
 				533F32D21773266600AD89E2 /* UASettingsBackupViewController.m */,
+				53BE89EC18983E650035CF4A /* UASettingsEntryViewController.h */,
+				53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */,
 				533F32D51773266600AD89E2 /* UASettingsGlucoseViewController.h */,
 				533F32D61773266600AD89E2 /* UASettingsGlucoseViewController.m */,
 				534617511852828E00ED4B6D /* UASettingsTimelineViewController.h */,
@@ -1952,6 +1957,7 @@
 				533F355C17736C5500AD89E2 /* UAAutocompleteBar.m in Sources */,
 				533F355D17736C5500AD89E2 /* UAAutocompleteBarButton.m in Sources */,
 				533F355E17736C5500AD89E2 /* UASuggestionBar.m in Sources */,
+				53BE89EE18983E650035CF4A /* UASettingsEntryViewController.m in Sources */,
 				53B53AEB18672B0A00773EE7 /* UIButton+AFNetworking.m in Sources */,
 				531D4D81184D372800ABAEC3 /* RECommonFunctions.m in Sources */,
 				533F356017736C5500AD89E2 /* UAInputLabel.m in Sources */,
@@ -2074,8 +2080,8 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PROVISIONING_PROFILE = "5A8F584A-A8AB-4879-8662-F08F9C9E3CC8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5A8F584A-A8AB-4879-8662-F08F9C9E3CC8";
+				PROVISIONING_PROFILE = "906465D8-E741-4DCB-B92A-0C77767E36A8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "906465D8-E741-4DCB-B92A-0C77767E36A8";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = YES;
 				VALIDATE_PRODUCT = YES;
@@ -2114,8 +2120,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "5A8F584A-A8AB-4879-8662-F08F9C9E3CC8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5A8F584A-A8AB-4879-8662-F08F9C9E3CC8";
+				PROVISIONING_PROFILE = "906465D8-E741-4DCB-B92A-0C77767E36A8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "906465D8-E741-4DCB-B92A-0C77767E36A8";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2153,8 +2159,8 @@
 					"-ObjC",
 					"-all_load",
 				);
-				PROVISIONING_PROFILE = "5A8F584A-A8AB-4879-8662-F08F9C9E3CC8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5A8F584A-A8AB-4879-8662-F08F9C9E3CC8";
+				PROVISIONING_PROFILE = "906465D8-E741-4DCB-B92A-0C77767E36A8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "906465D8-E741-4DCB-B92A-0C77767E36A8";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = YES;
 			};
@@ -2223,8 +2229,8 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = Diabetik;
-				PROVISIONING_PROFILE = "5A8F584A-A8AB-4879-8662-F08F9C9E3CC8";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5A8F584A-A8AB-4879-8662-F08F9C9E3CC8";
+				PROVISIONING_PROFILE = "906465D8-E741-4DCB-B92A-0C77767E36A8";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "906465D8-E741-4DCB-B92A-0C77767E36A8";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

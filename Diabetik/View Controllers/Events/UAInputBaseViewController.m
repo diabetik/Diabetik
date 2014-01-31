@@ -69,6 +69,12 @@
         dummyNotesTextView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         dummyNotesTextView.autocorrectionType = UITextAutocorrectionTypeYes;
         dummyNotesTextView.font = [UAFont standardMediumFontWithSize:16.0f];
+        
+        // If we've been asked to automatically geotag events, kick that off here
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kAutomaticallyGeotagEvents])
+        {
+            [self requestCurrentLocation];
+        }
     }
     return self;
 }
@@ -379,9 +385,12 @@
     parentVC.locationButton.imageView.alpha = 0.0f;
     [parentVC.locationButton.activityIndicatorView startAnimating];
     
+    __weak __typeof(self)weakSelf = self;
     [[UALocationController sharedInstance] fetchUserLocationWithSuccess:^(CLLocation *location) {
-        self.lat = [NSNumber numberWithDouble:location.coordinate.latitude];
-        self.lon = [NSNumber numberWithDouble:location.coordinate.longitude];
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        
+        strongSelf.lat = [NSNumber numberWithDouble:location.coordinate.latitude];
+        strongSelf.lon = [NSNumber numberWithDouble:location.coordinate.longitude];
         
         [parentVC updateKeyboardButtons];
         [parentVC.locationButton.activityIndicatorView stopAnimating];

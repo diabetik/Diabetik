@@ -21,6 +21,7 @@
 #import "UAAppDelegate.h"
 
 #import "UASettingsViewController.h"
+#import "UASettingsEntryViewController.h"
 #import "UASettingsGlucoseViewController.h"
 #import "UASettingsTimelineViewController.h"
 #import "UASettingsDropboxViewController.h"
@@ -36,7 +37,6 @@
 @interface UASettingsViewController ()
 
 // UI
-- (void)toggleSmartInput:(UISwitch *)sender;
 - (void)toggleSounds:(UISwitch *)sender;
 
 @end
@@ -77,10 +77,6 @@
 }
 
 #pragma mark - UI
-- (void)toggleSmartInput:(UISwitch *)sender
-{
-    [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:kUseSmartInputKey];
-}
 - (void)toggleSounds:(UISwitch *)sender
 {
     [[NSUserDefaults standardUserDefaults] setBool:[sender isOn] forKey:kUseSoundsKey];
@@ -148,16 +144,6 @@
     {
         if(indexPath.row == 0)
         {
-            cell.textLabel.text = NSLocalizedString(@"Smart input", @"A settings switch to control the Smart Input feature");
-            
-            UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
-            [switchControl addTarget:self action:@selector(toggleSmartInput:) forControlEvents:UIControlEventTouchUpInside];
-            cell.accessoryView = switchControl;
-            
-            [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kUseSmartInputKey]];
-        }
-        else if(indexPath.row == 1)
-        {
             cell.textLabel.text = NSLocalizedString(@"Sounds", @"A settings switch to control application sounds");
             
             UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
@@ -166,9 +152,14 @@
             
             [switchControl setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kUseSoundsKey]];
         }
-        else if(indexPath.row == 2)
+        else if(indexPath.row == 1)
         {
             cell.textLabel.text = NSLocalizedString(@"Timeline settings", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if(indexPath.row == 2)
+        {
+            cell.textLabel.text = NSLocalizedString(@"Entry settings", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
         else if(indexPath.row == 3)
@@ -225,9 +216,14 @@
     
     if(indexPath.section == 0)
     {
-        if(indexPath.row == 2)
+        if(indexPath.row == 1)
         {
             UASettingsTimelineViewController *vc = [[UASettingsTimelineViewController alloc] init];
+            [self.navigationController pushViewController:vc animated:YES];
+        }
+        if(indexPath.row == 2)
+        {
+            UASettingsEntryViewController *vc = [[UASettingsEntryViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
         }
         else if(indexPath.row == 3)
@@ -274,7 +270,7 @@
 {
     if(indexPath.section == 0)
     {
-        if(indexPath.row >= 2 && indexPath.row <= 3)
+        if(indexPath.row >= 1 && indexPath.row <= 3)
         {
             return YES;
         }

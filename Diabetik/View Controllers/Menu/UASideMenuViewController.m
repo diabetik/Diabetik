@@ -75,7 +75,6 @@
     }
     
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-        NSLog(@"Reminders updated: %@", [[UAReminderController sharedInstance] ungroupedReminders]);
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });
@@ -201,8 +200,6 @@
             cell.textLabel.text = NSLocalizedString(@"Settings", nil);
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconSettings"];
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconSettingsHighlighted"];
-            cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 999);
-            cell.co
         }
     }
     else if(indexPath.section == 1)

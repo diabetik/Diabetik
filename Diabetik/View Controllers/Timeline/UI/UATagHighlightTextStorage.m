@@ -71,10 +71,11 @@
 	NSRange paragraphRange = [self.string paragraphRangeForRange:self.editedRange];
 	[self removeAttribute:NSForegroundColorAttributeName range:paragraphRange];
     [self removeAttribute:@"tag" range:paragraphRange];
+    [self addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:171.0f/255.0f alpha:1.0f] range:paragraphRange];
     
 	[regex enumerateMatchesInString:self.string options:0 range:paragraphRange usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
         NSString *tagValue = [[self.string substringWithRange:result.range] stringByReplacingOccurrencesOfString:@"#" withString:@""];
-		[self addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:result.range];
+		[self addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.0f green:192.0f/255.0f blue:180.0f/255.0f alpha:1.0f] range:result.range];
         [self addAttribute:@"tag" value:tagValue range:result.range];
 	}];
     

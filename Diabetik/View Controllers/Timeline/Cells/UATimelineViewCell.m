@@ -26,7 +26,7 @@
 
 #import "UATagHighlightTextStorage.h"
 
-#define kNotesFont [UAFont standardRegularFontWithSize:14.0f]
+#define kNotesFont [UIFont fontWithName:@"Avenir-LightOblique" size:15.0f]
 #define kNotesBottomVerticalPadding 13.0f
 #define kBottomVerticalPadding 12.0f
 #define kHorizontalMargin 16.0f
@@ -41,6 +41,7 @@
     UATagHighlightTextStorage *textStorage;
     UIView *bottomBorder;
 }
+
 @end
 
 @implementation UATimelineViewCell
@@ -217,21 +218,21 @@
                 [self.notesTextView removeFromSuperview];
                 self.notesTextView = nil;
             }
-        
+            
             CGRect frame = CGRectMake(96.0f, 36.0f, self.bounds.size.width-96.0f-kHorizontalMargin, 17.0f);
             CGSize containerSize = CGSizeMake(frame.size.width,  CGFLOAT_MAX);
             
-            NSTextContainer *container = [[NSTextContainer alloc] initWithSize:containerSize];
-            container.widthTracksTextView = YES;
+            NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:containerSize];
+            textContainer.widthTracksTextView = YES;
             
             NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-            [layoutManager addTextContainer:container];
+            [layoutManager addTextContainer:textContainer];
             
             textStorage = [[UATagHighlightTextStorage alloc] init];
             [textStorage appendAttributedString:[[NSAttributedString alloc] initWithString:notes]];
             [textStorage addLayoutManager:layoutManager];
-        
-            self.notesTextView = [[UITextView alloc] initWithFrame:frame textContainer:container];
+    
+            self.notesTextView = [[UITextView alloc] initWithFrame:frame textContainer:textContainer];
             self.notesTextView.backgroundColor = [UIColor clearColor];
             self.notesTextView.font = kNotesFont;
             self.notesTextView.textColor = [UIColor colorWithRed:163.0f/255.0f green:174.0f/255.0f blue:171.0f/255.0f alpha:1.0f];

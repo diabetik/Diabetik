@@ -63,8 +63,15 @@
                                                      name:USMStoreDidImportChangesNotification
                                                    object:nil];
         
-        [self cacheReminders];
-        [self deleteExpiredReminders];
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [strongSelf cacheReminders];
+                [strongSelf deleteExpiredReminders];
+            });
+        });
     }
     
     return self;

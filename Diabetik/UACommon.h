@@ -114,6 +114,7 @@ static NSString * const kHasSeenAddDragUIHint = @"kHasSeenAddDragUIHint";
 static NSString * const kFilterSearchResultsKey = @"kFilterSearchResultsKey";
 static NSString * const kReportsDefaultKey = @"kReportsDefaultKey";
 static NSString * const kShowInlineImages = @"kShowInlineImages";
+static NSString * const kAutomaticallyGeotagEvents = @"kAutomaticallyGeotagEvents";
 
 static NSString * const kAutomaticBackupEnabledKey = @"kAutomaticBackupEnabledKey";
 static NSString * const kWWANAutomaticBackupEnabledKey = @"kWWANAutomaticBackupEnabledKey";
