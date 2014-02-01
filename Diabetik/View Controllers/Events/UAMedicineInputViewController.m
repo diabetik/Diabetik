@@ -125,7 +125,6 @@
                     
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
                     UAEventInputViewCell *cell = (UAEventInputViewCell *)[strongSelf.tableView cellForRowAtIndexPath:indexPath];
-                    strongSelf.previouslyActiveControlIndexPath = indexPath;
                     [cell.control becomeFirstResponder];
                 });
                 
@@ -145,17 +144,14 @@
 }
 - (void)didBecomeActive:(BOOL)editing
 {
-    [parentVC updateKeyboardButtons];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:usingSmartInput ? 1 : 0 inSection:0];
-    UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    
-    // Select our first input field
-    if(editing && !isFirstLoad)
+    if(!self.activeControlIndexPath)
     {
-        [cell.control becomeFirstResponder];
+        self.activeControlIndexPath = [NSIndexPath indexPathForRow:usingSmartInput ? 1 : 0 inSection:0];
     }
+    UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:self.activeControlIndexPath];
+    [cell.control becomeFirstResponder];
     
-    self.previouslyActiveControlIndexPath = indexPath;
+    self.activeView = YES;
 }
 - (NSError *)validationError
 {
@@ -236,6 +232,7 @@
 }
 - (void)selectType:(UIButton *)sender
 {
+    /*
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
     [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
     
@@ -255,6 +252,7 @@
     
     [sender setSelected:YES];
     self.type = sender.tag;
+    */
 }
 
 #pragma mark - UI
@@ -283,11 +281,7 @@
         textField.text = self.name;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
         textField.delegate = self;
-        
-        UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        self.autocompleteBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height);
-        [accessoryView.contentView addSubview:self.autocompleteBar];
-        textField.inputAccessoryView = accessoryView;
+        textField.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Name", nil)];
     }
@@ -301,7 +295,7 @@
         textField.delegate = self;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Amount", nil)];
-        
+        /*
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
         
         UASuggestionBar *suggestionBar = [[UASuggestionBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height)];
@@ -349,6 +343,7 @@
         [button setSelected:YES];
         
         textField.inputAccessoryView = accessoryView;
+         */
     }
     else if(indexPath.row == 2)
     {
@@ -359,6 +354,7 @@
         textField.keyboardType = UIKeyboardTypeAlphabet;
         textField.clearButtonMode = UITextFieldViewModeNever;
         textField.delegate = self;
+        textField.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];
         [datePicker setDate:self.date];
@@ -373,11 +369,7 @@
         UANotesTextView *textView = (UANotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
-        
-        UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        self.autocompleteTagBar.frame = CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height);
-        [accessoryView.contentView addSubview:self.autocompleteTagBar];
-        textView.inputAccessoryView = accessoryView;
+        textView.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Notes", nil)];
         [cell setDrawsBorder:NO];
@@ -465,7 +457,7 @@
 #pragma mark - UAAutocompleteBarDelegate methods
 - (NSArray *)suggestionsForAutocompleteBar:(UAAutocompleteBar *)theAutocompleteBar
 {
-    if([theAutocompleteBar isEqual:self.autocompleteBar])
+    if(self.activeControlIndexPath.row == 0)
     {
         return [[UAEventController sharedInstance] fetchKey:@"name" forEventsWithFilterType:MedicineFilterType];
     }
@@ -484,13 +476,11 @@
     
     if(textField.tag == 0)
     {
-        [self.autocompleteBar showSuggestionsForInput:[textField text]];
+        [self.keyboardShortcutAccessoryView showAutocompleteSuggestionsForInput:[textField text]];
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [super textFieldDidEndEditing:textField];
-
     if(textField.tag == 0)
     {
         self.name = textField.text;
@@ -509,7 +499,7 @@
     }
     else if(textField.tag == 0)
     {
-        [self.autocompleteBar showSuggestionsForInput:newValue];
+        [self.keyboardShortcutAccessoryView showAutocompleteSuggestionsForInput:newValue];
     }
     
     return YES;
@@ -518,7 +508,7 @@
 {
     if(textField.tag == 0)
     {
-        [self.autocompleteBar showSuggestionsForInput:nil];
+        [self.keyboardShortcutAccessoryView setShowingAutocompleteBar:NO];
     }
     
     return YES;

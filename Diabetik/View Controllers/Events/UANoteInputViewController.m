@@ -166,7 +166,7 @@
         textField.text = title;
         textField.delegate = self;
         textField.inputView = nil;
-        textField.inputAccessoryView = nil;
+        textField.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Title", nil)];
         [cell setDrawsBorder:YES];
@@ -178,13 +178,13 @@
         textField.text = [dateFormatter stringFromDate:self.date];
         textField.clearButtonMode = UITextFieldViewModeNever;
         textField.delegate = self;
+        textField.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];
         [datePicker setDate:self.date];
         [datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
         [datePicker addTarget:self action:@selector(changeDate:) forControlEvents:UIControlEventValueChanged];
         textField.inputView = datePicker;
-        textField.inputAccessoryView = nil;
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Date", nil)];
         [cell setDrawsBorder:YES];
@@ -195,11 +195,7 @@
         textView.text = notes;
         textView.delegate = self;
         textView.inputView = nil;
-        
-        UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        self.autocompleteTagBar.frame = accessoryView.contentView.bounds;
-        [accessoryView.contentView addSubview:self.autocompleteTagBar];
-        textView.inputAccessoryView = accessoryView;
+        textView.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         [cell setDrawsBorder:NO];
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Notes", nil)];
@@ -263,8 +259,6 @@
 #pragma mark - UITextFieldDelegate methods
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [super textFieldDidEndEditing:textField];
-    
     if(textField.tag == 0)
     {
         title = textField.text;

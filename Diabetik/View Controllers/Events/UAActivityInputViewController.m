@@ -164,11 +164,7 @@
         textField.autocorrectionType = UITextAutocorrectionTypeYes;
         textField.autocapitalizationType = UITextAutocapitalizationTypeSentences;
         textField.delegate = self;
-        
-        UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        self.autocompleteBar.frame = accessoryView.contentView.bounds;
-        [accessoryView.contentView addSubview:self.autocompleteBar];
-        textField.inputAccessoryView = accessoryView;
+        textField.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Name", nil)];
     }
@@ -180,6 +176,7 @@
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         textField.delegate = self;
+        textField.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Time", nil)];
     }
@@ -192,6 +189,7 @@
         textField.keyboardType = UIKeyboardTypeAlphabet;
         textField.clearButtonMode = UITextFieldViewModeNever;
         textField.delegate = self;
+        textField.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];
         [datePicker setDatePickerMode:UIDatePickerModeDateAndTime];
@@ -206,11 +204,7 @@
         UANotesTextView *textView = (UANotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
-        
-        UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        self.autocompleteBar.frame = accessoryView.contentView.bounds;
-        [accessoryView.contentView addSubview:self.autocompleteTagBar];
-        textView.inputAccessoryView = accessoryView;
+        textView.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Notes", nil)];
         [cell setDrawsBorder:NO];
@@ -299,7 +293,7 @@
 #pragma mark - UAAutocompleteBarDelegate methods
 - (NSArray *)suggestionsForAutocompleteBar:(UAAutocompleteBar *)theAutocompleteBar
 {
-    if([theAutocompleteBar isEqual:self.autocompleteBar])
+    if(self.activeControlIndexPath.row == 0)
     {
         return [[UAEventController sharedInstance] fetchKey:@"name" forEventsWithFilterType:ActivityFilterType];
     }
@@ -318,13 +312,11 @@
     
     if(textField.tag == 0)
     {
-        [self.autocompleteBar showSuggestionsForInput:[textField text]];
+        [self.keyboardShortcutAccessoryView showAutocompleteSuggestionsForInput:[textField text]];
     }
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [super textFieldDidEndEditing:textField];
-    
     if(textField.tag == 0)
     {
         name = textField.text;
@@ -343,7 +335,7 @@
     else if(textField.tag == 0)
     {
         NSString *fullText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
-        [self.autocompleteBar showSuggestionsForInput:fullText];
+        [self.keyboardShortcutAccessoryView showAutocompleteSuggestionsForInput:fullText];
     }
     
     return YES;
@@ -352,7 +344,7 @@
 {
     if(textField.tag == 0)
     {
-        [self.autocompleteBar showSuggestionsForInput:nil];
+        [self.keyboardShortcutAccessoryView setShowingAutocompleteBar:NO];
     }
     
     return YES;

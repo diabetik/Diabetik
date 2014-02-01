@@ -36,20 +36,14 @@
 #import "UAEventInputTextFieldViewCell.h"
 #import "UAEventInputTextViewViewCell.h"
 
-#import "UAKeyboardAccessoryView.h"
-#import "UAKeyboardBackingView.h"
 #import "UAAutocompleteBar.h"
 
 @class UAInputBaseViewController;
-@interface UAInputParentViewController : UABaseViewController <UAKeyboardBackingDelegate, UIActionSheetDelegate, UIScrollViewDelegate>
+@interface UAInputParentViewController : UABaseViewController <UIActionSheetDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) NSManagedObjectContext *moc;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UAEvent *event;
 @property (nonatomic, strong) NSMutableArray *viewControllers;
-
-@property (nonatomic, strong) UAKeyboardBackingView *keyboardBackingView;
-@property (nonatomic, strong) UAKeyboardBackingViewButton *photoButton;
-@property (nonatomic, strong) UAKeyboardBackingViewButton *locationButton;
 
 // Setup
 - (id)initWithEventType:(NSInteger)eventType;
@@ -71,7 +65,6 @@
 - (void)presentGeotagOptions:(id)sender;
 - (void)presentTweetComposer:(id)sender;
 - (void)presentFacebookComposer:(id)sender;
-- (void)updateKeyboardButtons;
 - (void)updateNavigationBar;
 
 @end

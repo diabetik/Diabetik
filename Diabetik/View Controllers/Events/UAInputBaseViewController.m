@@ -35,6 +35,8 @@
         [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         
         usingSmartInput = NO;
+        self.activeView = NO;
+        self.activeControlIndexPath = nil;
         self.currentPhotoPath = nil;
         self.lat = nil, self.lon = nil;
         self.date = [NSDate date];
@@ -55,13 +57,6 @@
                                                  selector:@selector(keyboardWasHidden:)
                                                      name:UIKeyboardDidHideNotification
                                                    object:nil];
-        
-        self.autocompleteBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
-        self.autocompleteBar.showTagButton = NO;
-        self.autocompleteBar.delegate = self;
-        self.autocompleteTagBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
-        self.autocompleteTagBar.showTagButton = YES;
-        self.autocompleteTagBar.delegate = self;
         
         dummyNotesTextView = [[UANotesTextView alloc] initWithFrame:CGRectZero];
         dummyNotesTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -128,21 +123,14 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    
-    BOOL editMode = self.event ? NO : YES;
-    if(!isFirstLoad)
-    {
-        editMode = NO;
-    }
-    
-    [self didBecomeActive:editMode];
+//    [self didBecomeActive:NO];
 }
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
     
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, kAccessoryViewHeight, 0.0f);
-    self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, kAccessoryViewHeight, 0.0f);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+    self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
 #pragma mark - Logic
@@ -217,34 +205,56 @@
         [alertView show];
     }
 }
+- (void)updateKeyboardShortcutButtons
+{
+    if((self.event && [self.event.lat doubleValue] != 0.0 && [self.event.lon doubleValue] != 0.0) || ([self.lat doubleValue] != 0.0 && [self.lon doubleValue] != 0.0))
+    {
+        //[self.locationButton setTitle:NSLocalizedString(@"View Location", nil) forState:UIControlStateNormal];
+        //[self.keyboardBackingView.locationIndicatorImageView setImage:[UIImage imageNamed:@"KeyboardDismissLocationActive.png"]];
+    }
+    else
+    {
+        //[self.locationButton setTitle:NSLocalizedString(@"Add Location", nil) forState:UIControlStateNormal];
+        //[self.keyboardBackingView.locationIndicatorImageView setImage:[UIImage imageNamed:@"KeyboardDismissLocationInactive.png"]];
+    }
+
+    if(self.currentPhotoPath)
+    {
+        UIImage *photo = [[UAMediaController sharedInstance] imageWithFilename:self.currentPhotoPath];
+        self.keyboardShortcutAccessoryView.photoButton.fullsizeImageView.image = photo;
+    }
+    else
+    {
+        self.keyboardShortcutAccessoryView.photoButton.fullsizeImageView.image = nil;
+    }
+}
 
 #pragma mark - UI
 - (void)didBecomeActive:(BOOL)editing
 {
-    [parentVC updateKeyboardButtons];
-    UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    NSLog(@"Becoming active %@", NSStringFromClass([self class]));
+    [self updateKeyboardShortcutButtons];
     
-    // Select our first input field
-    if(editing)
+    if(!self.activeControlIndexPath)
     {
-        [cell.control becomeFirstResponder];
+        self.activeControlIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     }
-
-    self.previouslyActiveControlIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:self.activeControlIndexPath];
+    [cell.control becomeFirstResponder];
+    
+    self.activeView = YES;
 }
 - (void)willBecomeInactive
 {
+    NSLog(@"Becoming inactive %@",  NSStringFromClass([self class]));
     isFirstLoad = NO;
     [self finishEditing:self];
+    
+    self.activeView = NO;
 }
 - (void)finishEditing:(id)sender
 {
     [self.view endEditing:YES];
-}
-- (void)nextField:(UITextField *)sender
-{
-    UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag+1 inSection:0]];
-    [cell.control becomeFirstResponder];
 }
 - (UIColor *)barTintColor
 {
@@ -278,11 +288,6 @@
     
     [textView reloadInputViews];
 }
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    self.activeControlIndexPath = nil;
-    self.previouslyActiveControlIndexPath = [NSIndexPath indexPathForRow:textView.tag inSection:0];
-}
 - (void)textViewDidChange:(UITextView *)textView
 {
     // Determine whether we're current in tag 'edit mode'
@@ -292,11 +297,11 @@
     {
         NSString *currentTag = [textView.text substringWithRange:range];
         currentTag = [currentTag substringFromIndex:1];
-        [self.autocompleteTagBar showSuggestionsForInput:currentTag];
+        [self.keyboardShortcutAccessoryView showAutocompleteSuggestionsForInput:currentTag];
     }
     else
     {
-        [self.autocompleteTagBar showSuggestionsForInput:nil];
+        [[self keyboardShortcutAccessoryView] setShowingAutocompleteBar:NO];
     }
     
     // Update values
@@ -314,14 +319,7 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:textField.tag inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-    
     [textField reloadInputViews];
-}
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    self.previouslyActiveControlIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
-    self.activeControlIndexPath = nil;
 }
 
 #pragma mark - UAAutocompleteBarDelegate methods
@@ -363,8 +361,10 @@
             //[self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         }
     }
+    
+    [self.keyboardShortcutAccessoryView setShowingAutocompleteBar:NO];
 }
-- (void)addTagCaret
+- (void)presentTagOptions:(id)sender
 {
     UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:self.activeControlIndexPath];
     
@@ -380,11 +380,7 @@
 
 #pragma mark - Metadata management
 - (void)requestCurrentLocation
-{    
-    parentVC.locationButton.titleLabel.alpha = 0.0f;
-    parentVC.locationButton.imageView.alpha = 0.0f;
-    [parentVC.locationButton.activityIndicatorView startAnimating];
-    
+{
     __weak __typeof(self)weakSelf = self;
     [[UALocationController sharedInstance] fetchUserLocationWithSuccess:^(CLLocation *location) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -392,15 +388,9 @@
         strongSelf.lat = [NSNumber numberWithDouble:location.coordinate.latitude];
         strongSelf.lon = [NSNumber numberWithDouble:location.coordinate.longitude];
         
-        [parentVC updateKeyboardButtons];
-        [parentVC.locationButton.activityIndicatorView stopAnimating];
-        parentVC.locationButton.titleLabel.alpha = 1.0f;
-        parentVC.locationButton.imageView.alpha = 1.0f;
+        [strongSelf updateKeyboardShortcutButtons];
         
     } failure:^(NSError *error) {
-        [parentVC.locationButton.activityIndicatorView stopAnimating];
-        parentVC.locationButton.titleLabel.alpha = 1.0f;
-        parentVC.locationButton.imageView.alpha = 1.0f;
     }];
 }
 - (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType
@@ -427,7 +417,7 @@
     self.lon = [NSNumber numberWithDouble:location.coordinate.longitude];
     
     [manager stopUpdatingLocation];
-    [parentVC updateKeyboardButtons];
+    [self updateKeyboardShortcutButtons];
 }
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
@@ -457,7 +447,7 @@
             self.lat = nil, self.lon = nil;
             self.event.lat = nil, self.event.lon = nil;
             
-            [parentVC updateKeyboardButtons];
+            [self updateKeyboardShortcutButtons];
         }
         else if(buttonIndex == 1)
         {
@@ -478,7 +468,7 @@
             {
                 self.event.photoPath = nil, self.currentPhotoPath = nil;
                 
-                [parentVC updateKeyboardButtons];
+                [self updateKeyboardShortcutButtons];
             }
             else if(buttonIndex == 1)
             {
@@ -490,14 +480,6 @@
                     
                     [self presentViewController:viewController animated:YES completion:nil];
                 }
-            }
-            else if(buttonIndex == 2)
-            {
-                [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
-            }
-            else if(buttonIndex == 3)
-            {
-                [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
             }
         }
         else
@@ -513,28 +495,27 @@
         }
     }
 }
+
+#warning FIX THIS!
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
                                                                   presentingController:(UIViewController *)presenting
                                                                       sourceController:(UIViewController *)source {
-    if ([presented isKindOfClass:TGRImageViewController.class]) {
-        
-        UIImageView *imageView = [[(UAInputParentViewController *)self.parentViewController photoButton] fullsizeImageView];
-        
+    if ([presented isKindOfClass:TGRImageViewController.class])
+    {
+        UIImageView *imageView = [[self.keyboardShortcutAccessoryView photoButton] fullsizeImageView];
         return [[TGRImageZoomAnimationController alloc] initWithReferenceImageView:imageView];
     }
     return nil;
 }
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
 {
-    if ([dismissed isKindOfClass:TGRImageViewController.class]) {
-        
-        UIImageView *imageView = [[(UAInputParentViewController *)self.parentViewController photoButton] fullsizeImageView];
-        
+    if ([dismissed isKindOfClass:TGRImageViewController.class])
+    {
+        UIImageView *imageView = [[self.keyboardShortcutAccessoryView photoButton] fullsizeImageView];
         return [[TGRImageZoomAnimationController alloc] initWithReferenceImageView:imageView];
     }
     return nil;
 }
-
 
 #pragma mark - UINavigationControllerDelegate methods
 - (void)navigationController:(UINavigationController *)navigationController
@@ -579,7 +560,7 @@
             
             weakSelf.currentPhotoPath = filename;
             
-            [parentVC updateKeyboardButtons];
+            [self updateKeyboardShortcutButtons];
             
         } failure:^(NSError *error) {
             NSLog(@"Image failed with filename: %@. Error: %@", filename, error);
@@ -587,22 +568,29 @@
     }
 }
 
-#pragma mark - Notifications
-- (void)keyboardWasShown:(NSNotification*)aNotification
+#pragma mark - UIKeyboardShortcutDelegate methods
+- (void)keyboardShortcut:(UAKeyboardShortcutAccessoryView *)shortcutView didPressButton:(UAKeyboardShortcutButton *)button
 {
-    // STUB
-}
-- (void)keyboardWillBeShown:(NSNotification *)aNotification
-{
-    [parentVC.keyboardBackingView setKeyboardState:kKeyboardShown];
-}
-- (void)keyboardWillBeHidden:(NSNotification *)aNotification
-{
-    [parentVC.keyboardBackingView setKeyboardState:kKeyboardHidden];
-}
-- (void)keyboardWasHidden:(NSNotification *)aNotification
-{
-    // STUB
+    if([button isEqual:[shortcutView locationButton]])
+    {
+        [self requestCurrentLocation];
+    }
+    else if([button isEqual:[shortcutView deleteButton]])
+    {
+        [self deleteEvent];
+    }
+    else if([button isEqual:[shortcutView photoButton]])
+    {
+        [(UAInputParentViewController *)self.parentViewController presentMediaOptions:button];
+    }
+    else if([button isEqual:[shortcutView reminderButton]])
+    {
+        [(UAInputParentViewController *)self.parentViewController presentAddReminder:button];
+    }
+    else if([button isEqual:[shortcutView tagButton]])
+    {
+        [self presentTagOptions:button];
+    }
 }
 
 #pragma mark - Accessors
@@ -632,6 +620,16 @@
     {
         self.eventOID = theEvent.objectID;
     }
+}
+- (UAKeyboardShortcutAccessoryView *)keyboardShortcutAccessoryView
+{
+    if(!_keyboardShortcutAccessoryView)
+    {
+        _keyboardShortcutAccessoryView = [[UAKeyboardShortcutAccessoryView alloc] initWithFrame:CGRectZero];
+        _keyboardShortcutAccessoryView.delegate = self;
+    }
+    
+    return _keyboardShortcutAccessoryView;
 }
 
 #pragma mark - UINavigationControllerDelegate methods

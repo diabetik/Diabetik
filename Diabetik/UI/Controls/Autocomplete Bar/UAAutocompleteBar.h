@@ -36,18 +36,16 @@
 @interface UAAutocompleteBar : UIView
 {
     UIScrollView *scrollView;
-    UIButton *tagButton;
     NSMutableArray *buttons;
 }
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, strong) NSArray *suggestions;
-@property (nonatomic, assign) BOOL showTagButton;
 
 // Setup
 - (id)initWithFrame:(CGRect)frame;
 
 // Logic
 - (void)fetchSuggestions;
-- (void)showSuggestionsForInput:(NSString *)input;
+- (BOOL)showSuggestionsForInput:(NSString *)input;
 
 @end

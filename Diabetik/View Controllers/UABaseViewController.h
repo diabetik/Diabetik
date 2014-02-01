@@ -33,7 +33,6 @@
 }
 @property (nonatomic, strong) UIView *activeField;
 @property (nonatomic, strong) NSIndexPath *activeControlIndexPath;
-@property (nonatomic, strong) NSIndexPath *previouslyActiveControlIndexPath;
 
 // Logic
 - (void)reloadViewData:(NSNotification *)note;

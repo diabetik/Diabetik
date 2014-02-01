@@ -24,6 +24,7 @@
 
 #import "UABaseViewController.h"
 #import "UAInputParentViewController.h"
+#import "UAKeyboardShortcutAccessoryView.h"
 #import "UAUI.h"
 
 #import "UAEventController.h"
@@ -42,7 +43,7 @@
 #define kGeoTagAlertViewTag 1
 
 @class UAInputParentViewController;
-@interface UAInputBaseViewController : UABaseTableViewController <CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UAAutocompleteBarDelegate, UIViewControllerTransitioningDelegate>
+@interface UAInputBaseViewController : UABaseTableViewController <CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UAAutocompleteBarDelegate, UAKeyboardShortcutDelegate, UIViewControllerTransitioningDelegate>
 {
 @protected
     UAInputParentViewController *parentVC;
@@ -56,15 +57,14 @@
 @property (nonatomic, strong) UAEvent *event;
 @property (nonatomic, strong) NSManagedObjectID *eventOID;
 @property (nonatomic, strong) CLLocationManager *locationManager;
-@property (nonatomic, strong) UAAutocompleteBar *autocompleteBar;
-@property (nonatomic, strong) UAAutocompleteBar *autocompleteTagBar;
+@property (nonatomic, strong) UAKeyboardShortcutAccessoryView *keyboardShortcutAccessoryView;
 
 @property (nonatomic, strong) NSString *currentPhotoPath;
 @property (nonatomic, strong) NSNumber *lat;
 @property (nonatomic, strong) NSNumber *lon;
 @property (nonatomic, strong) NSDate *date;
 
-@property (nonatomic, strong) UIView *previouslyActiveField;
+@property (nonatomic, assign) BOOL activeView;
 
 // Setup
 - (id)init;
@@ -76,6 +76,7 @@
 - (void)discardChanges;
 - (NSError *)validationError;
 - (UAEvent *)saveEvent:(NSError **)error;
+- (void)updateKeyboardShortcutButtons;
 
 // UI
 - (void)triggerDeleteEvent:(id)sender;

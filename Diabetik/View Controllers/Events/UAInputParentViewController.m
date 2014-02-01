@@ -46,11 +46,11 @@
     BOOL isBeingPopped;
 }
 
+// Logic
+- (void)layoutViewControllers;
+
 // Helpers
 - (UAInputBaseViewController *)targetViewController;
-- (UIColor *)colorLerpFrom:(UIColor *)start
-                        to:(UIColor *)end
-              withDuration:(float)t;
 
 @end
 
@@ -89,7 +89,6 @@
         {
             vc = [[UANoteInputViewController alloc] init];
         }
-        
         self.viewControllers = [NSMutableArray arrayWithObject:vc];
         
         [self performSetup];
@@ -107,26 +106,28 @@
         isAnimatingAddEntry = NO;
         isBeingPopped = NO;
         
+        UAInputBaseViewController *vc = nil;
         if([aEvent isKindOfClass:[UAMedicine class]])
         {
-            self.viewControllers = [NSMutableArray arrayWithObject:[[UAMedicineInputViewController alloc] initWithEvent:aEvent]];
+            vc = [[UAMedicineInputViewController alloc] initWithEvent:aEvent];
         }
         else if([aEvent isKindOfClass:[UAReading class]])
         {
-            self.viewControllers = [NSMutableArray arrayWithObject:[[UABGInputViewController alloc] initWithEvent:aEvent]];
-        }
-        else if([aEvent isKindOfClass:[UAActivity class]])
-        {
-            self.viewControllers = [NSMutableArray arrayWithObject:[[UAActivityInputViewController alloc] initWithEvent:aEvent]];
+            vc = [[UABGInputViewController alloc] initWithEvent:aEvent];
         }
         else if([aEvent isKindOfClass:[UAMeal class]])
         {
-            self.viewControllers = [NSMutableArray arrayWithObject:[[UAMealInputViewController alloc] initWithEvent:aEvent]];
+            vc = [[UAMealInputViewController alloc] initWithEvent:aEvent];
+        }
+        else if([aEvent isKindOfClass:[UAActivity class]])
+        {
+            vc = [[UAActivityInputViewController alloc] initWithEvent:aEvent];
         }
         else if([aEvent isKindOfClass:[UANote class]])
         {
-            self.viewControllers = [NSMutableArray arrayWithObject:[[UANoteInputViewController alloc] initWithEvent:aEvent]];
+            vc = [[UANoteInputViewController alloc] initWithEvent:aEvent];
         }
+        self.viewControllers = [NSMutableArray arrayWithObject:vc];
         
         [self performSetup];
     }
@@ -177,93 +178,18 @@
     
     // Setup our table view
     self.view.backgroundColor = [UIColor whiteColor];
-    if(!self.keyboardBackingView)
-    {
-        self.locationButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero
-                                                                       textColor:[UIColor colorWithRed:254.0f/255.0f green:196.0f/255.0f blue:89.0f/255.0f alpha:1.0f]
-                                                                  highlightColor:[UIColor colorWithRed:254.0f/255.0f green:196.0f/255.0f blue:89.0f/255.0f alpha:1.0f]];
-        [self.locationButton setImage:[UIImage imageNamed:@"AddEntryKeyboardLocation"] forState:UIControlStateNormal];
-        [self.locationButton setImage:[UIImage imageNamed:@"AddEntryKeyboardLocationSelected"] forState:UIControlStateHighlighted];
-        [self.locationButton addTarget:self action:@selector(presentGeotagOptions:) forControlEvents:UIControlEventTouchUpInside];
-        
-        self.photoButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero
-                                                                    textColor:[UIColor colorWithRed:186.0f/255.0f green:125.0f/255.0f blue:255.0f/255.0f alpha:1.0f]
-                                                               highlightColor:[UIColor colorWithRed:186.0f/255.0f green:125.0f/255.0f blue:255.0f/255.0f alpha:1.0f]];
-        [self.photoButton setImage:[UIImage imageNamed:@"AddEntryKeyboardPhoto"] forState:UIControlStateNormal];
-        [self.photoButton setImage:[UIImage imageNamed:@"AddEntryKeyboardPhotoSelected"] forState:UIControlStateHighlighted];
-        [self.photoButton setTitle:NSLocalizedString(@"Add Photo", nil) forState:UIControlStateNormal];
-        [self.photoButton addTarget:self action:@selector(presentMediaOptions:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UAKeyboardBackingViewButton *reminderButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero
-                                                                                               textColor:[UIColor colorWithRed:103.0f/255.0f green:230.0f/255.0f blue:156.0f/255.0f alpha:1.0f]
-                                                                                          highlightColor:[UIColor colorWithRed:103.0f/255.0f green:230.0f/255.0f blue:156.0f/255.0f alpha:1.0f]];
-        [reminderButton setImage:[UIImage imageNamed:@"AddEntryKeyboardReminders"] forState:UIControlStateNormal];
-        [reminderButton setImage:[UIImage imageNamed:@"AddEntryKeyboardReminderSelected"] forState:UIControlStateHighlighted];
-        [reminderButton setTitle:NSLocalizedString(@"Add Reminder", nil) forState:UIControlStateNormal];
-        [reminderButton addTarget:self action:@selector(presentAddReminder:) forControlEvents:UIControlEventTouchUpInside];
-        
-        UAKeyboardBackingViewButton *tweetButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero
-                                                                                            textColor:[UIColor colorWithRed:41.0f/255.0f green:183.0f/255.0f blue:239.0f/255.0f alpha:1.0f]
-                                                                                       highlightColor:[UIColor colorWithRed:41.0f/255.0f green:183.0f/255.0f blue:239.0f/255.0f alpha:1.0f]];
-        [tweetButton setImage:[UIImage imageNamed:@"AddEntryKeyboardTweet"] forState:UIControlStateNormal];
-        [tweetButton setImage:[UIImage imageNamed:@"AddEntryKeyboardTweetSelected"] forState:UIControlStateHighlighted];
-        [tweetButton setImage:[UIImage imageNamed:@"AddEntryKeyboardTweetDisabled"] forState:UIControlStateDisabled];
-        [tweetButton setTitle:NSLocalizedString(@"Tweet", @"A button allowing users to post an entry on Twitter") forState:UIControlStateNormal];
-        [tweetButton addTarget:self action:@selector(presentTweetComposer:) forControlEvents:UIControlEventTouchUpInside];
-        
-        BOOL enableTwitterButton = [SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter];
-        [tweetButton setEnabled:enableTwitterButton];        
-        
-        UAKeyboardBackingViewButton *likeButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero
-                                                                                           textColor:[UIColor colorWithRed:99.0f/255.0f green:122.0f/255.0f blue:170.0f/255.0f alpha:1.0f]
-                                                                                      highlightColor:[UIColor colorWithRed:99.0f/255.0f green:122.0f/255.0f blue:170.0f/255.0f alpha:1.0f]];
-        [likeButton setImage:[UIImage imageNamed:@"AddEntryKeyboardLike"] forState:UIControlStateNormal];
-        [likeButton setImage:[UIImage imageNamed:@"AddEntryKeyboardLikeSelected"] forState:UIControlStateHighlighted];
-        [likeButton setImage:[UIImage imageNamed:@"AddEntryKeyboardLikeDisabled"] forState:UIControlStateDisabled];
-        [likeButton setTitle:NSLocalizedString(@"Like", @"A button allowing users to 'Like' an entry on Facebook") forState:UIControlStateNormal];
-        [likeButton addTarget:self action:@selector(presentFacebookComposer:) forControlEvents:UIControlEventTouchUpInside];
-        
-        BOOL enableFacebookButton = [SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook];
-        [likeButton setEnabled:enableFacebookButton];
-        
-        UAKeyboardBackingViewButton *deleteButton = [[UAKeyboardBackingViewButton alloc] initWithFrame:CGRectZero
-                                                                                             textColor:[UIColor colorWithRed:254.0f/255.0f green:79.0f/255.0f blue:96.0f/255.0f alpha:1.0f]
-                                                                                        highlightColor:[UIColor colorWithRed:254.0f/255.0f green:79.0f/255.0f blue:96.0f/255.0f alpha:1.0f]];
-        [deleteButton setImage:[UIImage imageNamed:@"AddEntryKeyboardTrash"] forState:UIControlStateNormal];
-        [deleteButton setImage:[UIImage imageNamed:@"AddEntryKeyboardTrashSelected"] forState:UIControlStateHighlighted];
-        [deleteButton setTitle:NSLocalizedString(@"Delete Entry", nil) forState:UIControlStateNormal];
-        [deleteButton addTarget:self action:@selector(deleteEvent:) forControlEvents:UIControlEventTouchUpInside];
-        if(!self.event)
-        {
-            //[deleteButton setEnabled:NO];
-        }
-        
-        CGSize keyboardSize = [[UAKeyboardController sharedInstance] keyboardSize];
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-        {
-            keyboardSize = CGSizeMake(self.view.bounds.size.width, 200);
-        }
-        
-        NSArray *buttons = @[self.locationButton, self.photoButton, reminderButton, tweetButton, likeButton, deleteButton];
-        self.keyboardBackingView = [[UAKeyboardBackingView alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height - keyboardSize.height, keyboardSize.width, keyboardSize.height) andButtons:buttons];
-        self.keyboardBackingView.delegate = self;
-        self.keyboardBackingView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-        [self.view addSubview:self.keyboardBackingView];
-        
-        [self updateKeyboardButtons];
-    }
     
     // Setup our scroll view
     if(!self.scrollView)
     {
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.keyboardBackingView.bounds.size.height + kAccessoryViewHeight - self.topLayoutGuide.length)];
+        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length)];
         self.scrollView.delegate = self;
-        //self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         self.scrollView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
         self.scrollView.alwaysBounceHorizontal = YES;
         self.scrollView.directionalLockEnabled = YES;
         self.scrollView.backgroundColor = [UIColor clearColor];
-        [self.view insertSubview:self.scrollView belowSubview:self.keyboardBackingView];
+        [self.view addSubview:self.scrollView];
         
         for(UAInputBaseViewController *vc in self.viewControllers)
         {
@@ -272,6 +198,8 @@
         self.scrollView.pagingEnabled = YES;
         self.scrollView.showsHorizontalScrollIndicator = NO;
         self.scrollView.showsVerticalScrollIndicator = NO;
+        
+        [self activateTargetViewController];
     }
     
     if(!addEntryBubbleImageView)
@@ -293,7 +221,6 @@
     [self.navigationItem setRightBarButtonItem:saveBarButtonItem animated:NO];
     
     [self updateNavigationBar];
-    [self updateKeyboardButtons];
     
     if(!self.event && ![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenAddDragUIHint])
     {
@@ -313,6 +240,7 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenAddDragUIHint];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+    
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -347,7 +275,7 @@
 {
     [super viewWillLayoutSubviews];
     
-    self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.keyboardBackingView.bounds.size.height + kAccessoryViewHeight - self.topLayoutGuide.length);
+    self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
 }
 
 #pragma mark - Logic
@@ -517,48 +445,53 @@
     [vc removeFromParentViewController];
     [self.viewControllers removeObject:vc];
     
-    // Re-layout subviews
-    CGFloat x = 0.0f;
-    for(UAInputBaseViewController *vc in self.viewControllers)
-    {
-        vc.view.frame = CGRectMake(x, 0.0f, vc.view.frame.size.width, vc.view.frame.size.height);
-        x += vc.view.frame.size.width;
-    }
-    
-    // Adjust our viewport
-    CGFloat contentWidth = self.scrollView.contentSize.width > 0 ? self.scrollView.contentSize.width-kVCHorizontalPadding : 0.0f;
-    self.scrollView.contentSize = CGSizeMake((contentWidth - vc.view.frame.size.width) + kVCHorizontalPadding, self.scrollView.bounds.size.height);
-    if(self.scrollView.contentOffset.x >= self.scrollView.contentSize.width - vc.view.frame.size.width - kVCHorizontalPadding)
-    {
-       [self.scrollView setContentOffset:CGPointMake((self.viewControllers.count-1)*vc.view.frame.size.width, 0.0f) animated:NO];
-    }
-    
-    // Update UI
+    [self layoutViewControllers];
     [self activateTargetViewController];
+}
+- (void)layoutViewControllers
+{
+    if([self.viewControllers count])
+    {
+        UIViewController *vc = self.viewControllers[0];
+        
+        // Re-layout subviews
+        CGFloat x = 0.0f;
+        for(UAInputBaseViewController *vc in self.viewControllers)
+        {
+            vc.view.frame = CGRectMake(x, 0.0f, vc.view.frame.size.width, vc.view.frame.size.height);
+            x += vc.view.frame.size.width;
+        }
+        
+        // Adjust our viewport
+        CGFloat contentWidth = self.scrollView.contentSize.width > 0 ? self.scrollView.contentSize.width-kVCHorizontalPadding : 0.0f;
+        self.scrollView.contentSize = CGSizeMake((contentWidth - vc.view.frame.size.width) + kVCHorizontalPadding, self.scrollView.bounds.size.height);
+        if(self.scrollView.contentOffset.x >= self.scrollView.contentSize.width - vc.view.frame.size.width - kVCHorizontalPadding)
+        {
+            [self.scrollView setContentOffset:CGPointMake((self.viewControllers.count-1)*vc.view.frame.size.width, 0.0f) animated:NO];
+        }
+    }
 }
 - (void)activateTargetViewController
 {
-    UAInputBaseViewController *activeVC = nil;
     UAInputBaseViewController *targetVC = [self targetViewController];
     
     BOOL currentlyEditing = NO;
     for(UAInputBaseViewController *vc in self.viewControllers)
     {
-        if(vc.activeControlIndexPath != nil)
+        if([vc activeView])
         {
             currentlyEditing = YES;
-            activeVC = vc;
+           
+            [vc willBecomeInactive];
         }
-        
-        if(![vc isEqual:targetVC]) [vc willBecomeInactive];
     }
-    
-    if(![activeVC isEqual:targetVC]) [targetVC didBecomeActive:currentlyEditing];
+    [targetVC didBecomeActive:currentlyEditing];
+    NSLog(@"Target: %@", targetVC);
         
     self.navigationController.navigationBar.barTintColor = [targetVC barTintColor];
     
     [self updateNavigationBar];
-    [self updateKeyboardButtons];
+    [targetVC updateKeyboardShortcutButtons];
 }
 - (void)handleBack:(id)sender
 {
@@ -593,17 +526,14 @@
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
     UAInputBaseViewController *targetVC = [self targetViewController];
-
-    [self.view endEditing:YES];
-    
     UIActionSheet *actionSheet = nil;
     if(targetVC.currentPhotoPath)
     {
         actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                   delegate:targetVC
                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
-                                    destructiveButtonTitle:NSLocalizedString(@"Delete photo", nil)
-                                         otherButtonTitles:NSLocalizedString(@"View photo", nil), NSLocalizedString(@"Take new photo", nil), NSLocalizedString(@"Choose new photo", nil), nil];
+                                    destructiveButtonTitle:NSLocalizedString(@"Remove photo", nil)
+                                         otherButtonTitles:NSLocalizedString(@"View photo", nil), nil];
         actionSheet.tag = kExistingImageActionSheetTag;
     }
     else
@@ -615,6 +545,7 @@
                                          otherButtonTitles:NSLocalizedString(@"Take photo", nil), NSLocalizedString(@"Choose photo", nil), nil];
         actionSheet.tag = kImageActionSheetTag;
     }
+    
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     [actionSheet showInView:self.view];
 }
@@ -718,36 +649,6 @@
     }];
     [self presentViewController:facebookComposerSheet animated:YES completion:nil];
 }
-- (void)updateKeyboardButtons
-{
-    UAInputBaseViewController *targetVC = [self targetViewController];
-    if((targetVC.event && [targetVC.event.lat doubleValue] != 0.0 && [targetVC.event.lon doubleValue] != 0.0) || ([targetVC.lat doubleValue] != 0.0 && [targetVC.lon doubleValue] != 0.0))
-    {
-        [self.locationButton setTitle:NSLocalizedString(@"View Location", nil) forState:UIControlStateNormal];
-        [self.keyboardBackingView.locationIndicatorImageView setImage:[UIImage imageNamed:@"KeyboardDismissLocationActive.png"]];
-    }
-    else
-    {
-        [self.locationButton setTitle:NSLocalizedString(@"Add Location", nil) forState:UIControlStateNormal];
-        [self.keyboardBackingView.locationIndicatorImageView setImage:[UIImage imageNamed:@"KeyboardDismissLocationInactive.png"]];
-    }
-    
-    if(targetVC.currentPhotoPath)
-    {
-        [self.photoButton setTitle:NSLocalizedString(@"View Photo", nil) forState:UIControlStateNormal];
-        [self.keyboardBackingView.photoIndicatorImageView setImage:[UIImage imageNamed:@"KeyboardDismissPhotoActive.png"]];
-        
-        UIImage *photo = [[UAMediaController sharedInstance] imageWithFilename:targetVC.currentPhotoPath];
-        self.photoButton.fullsizeImageView.image = photo;
-    }
-    else
-    {
-        [self.photoButton setTitle:NSLocalizedString(@"Add Photo", nil) forState:UIControlStateNormal];
-        [self.keyboardBackingView.photoIndicatorImageView setImage:[UIImage imageNamed:@"KeyboardDismissPhotoInactive.png"]];
-        
-        self.photoButton.fullsizeImageView.image = nil;
-    }
-}
 - (void)updateNavigationBar
 {
     UAInputBaseViewController *targetVC = [self targetViewController];
@@ -773,25 +674,6 @@
         self.navigationItem.title = targetVC.title;
         self.navigationItem.titleView = nil;
     }
-}
-
-#pragma mark - UAKeyboardBackingDelegate
-- (void)presentKeyboard
-{
-    UAInputBaseViewController *targetVC = [self targetViewController];
-    
-    UAEventInputViewCell *cell = (UAEventInputViewCell *)[targetVC.tableView cellForRowAtIndexPath:targetVC.previouslyActiveControlIndexPath];
-    if(!cell)
-    {
-        [targetVC.tableView scrollToRowAtIndexPath:targetVC.previouslyActiveControlIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-    }
-    cell = (UAEventInputViewCell *)[targetVC.tableView cellForRowAtIndexPath:targetVC.previouslyActiveControlIndexPath];
-    
-    [cell.control becomeFirstResponder];
-}
-- (void)dismissKeyboard
-{
-    [self.view endEditing:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -948,26 +830,6 @@
     }
     
     return nil;
-}
-- (UIColor *)colorLerpFrom:(UIColor *)start
-                        to:(UIColor *)end
-              withDuration:(float)t
-{
-    if(t < 0.0f) t = 0.0f;
-    if(t > 1.0f) t = 1.0f;
-    
-    const CGFloat *startComponent = CGColorGetComponents(start.CGColor);
-    const CGFloat *endComponent = CGColorGetComponents(end.CGColor);
-    
-    float startAlpha = CGColorGetAlpha(start.CGColor);
-    float endAlpha = CGColorGetAlpha(end.CGColor);
-    
-    float r = startComponent[0] + (endComponent[0] - startComponent[0]) * t;
-    float g = startComponent[1] + (endComponent[1] - startComponent[1]) * t;
-    float b = startComponent[2] + (endComponent[2] - startComponent[2]) * t;
-    float a = startAlpha + (endAlpha - startAlpha) * t;
-    
-    return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
 
 #pragma mark - Autorotation

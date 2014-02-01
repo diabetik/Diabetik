@@ -27,7 +27,6 @@
 @end
 
 @implementation UAAutocompleteBar
-@synthesize showTagButton = _showTagButton;
 
 #pragma mark - Setup
 - (id)initWithFrame:(CGRect)frame
@@ -47,30 +46,16 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
         self.suggestions = nil;
         
-        tagButton = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(10.0f, 12.0f, 40.0f, 27.0f)];
-        [tagButton setImage:[UIImage imageNamed:@"AccessoryViewIconTag.png"] forState:UIControlStateNormal];
-        [tagButton addTarget:self action:@selector(addTag:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:tagButton];
-        
         buttons = [NSMutableArray array];
     }
     return self;
 }
 
 #pragma mark - Logic
-- (void)showSuggestionsForInput:(NSString *)input
+- (BOOL)showSuggestionsForInput:(NSString *)input
 {
-    if(input || !self.showTagButton)
-    {
-        tagButton.hidden = YES;
-    }
-    else
-    {
-        tagButton.hidden = NO;
-    }
-    
     // Lazy-load from our datasource if necessary
-    if(input && !self.suggestions)
+    //if(input && !self.suggestions)
     {
         [self fetchSuggestions];
     }
@@ -86,9 +71,10 @@
     }
     
     // Don't bother re-populating our options if we're not searching for anything
-    if(!input) return;
+    if(!input) return NO;
     
     // Generate new suggestions
+    NSInteger totalSuggestions = 0;
     if(input && [input length])
     {
         NSString *lowercaseInput = [input lowercaseString];
@@ -110,22 +96,18 @@
                 [buttons addObject:button];
                 
                 x += button.frame.size.width + margin;
+                totalSuggestions ++;
             }
         }
         
         scrollView.contentOffset = CGPointMake(0.0f, 0.0f);
         scrollView.contentSize = CGSizeMake(x, 45.0f);
     }
+    return totalSuggestions ? YES : NO;
 }
 - (void)fetchSuggestions
 {
     self.suggestions = [self.delegate suggestionsForAutocompleteBar:self];
-}
-- (void)setShowTagButton:(BOOL)state
-{
-    _showTagButton = state;
-    
-    [tagButton setHidden:!_showTagButton];
 }
 - (void)addTag:(UIButton *)sender
 {

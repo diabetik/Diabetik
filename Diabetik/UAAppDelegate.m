@@ -269,9 +269,9 @@
 }
 - (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
 {
-    return NO;
+    return (orientation == UIInterfaceOrientationMaskPortrait);
 }
- 
+
 #pragma mark - Location services
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {

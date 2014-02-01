@@ -63,11 +63,9 @@
         triggerForAll = YES;
         
         nameAutocompleteBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
-        nameAutocompleteBar.showTagButton = NO;
         nameAutocompleteBar.delegate = self;
         
         tagAutocompleteBar = [[UAAutocompleteBar alloc] initWithFrame:CGRectMake(0, 0, 235, 44)];
-        tagAutocompleteBar.showTagButton = NO;
         tagAutocompleteBar.delegate = self;
     }
     return self;

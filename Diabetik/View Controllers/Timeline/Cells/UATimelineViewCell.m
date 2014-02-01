@@ -122,7 +122,8 @@
                                                                attributes:@{NSFontAttributeName:self.notesTextView.font}
                                                                   context:nil];
         
-        self.notesTextView.frame = CGRectMake(ceilf(self.notesTextView.frame.origin.x), ceilf(self.notesTextView.frame.origin.y), ceilf(self.notesTextView.frame.size.width), ceilf(notesFrame.size.height));
+        CGFloat width = notesFrame.size.width < self.bounds.size.width-96.0f-kHorizontalMargin ? notesFrame.size.width : self.bounds.size.width-96.0f-kHorizontalMargin;
+        self.notesTextView.frame = CGRectMake(ceilf(self.notesTextView.frame.origin.x), ceilf(self.notesTextView.frame.origin.y), ceilf(width), ceilf(notesFrame.size.height));
     }
     
     if(cellPosition == UACellBackgroundViewPositionBottom)

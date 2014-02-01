@@ -203,6 +203,7 @@
         textField.text = value;
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.delegate = self;
+        textField.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Value", nil)];
     }
@@ -215,6 +216,7 @@
         textField.keyboardType = UIKeyboardTypeAlphabet;
         textField.clearButtonMode = UITextFieldViewModeNever;
         textField.delegate = self;
+        textField.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.bounds.size.height+44, 320, 216)];
         [datePicker setDate:self.date];
@@ -229,12 +231,14 @@
         UANotesTextView *textView = (UANotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
+        textView.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
+        /*
         UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
         self.autocompleteTagBar.frame = accessoryView.contentView.bounds;
         [accessoryView.contentView addSubview:self.autocompleteTagBar];
         textView.inputAccessoryView = accessoryView;
-        
+        */
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Notes", nil)];
         [cell setDrawsBorder:NO];
     }
@@ -322,7 +326,7 @@
 #pragma mark - UAAutocompleteBarDelegate methods
 - (NSArray *)suggestionsForAutocompleteBar:(UAAutocompleteBar *)theAutocompleteBar
 {
-    if([theAutocompleteBar isEqual:self.autocompleteBar])
+    if(self.activeControlIndexPath.row == 0)
     {
         return [[UAEventController sharedInstance] fetchKey:@"name" forEventsWithFilterType:ReadingFilterType];
     }
@@ -337,8 +341,6 @@
 #pragma mark - UITextFieldDelegate methods
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-    [super textFieldDidEndEditing:textField];
-    
     if(textField.tag == 0)
     {
         value = textField.text;

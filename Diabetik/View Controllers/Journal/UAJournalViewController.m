@@ -167,6 +167,7 @@
     [super viewWillLayoutSubviews];
     
     CGFloat buttonWidth = floorf(self.view.frame.size.width/3.0f);
+    NSLog(@"%f", buttonWidth);
     todayButton.frame = CGRectMake(0.0f, 0.0f, buttonWidth, 119.0f);
     sevenDayButton.frame = CGRectMake(buttonWidth, 0.0f, buttonWidth, 119.0f);
     fourteenDayButton.frame = CGRectMake(buttonWidth*2.0f, 0.0f, buttonWidth, 119.0f);
