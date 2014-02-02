@@ -33,8 +33,6 @@
 #import "UAEventController.h"
 #import "UASyncController.h"
 
-#import "UAKeyboardController.h"
-
 @implementation UAAppDelegate
 
 #pragma mark - Setup
@@ -128,7 +126,6 @@
             // Call various singletons
             [UASyncController sharedInstance];
             [UALocationController sharedInstance];
-            [[UAKeyboardController sharedInstance] fetchKeyboardSize];
         });
     });
     

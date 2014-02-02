@@ -123,7 +123,6 @@
 		533F34E41773266600AD89E2 /* UABaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32E81773266600AD89E2 /* UABaseViewController.m */; };
 		533F352417736C0600AD89E2 /* UABackupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351417736C0600AD89E2 /* UABackupController.m */; };
 		533F352517736C0600AD89E2 /* UAEventController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351617736C0600AD89E2 /* UAEventController.m */; };
-		533F352617736C0600AD89E2 /* UAKeyboardController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351817736C0600AD89E2 /* UAKeyboardController.m */; };
 		533F352717736C0600AD89E2 /* UALocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351A17736C0600AD89E2 /* UALocationController.m */; };
 		533F352817736C0600AD89E2 /* UAMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351C17736C0600AD89E2 /* UAMediaController.m */; };
 		533F352917736C0600AD89E2 /* UAReminderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351E17736C0600AD89E2 /* UAReminderController.m */; };
@@ -442,8 +441,6 @@
 		533F351417736C0600AD89E2 /* UABackupController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UABackupController.m; sourceTree = "<group>"; };
 		533F351517736C0600AD89E2 /* UAEventController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventController.h; sourceTree = "<group>"; };
 		533F351617736C0600AD89E2 /* UAEventController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventController.m; sourceTree = "<group>"; };
-		533F351717736C0600AD89E2 /* UAKeyboardController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAKeyboardController.h; sourceTree = "<group>"; };
-		533F351817736C0600AD89E2 /* UAKeyboardController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAKeyboardController.m; sourceTree = "<group>"; };
 		533F351917736C0600AD89E2 /* UALocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UALocationController.h; sourceTree = "<group>"; };
 		533F351A17736C0600AD89E2 /* UALocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UALocationController.m; sourceTree = "<group>"; };
 		533F351B17736C0600AD89E2 /* UAMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMediaController.h; sourceTree = "<group>"; };
@@ -1250,8 +1247,6 @@
 				533F351417736C0600AD89E2 /* UABackupController.m */,
 				533F351517736C0600AD89E2 /* UAEventController.h */,
 				533F351617736C0600AD89E2 /* UAEventController.m */,
-				533F351717736C0600AD89E2 /* UAKeyboardController.h */,
-				533F351817736C0600AD89E2 /* UAKeyboardController.m */,
 				533F351917736C0600AD89E2 /* UALocationController.h */,
 				533F351A17736C0600AD89E2 /* UALocationController.m */,
 				533F351B17736C0600AD89E2 /* UAMediaController.h */,
@@ -1941,7 +1936,6 @@
 				533F352417736C0600AD89E2 /* UABackupController.m in Sources */,
 				533F352517736C0600AD89E2 /* UAEventController.m in Sources */,
 				53AE05CB18947AC70078B408 /* TPKeyboardAvoidingScrollView.m in Sources */,
-				533F352617736C0600AD89E2 /* UAKeyboardController.m in Sources */,
 				533F352717736C0600AD89E2 /* UALocationController.m in Sources */,
 				53AE05CA18947AC70078B408 /* TPKeyboardAvoidingCollectionView.m in Sources */,
 				533F352817736C0600AD89E2 /* UAMediaController.m in Sources */,

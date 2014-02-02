@@ -84,6 +84,7 @@
 {
     [super viewWillLayoutSubviews];
     
+    webView.frame = self.view.bounds;
     webView.scrollView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
     webView.scrollView.scrollIndicatorInsets = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
 }

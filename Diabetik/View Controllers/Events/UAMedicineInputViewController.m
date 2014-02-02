@@ -379,9 +379,9 @@
 }
 
 #pragma mark - UI
-- (UIColor *)barTintColor
+- (UIImage *)navigationBarBackgroundImage
 {
-    return [UIColor colorWithRed:192.0f/255.0f green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
+    return [UIImage imageNamed:@"medicineNavBarBG"];
 }
 
 #pragma mark - Social helpers

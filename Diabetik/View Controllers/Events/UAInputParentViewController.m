@@ -19,7 +19,6 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "UAKeyboardController.h"
 #import "UAInputParentViewController.h"
 #import "UAEventMapViewController.h"
 #import "UAReminderController.h"
@@ -170,10 +169,6 @@
 {
     [super viewWillAppear:animated];
     
-    self.navigationController.navigationBar.translucent = NO;
-    self.navigationController.navigationBar.barTintColor = [[self targetViewController] barTintColor];
-    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]};
-    
     [self setNeedsStatusBarAppearanceUpdate];
     
     // Setup our table view
@@ -240,22 +235,14 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenAddDragUIHint];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    UIColor *defaultBarTintColor = kDefaultBarTintColor;
-    UIColor *defaultTintColor = kDefaultTintColor;
-    self.navigationController.navigationBar.barTintColor = defaultBarTintColor;
-    self.navigationController.navigationBar.tintColor = defaultTintColor;
-    
-    if(isBeingPopped)
-    {
-        UIColor *defaultBarTintColor = kDefaultBarTintColor;
-        [self.navigationController.navigationBar setBarTintColor:defaultBarTintColor];
-    }
+    // Remove any customisation on the navigation bar
+    [self.navigationController.navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:nil];
 }
 - (void)viewDidDisappear:(BOOL)animated
 {
@@ -487,8 +474,6 @@
     }
     [targetVC didBecomeActive:currentlyEditing];
     NSLog(@"Target: %@", targetVC);
-        
-    self.navigationController.navigationBar.barTintColor = [targetVC barTintColor];
     
     [self updateNavigationBar];
     [targetVC updateKeyboardShortcutButtons];
@@ -652,6 +637,10 @@
 - (void)updateNavigationBar
 {
     UAInputBaseViewController *targetVC = [self targetViewController];
+    [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController.navigationBar setBackgroundImage:[[self targetViewController] navigationBarBackgroundImage] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setShadowImage:[UIImage imageNamed:@"trans"]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]}];
     
     if([self.viewControllers count] > 1)
     {

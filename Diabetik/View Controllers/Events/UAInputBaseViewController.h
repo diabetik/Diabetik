@@ -80,7 +80,7 @@
 
 // UI
 - (void)triggerDeleteEvent:(id)sender;
-- (UIColor *)barTintColor;
+- (UIImage *)navigationBarBackgroundImage;
 
 // Metadata
 - (void)requestCurrentLocation;

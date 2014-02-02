@@ -204,9 +204,9 @@
 }
 
 #pragma mark - UI
-- (UIColor *)barTintColor
+- (UIImage *)navigationBarBackgroundImage
 {
-    return [UIColor colorWithRed:105.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
+    return [UIImage imageNamed:@"noteNavBarBG"];
 }
 
 #pragma mark - UITableViewDatasource methods

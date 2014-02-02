@@ -152,7 +152,7 @@
     [self.tableView addGestureRecognizer:tapGesture];
     
     // Setup our nav bar buttons
-    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
+    UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
     [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
     
     // Setup our search bar
@@ -162,12 +162,13 @@
     self.searchDisplayController.searchResultsDelegate = self;
     self.searchDisplayController.searchResultsDataSource = self;
     self.searchDisplayController.delegate = self;
-    self.tableView.tableHeaderView = searchBar;
-    self.tableView.backgroundColor = self.view.backgroundColor;
-    
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.searchDisplayController.displaysSearchBarInNavigationBar = NO;
     self.searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
     self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+
+    self.tableView.tableHeaderView = searchBar;
+    self.tableView.backgroundColor = self.view.backgroundColor;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // Footer view
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)

@@ -256,9 +256,9 @@
 {
     [self.view endEditing:YES];
 }
-- (UIColor *)barTintColor
+- (UIImage *)navigationBarBackgroundImage
 {
-    return [UIColor greenColor];
+    return nil;
 }
 
 #pragma mark - Social helpers

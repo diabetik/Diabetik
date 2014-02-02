@@ -19,7 +19,6 @@
 //
 
 #import "UABaseViewController.h"
-#import "UAKeyboardController.h"
 
 #import "TPKeyboardAvoidingTableView.h"
 
@@ -299,8 +298,8 @@
 {
     [super viewWillLayoutSubviews];
 
-    //self.tableView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
-    //self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
+    self.tableView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
 }
 
 #pragma mark - Logic

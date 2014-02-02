@@ -94,9 +94,23 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];
 }
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidDisappear:(BOOL)animated
 {
-    [super viewWillAppear:animated];
+    [super viewDidDisappear:animated];
+    
+    if ([self.addEntryPopoverController isPopoverVisible])
+    {
+        [self.addEntryPopoverController dismissPopoverAnimated:YES];
+    }
+    self.addEntryPopoverController = nil;
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView registerClass:[UAJournalMonthViewCell class] forCellReuseIdentifier:@"UAJournalMonthViewCell"];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UAJournalSpacerViewCell"];
     
     // Setup our table header view
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 120.0f)];
@@ -131,30 +145,7 @@
     [headerView addSubview:fourteenDayButton];
     
     self.tableView.tableHeaderView = headerView;
-    
-    // Additional setup
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-    
-    [self refreshView];
-}
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    if ([self.addEntryPopoverController isPopoverVisible])
-    {
-        [self.addEntryPopoverController dismissPopoverAnimated:YES];
-    }
-    self.addEntryPopoverController = nil;
-}
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView registerClass:[UAJournalMonthViewCell class] forCellReuseIdentifier:@"UAJournalMonthViewCell"];
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"UAJournalSpacerViewCell"];
-    
+
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenStarterTooltip])
     {
         [self showTips];
@@ -167,7 +158,6 @@
     [super viewWillLayoutSubviews];
     
     CGFloat buttonWidth = floorf(self.view.frame.size.width/3.0f);
-    NSLog(@"%f", buttonWidth);
     todayButton.frame = CGRectMake(0.0f, 0.0f, buttonWidth, 119.0f);
     sevenDayButton.frame = CGRectMake(buttonWidth, 0.0f, buttonWidth, 119.0f);
     fourteenDayButton.frame = CGRectMake(buttonWidth*2.0f, 0.0f, buttonWidth, 119.0f);
@@ -244,6 +234,8 @@
     if(isVisible)
     {
         [self.tableView reloadData];
+        
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
     }
 }
 - (void)reloadViewData:(NSNotification *)note

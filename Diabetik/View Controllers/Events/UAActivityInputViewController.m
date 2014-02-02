@@ -214,9 +214,9 @@
 }
 
 #pragma mark - UI
-- (UIColor *)barTintColor
+- (UIImage *)navigationBarBackgroundImage
 {
-    return [UIColor colorWithRed:127.0f/255.0f green:192.0f/255.0f blue:241.0f/255.0f alpha:1.0f];
+    return [UIImage imageNamed:@"activityNavBarBG"];
 }
 
 #pragma mark - Social helpers
