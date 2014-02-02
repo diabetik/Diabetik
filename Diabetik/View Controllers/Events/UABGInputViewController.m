@@ -249,7 +249,7 @@
 #pragma mark - UI
 - (UIImage *)navigationBarBackgroundImage
 {
-    return [UIImage imageNamed:@"readingNavBarBG"];
+    return [UIImage imageNamed:@"ReadingNavBarBG"];
 }
 
 #pragma mark - Social helpers

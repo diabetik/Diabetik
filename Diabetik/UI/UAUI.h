@@ -36,11 +36,11 @@
 #import "UABadgeView.h"
 
 // Controls
+#import "UACategoryInputView.h"
 #import "UASlider.h"
 #import "UAInputLabel.h"
 #import "UANotesTextView.h"
 #import "UAAutocompleteBar.h"
-#import "UASuggestionBar.h"
 
 // Buttons
 #import "UAAutocompleteBarButton.h"

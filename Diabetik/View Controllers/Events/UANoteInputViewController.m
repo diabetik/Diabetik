@@ -206,7 +206,7 @@
 #pragma mark - UI
 - (UIImage *)navigationBarBackgroundImage
 {
-    return [UIImage imageNamed:@"noteNavBarBG"];
+    return [UIImage imageNamed:@"NoteNavBarBG"];
 }
 
 #pragma mark - UITableViewDatasource methods

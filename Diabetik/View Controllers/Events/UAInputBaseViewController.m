@@ -152,8 +152,6 @@
 }
 - (void)triggerDeleteEvent:(id)sender
 {
-    [self.view endEditing:YES];
-    
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Delete Entry", nil)
                                                         message:NSLocalizedString(@"Are you sure you'd like to permanently delete this entry?", nil)
                                                        delegate:self
@@ -209,13 +207,11 @@
 {
     if((self.event && [self.event.lat doubleValue] != 0.0 && [self.event.lon doubleValue] != 0.0) || ([self.lat doubleValue] != 0.0 && [self.lon doubleValue] != 0.0))
     {
-        //[self.locationButton setTitle:NSLocalizedString(@"View Location", nil) forState:UIControlStateNormal];
-        //[self.keyboardBackingView.locationIndicatorImageView setImage:[UIImage imageNamed:@"KeyboardDismissLocationActive.png"]];
+        [self.keyboardShortcutAccessoryView.locationButton setImage:[UIImage imageNamed:@"KeyboardShortcutLocationActiveIcon"] forState:UIControlStateNormal];
     }
     else
     {
-        //[self.locationButton setTitle:NSLocalizedString(@"Add Location", nil) forState:UIControlStateNormal];
-        //[self.keyboardBackingView.locationIndicatorImageView setImage:[UIImage imageNamed:@"KeyboardDismissLocationInactive.png"]];
+        [self.keyboardShortcutAccessoryView.locationButton setImage:[UIImage imageNamed:@"KeyboardShortcutLocationIcon"] forState:UIControlStateNormal];
     }
 
     if(self.currentPhotoPath)
@@ -232,7 +228,6 @@
 #pragma mark - UI
 - (void)didBecomeActive:(BOOL)editing
 {
-    NSLog(@"Becoming active %@", NSStringFromClass([self class]));
     [self updateKeyboardShortcutButtons];
     
     if(!self.activeControlIndexPath)
@@ -246,7 +241,6 @@
 }
 - (void)willBecomeInactive
 {
-    NSLog(@"Becoming inactive %@",  NSStringFromClass([self class]));
     isFirstLoad = NO;
     [self finishEditing:self];
     
@@ -573,11 +567,11 @@
 {
     if([button isEqual:[shortcutView locationButton]])
     {
-        [self requestCurrentLocation];
+        [(UAInputParentViewController *)self.parentViewController presentGeotagOptions:button];
     }
     else if([button isEqual:[shortcutView deleteButton]])
     {
-        [self deleteEvent];
+        [self triggerDeleteEvent:button];
     }
     else if([button isEqual:[shortcutView photoButton]])
     {

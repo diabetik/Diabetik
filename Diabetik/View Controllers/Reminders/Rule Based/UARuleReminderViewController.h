@@ -22,7 +22,9 @@
 #import "UAReminderRule.h"
 #import "UAReminderBaseViewController.h"
 
-@interface UARuleReminderViewController : UAReminderBaseViewController <UITextFieldDelegate, UIAlertViewDelegate, UAAutocompleteBarDelegate>
+#import "UACategoryInputView.h"
+
+@interface UARuleReminderViewController : UAReminderBaseViewController <UITextFieldDelegate, UIAlertViewDelegate, UAAutocompleteBarDelegate, UACategoryInputViewDelegate>
 
 // Setup
 - (id)initWithReminderRule:(UAReminderRule *)rule;

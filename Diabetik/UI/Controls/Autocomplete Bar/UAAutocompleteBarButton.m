@@ -40,21 +40,17 @@
     self = [super initWithFrame:frame];
     if (self)
     {
-        UIImage *normalBG = [[UIImage imageNamed:@"AccessoryViewBubble.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 14.0f, 0.0f, 14.0f)];
-        UIImage *highlightedBG = [[UIImage imageNamed:@"AccessoryViewBubblePressed.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0f, 14.0f, 0.0f, 14.0f)];
-        [self setBackgroundImage:normalBG forState:UIControlStateNormal];
-        [self setBackgroundImage:highlightedBG forState:UIControlStateHighlighted];
-        [self setBackgroundImage:highlightedBG forState:UIControlStateSelected];
-        [self setBackgroundImage:highlightedBG forState:UIControlStateHighlighted | UIControlStateSelected];
+        self.layer.borderWidth = 1.0f;
+        self.layer.borderColor = [UIColor colorWithRed:219.0f/255.0f green:219.0f/255.0f blue:219.0f/255.0f alpha:1.0f].CGColor;
+        self.layer.cornerRadius = 14.0f;
         
         self.labelColor = [UIColor colorWithRed:34.0f/255.0f green:34.0f/255.0f blue:34.0f/255.0f alpha:1.0f];
         self.labelSelectedColor = [UIColor colorWithRed:18.0f/255.0f green:185.0f/255.0f blue:139.0f/255.0f alpha:1.0f];
-        //self.backgroundColor = [UIColor clearColor];
         self.titleLabel.font = [UAFont standardRegularFontWithSize:14.0f];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         
         [self setAdjustsImageWhenHighlighted:NO];
-        [self setTitleShadowColor:[UIColor colorWithWhite:1.0f alpha:0.6f] forState:UIControlStateNormal];
+        [self setBackgroundColor:[UIColor whiteColor]];
         [self setTitleColor:self.labelColor forState:UIControlStateNormal];
     }
     return self;
@@ -73,6 +69,8 @@
     
     [self updateState];
 }
+
+#pragma mark - Logic
 - (void)setTitle:(NSString *)title forState:(UIControlState)state
 {
     [super setTitle:title forState:state];
@@ -85,10 +83,12 @@
 {
     if([self isHighlighted] || [self isSelected])
     {
+        [self setBackgroundColor:[UIColor colorWithRed:235.0f/255.0f green:235.0f/255.0f blue:235.0f/255.0f alpha:1.0f]];
         [self setTitleColor:self.labelSelectedColor forState:UIControlStateNormal];
     }
     else
     {
+        [self setBackgroundColor:[UIColor whiteColor]];
         [self setTitleColor:self.labelColor forState:UIControlStateNormal];
     }
 }

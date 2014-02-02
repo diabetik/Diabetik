@@ -15,7 +15,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.layer.borderColor = [UIColor colorWithRed:232.0f/255.0f green:232.0f/255.0f blue:232.0f/255.0f alpha:1.0f].CGColor;
+        self.layer.borderColor = [UIColor colorWithRed:219.0f/255.0f green:219.0f/255.0f blue:219.0f/255.0f alpha:1.0f].CGColor;
         self.layer.cornerRadius = 3.0f;
         self.layer.borderWidth = 0.5f;
         self.layer.masksToBounds = YES;
@@ -25,6 +25,19 @@
         self.imageView.tintColor = [UIColor redColor];
     }
     return self;
+}
+
+#pragma mark - Logic
+- (void)setHighlighted:(BOOL)highlighted
+{
+    if(highlighted)
+    {
+        self.backgroundColor = [UIColor colorWithRed:235.0f/255.0f green:235.0f/255.0f blue:235.0f/255.0f alpha:1.0f];
+    }
+    else
+    {
+        self.backgroundColor = [UIColor whiteColor];
+    }
 }
 
 #pragma mark - Accessors

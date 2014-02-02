@@ -539,8 +539,6 @@
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
     UAInputBaseViewController *targetVC = [self targetViewController];
-
-    [self.view endEditing:YES];
     if((self.event && [self.event.lat doubleValue] != 0.0 && [self.event.lon doubleValue] != 0.0) || ([targetVC.lat doubleValue] != 0.0 && [targetVC.lon doubleValue] != 0.0))
     {
         UIActionSheet *actionSheet = nil;

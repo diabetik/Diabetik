@@ -233,6 +233,7 @@
             textField.textAlignment = NSTextAlignmentRight;
             textField.font = [UAFont standardMediumFontWithSize:16.0f];
             textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
+            textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             cell.accessoryView = textField;
         }
         else if(indexPath.row == 1)

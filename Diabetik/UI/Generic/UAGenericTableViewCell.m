@@ -58,8 +58,56 @@
 {
     [super layoutSubviews];
     
-    self.textLabel.frame = CGRectMake(self.textLabel.frame.origin.x, self.textLabel.frame.origin.y, self.contentView.bounds.size.width-(self.textLabel.frame.origin.x*2), self.textLabel.frame.size.height);
-    self.imageView.frame = CGRectMake(self.imageView.frame.origin.x+3.0f, self.imageView.frame.origin.y, self.imageView.frame.size.width, self.imageView.frame.size.height);
+    CGFloat x = 16.0f;
+    if(self.imageView && self.imageView.image)
+    {
+        CGFloat y = floorf(self.contentView.bounds.size.height/2.0f - self.imageView.bounds.size.height/2.0f);
+        self.imageView.frame = CGRectMake(x, y, self.imageView.frame.size.width, self.imageView.frame.size.height);
+        x += self.imageView.frame.size.width + 10.0f;
+    }
+    
+    if(self.textLabel && self.textLabel.text)
+    {
+        CGSize titleSize = [self.textLabel.text sizeWithAttributes:@{NSFontAttributeName:self.textLabel.font}];
+        CGSize detailSize = CGSizeZero;
+        CGFloat height = titleSize.height;
+        
+        if(self.detailTextLabel && self.detailTextLabel.text)
+        {
+            detailSize = [self.detailTextLabel.text sizeWithAttributes:@{NSFontAttributeName:self.detailTextLabel.font}];
+            height += detailSize.height;
+        }
+        
+        CGFloat y = floorf(self.bounds.size.height/2.0f - height/2.0f);
+        CGFloat width = titleSize.width > detailSize.width ? titleSize.width : detailSize.width;
+        self.textLabel.frame = CGRectMake(x, y, titleSize.width, titleSize.height);
+        if(self.detailTextLabel && self.detailTextLabel.text)
+        {
+            self.detailTextLabel.frame = CGRectMake(x, floorf(y+titleSize.height), detailSize.width, detailSize.height);
+        }
+        x += floorf(width + 10.0f);
+    }
+    
+    if(self.accessoryControl)
+    {
+        self.accessoryView.frame = CGRectMake(x, 0.0f, self.bounds.size.width-x-16.0f, self.contentView.bounds.size.height);
+        
+        if(self.accessoryControl)
+        {
+            UIView *control = (UIView *)self.accessoryControl;
+            CGRect controlFrame = CGRectZero;
+            if(control.bounds.size.width < self.accessoryView.bounds.size.width)
+            {
+                CGFloat y = control.bounds.size.height < self.accessoryView.bounds.size.height ? (self.accessoryView.bounds.size.height-control.bounds.size.height)/2.0f : 0.0f;
+                controlFrame = CGRectMake(self.accessoryView.bounds.size.width-control.bounds.size.width, y, control.bounds.size.width, control.bounds.size.height);
+            }
+            else
+            {
+                controlFrame = self.accessoryView.bounds;
+            }
+            [control setFrame:controlFrame];
+        }
+    }
 }
 
 #pragma mark - Logic
@@ -88,12 +136,9 @@
     
     if(controlView)
     {
-        UIView *containerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, (controlView.frame.size.width < kMaxAccessoryWidth ? controlView.frame.size.width+10.0f : kMaxAccessoryWidth), self.frame.size.height)];
-        containerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
-        
-        controlView.frame = CGRectMake(floorf(containerView.frame.size.width - controlView.frame.size.width - 15.0f), floorf(containerView.frame.size.height/2-controlView.frame.size.height/2), controlView.frame.size.width, controlView.frame.size.height);
+        UIView *containerView = [[UIView alloc] initWithFrame:CGRectZero];
+        containerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [containerView addSubview:controlView];
-        
         [super setAccessoryView:containerView];
     }
     else

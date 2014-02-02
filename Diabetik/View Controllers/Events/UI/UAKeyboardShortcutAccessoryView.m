@@ -28,28 +28,28 @@
         self.buttonContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:self.buttonContainer];
         
-        self.tagButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 35.0f)];
-        [self.tagButton setImage:[UIImage imageNamed:@"Tag"] forState:UIControlStateNormal];
+        self.tagButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 45.0f, 28.0f)];
+        [self.tagButton setImage:[UIImage imageNamed:@"KeyboardShortcutTagIcon"] forState:UIControlStateNormal];
         [self.tagButton addTarget:self action:@selector(didPressButton:) forControlEvents:UIControlEventTouchUpInside];
         
-        self.photoButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 35.0f)];
-        [self.photoButton setImage:[UIImage imageNamed:@"PhotoCamera"] forState:UIControlStateNormal];
+        self.photoButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 45.0f, 28.0f)];
+        [self.photoButton setImage:[UIImage imageNamed:@"KeyboardShortcutPhotoIcon"] forState:UIControlStateNormal];
         [self.photoButton addTarget:self action:@selector(didPressButton:) forControlEvents:UIControlEventTouchUpInside];
         
-        self.shareButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 35.0f)];
-        [self.reminderButton setImage:[UIImage imageNamed:@"Link"] forState:UIControlStateNormal];
+        self.shareButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 45.0f, 28.0f)];
+        [self.shareButton setImage:[UIImage imageNamed:@"KeyboardShortcutShareIcon"] forState:UIControlStateNormal];
         [self.shareButton addTarget:self action:@selector(didPressButton:) forControlEvents:UIControlEventTouchUpInside];
         
-        self.reminderButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 35.0f)];
-        [self.reminderButton setImage:[UIImage imageNamed:@"Task"] forState:UIControlStateNormal];
+        self.reminderButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 45.0f, 28.0f)];
+        [self.reminderButton setImage:[UIImage imageNamed:@"KeyboardShortcutReminderIcon"] forState:UIControlStateNormal];
         [self.reminderButton addTarget:self action:@selector(didPressButton:) forControlEvents:UIControlEventTouchUpInside];
         
-        self.locationButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 35.0f)];
-        [self.locationButton setImage:[UIImage imageNamed:@"Location"] forState:UIControlStateNormal];
+        self.locationButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 45.0f, 28.0f)];
+        [self.locationButton setImage:[UIImage imageNamed:@"KeyboardShortcutLocationIcon"] forState:UIControlStateNormal];
         [self.locationButton addTarget:self action:@selector(didPressButton:) forControlEvents:UIControlEventTouchUpInside];
         
-        self.deleteButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 35.0f)];
-        [self.deleteButton setImage:[UIImage imageNamed:@"trash"] forState:UIControlStateNormal];
+        self.deleteButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 45.0f, 28.0f)];
+        [self.deleteButton setImage:[UIImage imageNamed:@"KeyboardShortcutDeleteIcon"] forState:UIControlStateNormal];
         [self.deleteButton addTarget:self action:@selector(didPressButton:) forControlEvents:UIControlEventTouchUpInside];
     
         self.buttons = @[self.tagButton, self.photoButton, self.locationButton, self.reminderButton, self.shareButton, self.deleteButton];
@@ -90,12 +90,10 @@
 {
     if([self.autocompleteBar showSuggestionsForInput:text])
     {
-        NSLog(@"Showing autocomplete");
         [self setShowingAutocompleteBar:YES];
     }
     else
     {
-                NSLog(@"hiding autocomplete");
         [self setShowingAutocompleteBar:NO];
     }
 }

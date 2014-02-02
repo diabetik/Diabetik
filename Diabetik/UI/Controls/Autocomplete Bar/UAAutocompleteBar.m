@@ -88,7 +88,7 @@
             NSString *lowercaseSuggestions = [suggestion lowercaseString];
             if([lowercaseSuggestions hasPrefix:lowercaseInput] && ![lowercaseSuggestions isEqualToString:lowercaseInput])
             {
-                UAAutocompleteBarButton *button = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(x, scrollView.bounds.size.height/2.0f - 27.0f/2.0f, 0.0f, 27.0f)];
+                UAAutocompleteBarButton *button = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(x, scrollView.bounds.size.height/2.0f - 28.0f/2.0f, 0.0f, 28.0f)];
                 [button setTitle:suggestion forState:UIControlStateNormal];
                 [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
                 

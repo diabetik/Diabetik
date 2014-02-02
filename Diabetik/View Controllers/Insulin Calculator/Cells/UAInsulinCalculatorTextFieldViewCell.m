@@ -40,6 +40,7 @@
         textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         textField.autocorrectionType = UITextAutocorrectionTypeNo;
         textField.textAlignment = NSTextAlignmentRight;
+        textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         textField.text = @"";
         
         [self setAccessoryView:textField];

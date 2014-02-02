@@ -36,8 +36,6 @@
 #import "UAEventInputTextFieldViewCell.h"
 #import "UAEventInputTextViewViewCell.h"
 
-#import "UAAutocompleteBar.h"
-
 @class UAInputBaseViewController;
 @interface UAInputParentViewController : UABaseViewController <UIActionSheetDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) NSManagedObjectContext *moc;

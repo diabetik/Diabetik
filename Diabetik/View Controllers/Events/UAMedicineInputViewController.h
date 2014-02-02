@@ -22,8 +22,9 @@
 #import "UAInputBaseViewController.h"
 
 #import "UAMedicine.h"
+#import "UACategoryInputView.h"
 
-@interface UAMedicineInputViewController : UAInputBaseViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface UAMedicineInputViewController : UAInputBaseViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UACategoryInputViewDelegate>
 @property (nonatomic, retain) NSString *amount;
 @property (nonatomic, retain) NSString *name;
 @property (nonatomic, assign) NSInteger type;

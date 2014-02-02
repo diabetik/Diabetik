@@ -226,7 +226,7 @@
 #pragma mark - UI
 - (UIImage *)navigationBarBackgroundImage
 {
-    return [UIImage imageNamed:@"mealNavBarBG"];
+    return [UIImage imageNamed:@"MealNavBarBG"];
 }
 
 #pragma mark - Social helpers

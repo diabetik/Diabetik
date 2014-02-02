@@ -24,6 +24,8 @@
 #import "UAMedicineInputViewController.h"
 #import "UAAppDelegate.h"
 
+#import "UAEventInputCategoryViewCell.h"
+
 #define kDatePickerViewTag 1
 #define kToolbarViewTag 2
 #define kNameInputControlTag 3
@@ -78,6 +80,14 @@
     }
     
     return self;
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self.tableView registerClass:[UAEventInputTextViewViewCell class] forCellReuseIdentifier:@"UAEventInputTextViewViewCell"];
+    [self.tableView registerClass:[UAEventInputTextFieldViewCell class] forCellReuseIdentifier:@"UAEventTextFieldViewCell"];
+    [self.tableView registerClass:[UAEventInputCategoryViewCell class] forCellReuseIdentifier:@"UAEventInputCategoryViewCell"];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -287,63 +297,18 @@
     }
     else if(indexPath.row == 1)
     {
-        UITextField *textField = (UITextField *)cell.control;
-        textField.placeholder = NSLocalizedString(@"Amount taken", nil);
-        textField.text = self.amount;
-        textField.autocorrectionType = UITextAutocorrectionTypeNo;
-        textField.keyboardType = UIKeyboardTypeDecimalPad;
-        textField.delegate = self;
+        UACategoryInputView *control = (UACategoryInputView *)cell.control;
+        control.selectedIndex = self.type;
+        control.delegate = self;
+        
+        control.textField.autocorrectionType = UITextAutocorrectionTypeNo;
+        control.textField.keyboardType = UIKeyboardTypeDecimalPad;
+        control.textField.text = self.amount;
+        control.textField.tag = 1;
+        control.textField.delegate = self;
+        control.textField.inputAccessoryView = [self keyboardShortcutAccessoryView];
         
         [(UILabel *)[cell label] setText:NSLocalizedString(@"Amount", nil)];
-        /*
-        UAKeyboardAccessoryView *accessoryView = [[UAKeyboardAccessoryView alloc] initWithBackingView:parentVC.keyboardBackingView];
-        
-        UASuggestionBar *suggestionBar = [[UASuggestionBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, accessoryView.frame.size.width - parentVC.keyboardBackingView.controlContainer.frame.size.width, accessoryView.frame.size.height)];
-        [accessoryView.contentView addSubview:suggestionBar];
-        
-        UAAutocompleteBarButton *units = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 12.0f, 0.0f, 27.0f)];
-        [units setTitle:NSLocalizedString(@"units", nil) forState:UIControlStateNormal];
-        [units addTarget:self action:@selector(selectType:) forControlEvents:UIControlEventTouchUpInside];
-        [units setTag:kMedicineTypeUnits];
-        
-        UAAutocompleteBarButton *mg = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 12.0f, 0.0f, 27.0f)];
-        [mg setTitle:NSLocalizedString(@"mg", nil) forState:UIControlStateNormal];
-        [mg addTarget:self action:@selector(selectType:) forControlEvents:UIControlEventTouchUpInside];
-        [mg setTag:kMedicineTypeMG];
-        
-        UAAutocompleteBarButton *pills = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 12.0f, 0.0f, 27.0f)];
-        [pills setTitle:NSLocalizedString(@"pills", nil) forState:UIControlStateNormal];
-        [pills addTarget:self action:@selector(selectType:) forControlEvents:UIControlEventTouchUpInside];
-        [pills setTag:kMedicineTypePills];
-        
-        UAAutocompleteBarButton *puffs = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(0.0f, 12.0f, 0.0f, 27.0f)];
-        [puffs setTitle:NSLocalizedString(@"puffs", nil) forState:UIControlStateNormal];
-        [puffs addTarget:self action:@selector(selectType:) forControlEvents:UIControlEventTouchUpInside];
-        [puffs setTag:kMedicineTypePuffs];
-        
-        [suggestionBar addSuggestions:@[units, mg, pills, puffs]];
-        
-        UAAutocompleteBarButton *button = nil;
-        if(self.type == kMedicineTypeUnits)
-        {
-            button = units;
-        }
-        else if(self.type == kMedicineTypeMG)
-        {
-            button = mg;
-        }
-        else if(self.type == kMedicineTypePills)
-        {
-            button = pills;
-        }
-        else if(self.type == kMedicineTypePuffs)
-        {
-            button = puffs;
-        }
-        [button setSelected:YES];
-        
-        textField.inputAccessoryView = accessoryView;
-         */
     }
     else if(indexPath.row == 2)
     {
@@ -381,7 +346,7 @@
 #pragma mark - UI
 - (UIImage *)navigationBarBackgroundImage
 {
-    return [UIImage imageNamed:@"medicineNavBarBG"];
+    return [UIImage imageNamed:@"MedicineNavBarBG"];
 }
 
 #pragma mark - Social helpers
@@ -422,18 +387,14 @@
     if(indexPath.row == 3)
     {
         cell = (UAEventInputTextViewViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UAEventInputTextViewViewCell"];
-        if (!cell)
-        {
-            cell = [[UAEventInputTextViewViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UAEventInputTextViewViewCell"];
-        }
+    }
+    else if(indexPath.row == 1)
+    {
+        cell = (UAEventInputCategoryViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UAEventInputCategoryViewCell"];
     }
     else
     {
         cell = (UAEventInputTextFieldViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UAEventTextFieldViewCell"];
-        if (!cell)
-        {
-            cell = [[UAEventInputTextFieldViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UAEventTextFieldViewCell"];
-        }
     }
     
     [self configureAppearanceForTableViewCell:cell atIndexPath:indexPath];
@@ -467,6 +428,12 @@
     }
     
     return nil;
+}
+
+#pragma mark - UACategoryInputViewDelegate methods
+- (void)categoryInputView:(UACategoryInputView *)categoryInputView didSelectOption:(NSUInteger)index
+{
+    self.type = index;
 }
 
 #pragma mark - UITextFieldDelegate methods

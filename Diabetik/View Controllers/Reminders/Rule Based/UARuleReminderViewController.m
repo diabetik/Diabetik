@@ -23,6 +23,8 @@
 #import "UATagController.h"
 #import "UAReminderController.h"
 
+#import "UACategoryInputView.h"
+
 @interface UARuleReminderViewController ()
 {
     NSString *ruleTitle;
@@ -39,7 +41,6 @@
 
 // UI
 - (void)addTrigger:(id)sender;
-- (void)selectIntervalType:(UIButton *)sender;
 - (void)toggleEntryTriggers:(id)sender;
 
 @end
@@ -94,6 +95,12 @@
     }
     
     return self;
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    [self.tableView registerClass:[UAGenericTableViewCell class] forCellReuseIdentifier:@"UAReminderCell"];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -239,30 +246,6 @@
         }
     }
 }
-- (void)selectIntervalType:(UIButton *)sender
-{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:2];
-    if(indexPath)
-    {
-        [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-        
-        UAGenericTableViewCell *cell = (UAGenericTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        if(cell)
-        {
-            UIView *accessoryView = [(UITextField *)cell.accessoryControl inputAccessoryView];
-            for(id control in [(UASuggestionBar *)accessoryView suggestions])
-            {
-                if([control isKindOfClass:[UAAutocompleteBarButton class]])
-                {
-                    [(UAAutocompleteBarButton *)control setSelected:NO];
-                }
-            }
-        }
-        
-        [sender setSelected:YES];
-        triggerIntervalType = sender.tag;
-    }
-}
 
 #pragma mark - UITableViewDelegate methods
 - (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -322,10 +305,6 @@
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UAGenericTableViewCell *cell = (UAGenericTableViewCell *)[aTableView dequeueReusableCellWithIdentifier:@"UAReminderCell"];
-    if (cell == nil)
-    {
-        cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UAReminderCell"];
-    }
     [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     cell.textLabel.font = [UAFont standardRegularFontWithSize:16.0f];
     cell.textLabel.textColor = [UIColor colorWithRed:110.0f/255.0f green:114.0f/255.0f blue:115.0f/255.0f alpha:1.0f];
@@ -395,7 +374,9 @@
             textField.font = [UAFont standardMediumFontWithSize:16.0f];
             textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             textField.autocorrectionType = UITextAutocorrectionTypeNo;
+            textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             textField.tag = 0;
+            
             cell.accessoryView = textField;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [nameAutocompleteBar removeFromSuperview];
@@ -422,6 +403,7 @@
             textField.font = [UAFont standardMediumFontWithSize:16.0f];
             textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             textField.autocorrectionType = UITextAutocorrectionTypeNo;
+            textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             textField.tag = 1;
             cell.accessoryView = textField;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -452,6 +434,7 @@
             textField.font = [UAFont standardMediumFontWithSize:16.0f];
             textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
             textField.autocorrectionType = UITextAutocorrectionTypeDefault;
+            textField.autoresizingMask = UIViewAutoresizingFlexibleWidth;
             textField.tag = 2;
             textField.inputAccessoryView = nil;
             
@@ -462,60 +445,14 @@
         {
             cell.textLabel.text = NSLocalizedString(@"After", @"The amount of time to wait after an event occurs before alerting the user");
             
-            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-            textField.delegate = self;
-            textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-            textField.text = [NSString stringWithFormat:@"%.0f", triggerInterval];
-            textField.placeholder = @"";
-            textField.keyboardType = UIKeyboardTypeDefault;
-            textField.clearButtonMode = UITextFieldViewModeNever;
-            textField.adjustsFontSizeToFitWidth = NO;
-            textField.keyboardType = UIKeyboardTypeDecimalPad;
-            textField.textAlignment = NSTextAlignmentRight;
-            textField.font = [UAFont standardMediumFontWithSize:16.0f];
-            textField.textColor = [UIColor colorWithRed:49.0f/255.0f green:51.0f/255.0f blue:51.0f/255.0f alpha:1.0f];
-            textField.tag = 3;
-            textField.inputAccessoryView = nil;
+            UACategoryInputView *categoryInputView = [[UACategoryInputView alloc] initWithCategories:@[NSLocalizedString(@"minutes", nil), NSLocalizedString(@"hours", nil), NSLocalizedString(@"days", nil)]];
+            categoryInputView.delegate = self;
             
-            cell.accessoryView = textField;
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            UASuggestionBar *suggestionBar = [[UASuggestionBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, 44.0f)];
-            suggestionBar.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"GenericAccessoryViewBackground.png"]];
-            
-            UAAutocompleteBarButton *minutes = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(10.0f, 9.0f, 70.0f, 27.0f)];
-            [minutes setTitle:NSLocalizedString(@"Minutes", nil) forState:UIControlStateNormal];
-            [minutes addTarget:self action:@selector(selectIntervalType:) forControlEvents:UIControlEventTouchUpInside];
-            [minutes setTag:kMinuteIntervalType];
-            
-            UAAutocompleteBarButton *hours = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(83.0f, 9.0f, 60.0f, 27.0f)];
-            [hours setTitle:NSLocalizedString(@"Hours", nil) forState:UIControlStateNormal];
-            [hours addTarget:self action:@selector(selectIntervalType:) forControlEvents:UIControlEventTouchUpInside];
-            [hours setTag:kHourIntervalType];
-            
-            UAAutocompleteBarButton *days = [[UAAutocompleteBarButton alloc] initWithFrame:CGRectMake(146.0f, 9.0f, 50.0f, 27.0f)];
-            [days setTitle:NSLocalizedString(@"Days", nil) forState:UIControlStateNormal];
-            [days addTarget:self action:@selector(selectIntervalType:) forControlEvents:UIControlEventTouchUpInside];
-            [days setTag:kDayIntervalType];
-            
-            [suggestionBar addSuggestions:@[minutes, hours, days]];
-            
-            UAAutocompleteBarButton *button = nil;
-            if(triggerIntervalType == kMinuteIntervalType)
-            {
-                button = minutes;
-            }
-            else if(triggerIntervalType == kHourIntervalType)
-            {
-                button = hours;
-            }
-            else if(triggerIntervalType == kDayIntervalType)
-            {
-                button = days;
-            }
-            [button setSelected:YES];
-            
-            textField.inputAccessoryView = suggestionBar;
+            categoryInputView.textField.textAlignment = NSTextAlignmentRight;
+            categoryInputView.textField.text = [NSString stringWithFormat:@"%.0f", triggerInterval];
+            categoryInputView.textField.placeholder = @"";
+            categoryInputView.textField.keyboardType = UIKeyboardTypeDecimalPad;
+            cell.accessoryView = categoryInputView;
         }
     }
     
@@ -602,6 +539,12 @@
     [super keyboardWillBeShown:aNotification];
     
     [self.tableView scrollToRowAtIndexPath:self.activeControlIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+}
+
+#pragma mark - UACategoryInputViewDelegate methods
+- (void)categoryInputView:(UACategoryInputView *)categoryInputView didSelectOption:(NSUInteger)index
+{
+    triggerIntervalType = index;
 }
 
 #pragma mark - UAAutocompleteBarDelegate methods

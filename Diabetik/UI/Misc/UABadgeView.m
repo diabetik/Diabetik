@@ -37,7 +37,7 @@
     {
         self.backgroundColor = [UIColor clearColor];
         _textColor = [UIColor colorWithRed:199.0f/255.0f green:199.0f/255.0f blue:204.0f/255.0f alpha:1.0f];
-        _badgeColor = [UIColor colorWithRed:199.0f/255.0f green:199.0f/255.0f blue:204.0f/255.0f alpha:1.0f];
+        _badgeColor = [UIColor colorWithRed:219.0f/255.0f green:219.0f/255.0f blue:219.0f/255.0f alpha:1.0f];
         _highlightedTextColor = [UIColor whiteColor];
         _highlightedBadgeColor = [UIColor whiteColor];
         
