@@ -22,7 +22,6 @@
 #import "UAReminderController.h"
 #import "UAMediaController.h"
 
-#import "UACreditsTooltipView.h"
 #import "UASideMenuViewController.h"
 #import "UASettingsViewController.h"
 #import "UARemindersViewController.h"
@@ -92,18 +91,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:reminderUpdateNotifier];
 }
 
-#pragma mark - UI
-- (void)showCredits
-{
-    UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
-    UIViewController *targetVC = appDelegate.viewController;
-    
-    UATooltipViewController *modalView = [[UATooltipViewController alloc] initWithParentVC:targetVC andDelegate:self];
-    UACreditsTooltipView *introductionView = [[UACreditsTooltipView alloc] initWithFrame:CGRectZero];
-    [modalView setContentView:introductionView];
-    [modalView present];
-}
-
 #pragma mark - UITableViewDataSource methods
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -128,7 +115,7 @@
 {
     if(section == 0)
     {
-        return 7;
+        return 6;
     }
     else if(section == 1)
     {
@@ -190,12 +177,6 @@
             cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconExportHighlighted"];
         }
         else if(indexPath.row == 5)
-        {
-            cell.textLabel.text = NSLocalizedString(@"Credits", @"Menu item to show users the application credits");
-            cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconCredits"];
-            cell.accessoryIcon.highlightedImage = [UIImage imageNamed:@"ListMenuIconCreditsHighlighted"];
-        }
-        else if(indexPath.row == 6)
         {
             cell.textLabel.text = NSLocalizedString(@"Settings", nil);
             cell.accessoryIcon.image = [UIImage imageNamed:@"ListMenuIconSettings"];
@@ -339,10 +320,6 @@
         }
         else if(indexPath.row == 5)
         {
-            [self showCredits];
-        }
-        else if(indexPath.row == 6)
-        {
             if(![[navigationController topViewController] isKindOfClass:[UASettingsViewController class]])
             {
                 UASettingsViewController *vc = [[UASettingsViewController alloc] init];
@@ -367,16 +344,6 @@
             }
         }
     }
-}
-
-#pragma mark - UAModalViewControllerDelegate methods
-- (void)willDisplayModalView:(UATooltipViewController *)aModalController
-{
-    // STUB
-}
-- (void)didDismissModalView:(UATooltipViewController *)aModalController
-{
-    // STUB
 }
 
 @end

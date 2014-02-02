@@ -30,6 +30,8 @@
 #import "UASettingsBackupViewController.h"
 #import "UASettingsLicensesViewController.h"
 
+#import "UACreditsTooltipView.h"
+
 #import "UASettingsViewCell.h"
 #import "UAHelper.h"
 #import "UAReading.h"
@@ -96,7 +98,7 @@
     }
     else if(section == 2)
     {
-        return 1;
+        return 2;
     }
     
     return 3;
@@ -201,6 +203,11 @@
     {
         if(indexPath.row == 0)
         {
+            cell.textLabel.text = NSLocalizedString(@"Credits", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        if(indexPath.row == 1)
+        {
             cell.textLabel.text = NSLocalizedString(@"Licenses", @"An option to view third-party software licenses used throughout the application");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
@@ -260,6 +267,18 @@
     else if(indexPath.section == 2)
     {
         if(indexPath.row == 0)
+        {
+            [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+            
+            UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
+            UIViewController *targetVC = appDelegate.viewController;
+            
+            UATooltipViewController *modalView = [[UATooltipViewController alloc] initWithParentVC:targetVC andDelegate:nil];
+            UACreditsTooltipView *introductionView = [[UACreditsTooltipView alloc] initWithFrame:CGRectZero];
+            [modalView setContentView:introductionView];
+            [modalView present];
+        }
+        else if(indexPath.row == 1)
         {
             UASettingsLicensesViewController *vc = [[UASettingsLicensesViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];

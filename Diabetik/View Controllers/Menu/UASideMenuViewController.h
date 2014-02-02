@@ -20,9 +20,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UASideMenuViewController : UABaseTableViewController <UATooltipViewControllerDelegate>
-
-// UI
-- (void)showCredits;
-
+@interface UASideMenuViewController : UABaseTableViewController
 @end

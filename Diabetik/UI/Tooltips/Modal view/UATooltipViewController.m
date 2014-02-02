@@ -32,18 +32,6 @@
 
 @implementation UATooltipViewController
 
-static UIWindow *overlayWindow() {
-    static UIWindow *overlayWindow = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        overlayWindow = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
-        overlayWindow.backgroundColor = [UIColor clearColor];
-        overlayWindow.windowLevel = UIWindowLevelAlert;
-        overlayWindow.userInteractionEnabled = YES;
-    });
-    return overlayWindow;
-}
-
 #pragma mark - Setup
 - (id)initWithParentVC:(UIViewController *)parentVC andDelegate:(id <UATooltipViewControllerDelegate>)delegate
 {
@@ -113,7 +101,7 @@ static UIWindow *overlayWindow() {
 {
     self.isDismissing = NO;
     
-    if([self.delegate respondsToSelector:@selector(willDisplayModalView:)])
+    if(self.delegate && [self.delegate respondsToSelector:@selector(willDisplayModalView:)])
     {
         [self.delegate willDisplayModalView:self];
     }
@@ -169,7 +157,7 @@ static UIWindow *overlayWindow() {
         
     } completion:^(BOOL finished) {
         
-        if([self.delegate respondsToSelector:@selector(didDismissModalView:)])
+        if(self.delegate && [self.delegate respondsToSelector:@selector(didDismissModalView:)])
         {
             [self.delegate didDismissModalView:self];
         }
