@@ -21,7 +21,6 @@
 #import "UAInputBaseViewController.h"
 #import "UALocationController.h"
 #import "UAEventMapViewController.h"
-#import "OvershareKit.h"
 
 @implementation UAInputBaseViewController
 @synthesize event = _event;
