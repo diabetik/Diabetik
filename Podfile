@@ -1,0 +1,10 @@
+platform :ios, '7.0'
+
+pod 'AFNetworking', '~> 2.0'
+pod 'OvershareKit', '~> 1.0.7'
+pod 'GoogleAnalytics-iOS-SDK', '~> 3.0.3'
+pod 'MBProgressHUD', '~> 0.8'
+pod 'SSKeychain', '~> 1.2.1'
+pod 'Appirater', '~> 2.0.2'
+pod 'Reachability', '~> 3.1.1'
+pod 'TPKeyboardAvoiding', '~> 1.2.2'

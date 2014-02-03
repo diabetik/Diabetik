@@ -260,7 +260,7 @@
                     else
                     {
                         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Export successful", nil)
-                                                                            message:[NSString stringWithFormat:NSLocalizedString(@"Your backup has been exported successfully", nil), [error localizedDescription]]
+                                                                            message:[NSString stringWithFormat:NSLocalizedString(@"Your backup has been exported successfully", nil)]
                                                                            delegate:nil
                                                                   cancelButtonTitle:NSLocalizedString(@"Okay", nil)
                                                                   otherButtonTitles:nil];
@@ -306,7 +306,7 @@
             if(!error)
             {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Restore successful", nil)
-                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Your backup was restored successfully", nil), [error localizedDescription]]
+                                                                    message:[NSString stringWithFormat:NSLocalizedString(@"Your backup was restored successfully", nil)]
                                                                    delegate:nil
                                                           cancelButtonTitle:NSLocalizedString(@"Okay", nil)
                                                           otherButtonTitles:nil];

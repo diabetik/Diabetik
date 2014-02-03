@@ -260,7 +260,7 @@
                         else
                         {
                             UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Export successful", nil)
-                                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Your files have been exported successfully", nil), [error localizedDescription]]
+                                                                                message:[NSString stringWithFormat:NSLocalizedString(@"Your files have been exported successfully", nil)]
                                                                                delegate:nil
                                                                       cancelButtonTitle:NSLocalizedString(@"Okay", nil)
                                                                       otherButtonTitles:nil];
