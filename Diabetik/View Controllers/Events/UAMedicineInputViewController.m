@@ -158,8 +158,17 @@
     {
         self.activeControlIndexPath = [NSIndexPath indexPathForRow:usingSmartInput ? 1 : 0 inSection:0];
     }
+    
     UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:self.activeControlIndexPath];
-    [cell.control becomeFirstResponder];
+    
+    if([cell.control isKindOfClass:[UACategoryInputView class]])
+    {
+        [[(UACategoryInputView *)cell.control textField] becomeFirstResponder];
+    }
+    else
+    {
+        [cell.control becomeFirstResponder];
+    }
     
     self.activeView = YES;
 }

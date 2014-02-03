@@ -47,6 +47,11 @@
 #pragma mark - Logic
 - (void)didTapSelectorButton:(UACategorySelectorButton *)button
 {
+    if(self.delegate && [self.delegate respondsToSelector:@selector(categoryInputView:willShowOptions:)])
+    {
+        [self.delegate categoryInputView:self willShowOptions:self.categories];
+    }
+    
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                              delegate:self
                                                     cancelButtonTitle:nil
@@ -85,7 +90,10 @@
     {
         self.selectedIndex = buttonIndex;
         
-        if(self.delegate) [self.delegate categoryInputView:self didSelectOption:buttonIndex];
+        if(self.delegate && [self.delegate respondsToSelector:@selector(categoryInputView:didSelectOption:)])
+        {
+            [self.delegate categoryInputView:self didSelectOption:buttonIndex];
+        }
     }
 }
 

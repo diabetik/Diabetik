@@ -155,6 +155,9 @@
     UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
     [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
     
+    self.tableView.backgroundColor = self.view.backgroundColor;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
     // Setup our search bar
     searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
     searchBar.delegate = self;
@@ -165,10 +168,8 @@
     self.searchDisplayController.displaysSearchBarInNavigationBar = NO;
     self.searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
     self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-
+    
     self.tableView.tableHeaderView = searchBar;
-    self.tableView.backgroundColor = self.view.backgroundColor;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // Footer view
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)

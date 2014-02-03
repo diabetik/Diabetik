@@ -21,6 +21,7 @@
 #import "UAInputBaseViewController.h"
 #import "UALocationController.h"
 #import "UAEventMapViewController.h"
+#import "OvershareKit.h"
 
 @implementation UAInputBaseViewController
 @synthesize event = _event;
@@ -229,7 +230,7 @@
 - (void)didBecomeActive:(BOOL)editing
 {
     [self updateKeyboardShortcutButtons];
-    
+    NSLog(@"Active");
     if(!self.activeControlIndexPath)
     {
         self.activeControlIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -584,6 +585,14 @@
     else if([button isEqual:[shortcutView tagButton]])
     {
         [self presentTagOptions:button];
+    }
+    else if([button isEqual:[shortcutView shareButton]])
+    {
+        /*
+        OSKShareableContent *content = [OSKShareableContent contentFromMicroblogPost:@"Test post" authorName:@"Nial" canonicalURL:nil images:@[]];
+        OSKPresentationManager *m = [[OSKPresentationManager alloc] init];
+        [m presentActivitySheetForContent:content presentingViewController:self options:@{}];
+        */
     }
 }
 

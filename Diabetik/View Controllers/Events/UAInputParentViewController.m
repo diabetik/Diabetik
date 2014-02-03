@@ -193,8 +193,6 @@
         self.scrollView.pagingEnabled = YES;
         self.scrollView.showsHorizontalScrollIndicator = NO;
         self.scrollView.showsVerticalScrollIndicator = NO;
-        
-        [self activateTargetViewController];
     }
     
     if(!addEntryBubbleImageView)
@@ -208,11 +206,11 @@
     // Setup header buttons
     if([self isPresentedModally])
     {
-        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconCancel.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
+        UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconCancel"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
         [self.navigationItem setLeftBarButtonItem:cancelBarButtonItem animated:NO];
     }
     
-    UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconSave.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(saveEvent:)];
+    UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconSave"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(saveEvent:)];
     [self.navigationItem setRightBarButtonItem:saveBarButtonItem animated:NO];
     
     [self updateNavigationBar];
@@ -235,6 +233,12 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenAddDragUIHint];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self activateTargetViewController];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {

@@ -447,6 +447,7 @@
             
             UACategoryInputView *categoryInputView = [[UACategoryInputView alloc] initWithCategories:@[NSLocalizedString(@"minutes", nil), NSLocalizedString(@"hours", nil), NSLocalizedString(@"days", nil)]];
             categoryInputView.delegate = self;
+            [categoryInputView setSelectedIndex:triggerIntervalType];
             
             categoryInputView.textField.textAlignment = NSTextAlignmentRight;
             categoryInputView.textField.text = [NSString stringWithFormat:@"%.0f", triggerInterval];
@@ -542,6 +543,10 @@
 }
 
 #pragma mark - UACategoryInputViewDelegate methods
+- (void)categoryInputView:(UACategoryInputView *)categoryInputView willShowOptions:(NSArray *)options
+{
+    [self.view endEditing:YES];
+}
 - (void)categoryInputView:(UACategoryInputView *)categoryInputView didSelectOption:(NSUInteger)index
 {
     triggerIntervalType = index;
