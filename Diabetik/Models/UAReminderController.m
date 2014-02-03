@@ -58,10 +58,12 @@
                                                  selector:@selector(cacheReminders)
                                                      name:kRemindersUpdatedNotification
                                                    object:nil];
+        /*
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(updateRemindersBasedOnCoreDataNotification:)
                                                      name:USMStoreDidImportChangesNotification
                                                    object:nil];
+         */
         
         __weak typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{

@@ -75,38 +75,6 @@
 }
 
 #pragma mark - Logic
-- (void)toggleiCloudSync
-{
-    __weak typeof(self) weakSelf = self;
-    if(!self.ubiquityStoreManager.cloudEnabled)
-    {
-        [self.ubiquityStoreManager setCloudEnabledAndOverwriteCloudWithLocalIfConfirmed:^(void(^setConfirmationAnswer)(BOOL answer)){
-            
-            weakSelf.iCloudConfirmationBlock = setConfirmationAnswer;
-            
-            iCloudEnabledAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"iCloud", nil)
-                                                                message:NSLocalizedString(@"You already have Diabetik data stored on iCloud. Would you like to download it and overwrite your local data, or overwrite it with the data on your device?", nil)
-                                                               delegate:weakSelf
-                                                      cancelButtonTitle:NSLocalizedString(@"Nevermind", nil)
-                                                      otherButtonTitles:NSLocalizedString(@"Overwrite my iCloud data", nil), NSLocalizedString(@"Overwrite my local data", nil), nil];
-            [iCloudEnabledAlertView show];
-        }];
-    }
-    else
-    {
-        [self.ubiquityStoreManager setCloudDisabledAndOverwriteLocalWithCloudIfConfirmed:^(void(^setConfirmationAnswer)(BOOL answer)){
-            
-            weakSelf.iCloudConfirmationBlock = setConfirmationAnswer;
-            
-            iCloudDisabledAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"iCloud", nil)
-                                                                message:NSLocalizedString(@"Disabling iCloud will make the data stored there unavailable. Would you like to download it to your device?", nil)
-                                                               delegate:weakSelf
-                                                      cancelButtonTitle:NSLocalizedString(@"Nevermind", nil)
-                                                      otherButtonTitles:NSLocalizedString(@"Download my iCloud data", nil), NSLocalizedString(@"Revert to my local data", nil), nil];
-            [iCloudDisabledAlertView show];
-        }];
-    }
-}
 - (void)saveContext
 {
     NSError *error = nil;

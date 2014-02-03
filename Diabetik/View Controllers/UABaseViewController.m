@@ -40,6 +40,7 @@
         isVisible = NO;
         isFirstLoad = YES;
         
+        /*
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(iCloudDataDidChange:)
                                                      name:USMStoreDidImportChangesNotification
@@ -48,6 +49,7 @@
                                                  selector:@selector(iCloudDataDidChange:)
                                                      name:USMStoreDidChangeNotification
                                                    object:nil];
+        */
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(coreDataDidChange:)
                                                      name:NSManagedObjectContextDidSaveNotification

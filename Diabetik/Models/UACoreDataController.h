@@ -20,8 +20,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface UACoreDataController : NSObject /*<UbiquityStoreManagerDelegate, UIAlertViewDelegate>*/
-@property (strong, nonatomic) UbiquityStoreManager *ubiquityStoreManager;
+@interface UACoreDataController : NSObject
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -29,7 +28,6 @@
 + (id)sharedInstance;
 
 // Logic
-- (void)toggleiCloudSync;
 - (void)saveContext;
 
 @end

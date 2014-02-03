@@ -17,7 +17,6 @@
 		5324D3B3175102730003F257 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324D3B2175102730003F257 /* AudioToolbox.framework */; };
 		5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */; };
 		532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EA4177D7DD1000D793F /* CoreText.framework */; };
-		532D720A1858BFD800ECBC97 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = 532D72091858BFD800ECBC97 /* JRSwizzle.m */; };
 		533255651892E29400D28C34 /* UATagHighlightTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 533255641892E29400D28C34 /* UATagHighlightTextStorage.m */; };
 		53350EC917B6A86300223662 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53350EC817B6A86300223662 /* Media.xcassets */; };
 		53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */; };
@@ -173,13 +172,10 @@
 		53D5C4D618412A720000CB86 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4D518412A720000CB86 /* libc++.dylib */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
-		53E915C218579A230025B465 /* NSError+UbiquityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E915BF18579A230025B465 /* NSError+UbiquityStoreManager.m */; };
-		53E915C318579A230025B465 /* UbiquityStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53E915C118579A230025B465 /* UbiquityStoreManager.m */; };
 		53F29548187845360021F6FC /* UAAnalytikController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F29547187845360021F6FC /* UAAnalytikController.m */; };
 		53F29555187855AB0021F6FC /* UASyncController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F29554187855AB0021F6FC /* UASyncController.m */; };
 		53F2955D18786B560021F6FC /* UASettingsAnalytikViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2955818786B560021F6FC /* UASettingsAnalytikViewController.m */; };
 		53F2955E18786B560021F6FC /* UASettingsDropboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2955A18786B560021F6FC /* UASettingsDropboxViewController.m */; };
-		53F2955F18786B560021F6FC /* UASettingsiCloudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F2955C18786B560021F6FC /* UASettingsiCloudViewController.m */; };
 		53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED118422B5B006736F5 /* TGRImageViewController.m */; };
 		53F78ED818422B5B006736F5 /* TGRImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 53F78ED218422B5B006736F5 /* TGRImageViewController.xib */; };
 		53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F78ED418422B5B006736F5 /* TGRImageZoomAnimationController.m */; };
@@ -207,8 +203,6 @@
 		5326A32417CFB74900B5F4A2 /* Diabetik_1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diabetik_1.2.xcdatamodel; sourceTree = "<group>"; };
 		5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_1.1_to_1.2.xcmappingmodel; sourceTree = "<group>"; };
 		532D0EA4177D7DD1000D793F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		532D72081858BFD800ECBC97 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
-		532D72091858BFD800ECBC97 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		532D720E1858FEC300ECBC97 /* Diabetik.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Diabetik.entitlements; sourceTree = "<group>"; };
 		533255631892E29400D28C34 /* UATagHighlightTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATagHighlightTextStorage.h; sourceTree = "<group>"; };
 		533255641892E29400D28C34 /* UATagHighlightTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATagHighlightTextStorage.m; sourceTree = "<group>"; };
@@ -489,10 +483,6 @@
 		53D5C4D518412A720000CB86 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		53E915BE18579A230025B465 /* NSError+UbiquityStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+UbiquityStoreManager.h"; sourceTree = "<group>"; };
-		53E915BF18579A230025B465 /* NSError+UbiquityStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+UbiquityStoreManager.m"; sourceTree = "<group>"; };
-		53E915C018579A230025B465 /* UbiquityStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UbiquityStoreManager.h; sourceTree = "<group>"; };
-		53E915C118579A230025B465 /* UbiquityStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UbiquityStoreManager.m; sourceTree = "<group>"; };
 		53F29546187845360021F6FC /* UAAnalytikController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAnalytikController.h; sourceTree = "<group>"; };
 		53F29547187845360021F6FC /* UAAnalytikController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAnalytikController.m; sourceTree = "<group>"; };
 		53F29553187855AB0021F6FC /* UASyncController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASyncController.h; sourceTree = "<group>"; };
@@ -501,8 +491,6 @@
 		53F2955818786B560021F6FC /* UASettingsAnalytikViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsAnalytikViewController.m; sourceTree = "<group>"; };
 		53F2955918786B560021F6FC /* UASettingsDropboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsDropboxViewController.h; sourceTree = "<group>"; };
 		53F2955A18786B560021F6FC /* UASettingsDropboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsDropboxViewController.m; sourceTree = "<group>"; };
-		53F2955B18786B560021F6FC /* UASettingsiCloudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsiCloudViewController.h; sourceTree = "<group>"; };
-		53F2955C18786B560021F6FC /* UASettingsiCloudViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsiCloudViewController.m; sourceTree = "<group>"; };
 		53F78ED018422B5B006736F5 /* TGRImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGRImageViewController.h; sourceTree = "<group>"; };
 		53F78ED118422B5B006736F5 /* TGRImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGRImageViewController.m; sourceTree = "<group>"; };
 		53F78ED218422B5B006736F5 /* TGRImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TGRImageViewController.xib; sourceTree = "<group>"; };
@@ -568,15 +556,6 @@
 				53240A82189534BB00AEA9E8 /* UATagTableViewCell.m */,
 			);
 			path = Cells;
-			sourceTree = "<group>";
-		};
-		532D72071858BFD800ECBC97 /* JRSwizzle */ = {
-			isa = PBXGroup;
-			children = (
-				532D72081858BFD800ECBC97 /* JRSwizzle.h */,
-				532D72091858BFD800ECBC97 /* JRSwizzle.m */,
-			);
-			path = JRSwizzle;
 			sourceTree = "<group>";
 		};
 		533255621892E1CA00D28C34 /* UI */ = {
@@ -706,8 +685,6 @@
 			children = (
 				53895257189FA10F00C8C3C8 /* Licensing */,
 				5389525E189FA12500C8C3C8 /* AppSoundEngine */,
-				532D72071858BFD800ECBC97 /* JRSwizzle */,
-				53E915BD18579A230025B465 /* UbiquityStoreManager */,
 				53F78ECF18422B5B006736F5 /* Vertigo */,
 				533F32491773266600AD89E2 /* OrderedDictionary */,
 				533F324C1773266600AD89E2 /* UIImage+Resize */,
@@ -1303,17 +1280,6 @@
 			path = Tags;
 			sourceTree = "<group>";
 		};
-		53E915BD18579A230025B465 /* UbiquityStoreManager */ = {
-			isa = PBXGroup;
-			children = (
-				53E915BE18579A230025B465 /* NSError+UbiquityStoreManager.h */,
-				53E915BF18579A230025B465 /* NSError+UbiquityStoreManager.m */,
-				53E915C018579A230025B465 /* UbiquityStoreManager.h */,
-				53E915C118579A230025B465 /* UbiquityStoreManager.m */,
-			);
-			path = UbiquityStoreManager;
-			sourceTree = "<group>";
-		};
 		53F295451878452A0021F6FC /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -1330,8 +1296,6 @@
 				53F2955818786B560021F6FC /* UASettingsAnalytikViewController.m */,
 				53F2955918786B560021F6FC /* UASettingsDropboxViewController.h */,
 				53F2955A18786B560021F6FC /* UASettingsDropboxViewController.m */,
-				53F2955B18786B560021F6FC /* UASettingsiCloudViewController.h */,
-				53F2955C18786B560021F6FC /* UASettingsiCloudViewController.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1573,9 +1537,7 @@
 				53895264189FA12500C8C3C8 /* VKRSAppSoundPlayer.m in Sources */,
 				533F34AB1773266600AD89E2 /* UAEventInputTextViewViewCell.m in Sources */,
 				533F34AC1773266600AD89E2 /* UAEventInputViewCell.m in Sources */,
-				53E915C218579A230025B465 /* NSError+UbiquityStoreManager.m in Sources */,
 				539664D21856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel in Sources */,
-				53F2955F18786B560021F6FC /* UASettingsiCloudViewController.m in Sources */,
 				533F34AF1773266600AD89E2 /* UAEventMapPin.m in Sources */,
 				533F34B01773266600AD89E2 /* UAEventMapViewController.m in Sources */,
 				533F34B11773266600AD89E2 /* UAActivityInputViewController.m in Sources */,
@@ -1618,7 +1580,6 @@
 				533F34D21773266600AD89E2 /* UACarbsChartViewController.m in Sources */,
 				533F34D31773266600AD89E2 /* UAChartViewController.m in Sources */,
 				533F34D41773266600AD89E2 /* UALeastSquareFitCalculator.m in Sources */,
-				532D720A1858BFD800ECBC97 /* JRSwizzle.m in Sources */,
 				533F34D51773266600AD89E2 /* UAScatterChartViewController.m in Sources */,
 				533F34D61773266600AD89E2 /* UAReportPreviewView.m in Sources */,
 				533F34D71773266600AD89E2 /* UAReportsViewController.m in Sources */,
@@ -1627,7 +1588,6 @@
 				53F29548187845360021F6FC /* UAAnalytikController.m in Sources */,
 				53240A89189547EB00AEA9E8 /* UABadgeView.m in Sources */,
 				533F34DA1773266600AD89E2 /* UASettingsBackupViewController.m in Sources */,
-				53E915C318579A230025B465 /* UbiquityStoreManager.m in Sources */,
 				5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */,
 				533F34DC1773266600AD89E2 /* UASettingsGlucoseViewController.m in Sources */,
 				533F34DD1773266600AD89E2 /* UASettingsLicensesViewController.m in Sources */,

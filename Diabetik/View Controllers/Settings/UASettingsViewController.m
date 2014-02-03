@@ -25,7 +25,6 @@
 #import "UASettingsGlucoseViewController.h"
 #import "UASettingsTimelineViewController.h"
 #import "UASettingsDropboxViewController.h"
-#import "UASettingsiCloudViewController.h"
 #import "UASettingsAnalytikViewController.h"
 #import "UASettingsBackupViewController.h"
 #import "UASettingsLicensesViewController.h"
