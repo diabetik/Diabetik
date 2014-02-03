@@ -176,9 +176,6 @@
 		53B53AF418672BE000773EE7 /* UASettingsTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
 		53BE89EE18983E650035CF4A /* UASettingsEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */; };
-		53D5C4C2184129840000CB86 /* Dropbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C1184129840000CB86 /* Dropbox.framework */; };
-		53D5C4C8184129EB0000CB86 /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4C4184129EB0000CB86 /* HockeySDK.framework */; };
-		53D5C4CA184129EB0000CB86 /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 53D5C4C7184129EB0000CB86 /* HockeySDKResources.bundle */; };
 		53D5C4D618412A720000CB86 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4D518412A720000CB86 /* libc++.dylib */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
@@ -507,10 +504,6 @@
 		53BE89EC18983E650035CF4A /* UASettingsEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsEntryViewController.h; sourceTree = "<group>"; };
 		53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsEntryViewController.m; sourceTree = "<group>"; };
 		53CDF9DF18772C6E00F5FA48 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		53D5C4C1184129840000CB86 /* Dropbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Dropbox.framework; sourceTree = "<group>"; };
-		53D5C4C4184129EB0000CB86 /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
-		53D5C4C6184129EB0000CB86 /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
-		53D5C4C7184129EB0000CB86 /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		53D5C4D518412A720000CB86 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -569,7 +562,6 @@
 				533F07451708B72300B7BF55 /* SystemConfiguration.framework in Frameworks */,
 				538FF35316FB115E002B4FC9 /* Accounts.framework in Frameworks */,
 				538FF35116FB1152002B4FC9 /* Social.framework in Frameworks */,
-				53D5C4C2184129840000CB86 /* Dropbox.framework in Frameworks */,
 				538DBA7C166F830300F0709F /* CoreGraphics.framework in Frameworks */,
 				53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */,
 				53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */,
@@ -579,7 +571,6 @@
 				530603A4167FCFFA00EFBE8B /* CoreLocation.framework in Frameworks */,
 				538DBA78166F830300F0709F /* UIKit.framework in Frameworks */,
 				538DBA7A166F830300F0709F /* Foundation.framework in Frameworks */,
-				53D5C4C8184129EB0000CB86 /* HockeySDK.framework in Frameworks */,
 				538DBA7E166F830300F0709F /* CoreData.framework in Frameworks */,
 				1DADC2BD9B3A453D97010A48 /* libPods.a in Frameworks */,
 			);
@@ -1274,8 +1265,6 @@
 				53F78EE518427791006736F5 /* ShinobiCharts.framework */,
 				53F78EE31842700C006736F5 /* libstdc++.6.0.9.dylib */,
 				53D5C4D518412A720000CB86 /* libc++.dylib */,
-				53D5C4C3184129EB0000CB86 /* HockeySDK.embeddedframework */,
-				53D5C4C1184129840000CB86 /* Dropbox.framework */,
 				539E1CD017B7FEDD0059ED17 /* Accelerate.framework */,
 				5354083817B7B90A008C64A4 /* StoreKit.framework */,
 				532D0EA4177D7DD1000D793F /* CoreText.framework */,
@@ -1350,24 +1339,6 @@
 				53AE05BF189459430078B408 /* UATagsViewController.m */,
 			);
 			path = Tags;
-			sourceTree = "<group>";
-		};
-		53D5C4C3184129EB0000CB86 /* HockeySDK.embeddedframework */ = {
-			isa = PBXGroup;
-			children = (
-				53D5C4C4184129EB0000CB86 /* HockeySDK.framework */,
-				53D5C4C5184129EB0000CB86 /* Resources */,
-			);
-			path = HockeySDK.embeddedframework;
-			sourceTree = "<group>";
-		};
-		53D5C4C5184129EB0000CB86 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				53D5C4C6184129EB0000CB86 /* HockeySDK.xcconfig */,
-				53D5C4C7184129EB0000CB86 /* HockeySDKResources.bundle */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		53E915BD18579A230025B465 /* UbiquityStoreManager */ = {
@@ -1529,7 +1500,6 @@
 				533F33041773266600AD89E2 /* OpenSans-Bold.ttf in Resources */,
 				533F33051773266600AD89E2 /* OpenSans-BoldItalic.ttf in Resources */,
 				53895268189FA19D00C8C3C8 /* Appirater-License.txt in Resources */,
-				53D5C4CA184129EB0000CB86 /* HockeySDKResources.bundle in Resources */,
 				533F33061773266600AD89E2 /* OpenSans-ExtraBold.ttf in Resources */,
 				533F33071773266600AD89E2 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 				533F33081773266600AD89E2 /* OpenSans-Italic.ttf in Resources */,

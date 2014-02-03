@@ -211,7 +211,7 @@
         medicine.amount = [valueFormatter numberFromString:self.amount];
         medicine.name = self.name;
         medicine.timestamp = self.date;
-        medicine.type = [NSNumber numberWithInt:self.type];
+        medicine.type = [NSNumber numberWithInteger:self.type];
         
         if(!notes.length) notes = nil;
         medicine.notes = notes;

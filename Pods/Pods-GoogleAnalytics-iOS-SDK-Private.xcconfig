@@ -1,6 +1,6 @@
 #include "Pods-GoogleAnalytics-iOS-SDK.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/GoogleAnalytics-iOS-SDK" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/ADNLogin" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/Appirater" "${PODS_ROOT}/Headers/GoogleAnalytics-iOS-SDK" "${PODS_ROOT}/Headers/MBProgressHUD" "${PODS_ROOT}/Headers/OvershareKit" "${PODS_ROOT}/Headers/PocketAPI" "${PODS_ROOT}/Headers/Reachability" "${PODS_ROOT}/Headers/SSKeychain" "${PODS_ROOT}/Headers/TPKeyboardAvoiding" ${PODS_GOOGLEANALYTICS_IOS_SDK_HEADER_SEARCH_PATHS}
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/GoogleAnalytics-iOS-SDK" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/ADNLogin" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/Appirater" "${PODS_ROOT}/Headers/Dropbox-Sync-API-SDK" "${PODS_ROOT}/Headers/GoogleAnalytics-iOS-SDK" "${PODS_ROOT}/Headers/HockeySDK" "${PODS_ROOT}/Headers/MBProgressHUD" "${PODS_ROOT}/Headers/OvershareKit" "${PODS_ROOT}/Headers/PocketAPI" "${PODS_ROOT}/Headers/Reachability" "${PODS_ROOT}/Headers/SSKeychain" "${PODS_ROOT}/Headers/TPKeyboardAvoiding" ${PODS_GOOGLEANALYTICS_IOS_SDK_HEADER_SEARCH_PATHS}
 LIBRARY_SEARCH_PATHS = ${PODS_GOOGLEANALYTICS_IOS_SDK_LIBRARY_SEARCH_PATHS}
 OTHER_LDFLAGS = -ObjC ${PODS_GOOGLEANALYTICS_IOS_SDK_OTHER_LDFLAGS}
 PODS_ROOT = ${SRCROOT}

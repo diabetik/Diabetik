@@ -1,5 +1,7 @@
 platform :ios, '7.0'
 
+pod 'Dropbox-Sync-API-SDK', '~> 2.0.3'
+pod 'HockeySDK', '~> 3.5.2'
 pod 'AFNetworking', '~> 2.0'
 pod 'OvershareKit', '~> 1.0.7'
 pod 'GoogleAnalytics-iOS-SDK', '~> 3.0.3'
