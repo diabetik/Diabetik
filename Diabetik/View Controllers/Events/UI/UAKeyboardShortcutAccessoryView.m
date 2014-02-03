@@ -48,9 +48,11 @@
         [self.photoButton setImage:[UIImage imageNamed:@"KeyboardShortcutPhotoIcon"] forState:UIControlStateNormal];
         [self.photoButton addTarget:self action:@selector(didPressButton:) forControlEvents:UIControlEventTouchUpInside];
         
+        /*
         self.shareButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 45.0f, 28.0f)];
         [self.shareButton setImage:[UIImage imageNamed:@"KeyboardShortcutShareIcon"] forState:UIControlStateNormal];
         [self.shareButton addTarget:self action:@selector(didPressButton:) forControlEvents:UIControlEventTouchUpInside];
+        */
         
         self.reminderButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 45.0f, 28.0f)];
         [self.reminderButton setImage:[UIImage imageNamed:@"KeyboardShortcutReminderIcon"] forState:UIControlStateNormal];
@@ -64,7 +66,7 @@
         [self.deleteButton setImage:[UIImage imageNamed:@"KeyboardShortcutDeleteIcon"] forState:UIControlStateNormal];
         [self.deleteButton addTarget:self action:@selector(didPressButton:) forControlEvents:UIControlEventTouchUpInside];
     
-        self.buttons = @[self.tagButton, self.photoButton, self.locationButton, self.reminderButton, self.shareButton, self.deleteButton];
+        self.buttons = @[self.tagButton, self.photoButton, self.locationButton, self.reminderButton, /*self.shareButton,*/ self.deleteButton];
     }
     return self;
 }

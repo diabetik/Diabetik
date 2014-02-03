@@ -11,12 +11,6 @@
 		5301AED5185A08A0005F4CF4 /* UACoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301AED4185A08A0005F4CF4 /* UACoreDataController.m */; };
 		5304B5BB18745DCF00184544 /* UATooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304B5BA18745DCF00184544 /* UATooltipView.m */; };
 		530603A4167FCFFA00EFBE8B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530603A3167FCFFA00EFBE8B /* CoreLocation.framework */; };
-		531D4D81184D372800ABAEC3 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D76184D372800ABAEC3 /* RECommonFunctions.m */; };
-		531D4D82184D372800ABAEC3 /* REFrostedContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D78184D372800ABAEC3 /* REFrostedContainerViewController.m */; };
-		531D4D83184D372800ABAEC3 /* REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D7A184D372800ABAEC3 /* REFrostedViewController.m */; };
-		531D4D84184D372800ABAEC3 /* UIImage+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D7C184D372800ABAEC3 /* UIImage+REFrostedViewController.m */; };
-		531D4D85184D372800ABAEC3 /* UIView+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D7E184D372800ABAEC3 /* UIView+REFrostedViewController.m */; };
-		531D4D86184D372800ABAEC3 /* UIViewController+REFrostedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 531D4D80184D372800ABAEC3 /* UIViewController+REFrostedViewController.m */; };
 		53240A83189534BB00AEA9E8 /* UATagTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53240A82189534BB00AEA9E8 /* UATagTableViewCell.m */; };
 		53240A89189547EB00AEA9E8 /* UABadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53240A88189547EB00AEA9E8 /* UABadgeView.m */; };
 		5324AFFD16DE8BE40004A30F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324AFFC16DE8BE30004A30F /* libz.dylib */; };
@@ -204,18 +198,6 @@
 		5304B5B918745DCF00184544 /* UATooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATooltipView.h; sourceTree = "<group>"; };
 		5304B5BA18745DCF00184544 /* UATooltipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATooltipView.m; sourceTree = "<group>"; };
 		530603A3167FCFFA00EFBE8B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		531D4D75184D372800ABAEC3 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
-		531D4D76184D372800ABAEC3 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
-		531D4D77184D372800ABAEC3 /* REFrostedContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedContainerViewController.h; sourceTree = "<group>"; };
-		531D4D78184D372800ABAEC3 /* REFrostedContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REFrostedContainerViewController.m; sourceTree = "<group>"; };
-		531D4D79184D372800ABAEC3 /* REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REFrostedViewController.h; sourceTree = "<group>"; };
-		531D4D7A184D372800ABAEC3 /* REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REFrostedViewController.m; sourceTree = "<group>"; };
-		531D4D7B184D372800ABAEC3 /* UIImage+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+REFrostedViewController.h"; sourceTree = "<group>"; };
-		531D4D7C184D372800ABAEC3 /* UIImage+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+REFrostedViewController.m"; sourceTree = "<group>"; };
-		531D4D7D184D372800ABAEC3 /* UIView+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+REFrostedViewController.h"; sourceTree = "<group>"; };
-		531D4D7E184D372800ABAEC3 /* UIView+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+REFrostedViewController.m"; sourceTree = "<group>"; };
-		531D4D7F184D372800ABAEC3 /* UIViewController+REFrostedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+REFrostedViewController.h"; sourceTree = "<group>"; };
-		531D4D80184D372800ABAEC3 /* UIViewController+REFrostedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+REFrostedViewController.m"; sourceTree = "<group>"; };
 		53240A81189534BB00AEA9E8 /* UATagTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATagTableViewCell.h; sourceTree = "<group>"; };
 		53240A82189534BB00AEA9E8 /* UATagTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATagTableViewCell.m; sourceTree = "<group>"; };
 		53240A87189547EB00AEA9E8 /* UABadgeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UABadgeView.h; sourceTree = "<group>"; };
@@ -579,25 +561,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		531D4D74184D372800ABAEC3 /* REFrostedViewController */ = {
-			isa = PBXGroup;
-			children = (
-				531D4D75184D372800ABAEC3 /* RECommonFunctions.h */,
-				531D4D76184D372800ABAEC3 /* RECommonFunctions.m */,
-				531D4D77184D372800ABAEC3 /* REFrostedContainerViewController.h */,
-				531D4D78184D372800ABAEC3 /* REFrostedContainerViewController.m */,
-				531D4D79184D372800ABAEC3 /* REFrostedViewController.h */,
-				531D4D7A184D372800ABAEC3 /* REFrostedViewController.m */,
-				531D4D7B184D372800ABAEC3 /* UIImage+REFrostedViewController.h */,
-				531D4D7C184D372800ABAEC3 /* UIImage+REFrostedViewController.m */,
-				531D4D7D184D372800ABAEC3 /* UIView+REFrostedViewController.h */,
-				531D4D7E184D372800ABAEC3 /* UIView+REFrostedViewController.m */,
-				531D4D7F184D372800ABAEC3 /* UIViewController+REFrostedViewController.h */,
-				531D4D80184D372800ABAEC3 /* UIViewController+REFrostedViewController.m */,
-			);
-			path = REFrostedViewController;
-			sourceTree = "<group>";
-		};
 		53240A7F189534A800AEA9E8 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -745,7 +708,6 @@
 				5389525E189FA12500C8C3C8 /* AppSoundEngine */,
 				532D72071858BFD800ECBC97 /* JRSwizzle */,
 				53E915BD18579A230025B465 /* UbiquityStoreManager */,
-				531D4D74184D372800ABAEC3 /* REFrostedViewController */,
 				53F78ECF18422B5B006736F5 /* Vertigo */,
 				533F32491773266600AD89E2 /* OrderedDictionary */,
 				533F324C1773266600AD89E2 /* UIImage+Resize */,
@@ -1600,7 +1562,6 @@
 				53AAE880189C22D000499991 /* UAKeyboardShortcutAccessoryView.m in Sources */,
 				533F347D1773266600AD89E2 /* UAHelper.m in Sources */,
 				537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */,
-				531D4D83184D372800ABAEC3 /* REFrostedViewController.m in Sources */,
 				53FE5FB1189EC0E6008AC334 /* UACategorySelectorButton.m in Sources */,
 				53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */,
 				53AAE883189C26CC00499991 /* UAKeyboardShortcutButton.m in Sources */,
@@ -1625,7 +1586,6 @@
 				533F34B31773266600AD89E2 /* UAInputBaseViewController.m in Sources */,
 				5304B5BB18745DCF00184544 /* UATooltipView.m in Sources */,
 				533F34B41773266600AD89E2 /* UAInputParentViewController.m in Sources */,
-				531D4D84184D372800ABAEC3 /* UIImage+REFrostedViewController.m in Sources */,
 				53A5D6BF1870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m in Sources */,
 				53895265189FA12500C8C3C8 /* VKRSSound.m in Sources */,
 				533F34B51773266600AD89E2 /* UAMealInputViewController.m in Sources */,
@@ -1661,7 +1621,6 @@
 				532D720A1858BFD800ECBC97 /* JRSwizzle.m in Sources */,
 				533F34D51773266600AD89E2 /* UAScatterChartViewController.m in Sources */,
 				533F34D61773266600AD89E2 /* UAReportPreviewView.m in Sources */,
-				531D4D86184D372800ABAEC3 /* UIViewController+REFrostedViewController.m in Sources */,
 				533F34D71773266600AD89E2 /* UAReportsViewController.m in Sources */,
 				533F34D81773266600AD89E2 /* UADateButton.m in Sources */,
 				533F34D91773266600AD89E2 /* UADatePickerController.m in Sources */,
@@ -1692,13 +1651,11 @@
 				533F355C17736C5500AD89E2 /* UAAutocompleteBar.m in Sources */,
 				533F355D17736C5500AD89E2 /* UAAutocompleteBarButton.m in Sources */,
 				53BE89EE18983E650035CF4A /* UASettingsEntryViewController.m in Sources */,
-				531D4D81184D372800ABAEC3 /* RECommonFunctions.m in Sources */,
 				533F356017736C5500AD89E2 /* UAInputLabel.m in Sources */,
 				533F356117736C5500AD89E2 /* UASlider.m in Sources */,
 				533F356217736C5500AD89E2 /* UAGenericTableHeaderView.m in Sources */,
 				53FE5FB4189EC455008AC334 /* UAEventInputCategoryViewCell.m in Sources */,
 				533F356317736C5500AD89E2 /* UAGenericTableViewCell.m in Sources */,
-				531D4D82184D372800ABAEC3 /* REFrostedContainerViewController.m in Sources */,
 				533F356517736C5500AD89E2 /* UAViewControllerMessageView.m in Sources */,
 				533F356617736C5500AD89E2 /* UAFont.m in Sources */,
 				53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */,
@@ -1708,7 +1665,6 @@
 				533F356917736C5500AD89E2 /* UANavigationController.m in Sources */,
 				533F356A17736C5500AD89E2 /* UATooltipViewController.m in Sources */,
 				533F356B17736C5500AD89E2 /* UACreditsTooltipView.m in Sources */,
-				531D4D85184D372800ABAEC3 /* UIView+REFrostedViewController.m in Sources */,
 				533F356C17736C5500AD89E2 /* UAExportTooltipView.m in Sources */,
 				533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */,
 				533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */,

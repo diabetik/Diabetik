@@ -135,7 +135,7 @@
     }
     else
     {
-        return [filename stringByAppendingString:@"Inactive.png"];
+        return [filename stringByAppendingString:@"Inactive"];
     }
 }
 

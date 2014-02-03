@@ -586,14 +586,6 @@
     {
         [self presentTagOptions:button];
     }
-    else if([button isEqual:[shortcutView shareButton]])
-    {
-        /*
-        OSKShareableContent *content = [OSKShareableContent contentFromMicroblogPost:@"Test post" authorName:@"Nial" canonicalURL:nil images:@[]];
-        OSKPresentationManager *m = [[OSKPresentationManager alloc] init];
-        [m presentActivitySheetForContent:content presentingViewController:self options:@{}];
-        */
-    }
 }
 
 #pragma mark - Accessors

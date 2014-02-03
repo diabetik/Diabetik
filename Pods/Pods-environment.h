@@ -6,12 +6,6 @@
 // project.
 
 
-// ADNLogin
-#define COCOAPODS_POD_AVAILABLE_ADNLogin
-#define COCOAPODS_VERSION_MAJOR_ADNLogin 2
-#define COCOAPODS_VERSION_MINOR_ADNLogin 1
-#define COCOAPODS_VERSION_PATCH_ADNLogin 0
-
 // AFNetworking
 #define COCOAPODS_POD_AVAILABLE_AFNetworking
 #define COCOAPODS_VERSION_MAJOR_AFNetworking 2
@@ -84,17 +78,11 @@
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 8
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 0
 
-// OvershareKit
-#define COCOAPODS_POD_AVAILABLE_OvershareKit
-#define COCOAPODS_VERSION_MAJOR_OvershareKit 1
-#define COCOAPODS_VERSION_MINOR_OvershareKit 0
-#define COCOAPODS_VERSION_PATCH_OvershareKit 7
-
-// PocketAPI
-#define COCOAPODS_POD_AVAILABLE_PocketAPI
-#define COCOAPODS_VERSION_MAJOR_PocketAPI 1
-#define COCOAPODS_VERSION_MINOR_PocketAPI 0
-#define COCOAPODS_VERSION_PATCH_PocketAPI 2
+// REFrostedViewController
+#define COCOAPODS_POD_AVAILABLE_REFrostedViewController
+#define COCOAPODS_VERSION_MAJOR_REFrostedViewController 2
+#define COCOAPODS_VERSION_MINOR_REFrostedViewController 4
+#define COCOAPODS_VERSION_PATCH_REFrostedViewController 2
 
 // Reachability
 #define COCOAPODS_POD_AVAILABLE_Reachability
