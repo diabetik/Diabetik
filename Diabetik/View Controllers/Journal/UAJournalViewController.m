@@ -202,6 +202,7 @@
                                                  fromDate:(NSDate *)[[objects lastObject] valueForKey:@"timestamp"]
                                                    toDate:[NSDate date]
                                                   options:0] month];
+        month++;
     }
     if(month < 6) month = 6;
     

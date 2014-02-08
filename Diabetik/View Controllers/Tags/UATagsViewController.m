@@ -21,6 +21,7 @@
 #import "UATagsViewController.h"
 #import "UATimelineViewController.h"
 
+#import "UATagController.h"
 #import "UATagTableViewCell.h"
 #import "UATag.h"
 
@@ -132,14 +133,14 @@
     {
         return _fetchedResultsController;
     }
-    
+    NSLog(@"%@", [[UATagController sharedInstance] fetchAllTags]);
     NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
     {
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         NSEntityDescription *entity = [NSEntityDescription entityForName:@"UATag" inManagedObjectContext:moc];
         [fetchRequest setEntity:entity];
-        [fetchRequest setFetchBatchSize:20];
+//        [fetchRequest setFetchBatchSize:20];
         
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
         NSArray *sortDescriptors = @[sortDescriptor];
