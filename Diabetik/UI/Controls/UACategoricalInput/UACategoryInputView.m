@@ -59,16 +59,12 @@
 #pragma mark - Logic
 - (void)didTapSelectorButton:(UACategorySelectorButton *)button
 {
-    if(self.delegate && [self.delegate respondsToSelector:@selector(categoryInputView:willShowOptions:)])
-    {
-        [self.delegate categoryInputView:self willShowOptions:self.categories];
-    }
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+    UAActionSheet *actionSheet = [[UAActionSheet alloc] initWithTitle:nil
                                                              delegate:self
                                                     cancelButtonTitle:nil
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:nil];
+    actionSheet.acceptsFirstResponder = NO;
     
     for(NSString *category in self.categories)
     {

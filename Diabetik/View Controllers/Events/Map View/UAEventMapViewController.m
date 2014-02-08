@@ -61,6 +61,11 @@
     
     mapView.frame = self.view.frame;
     [self positionPin:location];
+    
+    UIColor *tintColor = kDefaultTintColor;
+    [self.navigationController.navigationBar setTintColor:tintColor];
+    [self.navigationController.navigationBar setShadowImage:nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]}];
 }
 - (void)viewWillLayoutSubviews
 {

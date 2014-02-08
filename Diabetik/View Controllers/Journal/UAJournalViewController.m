@@ -71,19 +71,20 @@
         [dateFormatter setDateFormat:@"MMMM yyyy"];
         
         // Notifications
-        settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSignificantSettingsChangeNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+        settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSettingsChangedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            NSLog(@"settings changed!!! :-)");
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf reloadViewData:note];
         }];
         
         // Menu items
-        UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
+        UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
         [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
         
         // Don't setup our menu bar button item for iPad users, as this is handled by our UISplitViewControllerDelegate
         if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
         {
-            UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconListMenu.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showSideMenu:)];
+            UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconListMenu"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showSideMenu:)];
             [self.navigationItem setLeftBarButtonItem:menuBarButtonItem animated:NO];
         }
         
@@ -231,12 +232,9 @@
 }
 - (void)refreshView
 {
-    if(isVisible)
-    {
-        [self.tableView reloadData];
-        
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-    }
+    [self.tableView reloadData];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
 }
 - (void)reloadViewData:(NSNotification *)note
 {

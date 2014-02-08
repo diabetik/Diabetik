@@ -41,9 +41,18 @@
 - (BOOL)isPresentedModally;
 - (void)panGestureRecognized:(UIPanGestureRecognizer *)sender;
 
+// Keyboard notifications
+- (void)keyboardWillBeShown:(NSNotification *)aNotification;
+- (void)keyboardWasShown:(NSNotification *)aNotification;
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification;
+- (void)keyboardWasHidden:(NSNotification *)aNotification;
+
 // Notifications
 - (void)coreDataDidChange:(NSNotification *)note;
 - (void)iCloudDataDidChange:(NSNotification *)note;
+
+// Helpers
+- (NSTimeInterval)keyboardAnimationDurationForNotification:(NSNotification *)notification;
 
 // Helpers
 - (UIView *)dismissableView;
@@ -58,11 +67,5 @@
 
 // Setup
 - (id)initWithStyle:(UITableViewStyle)style;
-
-// Logic
-- (void)keyboardWillBeShown:(NSNotification*)aNotification;
-- (void)keyboardWasShown:(NSNotification*)aNotification;
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification;
-- (void)keyboardWasHidden:(NSNotification*)aNotification;
 
 @end

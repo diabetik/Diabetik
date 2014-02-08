@@ -228,43 +228,9 @@
 {
     return [UIImage imageNamed:@"MealNavBarBG"];
 }
-
-#pragma mark - Social helpers
-- (NSString *)facebookSocialMessageText
+- (UIColor *)tintColor
 {
-    if(name && [name length])
-    {
-        if(grams > 0)
-        {
-            NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
-            
-            return [NSString stringWithFormat:NSLocalizedString(@"Yum! I just ate %@ with %@ grams and recorded it with Diabetik", nil), name, [valueFormatter stringFromNumber:[NSNumber numberWithDouble:grams]]];
-        }
-        else
-        {
-            return [NSString stringWithFormat:NSLocalizedString(@"Yum! I just ate %@ and recorded it with Diabetik", nil), name];
-        }
-    }
-    
-    return [super twitterSocialMessageText];
-}
-- (NSString *)twitterSocialMessageText
-{
-    if(name && [name length])
-    {
-        if(grams > 0)
-        {
-            NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
-            
-            return [NSString stringWithFormat:NSLocalizedString(@"Yum! I just ate %@ with %@ grams and recorded it with @diabetikapp", nil), name, [valueFormatter stringFromNumber:[NSNumber numberWithDouble:grams]]];
-        }
-        else
-        {
-            return [NSString stringWithFormat:NSLocalizedString(@"Yum! I just ate %@ and recorded it with @diabetikapp", nil), name];
-        }
-    }
-    
-    return [super twitterSocialMessageText];
+    return [UIColor colorWithRed:254.0f/255.0f green:201.0f/255.0f blue:105.0f/255.0f alpha:1.0f];
 }
 
 #pragma mark - UITableViewDatasource methods

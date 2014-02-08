@@ -197,7 +197,7 @@
     }];
     settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSettingsChangedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        
+
         [strongSelf reloadViewData:note];
     }];
 }
@@ -239,8 +239,6 @@
         [self.addEntryPopoverController dismissPopoverAnimated:YES];
     }
     self.addEntryPopoverController = nil;
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)dealloc
 {

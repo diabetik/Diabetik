@@ -61,8 +61,6 @@
 - (void)presentAddReminder:(id)sender;
 - (void)presentMediaOptions:(id)sender;
 - (void)presentGeotagOptions:(id)sender;
-- (void)presentTweetComposer:(id)sender;
-- (void)presentFacebookComposer:(id)sender;
 - (void)updateNavigationBar;
 
 @end

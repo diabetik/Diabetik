@@ -25,7 +25,6 @@
 @protocol UACategoryInputViewDelegate <NSObject>
 
 @optional
-- (void)categoryInputView:(UACategoryInputView *)categoryInputView willShowOptions:(NSArray *)options;
 - (void)categoryInputView:(UACategoryInputView *)categoryInputView didSelectOption:(NSUInteger)index;
 
 @end

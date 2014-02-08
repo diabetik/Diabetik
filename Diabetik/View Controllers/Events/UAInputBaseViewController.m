@@ -40,23 +40,7 @@
         self.currentPhotoPath = nil;
         self.lat = nil, self.lon = nil;
         self.date = [NSDate date];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWasShown:)
-                                                     name:UIKeyboardDidShowNotification
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillBeShown:)
-                                                     name:UIKeyboardWillShowNotification
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillBeHidden:)
-                                                     name:UIKeyboardWillHideNotification
-                                                   object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWasHidden:)
-                                                     name:UIKeyboardDidHideNotification
-                                                   object:nil];
+        self.view.tintColor = [self tintColor];
         
         dummyNotesTextView = [[UANotesTextView alloc] initWithFrame:CGRectZero];
         dummyNotesTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
@@ -123,7 +107,6 @@
     [super viewWillAppear:animated];
     
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-//    [self didBecomeActive:NO];
 }
 - (void)viewWillLayoutSubviews
 {
@@ -205,6 +188,16 @@
 }
 - (void)updateKeyboardShortcutButtons
 {
+    [self.keyboardShortcutAccessoryView.tagButton setEnabled:NO];
+    if(self.activeControlIndexPath)
+    {
+        UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:self.activeControlIndexPath];
+        if([cell.control isKindOfClass:[UANotesTextView class]])
+        {
+            [self.keyboardShortcutAccessoryView.tagButton setEnabled:YES];
+        }
+    }
+    
     if((self.event && [self.event.lat doubleValue] != 0.0 && [self.event.lon doubleValue] != 0.0) || ([self.lat doubleValue] != 0.0 && [self.lon doubleValue] != 0.0))
     {
         [self.keyboardShortcutAccessoryView.locationButton setImage:[UIImage imageNamed:@"KeyboardShortcutLocationActiveIcon"] forState:UIControlStateNormal];
@@ -226,10 +219,10 @@
 }
 
 #pragma mark - UI
-- (void)didBecomeActive:(BOOL)editing
+- (void)didBecomeActive
 {
     [self updateKeyboardShortcutButtons];
-    NSLog(@"Active");
+    
     if(!self.activeControlIndexPath)
     {
         self.activeControlIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
@@ -250,19 +243,13 @@
 {
     [self.view endEditing:YES];
 }
-- (UIImage *)navigationBarBackgroundImage
+- (UIColor *)tintColor
 {
     return nil;
 }
-
-#pragma mark - Social helpers
-- (NSString *)facebookSocialMessageText
+- (UIImage *)navigationBarBackgroundImage
 {
-    return NSLocalizedString(@"I love Diabetik! It's a great way to track my diabetes.", nil);
-}
-- (NSString *)twitterSocialMessageText
-{
-    return NSLocalizedString(@"I love @diabetikapp! It's a great way to track my diabetes.", nil);
+    return nil;
 }
 
 #pragma mark - UITableViewDelegate methods
@@ -281,6 +268,7 @@
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textView.tag inSection:0];
     
     [textView reloadInputViews];
+    [self updateKeyboardShortcutButtons];
 }
 - (void)textViewDidChange:(UITextView *)textView
 {
@@ -314,6 +302,8 @@
 {
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
     [textField reloadInputViews];
+    
+    [self updateKeyboardShortcutButtons];
 }
 
 #pragma mark - UAAutocompleteBarDelegate methods
@@ -368,13 +358,18 @@
     }
     cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:self.activeControlIndexPath];
     
-    UITextField *activeTextField = (UITextField *)cell.control;
-    activeTextField.text = [activeTextField.text stringByAppendingString:@"#"];
+    if([cell.control isKindOfClass:[UANotesTextView class]])
+    {
+        UANotesTextView *activeTextField = (UANotesTextView *)cell.control;
+        activeTextField.text = [activeTextField.text stringByAppendingString:@"#"];
+    }
 }
 
 #pragma mark - Metadata management
 - (void)requestCurrentLocation
 {
+    [self.keyboardShortcutAccessoryView.locationButton showActivityIndicator:YES];
+    
     __weak __typeof(self)weakSelf = self;
     [[UALocationController sharedInstance] fetchUserLocationWithSuccess:^(CLLocation *location) {
         __strong __typeof(weakSelf)strongSelf = weakSelf;
@@ -383,8 +378,12 @@
         strongSelf.lon = [NSNumber numberWithDouble:location.coordinate.longitude];
         
         [strongSelf updateKeyboardShortcutButtons];
+        [strongSelf.keyboardShortcutAccessoryView.locationButton showActivityIndicator:NO];
         
     } failure:^(NSError *error) {
+        __strong __typeof(weakSelf)strongSelf = weakSelf;
+        
+        [strongSelf.keyboardShortcutAccessoryView.locationButton showActivityIndicator:NO];
     }];
 }
 - (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType
@@ -445,6 +444,8 @@
         }
         else if(buttonIndex == 1)
         {
+            [self.view endEditing:YES];
+            
             CLLocation *location = [[CLLocation alloc] initWithLatitude:[self.lat doubleValue] longitude:[self.lon doubleValue]];
             UAEventMapViewController *vc = [[UAEventMapViewController alloc] initWithLocation:location];
             [self.navigationController pushViewController:vc animated:YES];
@@ -466,6 +467,8 @@
             }
             else if(buttonIndex == 1)
             {
+                [self.view endEditing:YES];
+                
                 UIImage *image = [[UAMediaController sharedInstance] imageWithFilename:self.currentPhotoPath];
                 if(image)
                 {
@@ -478,6 +481,11 @@
         }
         else
         {
+            if(buttonIndex != actionSheet.cancelButtonIndex && buttonIndex != actionSheet.destructiveButtonIndex)
+            {
+                [self.view endEditing:YES];
+            }
+            
             if(buttonIndex == 0)
             {
                 [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];

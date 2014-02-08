@@ -62,8 +62,8 @@
     [super drawRect:rect];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:189.0f/255.0f green:189.0f/255.0f blue:189.0f/255.0f alpha:1.0f].CGColor);
-    CGContextSetLineWidth(context, 1.0);
+    CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:232.0f/255.0f green:234.0f/255.0f blue:235.0f/255.0f alpha:1.0f].CGColor);
+    CGContextSetLineWidth(context, 2.0);
     CGContextMoveToPoint(context, 0,0);
     CGContextAddLineToPoint(context, 0.0f, self.bounds.size.height);
     

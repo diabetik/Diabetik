@@ -21,5 +21,10 @@
 #import <UIKit/UIKit.h>
 
 @interface UAKeyboardShortcutButton : UIButton
+@property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 @property (nonatomic, strong) UIImageView *fullsizeImageView;
+
+#pragma mark - Logic
+- (void)showActivityIndicator:(BOOL)state;
+
 @end

@@ -212,31 +212,13 @@
     
     cell.control.tag = indexPath.row;
 }
-
-#pragma mark - UI
 - (UIImage *)navigationBarBackgroundImage
 {
     return [UIImage imageNamed:@"ActivityNavBarBG"];
 }
-
-#pragma mark - Social helpers
-- (NSString *)facebookSocialMessageText
+- (UIColor *)tintColor
 {
-    if(minutes && [minutes length] && name && [name length])
-    {
-        return [NSString stringWithFormat:NSLocalizedString(@"I just spent %@ minutes %@ and tracked it with Diabetik", nil), minutes, name];
-    }
-    
-    return [super twitterSocialMessageText];
-}
-- (NSString *)twitterSocialMessageText
-{
-    if(minutes && [minutes length] && name && [name length])
-    {
-        return [NSString stringWithFormat:NSLocalizedString(@"I just spent %@ minutes %@ and tracked it with @diabetikapp", nil), minutes, name];
-    }
-    
-    return [super twitterSocialMessageText];
+    return [UIColor colorWithRed:127.0f/255.0f green:192.0f/255.0f blue:241.0f/255.0f alpha:1.0f];
 }
 
 #pragma mark - UITableViewDatasource methods

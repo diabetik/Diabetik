@@ -25,13 +25,12 @@
 @end
 
 @implementation UAKeyboardShortcutAccessoryView
-
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectMake(0, 0, 320.0f, 44.0f);
+    frame = CGRectMake(0, 0, 320.0f, 38.0f);
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor whiteColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.clipsToBounds = YES;
         self.showingAutocompleteBar = NO;
@@ -39,6 +38,7 @@
         self.buttonContainer = [[UIView alloc] initWithFrame:frame];
         self.buttonContainer.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         [self addSubview:self.buttonContainer];
+        
         
         self.tagButton = [[UAKeyboardShortcutButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 45.0f, 28.0f)];
         [self.tagButton setImage:[UIImage imageNamed:@"KeyboardShortcutTagIcon"] forState:UIControlStateNormal];

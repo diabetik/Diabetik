@@ -34,6 +34,9 @@
 #define kIconTag 6
 
 @interface UAMedicineInputViewController ()
+{
+    BOOL isFetchingSmartInputPrediction;
+}
 @end
 
 @implementation UAMedicineInputViewController
@@ -76,7 +79,7 @@
     self = [self init];
     if(self)
     {
-        _amount = [amount stringValue];
+        _amount = [NSString stringWithFormat:@"%0.2f", [amount doubleValue]];
     }
     
     return self;
@@ -85,6 +88,8 @@
 {
     [super viewDidLoad];
     
+    isFetchingSmartInputPrediction = NO;
+    
     [self.tableView registerClass:[UAEventInputTextViewViewCell class] forCellReuseIdentifier:@"UAEventInputTextViewViewCell"];
     [self.tableView registerClass:[UAEventInputTextFieldViewCell class] forCellReuseIdentifier:@"UAEventTextFieldViewCell"];
     [self.tableView registerClass:[UAEventInputCategoryViewCell class] forCellReuseIdentifier:@"UAEventInputCategoryViewCell"];
@@ -92,11 +97,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
-    
+
     if(![self event] && moc && isFirstLoad)
     {
         if([[NSUserDefaults standardUserDefaults] boolForKey:kUseSmartInputKey])
         {
+            isFetchingSmartInputPrediction = YES;
+            
             // Because the user may have other entry screens open we need to
             // create temporary UAMedicine objects so that
             // they can be factored into the Smart Input calculation
@@ -125,49 +132,60 @@
                 
                 strongSelf.name = [event name];
                 strongSelf.type = [[event type] integerValue];
-                usingSmartInput = YES;
-                
+
                 dispatch_async(dispatch_get_main_queue(), ^{
                     __strong typeof(weakSelf) strongSelf = weakSelf;
+                    
+                    usingSmartInput = YES;
+                    isFetchingSmartInputPrediction = NO;
                     
                     [strongSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
                                                 withRowAnimation:UITableViewRowAnimationNone];
                     
                     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
                     UAEventInputViewCell *cell = (UAEventInputViewCell *)[strongSelf.tableView cellForRowAtIndexPath:indexPath];
-                    [cell.control becomeFirstResponder];
+                    [[(UACategoryInputView *)cell.control textField] becomeFirstResponder];
                 });
                 
             } failure:^{
-                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     __strong typeof(weakSelf) strongSelf = weakSelf;
+                    
+                    isFetchingSmartInputPrediction = NO;
                     
                     UAEventInputViewCell *cell = (UAEventInputViewCell *)[strongSelf.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
                     [cell.control becomeFirstResponder];
                 });
             }];
         }
+        else
+        {
+            self.activeControlIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        }
     }
     
     [super viewWillAppear:animated];
 }
-- (void)didBecomeActive:(BOOL)editing
+- (void)didBecomeActive
 {
-    if(!self.activeControlIndexPath)
+    [self updateKeyboardShortcutButtons];
+    
+    if(!isFetchingSmartInputPrediction && !self.activeControlIndexPath)
     {
-        self.activeControlIndexPath = [NSIndexPath indexPathForRow:usingSmartInput ? 1 : 0 inSection:0];
+        self.activeControlIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     }
     
-    UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:self.activeControlIndexPath];
-    
-    if([cell.control isKindOfClass:[UACategoryInputView class]])
+    if(self.activeControlIndexPath)
     {
-        [[(UACategoryInputView *)cell.control textField] becomeFirstResponder];
-    }
-    else
-    {
-        [cell.control becomeFirstResponder];
+        UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:self.activeControlIndexPath];
+        if([cell.control isKindOfClass:[UACategoryInputView class]])
+        {
+            [[(UACategoryInputView *)cell.control textField] becomeFirstResponder];
+        }
+        else
+        {
+            [cell.control becomeFirstResponder];
+        }
     }
     
     self.activeView = YES;
@@ -249,30 +267,6 @@
     
     return nil;
 }
-- (void)selectType:(UIButton *)sender
-{
-    /*
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
-    
-    UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    if(cell)
-    {
-        UAKeyboardAccessoryView *accessoryView = (UAKeyboardAccessoryView *)cell.control.inputAccessoryView;
-        NSArray *controls = [(UASuggestionBar *)[accessoryView.contentView.subviews objectAtIndex:0] suggestions];
-        for(id control in controls)
-        {
-            if([control isKindOfClass:[UAAutocompleteBarButton class]])
-            {
-                [(UAAutocompleteBarButton *)control setSelected:NO];
-            }
-        }
-    }
-    
-    [sender setSelected:YES];
-    self.type = sender.tag;
-    */
-}
 
 #pragma mark - UI
 - (void)changeDate:(id)sender
@@ -351,33 +345,13 @@
     
     cell.control.tag = indexPath.row;
 }
-
-#pragma mark - UI
 - (UIImage *)navigationBarBackgroundImage
 {
     return [UIImage imageNamed:@"MedicineNavBarBG"];
 }
-
-#pragma mark - Social helpers
-- (NSString *)facebookSocialMessageText
+- (UIColor *)tintColor
 {
-    if(self.name && [self.name length] && self.amount && [self.amount length])
-    {
-        NSString *typeHR = [[UAEventController sharedInstance] medicineTypeHR:self.type];
-        return [NSString stringWithFormat:NSLocalizedString(@"I just took %@ %@ of %@ and recorded it with Diabetik", nil), self.amount, typeHR, self.name];
-    }
-    
-    return [super twitterSocialMessageText];
-}
-- (NSString *)twitterSocialMessageText
-{
-    if(self.name && [self.name length] && self.amount && [self.amount length])
-    {
-        NSString *typeHR = [[UAEventController sharedInstance] medicineTypeHR:self.type];
-        return [NSString stringWithFormat:NSLocalizedString(@"I just took %@ %@ of %@ and recorded it with @diabetikapp", nil), self.amount, typeHR, self.name];
-    }
-    
-    return [super twitterSocialMessageText];
+    return [UIColor colorWithRed:192.0f/255.0f green:138.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
 }
 
 #pragma mark - UITableViewDatasource methods

@@ -202,11 +202,13 @@
     }
     cell.control.tag = indexPath.row;
 }
-
-#pragma mark - UI
 - (UIImage *)navigationBarBackgroundImage
 {
     return [UIImage imageNamed:@"NoteNavBarBG"];
+}
+- (UIColor *)tintColor
+{
+    return [UIColor colorWithRed:105.0f/255.0f green:224.0f/255.0f blue:150.0f/255.0f alpha:1.0f];
 }
 
 #pragma mark - UITableViewDatasource methods

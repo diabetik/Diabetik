@@ -71,7 +71,7 @@
 - (id)initWithEvent:(UAEvent *)aEvent;
 
 // Logic
-- (void)didBecomeActive:(BOOL)editing;
+- (void)didBecomeActive;
 - (void)willBecomeInactive;
 - (void)discardChanges;
 - (NSError *)validationError;
@@ -81,13 +81,10 @@
 // UI
 - (void)triggerDeleteEvent:(id)sender;
 - (UIImage *)navigationBarBackgroundImage;
+- (UIColor *)tintColor;
 
 // Metadata
 - (void)requestCurrentLocation;
 - (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType;
-
-// Social helpers
-- (NSString *)facebookSocialMessageText;
-- (NSString *)twitterSocialMessageText;
 
 @end

@@ -50,6 +50,19 @@
                                                      name:USMStoreDidChangeNotification
                                                    object:nil];
         */
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWasShown:)
+                                                     name:UIKeyboardDidShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillBeShown:)
+                                                     name:UIKeyboardWillShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWillBeHidden:)
+                                                     name:UIKeyboardWillHideNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(keyboardWasHidden:)
+                                                     name:UIKeyboardDidHideNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(coreDataDidChange:)
                                                      name:NSManagedObjectContextDidSaveNotification
@@ -152,6 +165,24 @@
     return NO;
 }
 
+#pragma mark - Keyboard notifications
+- (void)keyboardWillBeShown:(NSNotification *)aNotification
+{
+    // STUB
+}
+- (void)keyboardWasShown:(NSNotification *)aNotification
+{
+    // STUB
+}
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification
+{
+    // STUB
+}
+- (void)keyboardWasHidden:(NSNotification *)aNotification
+{
+    // STUB
+}
+
 #pragma mark - Notifications
 - (void)coreDataDidChange:(NSNotification *)note
 {
@@ -182,6 +213,15 @@
     }
     
     return dismissableOverlayView;
+}
+- (NSTimeInterval)keyboardAnimationDurationForNotification:(NSNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    NSValue *value = [info objectForKey: UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval duration = 0;
+    [value getValue:&duration];
+    
+    return duration;
 }
 
 #pragma mark - Autorotation
@@ -233,19 +273,6 @@
     if(self)
     {
         tableStyle = style;
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWasShown:)
-                                                     name:UIKeyboardDidShowNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillBeShown:)
-                                                     name:UIKeyboardWillShowNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWillBeHidden:)
-                                                     name:UIKeyboardWillHideNotification object:nil];
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(keyboardWasHidden:)
-                                                     name:UIKeyboardDidHideNotification object:nil];
          
         UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconBack.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
         [self.navigationItem setBackBarButtonItem:backBarButtonItem];
@@ -302,24 +329,6 @@
 
     self.tableView.contentInset = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
     self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(self.topLayoutGuide.length, 0.0f, 0.0f, 0.0f);
-}
-
-#pragma mark - Logic
-- (void)keyboardWillBeShown:(NSNotification*)aNotification
-{
-    // STUB
-}
-- (void)keyboardWasShown:(NSNotification*)aNotification
-{
-    // STUB
-}
-- (void)keyboardWillBeHidden:(NSNotification*)aNotification
-{
-    // STUB
-}
-- (void)keyboardWasHidden:(NSNotification*)aNotification
-{
-    // STUB
 }
 
 #pragma mark - UITableViewDataSource methods

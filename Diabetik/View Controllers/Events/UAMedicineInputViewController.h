@@ -32,9 +32,6 @@
 // Setup
 - (id)initWithAmount:(NSNumber *)amount;
 
-// Logic
-- (void)selectType:(UIButton *)sender;
-
 // UI
 - (void)changeDate:(id)sender;
 - (void)configureAppearanceForTableViewCell:(UAEventInputViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;

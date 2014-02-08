@@ -535,18 +535,8 @@
     
     self.activeControlIndexPath = nil;
 }
-- (void)keyboardWillBeShown:(NSNotification *)aNotification
-{
-    [super keyboardWillBeShown:aNotification];
-    
-    [self.tableView scrollToRowAtIndexPath:self.activeControlIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-}
 
 #pragma mark - UACategoryInputViewDelegate methods
-- (void)categoryInputView:(UACategoryInputView *)categoryInputView willShowOptions:(NSArray *)options
-{
-    [self.view endEditing:YES];
-}
 - (void)categoryInputView:(UACategoryInputView *)categoryInputView didSelectOption:(NSUInteger)index
 {
     triggerIntervalType = index;

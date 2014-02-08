@@ -251,25 +251,9 @@
 {
     return [UIImage imageNamed:@"ReadingNavBarBG"];
 }
-
-#pragma mark - Social helpers
-- (NSString *)facebookSocialMessageText
+- (UIColor *)tintColor
 {
-    if(value && [value length])
-    {
-        return [NSString stringWithFormat:NSLocalizedString(@"I just recorded a blood glucose reading of %@ with Diabetik", nil), value];
-    }
-    
-    return [super twitterSocialMessageText];
-}
-- (NSString *)twitterSocialMessageText
-{
-    if(value && [value length])
-    {
-        return [NSString stringWithFormat:NSLocalizedString(@"I just recorded a blood glucose reading of %@ with @diabetikapp", nil), value];
-    }
-    
-    return [super twitterSocialMessageText];
+    return [UIColor colorWithRed:254.0f/255.0f green:96.0f/255.0f blue:111.0f/255.0f alpha:1.0f];
 }
 
 #pragma mark - UITableViewDatasource methods

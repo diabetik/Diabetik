@@ -95,7 +95,6 @@ static NSString * const kAnalytikUseStagingServerKey = @"kAnalytikUseStagingServ
 
 // Notifications
 static NSString * const kRemindersUpdatedNotification = @"com.uglyapps.reminders.updated";
-static NSString * const kSignificantSettingsChangeNotification = @"com.uglyapps.settings.change";
 static NSString * const kSettingsChangedNotification = @"com.uglyapps.settings.change";
 static NSString * const kDropboxLinkNotification = @"com.uglyapps.dropbox.linked";
 static NSString * const kRunKeeperLinkNotification = @"com.uglyapps.runkeeper.linked";

@@ -34,7 +34,7 @@
         
         self.clipsToBounds = YES;
         self.backgroundColor = [UIColor whiteColor];
-        self.imageView.tintColor = [UIColor redColor];
+        self.adjustsImageWhenDisabled = NO;
     }
     return self;
 }
@@ -51,6 +51,25 @@
         self.backgroundColor = [UIColor whiteColor];
     }
 }
+- (void)setEnabled:(BOOL)enabled
+{
+    [super setEnabled:enabled];
+    self.alpha = enabled ? 1.0f : 0.35f;
+}
+- (void)showActivityIndicator:(BOOL)state
+{
+    [[self imageView] setHidden:state];
+    [[self activityIndicatorView] setHidden:!state];
+    
+    if(state)
+    {
+        [[self activityIndicatorView] startAnimating];
+    }
+    else
+    {
+        [[self activityIndicatorView] stopAnimating];
+    }
+}
 
 #pragma mark - Accessors
 - (UIImageView *)fullsizeImageView
@@ -60,11 +79,26 @@
         _fullsizeImageView = [[UIImageView alloc] initWithFrame:self.bounds];
         _fullsizeImageView.contentMode = UIViewContentModeScaleAspectFill;
         _fullsizeImageView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        
         [self insertSubview:_fullsizeImageView aboveSubview:self.imageView];
     }
     
     return _fullsizeImageView;
+}
+- (UIActivityIndicatorView *)activityIndicatorView
+{
+    if(!_activityIndicatorView)
+    {
+        _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithFrame:self.bounds];
+        _activityIndicatorView.hidden = NO;
+        _activityIndicatorView.backgroundColor = [UIColor clearColor];
+        _activityIndicatorView.color = [UIColor blackColor];
+        _activityIndicatorView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        _activityIndicatorView.userInteractionEnabled = NO;
+        _activityIndicatorView.hidesWhenStopped = YES;
+        [self insertSubview:_activityIndicatorView aboveSubview:self.imageView];
+    }
+    
+    return _activityIndicatorView;
 }
 
 @end

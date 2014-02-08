@@ -423,13 +423,6 @@
     
     return cell;
 }
-- (void)keyboardWillBeShown:(NSNotification *)aNotification
-{
-    [super keyboardWillBeShown:aNotification];
-    
-    [self.tableView scrollToRowAtIndexPath:activeIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-}
-
 #pragma mark - UITextFieldDelegate methods
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {

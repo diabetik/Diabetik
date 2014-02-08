@@ -233,12 +233,8 @@
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenAddDragUIHint];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-}
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     
-    [self activateTargetViewController];
+    [self performSelector:@selector(activateTargetViewController) withObject:nil afterDelay:0.0f];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -261,12 +257,6 @@
         }
         self.viewControllers = nil;
     }
-}
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    
-    self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
 }
 
 #pragma mark - Logic
@@ -465,22 +455,21 @@
 - (void)activateTargetViewController
 {
     UAInputBaseViewController *targetVC = [self targetViewController];
-    
-    BOOL currentlyEditing = NO;
-    for(UAInputBaseViewController *vc in self.viewControllers)
+    if(targetVC)
     {
-        if([vc activeView])
+        for(UAInputBaseViewController *vc in self.viewControllers)
         {
-            currentlyEditing = YES;
-           
-            [vc willBecomeInactive];
+            if([vc activeView])
+            {
+                [vc willBecomeInactive];
+            }
         }
+        [targetVC didBecomeActive];
+        NSLog(@"Target: %@", targetVC);
+        
+        [self updateNavigationBar];
+        [targetVC updateKeyboardShortcutButtons];
     }
-    [targetVC didBecomeActive:currentlyEditing];
-    NSLog(@"Target: %@", targetVC);
-    
-    [self updateNavigationBar];
-    [targetVC updateKeyboardShortcutButtons];
 }
 - (void)handleBack:(id)sender
 {
@@ -515,10 +504,10 @@
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
     UAInputBaseViewController *targetVC = [self targetViewController];
-    UIActionSheet *actionSheet = nil;
+    UAActionSheet *actionSheet = nil;
     if(targetVC.currentPhotoPath)
     {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+        actionSheet = [[UAActionSheet alloc] initWithTitle:nil
                                                   delegate:targetVC
                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                     destructiveButtonTitle:NSLocalizedString(@"Remove photo", nil)
@@ -527,7 +516,7 @@
     }
     else
     {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+        actionSheet = [[UAActionSheet alloc] initWithTitle:nil
                                                   delegate:targetVC
                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                     destructiveButtonTitle:nil
@@ -535,6 +524,7 @@
         actionSheet.tag = kImageActionSheetTag;
     }
     
+    actionSheet.acceptsFirstResponder = NO;
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     [actionSheet showInView:self.view];
 }
@@ -545,12 +535,13 @@
     UAInputBaseViewController *targetVC = [self targetViewController];
     if((self.event && [self.event.lat doubleValue] != 0.0 && [self.event.lon doubleValue] != 0.0) || ([targetVC.lat doubleValue] != 0.0 && [targetVC.lon doubleValue] != 0.0))
     {
-        UIActionSheet *actionSheet = nil;
-        actionSheet = [[UIActionSheet alloc] initWithTitle:nil
+        UAActionSheet *actionSheet = nil;
+        actionSheet = [[UAActionSheet alloc] initWithTitle:nil
                                                   delegate:targetVC
                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                     destructiveButtonTitle:NSLocalizedString(@"Remove", nil)
                                          otherButtonTitles:NSLocalizedString(@"View on map", nil), NSLocalizedString(@"Update location", nil), nil];
+        actionSheet.acceptsFirstResponder = NO;
         actionSheet.tag = kGeotagActionSheetTag;
         actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
         [actionSheet showInView:self.view];
@@ -565,76 +556,6 @@
         alertView.tag = kGeoTagAlertViewTag;
         [alertView show];
     }
-}
-- (void)presentTweetComposer:(id)sender
-{
-    [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
-    
-    UAInputBaseViewController *targetVC = [self targetViewController];
-    
-    SLComposeViewController *tweetComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
-    [tweetComposerSheet setInitialText:[targetVC twitterSocialMessageText]];
-    if(targetVC.currentPhotoPath)
-    {
-        [tweetComposerSheet addImage:[[UAMediaController sharedInstance] imageWithFilename:targetVC.currentPhotoPath]];
-    }
-    
-    __weak typeof(self) weakSelf = self;
-    [tweetComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-        switch (result) {
-            case SLComposeViewControllerResultCancelled:
-                break;
-            case SLComposeViewControllerResultDone:
-            {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Tweet sent", nil)
-                                                                    message:NSLocalizedString(@"Your tweet has been sent", nil)
-                                                                   delegate:nil cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                          otherButtonTitles:nil];
-                [alertView show];
-            }
-                break;
-            default:
-                break;
-        }
-        
-        [weakSelf dismissViewControllerAnimated:YES completion:nil];
-    }];
-    [self presentViewController:tweetComposerSheet animated:YES completion:nil];
-}
-- (void)presentFacebookComposer:(id)sender
-{
-    [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
-    
-    UAInputBaseViewController *targetVC = [self targetViewController];
-    
-    SLComposeViewController *facebookComposerSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeFacebook];
-    [facebookComposerSheet setInitialText:[targetVC facebookSocialMessageText]];
-    if(targetVC.currentPhotoPath)
-    {
-        [facebookComposerSheet addImage:[[UAMediaController sharedInstance] imageWithFilename:targetVC.currentPhotoPath]];
-    }
-    
-    __weak typeof(self) weakSelf = self;
-    [facebookComposerSheet setCompletionHandler:^(SLComposeViewControllerResult result) {
-        switch (result) {
-            case SLComposeViewControllerResultCancelled:
-                break;
-            case SLComposeViewControllerResultDone:
-            {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Update sent", nil)
-                                                                    message:NSLocalizedString(@"Your Facebook update has been sent", nil)
-                                                                   delegate:nil cancelButtonTitle:NSLocalizedString(@"Okay", nil)
-                                                          otherButtonTitles:nil];
-                [alertView show];
-            }
-                break;
-            default:
-                break;
-        }
-        
-        [weakSelf dismissViewControllerAnimated:YES completion:nil];
-    }];
-    [self presentViewController:facebookComposerSheet animated:YES completion:nil];
 }
 - (void)updateNavigationBar
 {
@@ -653,13 +574,6 @@
         [titleView.pageControl setCurrentPage:page];
         self.navigationItem.titleView = titleView;
     }
-    else if(targetVC.event && targetVC.event.externalSource)
-    {
-        UANavSubtitleHeaderView *titleView = [[UANavSubtitleHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 200.0f, 44.0f)];
-        [titleView setTitle:targetVC.title];
-        [titleView setSubtitle:self.event.externalSource];
-        self.navigationItem.titleView = titleView;
-    }
     else
     {
         self.navigationItem.title = targetVC.title;
@@ -670,6 +584,8 @@
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)aScrollView
 {
+    isAddingQuickEntry = NO;
+    isAnimatingAddEntry = NO;
     originalContentOffset = aScrollView.contentOffset;
     
     addEntryBubbleImageView.frame = CGRectMake(self.view.bounds.size.width - addEntryBubbleImageView.frame.size.width, self.scrollView.frame.size.height/2.0f - addEntryBubbleImageView.frame.size.height/2.0f, addEntryBubbleImageView.frame.size.width, addEntryBubbleImageView.frame.size.height);
@@ -731,6 +647,7 @@
     CGFloat offsetX = [self.viewControllers count] > 1 ? aScrollView.contentOffset.x - ([self.viewControllers count]-1)*aScrollView.frame.size.width : aScrollView.contentOffset.x;
     if(fabsf(scrollVelocity.x) < 150.0f && offsetX > kDragBuffer && [self.viewControllers count] < 8)
     {
+        NSLog(@"Did add");
         isAddingQuickEntry = YES;
         
         if(offsetX-kDragBuffer < 20.0f)
@@ -767,12 +684,14 @@
 }
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)aScrollView
 {
+    NSLog(@"scrollViewDidEndScrollingAnimation");
     isAnimatingAddEntry = NO;
     isAddingQuickEntry = NO;
     [self activateTargetViewController];
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView
 {
+    NSLog(@"scrollViewDidEndDecelerating");
     if(!isAddingQuickEntry && !isAnimatingAddEntry)
     {
         [self activateTargetViewController];
@@ -803,6 +722,32 @@
     UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
     nvc.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:nvc animated:YES completion:nil];
+}
+
+#pragma mark - Keyboard handling
+
+- (void)keyboardWillBeShown:(NSNotification *)aNotification
+{
+    [UIView animateWithDuration:[self keyboardAnimationDurationForNotification:aNotification] animations:^{
+        CGSize kbSize = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+        self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length- kbSize.height);
+    } completion:^(BOOL finished) {
+    }];
+}
+- (void)keyboardWasShown:(NSNotification *)aNotification
+{
+    [UIView animateWithDuration: [self keyboardAnimationDurationForNotification:aNotification] animations:^{
+        CGSize kbSize = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+        self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length- kbSize.height);
+    } completion:^(BOOL finished) {
+    }];
+}
+- (void)keyboardWillBeHidden:(NSNotification *)aNotification
+{
+    [UIView animateWithDuration: [self keyboardAnimationDurationForNotification:aNotification] animations:^{
+        self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
+    } completion:^(BOOL finished) {
+    }];
 }
 
 #pragma mark - Helpers

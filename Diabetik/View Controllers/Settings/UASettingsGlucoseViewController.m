@@ -45,8 +45,6 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSignificantSettingsChangeNotification object:nil];
 }
 - (void)minSliderValueChanged:(UISlider *)sender
 {
