@@ -97,8 +97,6 @@
                 dispatch_group_enter(dispatchGroup);
                 [self syncBackupWithCompletionHandler:^{
                     dispatch_group_leave(dispatchGroup);
-                    
-                    NSLog(@"Sync'd backup");
                 }];
             }
             if(analyticRequiresSync)
@@ -106,8 +104,6 @@
                 dispatch_group_enter(dispatchGroup);
                 [self syncAnalytikWithCompletionHandler:^{
                     dispatch_group_leave(dispatchGroup);
-                    
-                    NSLog(@"Sync'd Analytik");
                 }];
             }
         });
@@ -130,7 +126,6 @@
         [[NSUserDefaults standardUserDefaults] setInteger:timestamp forKey:kLastBackupTimestamp];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        NSLog(@"No error: %@", error);
         if(completionBlock) completionBlock();
     }];
 }
@@ -148,9 +143,7 @@
     {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             
-            NSLog(@"Attemping Analytik sync from date: %@", syncFromDate);
             [[self analytikController] syncFromDate:syncFromDate success:^{
-                NSLog(@"Analytik sync was successful");
                 
                 [[NSUserDefaults standardUserDefaults] setInteger:[[NSDate date] timeIntervalSince1970] forKey:kAnalytikLastSyncTimestampKey];
                 [[NSUserDefaults standardUserDefaults] synchronize];
@@ -158,8 +151,6 @@
                 if(completionBlock) completionBlock();
                 
             } failure:^(NSError *error) {
-                NSLog(@"Analytik sync failed: %@", [error localizedDescription]);
-                
                 if(completionBlock) completionBlock();
             }];
             

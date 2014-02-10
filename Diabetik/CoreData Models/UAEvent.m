@@ -57,7 +57,6 @@
         
         if(shouldUpdateLastSyncTS)
         {
-            NSLog(@"Setting last sync timestamp to: %@", [self timestamp]);
             [[NSUserDefaults standardUserDefaults] setInteger:[[self timestamp] timeIntervalSince1970] forKey:kAnalytikLastSyncTimestampKey];
         }
     }

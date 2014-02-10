@@ -465,7 +465,6 @@
             }
         }
         [targetVC didBecomeActive];
-        NSLog(@"Target: %@", targetVC);
         
         [self updateNavigationBar];
         [targetVC updateKeyboardShortcutButtons];
@@ -647,7 +646,6 @@
     CGFloat offsetX = [self.viewControllers count] > 1 ? aScrollView.contentOffset.x - ([self.viewControllers count]-1)*aScrollView.frame.size.width : aScrollView.contentOffset.x;
     if(fabsf(scrollVelocity.x) < 150.0f && offsetX > kDragBuffer && [self.viewControllers count] < 8)
     {
-        NSLog(@"Did add");
         isAddingQuickEntry = YES;
         
         if(offsetX-kDragBuffer < 20.0f)
@@ -684,14 +682,12 @@
 }
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)aScrollView
 {
-    NSLog(@"scrollViewDidEndScrollingAnimation");
     isAnimatingAddEntry = NO;
     isAddingQuickEntry = NO;
     [self activateTargetViewController];
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)aScrollView
 {
-    NSLog(@"scrollViewDidEndDecelerating");
     if(!isAddingQuickEntry && !isAnimatingAddEntry)
     {
         [self activateTargetViewController];
@@ -731,7 +727,6 @@
     [UIView animateWithDuration:[self keyboardAnimationDurationForNotification:aNotification] animations:^{
         CGSize kbSize = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
         self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length- kbSize.height);
-        NSLog(@"%@", NSStringFromCGSize(kbSize));
     } completion:^(BOOL finished) {
     }];
 }

@@ -21,7 +21,6 @@
 		53350EC917B6A86300223662 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53350EC817B6A86300223662 /* Media.xcassets */; };
 		53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */; };
 		533D9D8918A0FC1300CE6104 /* UAActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 533D9D8818A0FC1300CE6104 /* UAActionSheet.m */; };
-		533D9D8B18A1273E00CE6104 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533D9D8A18A1273E00CE6104 /* Reveal.framework */; };
 		533F07431708B71700B7BF55 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07421708B71700B7BF55 /* CFNetwork.framework */; };
 		533F07451708B72300B7BF55 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07441708B72300B7BF55 /* SystemConfiguration.framework */; };
 		533F32E91773266600AD89E2 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F302A1773266500AD89E2 /* NSDate+Extension.m */; };
@@ -212,7 +211,6 @@
 		53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		533D9D8718A0FC1300CE6104 /* UAActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAActionSheet.h; sourceTree = "<group>"; };
 		533D9D8818A0FC1300CE6104 /* UAActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAActionSheet.m; sourceTree = "<group>"; };
-		533D9D8A18A1273E00CE6104 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		533F07421708B71700B7BF55 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		533F07441708B72300B7BF55 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		533F30291773266500AD89E2 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
@@ -526,7 +524,6 @@
 				53AE05D81894815D0078B408 /* AdSupport.framework in Frameworks */,
 				53F78EE41842700D006736F5 /* libstdc++.6.0.9.dylib in Frameworks */,
 				53D5C4D618412A720000CB86 /* libc++.dylib in Frameworks */,
-				533D9D8B18A1273E00CE6104 /* Reveal.framework in Frameworks */,
 				539E1CD117B7FEDD0059ED17 /* Accelerate.framework in Frameworks */,
 				5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */,
 				533F07431708B71700B7BF55 /* CFNetwork.framework in Frameworks */,
@@ -689,7 +686,6 @@
 		533F32211773266600AD89E2 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				533D9D8A18A1273E00CE6104 /* Reveal.framework */,
 				53895257189FA10F00C8C3C8 /* Licensing */,
 				5389525E189FA12500C8C3C8 /* AppSoundEngine */,
 				53F78ECF18422B5B006736F5 /* Vertigo */,

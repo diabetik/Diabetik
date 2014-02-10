@@ -119,7 +119,7 @@
             }
         }
     }
-    NSLog(@"%@", tags);
+    
     return [NSArray arrayWithArray:tags];
 }
 - (NSArray *)fetchExistingTagsWithStrings:(NSArray *)strings

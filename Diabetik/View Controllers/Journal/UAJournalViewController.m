@@ -72,7 +72,6 @@
         
         // Notifications
         settingsChangeNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kSettingsChangedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            NSLog(@"settings changed!!! :-)");
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [strongSelf reloadViewData:note];
         }];
