@@ -24,11 +24,10 @@
 #import "MBProgressHUD.h"
 
 @interface UASettingsAnalytikViewController ()
-{
-    UITextField *usernameTextField, *passwordTextField;
-    
-    BOOL isLoggedIn;
-}
+@property (nonatomic, strong) UITextField *usernameTextField, *passwordTextField;
+@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) UITextView *headerInfoTextView;
+@property (nonatomic, assign) BOOL isLoggedIn;
 
 // Logic
 - (void)performLogin;
@@ -45,44 +44,71 @@
     {
         self.title = NSLocalizedString(@"Analytik", nil);
         
-        usernameTextField = [[UITextField alloc] initWithFrame:CGRectZero];
-        usernameTextField.placeholder = NSLocalizedString(@"Email", nil);
-        usernameTextField.keyboardType = UIKeyboardTypeEmailAddress;
-        usernameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        usernameTextField.returnKeyType = UIReturnKeyNext;
-        usernameTextField.delegate = self;
+        _usernameTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _usernameTextField.placeholder = NSLocalizedString(@"Email", nil);
+        _usernameTextField.keyboardType = UIKeyboardTypeEmailAddress;
+        _usernameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        _usernameTextField.returnKeyType = UIReturnKeyNext;
+        _usernameTextField.delegate = self;
         
-        passwordTextField = [[UITextField alloc] initWithFrame:CGRectZero];
-        passwordTextField.placeholder = NSLocalizedString(@"Password", nil);
-        passwordTextField.secureTextEntry = YES;
-        passwordTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-        passwordTextField.returnKeyType = UIReturnKeyDone;
-        passwordTextField.delegate = self;
+        _passwordTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _passwordTextField.placeholder = NSLocalizedString(@"Password", nil);
+        _passwordTextField.secureTextEntry = YES;
+        _passwordTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+        _passwordTextField.returnKeyType = UIReturnKeyDone;
+        _passwordTextField.delegate = self;
         
-        isLoggedIn = [[[UASyncController sharedInstance] analytikController] activeAccount] ? YES : NO;
+        _isLoggedIn = [[[UASyncController sharedInstance] analytikController] activeAccount] ? YES : NO;
     }
     return self;
 }
-
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.headerView = [[UIView alloc] initWithFrame:CGRectZero];
+    //self.headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.headerView.backgroundColor = [UIColor redColor];
+    
+    self.headerInfoTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    self.headerInfoTextView.text = NSLocalizedString(@"Free personal diabetes analytics\n\nFind patterns in your blood sugar, better understand your diabetes and support research.", nil);
+    self.headerInfoTextView.font = [UAFont standardRegularFontWithSize:16.0f];
+    self.headerInfoTextView.backgroundColor = [UIColor clearColor];
+    self.headerInfoTextView.editable = NO;
+    [self.headerView addSubview:self.headerInfoTextView];
+    
+    self.tableView.tableHeaderView = self.headerView;
+}
+- (void)viewWillLayoutSubviews
+{
+    [super viewWillLayoutSubviews];
+    
+    self.headerView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 100.0f);
+    self.headerInfoTextView.frame = CGRectMake(16.0f, 0.0f, self.view.bounds.size.width-32.0f, 100.0f);
+    
+}
 #pragma mark - Logic
 - (void)performLogin
 {
     [self.view endEditing:YES];
     
-    if(usernameTextField.text.length && passwordTextField.text.length)
+    if(self.usernameTextField.text.length && self.passwordTextField.text.length)
     {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
+        __weak typeof(self) weakSelf = self;
+        
         UAAnalytikController *controller = [[UASyncController sharedInstance] analytikController];
-        [controller authorizeWithCredentials:@{@"email": usernameTextField.text, @"password": passwordTextField.text} success:^{
+        [controller authorizeWithCredentials:@{@"email": self.usernameTextField.text, @"password": self.passwordTextField.text} success:^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
-            isLoggedIn = YES;
-            [self.tableView reloadData];
+            strongSelf.isLoggedIn = YES;
+            [strongSelf.tableView reloadData];
             
-            usernameTextField.text = @"";
-            passwordTextField.text = @"";
+            strongSelf.usernameTextField.text = @"";
+            strongSelf.passwordTextField.text = @"";
             
             // Force a sync operation
             [[UASyncController sharedInstance] syncAnalytikWithCompletionHandler:nil];
@@ -130,9 +156,9 @@
 #pragma mark - UITextFieldDelegate methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if([textField isEqual:usernameTextField])
+    if([textField isEqual:self.usernameTextField])
     {
-        [passwordTextField becomeFirstResponder];
+        [self.passwordTextField becomeFirstResponder];
     }
     else
     {
@@ -149,7 +175,7 @@
     [aTableView deselectRowAtIndexPath:indexPath animated:YES];
     
     UAAnalytikController *controller = [[UASyncController sharedInstance] analytikController];
-    if(isLoggedIn)
+    if(self.isLoggedIn)
     {
         if(indexPath.section == 0)
         {
@@ -167,7 +193,7 @@
             {
                 [controller destroyCredentials];
                 
-                isLoggedIn = NO;
+                self.isLoggedIn = NO;
                 [aTableView reloadData];
             }
         }
@@ -184,7 +210,7 @@
 #pragma mark - UITableViewDataSource methods
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView
 {
-    if(isLoggedIn)
+    if(self.isLoggedIn)
     {
         return 1;
     }
@@ -193,7 +219,7 @@
 }
 - (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    if(isLoggedIn)
+    if(self.isLoggedIn)
     {
         return 2;
     }
@@ -209,7 +235,7 @@
 }
 - (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
 {
-    if(isLoggedIn)
+    if(self.isLoggedIn)
     {
         if(section == 0)
         {
@@ -245,7 +271,7 @@
 {
     UITableViewCell *cell = nil;
     
-    if(isLoggedIn)
+    if(self.isLoggedIn)
     {
         cell = [aTableView dequeueReusableCellWithIdentifier:@"UASettingCell"];
         if (cell == nil)
@@ -280,11 +306,11 @@
                 
                 if(indexPath.row == 0)
                 {
-                    cell.accessoryView = usernameTextField;
+                    cell.accessoryView = self.usernameTextField;
                 }
                 else if(indexPath.row == 1)
                 {
-                    cell.accessoryView = passwordTextField;
+                    cell.accessoryView = self.passwordTextField;
                 }
             }
             else
@@ -294,7 +320,7 @@
                 {
                     cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UASettingCell"];
                 }
-                cell.textLabel.text = NSLocalizedString(@"Send to staging server", nil);
+                cell.textLabel.text = @"Send to staging server";
                 
                 UISwitch *switchControl = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, 50, 44)];
                 [switchControl addTarget:self action:@selector(toggleStagingServer:) forControlEvents:UIControlEventTouchUpInside];
@@ -311,7 +337,7 @@
                 cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UASettingCell"];
             }
             
-            cell.textLabel.text = @"Login";
+            cell.textLabel.text = NSLocalizedString(@"Login", nil);
             cell.accessoryView = nil;
             cell.textLabel.textAlignment = NSTextAlignmentCenter;
         }

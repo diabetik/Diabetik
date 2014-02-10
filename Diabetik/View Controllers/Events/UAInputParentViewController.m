@@ -731,6 +731,7 @@
     [UIView animateWithDuration:[self keyboardAnimationDurationForNotification:aNotification] animations:^{
         CGSize kbSize = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
         self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length- kbSize.height);
+        NSLog(@"%@", NSStringFromCGSize(kbSize));
     } completion:^(BOOL finished) {
     }];
 }

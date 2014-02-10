@@ -155,10 +155,9 @@
         if(event.tags.count)
         {
             NSSet *existingEventTags = [event.tags copy];
-            for (NSManagedObject *tag in existingEventTags)
+            for (UATag *tag in existingEventTags)
             {
                 [[event mutableSetValueForKey:@"tags"] removeObject:tag];
-                [moc deleteObject:tag];
             }
         }
         

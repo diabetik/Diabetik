@@ -641,13 +641,13 @@
     {
         UAInputParentViewController *vc = [[UAInputParentViewController alloc] initWithEvent:(UAEvent *)object];
         
-        if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        /*if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
         {
             UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
             nvc.modalPresentationStyle = UIModalPresentationFormSheet;
             [self presentViewController:nvc animated:YES completion:nil];
         }
-        else
+        else*/
         {
             [self.navigationController pushViewController:vc animated:YES];
         }
