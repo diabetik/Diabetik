@@ -58,8 +58,6 @@
 		533F347D1773266600AD89E2 /* UAHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F31F01773266600AD89E2 /* UAHelper.m */; };
 		533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F324B1773266600AD89E2 /* OrderedDictionary.m */; };
 		533F34A41773266600AD89E2 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F324E1773266600AD89E2 /* UIImage+Resize.m */; };
-		533F34A81773266600AD89E2 /* UAAddEntryModalButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F325B1773266600AD89E2 /* UAAddEntryModalButton.m */; };
-		533F34A91773266600AD89E2 /* UAAddEntryModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F325D1773266600AD89E2 /* UAAddEntryModalView.m */; };
 		533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32611773266600AD89E2 /* UAEventInputTextFieldViewCell.m */; };
 		533F34AB1773266600AD89E2 /* UAEventInputTextViewViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32631773266600AD89E2 /* UAEventInputTextViewViewCell.m */; };
 		533F34AC1773266600AD89E2 /* UAEventInputViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32651773266600AD89E2 /* UAEventInputViewCell.m */; };
@@ -166,6 +164,11 @@
 		53AAE883189C26CC00499991 /* UAKeyboardShortcutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AAE882189C26CC00499991 /* UAKeyboardShortcutButton.m */; };
 		53AE05C0189459430078B408 /* UATagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE05BF189459430078B408 /* UATagsViewController.m */; };
 		53AE05D81894815D0078B408 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AE05D71894815D0078B408 /* AdSupport.framework */; };
+		53AFAA2118A90E7B00E65168 /* UAAddEntryiPadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFAA1818A90E7B00E65168 /* UAAddEntryiPadView.m */; };
+		53AFAA2218A90E7B00E65168 /* UAAddEntryModaliPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFAA1B18A90E7B00E65168 /* UAAddEntryModaliPadButton.m */; };
+		53AFAA2318A90E7B00E65168 /* UAAddEntryModalButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFAA1E18A90E7B00E65168 /* UAAddEntryModalButton.m */; };
+		53AFAA2418A90E7B00E65168 /* UAAddEntryModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFAA2018A90E7B00E65168 /* UAAddEntryModalView.m */; };
+		53AFAA2618A90E9700E65168 /* FXBlurView-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53AFAA2518A90E9700E65168 /* FXBlurView-License.txt */; };
 		53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5284818717597004E7F01 /* UAAddEntryListViewController.m */; };
 		53B53AF418672BE000773EE7 /* UASettingsTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
@@ -273,10 +276,6 @@
 		533F324B1773266600AD89E2 /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 		533F324D1773266600AD89E2 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		533F324E1773266600AD89E2 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		533F325A1773266600AD89E2 /* UAAddEntryModalButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryModalButton.h; sourceTree = "<group>"; };
-		533F325B1773266600AD89E2 /* UAAddEntryModalButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryModalButton.m; sourceTree = "<group>"; };
-		533F325C1773266600AD89E2 /* UAAddEntryModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryModalView.h; sourceTree = "<group>"; };
-		533F325D1773266600AD89E2 /* UAAddEntryModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryModalView.m; sourceTree = "<group>"; };
 		533F32601773266600AD89E2 /* UAEventInputTextFieldViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputTextFieldViewCell.h; sourceTree = "<group>"; };
 		533F32611773266600AD89E2 /* UAEventInputTextFieldViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputTextFieldViewCell.m; sourceTree = "<group>"; };
 		533F32621773266600AD89E2 /* UAEventInputTextViewViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputTextViewViewCell.h; sourceTree = "<group>"; };
@@ -475,6 +474,15 @@
 		53AE05BF189459430078B408 /* UATagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATagsViewController.m; sourceTree = "<group>"; };
 		53AE05D71894815D0078B408 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		53AE668A178727D800DE66D9 /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		53AFAA1718A90E7B00E65168 /* UAAddEntryiPadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryiPadView.h; sourceTree = "<group>"; };
+		53AFAA1818A90E7B00E65168 /* UAAddEntryiPadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryiPadView.m; sourceTree = "<group>"; };
+		53AFAA1A18A90E7B00E65168 /* UAAddEntryModaliPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryModaliPadButton.h; sourceTree = "<group>"; };
+		53AFAA1B18A90E7B00E65168 /* UAAddEntryModaliPadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryModaliPadButton.m; sourceTree = "<group>"; };
+		53AFAA1D18A90E7B00E65168 /* UAAddEntryModalButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryModalButton.h; sourceTree = "<group>"; };
+		53AFAA1E18A90E7B00E65168 /* UAAddEntryModalButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryModalButton.m; sourceTree = "<group>"; };
+		53AFAA1F18A90E7B00E65168 /* UAAddEntryModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryModalView.h; sourceTree = "<group>"; };
+		53AFAA2018A90E7B00E65168 /* UAAddEntryModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryModalView.m; sourceTree = "<group>"; };
+		53AFAA2518A90E9700E65168 /* FXBlurView-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "FXBlurView-License.txt"; sourceTree = "<group>"; };
 		53B5284718717597004E7F01 /* UAAddEntryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryListViewController.h; sourceTree = "<group>"; };
 		53B5284818717597004E7F01 /* UAAddEntryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryListViewController.m; sourceTree = "<group>"; };
 		53B53AF218672BE000773EE7 /* UASettingsTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsTextViewCell.h; sourceTree = "<group>"; };
@@ -736,10 +744,8 @@
 		533F32591773266600AD89E2 /* Add Entry */ = {
 			isa = PBXGroup;
 			children = (
-				533F325A1773266600AD89E2 /* UAAddEntryModalButton.h */,
-				533F325B1773266600AD89E2 /* UAAddEntryModalButton.m */,
-				533F325C1773266600AD89E2 /* UAAddEntryModalView.h */,
-				533F325D1773266600AD89E2 /* UAAddEntryModalView.m */,
+				53AFAA1618A90E7B00E65168 /* iPad */,
+				53AFAA1C18A90E7B00E65168 /* iPhone */,
 				53B5284718717597004E7F01 /* UAAddEntryListViewController.h */,
 				53B5284818717597004E7F01 /* UAAddEntryListViewController.m */,
 			);
@@ -1162,6 +1168,7 @@
 		53895257189FA10F00C8C3C8 /* Licensing */ = {
 			isa = PBXGroup;
 			children = (
+				53AFAA2518A90E9700E65168 /* FXBlurView-License.txt */,
 				5389526A189FA1D000C8C3C8 /* Reachability-License.txt */,
 				53895266189FA19D00C8C3C8 /* Appirater-License.txt */,
 				53895267189FA19D00C8C3C8 /* MBProgressHUD-License.txt */,
@@ -1283,6 +1290,36 @@
 				53AE05BF189459430078B408 /* UATagsViewController.m */,
 			);
 			path = Tags;
+			sourceTree = "<group>";
+		};
+		53AFAA1618A90E7B00E65168 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				53AFAA1718A90E7B00E65168 /* UAAddEntryiPadView.h */,
+				53AFAA1818A90E7B00E65168 /* UAAddEntryiPadView.m */,
+				53AFAA1918A90E7B00E65168 /* UI */,
+			);
+			path = iPad;
+			sourceTree = "<group>";
+		};
+		53AFAA1918A90E7B00E65168 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				53AFAA1A18A90E7B00E65168 /* UAAddEntryModaliPadButton.h */,
+				53AFAA1B18A90E7B00E65168 /* UAAddEntryModaliPadButton.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		53AFAA1C18A90E7B00E65168 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				53AFAA1D18A90E7B00E65168 /* UAAddEntryModalButton.h */,
+				53AFAA1E18A90E7B00E65168 /* UAAddEntryModalButton.m */,
+				53AFAA1F18A90E7B00E65168 /* UAAddEntryModalView.h */,
+				53AFAA2018A90E7B00E65168 /* UAAddEntryModalView.m */,
+			);
+			path = iPhone;
 			sourceTree = "<group>";
 		};
 		53F295451878452A0021F6FC /* Services */ = {
@@ -1441,6 +1478,7 @@
 				53895269189FA19D00C8C3C8 /* MBProgressHUD-License.txt in Resources */,
 				533F330D1773266600AD89E2 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				53350EC917B6A86300223662 /* Media.xcassets in Resources */,
+				53AFAA2618A90E9700E65168 /* FXBlurView-License.txt in Resources */,
 				533F34761773266600AD89E2 /* notification.caf in Resources */,
 				5389525C189FA10F00C8C3C8 /* AppSoundEngine-License.txt in Resources */,
 				53F78ED818422B5B006736F5 /* TGRImageViewController.xib in Resources */,
@@ -1535,9 +1573,8 @@
 				53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */,
 				53AAE883189C26CC00499991 /* UAKeyboardShortcutButton.m in Sources */,
 				533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */,
+				53AFAA2118A90E7B00E65168 /* UAAddEntryiPadView.m in Sources */,
 				533F34A41773266600AD89E2 /* UIImage+Resize.m in Sources */,
-				533F34A81773266600AD89E2 /* UAAddEntryModalButton.m in Sources */,
-				533F34A91773266600AD89E2 /* UAAddEntryModalView.m in Sources */,
 				533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */,
 				53895264189FA12500C8C3C8 /* VKRSAppSoundPlayer.m in Sources */,
 				533F34AB1773266600AD89E2 /* UAEventInputTextViewViewCell.m in Sources */,
@@ -1550,6 +1587,7 @@
 				53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */,
 				533F34B21773266600AD89E2 /* UABGInputViewController.m in Sources */,
 				53FE5FAE189EC077008AC334 /* UACategoryInputView.m in Sources */,
+				53AFAA2418A90E7B00E65168 /* UAAddEntryModalView.m in Sources */,
 				533F34B31773266600AD89E2 /* UAInputBaseViewController.m in Sources */,
 				5304B5BB18745DCF00184544 /* UATooltipView.m in Sources */,
 				533F34B41773266600AD89E2 /* UAInputParentViewController.m in Sources */,
@@ -1623,6 +1661,7 @@
 				53FE5FB4189EC455008AC334 /* UAEventInputCategoryViewCell.m in Sources */,
 				533F356317736C5500AD89E2 /* UAGenericTableViewCell.m in Sources */,
 				533F356517736C5500AD89E2 /* UAViewControllerMessageView.m in Sources */,
+				53AFAA2218A90E7B00E65168 /* UAAddEntryModaliPadButton.m in Sources */,
 				533F356617736C5500AD89E2 /* UAFont.m in Sources */,
 				53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */,
 				534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */,
@@ -1630,6 +1669,7 @@
 				533F356817736C5500AD89E2 /* UAUIHintView.m in Sources */,
 				533F356917736C5500AD89E2 /* UANavigationController.m in Sources */,
 				533F356A17736C5500AD89E2 /* UATooltipViewController.m in Sources */,
+				53AFAA2318A90E7B00E65168 /* UAAddEntryModalButton.m in Sources */,
 				533F356B17736C5500AD89E2 /* UACreditsTooltipView.m in Sources */,
 				533F356C17736C5500AD89E2 /* UAExportTooltipView.m in Sources */,
 				533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */,

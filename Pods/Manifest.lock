@@ -19,6 +19,7 @@ PODS:
     - AFNetworking/NSURLConnection
   - Appirater (2.0.2)
   - Dropbox-Sync-API-SDK (2.0.3)
+  - FXBlurView (1.5.3)
   - GoogleAnalytics-iOS-SDK (3.0.3)
   - HockeySDK (3.5.2)
   - MBProgressHUD (0.8)
@@ -31,6 +32,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - Appirater (~> 2.0.2)
   - Dropbox-Sync-API-SDK (~> 2.0.3)
+  - FXBlurView (~> 1.5.3)
   - GoogleAnalytics-iOS-SDK (~> 3.0.3)
   - HockeySDK (~> 3.5.2)
   - MBProgressHUD (~> 0.8)
@@ -43,6 +45,7 @@ SPEC CHECKSUMS:
   AFNetworking: c7d7901a83f631414c7eda1737261f696101a5cd
   Appirater: 32fb9089615b5e542c7ad7b5749741a8aed55290
   Dropbox-Sync-API-SDK: 31c474d9bd5ba92dc21a8197fdaab51ade6df386
+  FXBlurView: 8d662dd5b4ba15a1a0e97235501326fbdfb2b755
   GoogleAnalytics-iOS-SDK: 7b0e55cfe5e70d60478a7b105f15ac71e8bc373e
   HockeySDK: 203d3af93c2a229bfb528ff085201670ff65e1cf
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
