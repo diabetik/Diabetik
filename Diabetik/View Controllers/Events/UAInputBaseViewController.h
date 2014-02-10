@@ -43,7 +43,7 @@
 #define kGeoTagAlertViewTag 1
 
 @class UAInputParentViewController;
-@interface UAInputBaseViewController : UABaseTableViewController <CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UAAutocompleteBarDelegate, UAKeyboardShortcutDelegate, UIViewControllerTransitioningDelegate>
+@interface UAInputBaseViewController : UABaseTableViewController <CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UAAutocompleteBarDelegate, UAKeyboardShortcutDelegate, UIViewControllerTransitioningDelegate>
 {
 @protected
     UAInputParentViewController *parentVC;

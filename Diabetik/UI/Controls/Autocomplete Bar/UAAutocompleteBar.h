@@ -40,6 +40,7 @@
 }
 @property (nonatomic, weak) id delegate;
 @property (nonatomic, strong) NSArray *suggestions;
+@property (nonatomic, assign) BOOL shouldFetchSuggestions;
 
 // Setup
 - (id)initWithFrame:(CGRect)frame;

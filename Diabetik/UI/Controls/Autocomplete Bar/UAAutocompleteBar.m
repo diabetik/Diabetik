@@ -45,6 +45,7 @@
         self.backgroundColor = [UIColor clearColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin;
         self.suggestions = nil;
+        self.shouldFetchSuggestions = YES;
         
         buttons = [NSMutableArray array];
     }
@@ -55,7 +56,7 @@
 - (BOOL)showSuggestionsForInput:(NSString *)input
 {
     // Lazy-load from our datasource if necessary
-    //if(input && !self.suggestions)
+    if(self.shouldFetchSuggestions)
     {
         [self fetchSuggestions];
     }
@@ -108,6 +109,7 @@
 - (void)fetchSuggestions
 {
     self.suggestions = [self.delegate suggestionsForAutocompleteBar:self];
+    self.shouldFetchSuggestions = NO;
 }
 - (void)addTag:(UIButton *)sender
 {

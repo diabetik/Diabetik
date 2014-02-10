@@ -265,6 +265,7 @@
 #pragma mark - UITextViewDelegate
 - (void)textViewDidBeginEditing:(UITextView *)textView
 {
+    self.keyboardShortcutAccessoryView.autocompleteBar.shouldFetchSuggestions = YES;
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textView.tag inSection:0];
     
     [textView reloadInputViews];
@@ -300,6 +301,7 @@
 #pragma mark - UITextFieldDelegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    self.keyboardShortcutAccessoryView.autocompleteBar.shouldFetchSuggestions = YES;
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
     [textField reloadInputViews];
     
@@ -393,7 +395,6 @@
         if(!imagePickerController)
         {
             imagePickerController = [[UIImagePickerController alloc] init];
-            imagePickerController.delegate = self;
             imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
         }
         imagePickerController.sourceType = sourceType;
@@ -402,7 +403,46 @@
     }
 }
 
-#pragma mark - CLLocationManagerDelegate
+#pragma mark - Accessors
+- (UAEvent *)event
+{
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(!moc) return nil;
+    if(!self.eventOID) return nil;
+    
+    NSError *error = nil;
+    UAEvent *event = (UAEvent *)[moc existingObjectWithID:self.eventOID error:&error];
+    if (!event)
+    {
+        self.eventOID = nil;
+    }
+    
+    return event;
+}
+- (void)setEvent:(UAEvent *)theEvent
+{
+    NSError *error = nil;
+    if(theEvent.objectID.isTemporaryID && ![theEvent.managedObjectContext obtainPermanentIDsForObjects:@[theEvent] error:&error])
+    {
+        self.eventOID = nil;
+    }
+    else
+    {
+        self.eventOID = theEvent.objectID;
+    }
+}
+- (UAKeyboardShortcutAccessoryView *)keyboardShortcutAccessoryView
+{
+    if(!_keyboardShortcutAccessoryView)
+    {
+        _keyboardShortcutAccessoryView = [[UAKeyboardShortcutAccessoryView alloc] initWithFrame:CGRectZero];
+        _keyboardShortcutAccessoryView.delegate = self;
+    }
+    
+    return _keyboardShortcutAccessoryView;
+}
+
+#pragma mark - CLLocationManagerDelegate methods
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation *location = [locations lastObject];
@@ -417,7 +457,7 @@
     [manager stopUpdatingLocation];
 }
 
-#pragma mark - UIAlertViewDelegate
+#pragma mark - UIAlertViewDelegate methods
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(alertView.tag == kDeleteAlertViewTag && buttonIndex == 1)
@@ -430,7 +470,7 @@
     }
 }
 
-#pragma mark - UIActionSheetDelegate
+#pragma mark - UIActionSheetDelegate methods
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if(actionSheet.tag == kGeotagActionSheetTag)
@@ -517,18 +557,6 @@
     return nil;
 }
 
-#pragma mark - UINavigationControllerDelegate methods
-- (void)navigationController:(UINavigationController *)navigationController
-      willShowViewController:(UIViewController *)viewController
-                    animated:(BOOL)animated {
-    
-    if ([navigationController isKindOfClass:[UIImagePickerController class]] &&
-        ((UIImagePickerController *)navigationController).sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
-        //[[UIApplication sharedApplication] setStatusBarHidden:NO];
-        //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackOpaque animated:NO];
-    }
-}
-
 #pragma mark - UIImagePickerControllerDelegate methods
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
@@ -591,45 +619,6 @@
     {
         [self presentTagOptions:button];
     }
-}
-
-#pragma mark - Accessors
-- (UAEvent *)event
-{
-    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
-    if(!moc) return nil;
-    if(!self.eventOID) return nil;
-    
-    NSError *error = nil;
-    UAEvent *event = (UAEvent *)[moc existingObjectWithID:self.eventOID error:&error];
-    if (!event)
-    {
-        self.eventOID = nil;
-    }
-    
-    return event;
-}
-- (void)setEvent:(UAEvent *)theEvent
-{
-    NSError *error = nil;
-    if(theEvent.objectID.isTemporaryID && ![theEvent.managedObjectContext obtainPermanentIDsForObjects:@[theEvent] error:&error])
-    {
-        self.eventOID = nil;
-    }
-    else
-    {
-        self.eventOID = theEvent.objectID;
-    }
-}
-- (UAKeyboardShortcutAccessoryView *)keyboardShortcutAccessoryView
-{
-    if(!_keyboardShortcutAccessoryView)
-    {
-        _keyboardShortcutAccessoryView = [[UAKeyboardShortcutAccessoryView alloc] initWithFrame:CGRectZero];
-        _keyboardShortcutAccessoryView.delegate = self;
-    }
-    
-    return _keyboardShortcutAccessoryView;
 }
 
 #pragma mark - UINavigationControllerDelegate methods
