@@ -169,7 +169,6 @@
 		53AFAA2318A90E7B00E65168 /* UAAddEntryModalButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFAA1E18A90E7B00E65168 /* UAAddEntryModalButton.m */; };
 		53AFAA2418A90E7B00E65168 /* UAAddEntryModalView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFAA2018A90E7B00E65168 /* UAAddEntryModalView.m */; };
 		53AFAA2618A90E9700E65168 /* FXBlurView-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53AFAA2518A90E9700E65168 /* FXBlurView-License.txt */; };
-		53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B5284818717597004E7F01 /* UAAddEntryListViewController.m */; };
 		53B53AF418672BE000773EE7 /* UASettingsTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
 		53BE89EE18983E650035CF4A /* UASettingsEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */; };
@@ -483,8 +482,6 @@
 		53AFAA1F18A90E7B00E65168 /* UAAddEntryModalView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryModalView.h; sourceTree = "<group>"; };
 		53AFAA2018A90E7B00E65168 /* UAAddEntryModalView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryModalView.m; sourceTree = "<group>"; };
 		53AFAA2518A90E9700E65168 /* FXBlurView-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "FXBlurView-License.txt"; sourceTree = "<group>"; };
-		53B5284718717597004E7F01 /* UAAddEntryListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAddEntryListViewController.h; sourceTree = "<group>"; };
-		53B5284818717597004E7F01 /* UAAddEntryListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAddEntryListViewController.m; sourceTree = "<group>"; };
 		53B53AF218672BE000773EE7 /* UASettingsTextViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsTextViewCell.h; sourceTree = "<group>"; };
 		53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsTextViewCell.m; sourceTree = "<group>"; };
 		53B576751709DF02007322EF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -746,8 +743,6 @@
 			children = (
 				53AFAA1618A90E7B00E65168 /* iPad */,
 				53AFAA1C18A90E7B00E65168 /* iPhone */,
-				53B5284718717597004E7F01 /* UAAddEntryListViewController.h */,
-				53B5284818717597004E7F01 /* UAAddEntryListViewController.m */,
 			);
 			path = "Add Entry";
 			sourceTree = "<group>";
@@ -1570,7 +1565,6 @@
 				533F347D1773266600AD89E2 /* UAHelper.m in Sources */,
 				537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */,
 				53FE5FB1189EC0E6008AC334 /* UACategorySelectorButton.m in Sources */,
-				53B5284918717597004E7F01 /* UAAddEntryListViewController.m in Sources */,
 				53AAE883189C26CC00499991 /* UAKeyboardShortcutButton.m in Sources */,
 				533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */,
 				53AFAA2118A90E7B00E65168 /* UAAddEntryiPadView.m in Sources */,

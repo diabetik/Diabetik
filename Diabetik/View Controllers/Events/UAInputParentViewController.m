@@ -184,6 +184,7 @@
         self.scrollView.alwaysBounceHorizontal = YES;
         self.scrollView.directionalLockEnabled = YES;
         self.scrollView.backgroundColor = [UIColor clearColor];
+        
         [self.view addSubview:self.scrollView];
         
         for(UAInputBaseViewController *vc in self.viewControllers)
@@ -721,29 +722,36 @@
 }
 
 #pragma mark - Keyboard handling
-
 - (void)keyboardWillBeShown:(NSNotification *)aNotification
 {
     [UIView animateWithDuration:[self keyboardAnimationDurationForNotification:aNotification] animations:^{
-        CGSize kbSize = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+        CGRect keyboardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+        UIWindow *window = [[[UIApplication sharedApplication] windows] firstObject];
+        UIView *mainSubviewOfWindow = window.rootViewController.view;
+        CGRect keyboardFrameConverted = [mainSubviewOfWindow convertRect:keyboardFrame fromView:window];
+        CGSize kbSize = keyboardFrameConverted.size;
+        
         self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length- kbSize.height);
-    } completion:^(BOOL finished) {
-    }];
+        
+    } completion:nil];
 }
 - (void)keyboardWasShown:(NSNotification *)aNotification
 {
     [UIView animateWithDuration: [self keyboardAnimationDurationForNotification:aNotification] animations:^{
-        CGSize kbSize = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+        CGRect keyboardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+        UIWindow *window = [[[UIApplication sharedApplication] windows] firstObject];
+        UIView *mainSubviewOfWindow = window.rootViewController.view;
+        CGRect keyboardFrameConverted = [mainSubviewOfWindow convertRect:keyboardFrame fromView:window];
+        CGSize kbSize = keyboardFrameConverted.size;
+        
         self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length- kbSize.height);
-    } completion:^(BOOL finished) {
-    }];
+    } completion:nil];
 }
 - (void)keyboardWillBeHidden:(NSNotification *)aNotification
 {
     [UIView animateWithDuration: [self keyboardAnimationDurationForNotification:aNotification] animations:^{
         self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
-    } completion:^(BOOL finished) {
-    }];
+    } completion:nil];
 }
 
 #pragma mark - Helpers

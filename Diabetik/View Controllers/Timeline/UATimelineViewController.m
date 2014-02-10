@@ -30,7 +30,6 @@
 #import "UAActivityInputViewController.h"
 #import "UANoteInputViewController.h"
 #import "UATagController.h"
-#import "UAAddEntryListViewController.h"
 
 #import "UAMeal.h"
 #import "UAReading.h"
@@ -59,9 +58,7 @@
 }
 @property (nonatomic, strong) UAReportsViewController *reportsVC;
 @property (nonatomic, strong) UADetailViewController *detailViewController;
-@property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
 
-//@property (nonatomic, strong) UISearchDisplayController *searchDisplayController;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSPredicate *timelinePredicate;
 @property (nonatomic, strong) NSManagedObjectContext *moc;
@@ -238,16 +235,6 @@
     }
     
     [self refreshView];
-}
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    if ([self.addEntryPopoverController isPopoverVisible])
-    {
-        [self.addEntryPopoverController dismissPopoverAnimated:YES];
-    }
-    self.addEntryPopoverController = nil;
 }
 - (void)dealloc
 {
@@ -454,17 +441,9 @@
     }
     else
     {
-        if(!self.addEntryPopoverController)
-        {
-            UAAddEntryListViewController *vc = [[UAAddEntryListViewController alloc] initWithStyle:UITableViewStylePlain];
-            self.addEntryPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
-            [self.addEntryPopoverController setPopoverContentSize:CGSizeMake(320.0f, 225.0f)];
-            [self.addEntryPopoverController setDelegate:self];
-            
-            vc.parentPopoverController = self.addEntryPopoverController;
-        }
-        
-        [self.addEntryPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        UAAppDelegate *delegate = (UAAppDelegate*)[[UIApplication sharedApplication] delegate];
+        UAAddEntryiPadView *modalView = [UAAddEntryiPadView presentInView:delegate.viewController.view];
+        modalView.delegate = self;
     }
 }
 - (void)configureCell:(UITableViewCell *)aCell forTableview:(UITableView *)aTableView atIndexPath:(NSIndexPath *)indexPath
@@ -966,12 +945,6 @@
 - (void)didDismissReportsController:(UAReportsViewController *)controller
 {
     self.reportsVC = nil;
-}
-
-#pragma mark - UIPopoverControllerDelegate methods
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
-{
-    self.addEntryPopoverController = nil;
 }
 
 #pragma mark - Autorotation

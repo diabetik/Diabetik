@@ -111,9 +111,9 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    
-    self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
-    self.tableView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+   
+    self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    self.tableView.contentInset = UIEdgeInsetsZero;
 }
 
 #pragma mark - Logic

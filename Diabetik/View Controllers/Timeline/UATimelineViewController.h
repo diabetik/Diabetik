@@ -30,7 +30,7 @@
 #import "UATimelineHeaderViewCell.h"
 
 @class UADetailViewController;
-@interface UATimelineViewController : UABaseTableViewController <UAAddEntryModalDelegate, UAReportsDelegate, UIActionSheetDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIPopoverControllerDelegate, UIGestureRecognizerDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
+@interface UATimelineViewController : UABaseTableViewController <UAAddEntryModalDelegate, UAReportsDelegate, UIActionSheetDelegate, NSFetchedResultsControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 
 // Setup
 - (id)initWithRelativeDays:(NSInteger)days;

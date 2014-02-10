@@ -95,24 +95,16 @@
     UAJournalViewController *journalViewController = [[UAJournalViewController alloc] init];
     UANavigationController *navigationController = [[UANavigationController alloc] initWithRootViewController:journalViewController];
     
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        UISplitViewController *splitViewController = [[UISplitViewController alloc] initWithNibName:nil bundle:nil];
-        splitViewController.viewControllers = @[[[UASideMenuViewController alloc] init], navigationController];
-        splitViewController.delegate = self;
-        self.viewController = splitViewController;
-    }
-    else
-    {
-        REFrostedViewController *viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] init]];
-        viewController.direction = REFrostedViewControllerDirectionLeft;
-        viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
-        viewController.liveBlur = NO;
-        viewController.limitMenuViewSize = YES;
-        viewController.blurSaturationDeltaFactor = 3.0f;
-        viewController.blurRadius = 10.0f;
-        self.viewController = viewController;
-    }
+    REFrostedViewController *viewController = [[REFrostedViewController alloc] initWithContentViewController:navigationController menuViewController:[[UASideMenuViewController alloc] init]];
+    viewController.direction = REFrostedViewControllerDirectionLeft;
+    viewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
+    viewController.liveBlur = NO;
+    viewController.limitMenuViewSize = YES;
+    viewController.blurSaturationDeltaFactor = 3.0f;
+    viewController.blurRadius = 10.0f;
+    viewController.limitMenuViewSize = YES;
+    viewController.menuViewSize = CGSizeMake(320.0f, self.window.frame.size.height);
+    self.viewController = viewController;
     
     // Delay launch on non-essential classes
     __weak typeof(self) weakSelf = self;
@@ -241,31 +233,6 @@
     
     // Charts
     [ShinobiCharts setTheme:[SChartiOS7Theme new]];
-}
-
-#pragma mark - UISplitViewControllerDelegate method
-- (void)splitViewController:(UISplitViewController *)svc
-     willHideViewController:(UIViewController *)aViewController
-          withBarButtonItem:(UIBarButtonItem *)barButtonItem
-       forPopoverController:(UIPopoverController *)pc
-{
-    UINavigationController *nvc = svc.viewControllers[1];
-    UIViewController *vc = nvc.viewControllers[0];
-    
-    barButtonItem.image = [[UIImage imageNamed:@"NavBarIconListMenu"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    vc.navigationItem.leftBarButtonItem = barButtonItem;
-}
-- (void)splitViewController:(UISplitViewController *)svc
-     willShowViewController:(UIViewController *)aViewController
-  invalidatingBarButtonItem:(UIBarButtonItem *)button
-{
-    UINavigationController *nvc = svc.viewControllers[1];
-    UIViewController *vc = nvc.viewControllers[0];
-    vc.navigationItem.leftBarButtonItem = nil;
-}
-- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
-{
-    return (orientation == UIInterfaceOrientationMaskPortrait);
 }
 
 #pragma mark - Location services

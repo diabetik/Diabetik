@@ -35,6 +35,7 @@
 #import "UAEventInputViewCell.h"
 #import "UAEventInputTextFieldViewCell.h"
 #import "UAEventInputTextViewViewCell.h"
+#import "TPKeyboardAvoidingScrollView.h"
 
 @class UAInputBaseViewController;
 @interface UAInputParentViewController : UABaseViewController <UIActionSheetDelegate, UIScrollViewDelegate>

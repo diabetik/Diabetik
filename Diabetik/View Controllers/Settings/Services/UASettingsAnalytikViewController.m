@@ -71,7 +71,7 @@
     self.headerView.backgroundColor = [UIColor redColor];
     
     self.headerInfoTextView = [[UITextView alloc] initWithFrame:CGRectZero];
-    self.headerInfoTextView.text = NSLocalizedString(@"Free personal diabetes analytics\n\nFind patterns in your blood sugar, better understand your diabetes and support research.", nil);
+    self.headerInfoTextView.text = NSLocalizedString(@"Free personal diabetes analytics\n\nFind patterns in your blood sugar, better understand your diabetes and support research.\n\nSignup for an account at http://analytikhq.com", nil);
     self.headerInfoTextView.font = [UAFont standardRegularFontWithSize:16.0f];
     self.headerInfoTextView.backgroundColor = [UIColor clearColor];
     self.headerInfoTextView.editable = NO;
@@ -83,8 +83,8 @@
 {
     [super viewWillLayoutSubviews];
     
-    self.headerView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 100.0f);
-    self.headerInfoTextView.frame = CGRectMake(16.0f, 0.0f, self.view.bounds.size.width-32.0f, 100.0f);
+    self.headerView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 125.0f);
+    self.headerInfoTextView.frame = CGRectMake(16.0f, 0.0f, self.view.bounds.size.width-32.0f, 125.0f);
     
 }
 #pragma mark - Logic

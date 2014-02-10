@@ -62,16 +62,16 @@
     self.tableView.separatorColor = [UIColor colorWithWhite:0.0f alpha:0.08f];
     
     // We only want to make the tableview transparent for iPhone devices (where blur is displayed)
-    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    //if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
     {
         self.tableView.backgroundColor = [UIColor clearColor];
         self.tableView.backgroundView = nil;
         self.view.backgroundColor = [UIColor clearColor];
     }
-    else
+    /*else
     {
         self.view.backgroundColor = [UIColor whiteColor];
-    }
+    }*/
     
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -268,17 +268,9 @@
     UINavigationController *navigationController = nil;
     BOOL animateViewControllerChange = NO;
     
-    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
-    {
-        navigationController = (UINavigationController *)[(REFrostedViewController *)appDelegate.viewController contentViewController];
-        [(REFrostedViewController *)appDelegate.viewController hideMenuViewController];
-    }
-    else
-    {
-        navigationController = [(UISplitViewController *)appDelegate.viewController viewControllers][1];
-        animateViewControllerChange = YES;
-    }
-    
+    navigationController = (UINavigationController *)[(REFrostedViewController *)appDelegate.viewController contentViewController];
+    [(REFrostedViewController *)appDelegate.viewController hideMenuViewController];
+
     if(indexPath.section == 0)
     {
         if(indexPath.row == 0)

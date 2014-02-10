@@ -25,7 +25,6 @@
 #import "UAJournalMonthViewCell.h"
 #import "UAIntroductionTooltipView.h"
 #import "UAAddEntryModalView.h"
-#import "UAAddEntryListViewController.h"
 
 #import "UABGInputViewController.h"
 #import "UAMealInputViewController.h"
@@ -51,8 +50,6 @@
     double todaysHighest, sevenDaysHighest, fourteenDaysHighest;
     NSInteger todaysCount, sevenDaysCount, fourteenDaysCount;
 }
-@property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
-
 @end
 
 @implementation UAJournalViewController
@@ -79,13 +76,9 @@
         // Menu items
         UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
         [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
-        
-        // Don't setup our menu bar button item for iPad users, as this is handled by our UISplitViewControllerDelegate
-        if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
-        {
-            UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconListMenu"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showSideMenu:)];
-            [self.navigationItem setLeftBarButtonItem:menuBarButtonItem animated:NO];
-        }
+    
+        UIBarButtonItem *menuBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconListMenu"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showSideMenu:)];
+        [self.navigationItem setLeftBarButtonItem:menuBarButtonItem animated:NO];
         
     }
     return self;
@@ -93,16 +86,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:settingsChangeNotifier];
-}
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    
-    if ([self.addEntryPopoverController isPopoverVisible])
-    {
-        [self.addEntryPopoverController dismissPopoverAnimated:YES];
-    }
-    self.addEntryPopoverController = nil;
 }
 - (void)viewDidLoad
 {
@@ -409,12 +392,6 @@
             [self presentViewController:nvc animated:YES completion:nil];
         }
     }
-}
-
-#pragma mark - UIPopoverControllerDelegate methods
-- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
-{
-    self.addEntryPopoverController = nil;
 }
 
 #pragma mark - Helpers

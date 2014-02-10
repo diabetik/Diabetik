@@ -25,6 +25,7 @@
 @end
 
 @implementation UAKeyboardShortcutAccessoryView
+
 - (id)initWithFrame:(CGRect)frame
 {
     frame = CGRectMake(0, 0, 320.0f, 38.0f);
