@@ -55,7 +55,6 @@
         if(rootVC)
         {
             UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-            nvc.modalPresentationStyle = UIModalPresentationFormSheet;
             [rootVC presentViewController:nvc animated:YES completion:nil];
         }
     }
