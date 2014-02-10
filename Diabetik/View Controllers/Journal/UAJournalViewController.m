@@ -258,16 +258,9 @@
     }
     else
     {
-        if(!self.addEntryPopoverController)
-        {
-            UAAddEntryListViewController *vc = [[UAAddEntryListViewController alloc] initWithStyle:UITableViewStylePlain];
-            self.addEntryPopoverController = [[UIPopoverController alloc] initWithContentViewController:vc];
-            [self.addEntryPopoverController setPopoverContentSize:CGSizeMake(320.0f, 225.0f)];
-            [self.addEntryPopoverController setDelegate:self];
-            
-            vc.parentPopoverController = self.addEntryPopoverController;
-        }
-        [self.addEntryPopoverController presentPopoverFromBarButtonItem:(UIBarButtonItem *)sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        UAAppDelegate *delegate = (UAAppDelegate*)[[UIApplication sharedApplication] delegate];
+        UAAddEntryiPadView *modalView = [UAAddEntryiPadView presentInView:delegate.viewController.view];
+        modalView.delegate = self;
     }
 }
 - (void)showSideMenu:(id)sender
@@ -403,7 +396,7 @@
 }
 
 #pragma mark - UAAddEntryModalDelegate methods
-- (void)addEntryModal:(UAAddEntryModalView *)modalView didSelectEntryOption:(NSInteger)buttonIndex
+- (void)addEntryModal:(id)modalView didSelectEntryOption:(NSInteger)buttonIndex
 {
     [modalView dismiss];
     

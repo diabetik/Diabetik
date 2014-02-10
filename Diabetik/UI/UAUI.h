@@ -30,6 +30,7 @@
 // Views
 #import "UABaseViewController.h"
 #import "UAViewControllerMessageView.h"
+#import "UAAddEntryiPadView.h"
 #import "UATooltipViewController.h"
 #import "UATooltipView.h"
 #import "UAUIHintView.h"

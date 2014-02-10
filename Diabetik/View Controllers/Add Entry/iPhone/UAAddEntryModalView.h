@@ -23,7 +23,7 @@
 @class UAAddEntryModalView;
 @protocol UAAddEntryModalDelegate <NSObject>
 
-- (void)addEntryModal:(UAAddEntryModalView *)modalView didSelectEntryOption:(NSInteger)buttonIndex;
+- (void)addEntryModal:(id)modalView didSelectEntryOption:(NSInteger)buttonIndex;
 
 @end
 
