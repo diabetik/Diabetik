@@ -42,8 +42,8 @@
 
 @interface UATimelineViewController ()
 {
-    UISearchBar *searchBar;
     UISearchDisplayController *searchDisplayController;
+    
     NSArray *sectionStats;
     NSArray *searchResults;
     NSArray *searchResultHeaders;
@@ -61,12 +61,15 @@
 @property (nonatomic, strong) UADetailViewController *detailViewController;
 @property (nonatomic, strong) UIPopoverController *addEntryPopoverController;
 
+//@property (nonatomic, strong) UISearchDisplayController *searchDisplayController;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSPredicate *timelinePredicate;
 @property (nonatomic, strong) NSManagedObjectContext *moc;
+@property (nonatomic, assign) NSInteger relativeDays;
 
 @property (nonatomic, strong) UAViewControllerMessageView *noEntriesMessageView;
-@property (nonatomic, assign) NSInteger relativeDays;
+@property (nonatomic, strong) UIView *searchBarHeaderView;
+@property (nonatomic, strong) UISearchBar *searchBar;
 
 // Setup
 - (void)commonInit;
@@ -159,17 +162,23 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // Setup our search bar
-    searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 44.0f)];
-    searchBar.delegate = self;
-    searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-    self.searchDisplayController.searchResultsDelegate = self;
-    self.searchDisplayController.searchResultsDataSource = self;
-    self.searchDisplayController.delegate = self;
-    self.searchDisplayController.displaysSearchBarInNavigationBar = NO;
-    self.searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
-    self.searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
+    self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.searchBar.delegate = self;
     
-    self.tableView.tableHeaderView = searchBar;
+    searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    searchDisplayController.searchResultsDelegate = self;
+    searchDisplayController.searchResultsDataSource = self;
+    searchDisplayController.delegate = self;
+    searchDisplayController.displaysSearchBarInNavigationBar = NO;
+    searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
+    searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.searchBarHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
+    self.searchBarHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.searchBarHeaderView addSubview:self.searchBar];
+    
+    self.tableView.tableHeaderView = self.searchBarHeaderView;
     
     // Footer view
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
@@ -261,9 +270,9 @@
 - (void)refreshView
 {
     // If we're actively searching refresh our data
-    if([searchDisplayController isActive])
+    if([self.searchDisplayController isActive])
     {
-        [self performSearchWithText:[searchBar text]];
+        [self performSearchWithText:[self.searchBar text]];
         [[[self searchDisplayController] searchResultsTableView] reloadData];
     }
     
