@@ -60,19 +60,10 @@
     self.tableView.opaque = NO;
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorColor = [UIColor colorWithWhite:0.0f alpha:0.08f];
-    
-    // We only want to make the tableview transparent for iPhone devices (where blur is displayed)
-    //if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
-    {
-        self.tableView.backgroundColor = [UIColor clearColor];
-        self.tableView.backgroundView = nil;
-        self.view.backgroundColor = [UIColor clearColor];
-    }
-    /*else
-    {
-        self.view.backgroundColor = [UIColor whiteColor];
-    }*/
-    
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundView = nil;
+    self.view.backgroundColor = [UIColor clearColor];
+
     reminderUpdateNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kRemindersUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
