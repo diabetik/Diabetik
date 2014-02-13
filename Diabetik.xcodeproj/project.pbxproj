@@ -17,6 +17,24 @@
 		5324D3B3175102730003F257 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324D3B2175102730003F257 /* AudioToolbox.framework */; };
 		5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */; };
 		532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EA4177D7DD1000D793F /* CoreText.framework */; };
+		5330A26818AAC7E200000A47 /* UAActivityInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A25B18AAC7E200000A47 /* UAActivityInputViewController.m */; };
+		5330A26918AAC7E200000A47 /* UABGInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A25D18AAC7E200000A47 /* UABGInputViewController.m */; };
+		5330A26A18AAC7E200000A47 /* UAInputBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A25F18AAC7E200000A47 /* UAInputBaseViewController.m */; };
+		5330A26B18AAC7E200000A47 /* UAInputParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A26118AAC7E200000A47 /* UAInputParentViewController.m */; };
+		5330A26C18AAC7E200000A47 /* UAMealInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A26318AAC7E200000A47 /* UAMealInputViewController.m */; };
+		5330A26D18AAC7E200000A47 /* UAMedicineInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A26518AAC7E200000A47 /* UAMedicineInputViewController.m */; };
+		5330A26E18AAC7E200000A47 /* UANoteInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A26718AAC7E200000A47 /* UANoteInputViewController.m */; };
+		5330A27118AAC81000000A47 /* UAEventInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A27018AAC81000000A47 /* UAEventInputViewController.m */; };
+		5330A28618AAC9B800000A47 /* UAEventInputCategoryViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A27418AAC9B800000A47 /* UAEventInputCategoryViewCell.m */; };
+		5330A28718AAC9B800000A47 /* UAEventInputTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A27618AAC9B800000A47 /* UAEventInputTextFieldViewCell.m */; };
+		5330A28818AAC9B800000A47 /* UAEventInputTextViewViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A27818AAC9B800000A47 /* UAEventInputTextViewViewCell.m */; };
+		5330A28918AAC9B800000A47 /* UAEventInputViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A27A18AAC9B800000A47 /* UAEventInputViewCell.m */; };
+		5330A28A18AAC9B800000A47 /* UAKeyboardShortcutAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A27D18AAC9B800000A47 /* UAKeyboardShortcutAccessoryView.m */; };
+		5330A28B18AAC9B800000A47 /* UAKeyboardShortcutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A27F18AAC9B800000A47 /* UAKeyboardShortcutButton.m */; };
+		5330A28C18AAC9B800000A47 /* UANavPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A28118AAC9B800000A47 /* UANavPageControl.m */; };
+		5330A28D18AAC9B800000A47 /* UANavPaginationTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A28318AAC9B800000A47 /* UANavPaginationTitleView.m */; };
+		5330A28E18AAC9B800000A47 /* UANotesTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A28518AAC9B800000A47 /* UANotesTextView.m */; };
+		5330A29218AAC9FE00000A47 /* UAEventCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A29118AAC9FE00000A47 /* UAEventCollectionViewCell.m */; };
 		533255651892E29400D28C34 /* UATagHighlightTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 533255641892E29400D28C34 /* UATagHighlightTextStorage.m */; };
 		53350EC917B6A86300223662 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53350EC817B6A86300223662 /* Media.xcassets */; };
 		53388C0017103ED9008C9E18 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */; };
@@ -58,21 +76,8 @@
 		533F347D1773266600AD89E2 /* UAHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F31F01773266600AD89E2 /* UAHelper.m */; };
 		533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F324B1773266600AD89E2 /* OrderedDictionary.m */; };
 		533F34A41773266600AD89E2 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F324E1773266600AD89E2 /* UIImage+Resize.m */; };
-		533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32611773266600AD89E2 /* UAEventInputTextFieldViewCell.m */; };
-		533F34AB1773266600AD89E2 /* UAEventInputTextViewViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32631773266600AD89E2 /* UAEventInputTextViewViewCell.m */; };
-		533F34AC1773266600AD89E2 /* UAEventInputViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32651773266600AD89E2 /* UAEventInputViewCell.m */; };
 		533F34AF1773266600AD89E2 /* UAEventMapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F326D1773266600AD89E2 /* UAEventMapPin.m */; };
 		533F34B01773266600AD89E2 /* UAEventMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F326F1773266600AD89E2 /* UAEventMapViewController.m */; };
-		533F34B11773266600AD89E2 /* UAActivityInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32711773266600AD89E2 /* UAActivityInputViewController.m */; };
-		533F34B21773266600AD89E2 /* UABGInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32731773266600AD89E2 /* UABGInputViewController.m */; };
-		533F34B31773266600AD89E2 /* UAInputBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32751773266600AD89E2 /* UAInputBaseViewController.m */; };
-		533F34B41773266600AD89E2 /* UAInputParentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32771773266600AD89E2 /* UAInputParentViewController.m */; };
-		533F34B51773266600AD89E2 /* UAMealInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32791773266600AD89E2 /* UAMealInputViewController.m */; };
-		533F34B61773266600AD89E2 /* UAMedicineInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F327B1773266600AD89E2 /* UAMedicineInputViewController.m */; };
-		533F34B71773266600AD89E2 /* UANoteInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F327D1773266600AD89E2 /* UANoteInputViewController.m */; };
-		533F34BB1773266600AD89E2 /* UANavPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32861773266600AD89E2 /* UANavPageControl.m */; };
-		533F34BC1773266600AD89E2 /* UANavPaginationTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32881773266600AD89E2 /* UANavPaginationTitleView.m */; };
-		533F34BD1773266600AD89E2 /* UANotesTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F328A1773266600AD89E2 /* UANotesTextView.m */; };
 		533F34BE1773266600AD89E2 /* UAExportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F328D1773266600AD89E2 /* UAExportViewController.m */; };
 		533F34BF1773266600AD89E2 /* UAPDFDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F328F1773266600AD89E2 /* UAPDFDocument.m */; };
 		533F34C01773266600AD89E2 /* UAJournalMonthViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32931773266600AD89E2 /* UAJournalMonthViewCell.m */; };
@@ -160,8 +165,6 @@
 		53A5D6BF1870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6B91870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m */; };
 		53A5D6C01870D5950077DFBE /* UAInsulinCalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */; };
 		53A5D6C11870D5950077DFBE /* UAInsulinCalculatorTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */; };
-		53AAE880189C22D000499991 /* UAKeyboardShortcutAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AAE87F189C22D000499991 /* UAKeyboardShortcutAccessoryView.m */; };
-		53AAE883189C26CC00499991 /* UAKeyboardShortcutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AAE882189C26CC00499991 /* UAKeyboardShortcutButton.m */; };
 		53AE05C0189459430078B408 /* UATagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AE05BF189459430078B408 /* UATagsViewController.m */; };
 		53AE05D81894815D0078B408 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AE05D71894815D0078B408 /* AdSupport.framework */; };
 		53AFAA2118A90E7B00E65168 /* UAAddEntryiPadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53AFAA1818A90E7B00E65168 /* UAAddEntryiPadView.m */; };
@@ -188,7 +191,6 @@
 		53F78EE618427791006736F5 /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F78EE518427791006736F5 /* ShinobiCharts.framework */; };
 		53FE5FAE189EC077008AC334 /* UACategoryInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE5FAD189EC077008AC334 /* UACategoryInputView.m */; };
 		53FE5FB1189EC0E6008AC334 /* UACategorySelectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE5FB0189EC0E6008AC334 /* UACategorySelectorButton.m */; };
-		53FE5FB4189EC455008AC334 /* UAEventInputCategoryViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE5FB3189EC455008AC334 /* UAEventInputCategoryViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -207,6 +209,42 @@
 		5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_1.1_to_1.2.xcmappingmodel; sourceTree = "<group>"; };
 		532D0EA4177D7DD1000D793F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		532D720E1858FEC300ECBC97 /* Diabetik.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Diabetik.entitlements; sourceTree = "<group>"; };
+		5330A25A18AAC7E200000A47 /* UAActivityInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAActivityInputViewController.h; sourceTree = "<group>"; };
+		5330A25B18AAC7E200000A47 /* UAActivityInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAActivityInputViewController.m; sourceTree = "<group>"; };
+		5330A25C18AAC7E200000A47 /* UABGInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UABGInputViewController.h; sourceTree = "<group>"; };
+		5330A25D18AAC7E200000A47 /* UABGInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UABGInputViewController.m; sourceTree = "<group>"; };
+		5330A25E18AAC7E200000A47 /* UAInputBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInputBaseViewController.h; sourceTree = "<group>"; };
+		5330A25F18AAC7E200000A47 /* UAInputBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInputBaseViewController.m; sourceTree = "<group>"; };
+		5330A26018AAC7E200000A47 /* UAInputParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInputParentViewController.h; sourceTree = "<group>"; };
+		5330A26118AAC7E200000A47 /* UAInputParentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInputParentViewController.m; sourceTree = "<group>"; };
+		5330A26218AAC7E200000A47 /* UAMealInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMealInputViewController.h; sourceTree = "<group>"; };
+		5330A26318AAC7E200000A47 /* UAMealInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMealInputViewController.m; sourceTree = "<group>"; };
+		5330A26418AAC7E200000A47 /* UAMedicineInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMedicineInputViewController.h; sourceTree = "<group>"; };
+		5330A26518AAC7E200000A47 /* UAMedicineInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMedicineInputViewController.m; sourceTree = "<group>"; };
+		5330A26618AAC7E200000A47 /* UANoteInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANoteInputViewController.h; sourceTree = "<group>"; };
+		5330A26718AAC7E200000A47 /* UANoteInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANoteInputViewController.m; sourceTree = "<group>"; };
+		5330A26F18AAC81000000A47 /* UAEventInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputViewController.h; sourceTree = "<group>"; };
+		5330A27018AAC81000000A47 /* UAEventInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputViewController.m; sourceTree = "<group>"; };
+		5330A27318AAC9B800000A47 /* UAEventInputCategoryViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputCategoryViewCell.h; sourceTree = "<group>"; };
+		5330A27418AAC9B800000A47 /* UAEventInputCategoryViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputCategoryViewCell.m; sourceTree = "<group>"; };
+		5330A27518AAC9B800000A47 /* UAEventInputTextFieldViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputTextFieldViewCell.h; sourceTree = "<group>"; };
+		5330A27618AAC9B800000A47 /* UAEventInputTextFieldViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputTextFieldViewCell.m; sourceTree = "<group>"; };
+		5330A27718AAC9B800000A47 /* UAEventInputTextViewViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputTextViewViewCell.h; sourceTree = "<group>"; };
+		5330A27818AAC9B800000A47 /* UAEventInputTextViewViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputTextViewViewCell.m; sourceTree = "<group>"; };
+		5330A27918AAC9B800000A47 /* UAEventInputViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputViewCell.h; sourceTree = "<group>"; };
+		5330A27A18AAC9B800000A47 /* UAEventInputViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputViewCell.m; sourceTree = "<group>"; };
+		5330A27C18AAC9B800000A47 /* UAKeyboardShortcutAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAKeyboardShortcutAccessoryView.h; sourceTree = "<group>"; };
+		5330A27D18AAC9B800000A47 /* UAKeyboardShortcutAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAKeyboardShortcutAccessoryView.m; sourceTree = "<group>"; };
+		5330A27E18AAC9B800000A47 /* UAKeyboardShortcutButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAKeyboardShortcutButton.h; sourceTree = "<group>"; };
+		5330A27F18AAC9B800000A47 /* UAKeyboardShortcutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAKeyboardShortcutButton.m; sourceTree = "<group>"; };
+		5330A28018AAC9B800000A47 /* UANavPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANavPageControl.h; sourceTree = "<group>"; };
+		5330A28118AAC9B800000A47 /* UANavPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANavPageControl.m; sourceTree = "<group>"; };
+		5330A28218AAC9B800000A47 /* UANavPaginationTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANavPaginationTitleView.h; sourceTree = "<group>"; };
+		5330A28318AAC9B800000A47 /* UANavPaginationTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANavPaginationTitleView.m; sourceTree = "<group>"; };
+		5330A28418AAC9B800000A47 /* UANotesTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANotesTextView.h; sourceTree = "<group>"; };
+		5330A28518AAC9B800000A47 /* UANotesTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANotesTextView.m; sourceTree = "<group>"; };
+		5330A29018AAC9FE00000A47 /* UAEventCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventCollectionViewCell.h; sourceTree = "<group>"; };
+		5330A29118AAC9FE00000A47 /* UAEventCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventCollectionViewCell.m; sourceTree = "<group>"; };
 		533255631892E29400D28C34 /* UATagHighlightTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATagHighlightTextStorage.h; sourceTree = "<group>"; };
 		533255641892E29400D28C34 /* UATagHighlightTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATagHighlightTextStorage.m; sourceTree = "<group>"; };
 		53350EC817B6A86300223662 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -275,36 +313,10 @@
 		533F324B1773266600AD89E2 /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 		533F324D1773266600AD89E2 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		533F324E1773266600AD89E2 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
-		533F32601773266600AD89E2 /* UAEventInputTextFieldViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputTextFieldViewCell.h; sourceTree = "<group>"; };
-		533F32611773266600AD89E2 /* UAEventInputTextFieldViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputTextFieldViewCell.m; sourceTree = "<group>"; };
-		533F32621773266600AD89E2 /* UAEventInputTextViewViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputTextViewViewCell.h; sourceTree = "<group>"; };
-		533F32631773266600AD89E2 /* UAEventInputTextViewViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputTextViewViewCell.m; sourceTree = "<group>"; };
-		533F32641773266600AD89E2 /* UAEventInputViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputViewCell.h; sourceTree = "<group>"; };
-		533F32651773266600AD89E2 /* UAEventInputViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputViewCell.m; sourceTree = "<group>"; };
 		533F326C1773266600AD89E2 /* UAEventMapPin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventMapPin.h; sourceTree = "<group>"; };
 		533F326D1773266600AD89E2 /* UAEventMapPin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventMapPin.m; sourceTree = "<group>"; };
 		533F326E1773266600AD89E2 /* UAEventMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventMapViewController.h; sourceTree = "<group>"; };
 		533F326F1773266600AD89E2 /* UAEventMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventMapViewController.m; sourceTree = "<group>"; };
-		533F32701773266600AD89E2 /* UAActivityInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAActivityInputViewController.h; sourceTree = "<group>"; };
-		533F32711773266600AD89E2 /* UAActivityInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAActivityInputViewController.m; sourceTree = "<group>"; };
-		533F32721773266600AD89E2 /* UABGInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UABGInputViewController.h; sourceTree = "<group>"; };
-		533F32731773266600AD89E2 /* UABGInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UABGInputViewController.m; sourceTree = "<group>"; };
-		533F32741773266600AD89E2 /* UAInputBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInputBaseViewController.h; sourceTree = "<group>"; };
-		533F32751773266600AD89E2 /* UAInputBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInputBaseViewController.m; sourceTree = "<group>"; };
-		533F32761773266600AD89E2 /* UAInputParentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInputParentViewController.h; sourceTree = "<group>"; };
-		533F32771773266600AD89E2 /* UAInputParentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInputParentViewController.m; sourceTree = "<group>"; };
-		533F32781773266600AD89E2 /* UAMealInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMealInputViewController.h; sourceTree = "<group>"; };
-		533F32791773266600AD89E2 /* UAMealInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMealInputViewController.m; sourceTree = "<group>"; };
-		533F327A1773266600AD89E2 /* UAMedicineInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAMedicineInputViewController.h; sourceTree = "<group>"; };
-		533F327B1773266600AD89E2 /* UAMedicineInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAMedicineInputViewController.m; sourceTree = "<group>"; };
-		533F327C1773266600AD89E2 /* UANoteInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANoteInputViewController.h; sourceTree = "<group>"; };
-		533F327D1773266600AD89E2 /* UANoteInputViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANoteInputViewController.m; sourceTree = "<group>"; };
-		533F32851773266600AD89E2 /* UANavPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANavPageControl.h; sourceTree = "<group>"; };
-		533F32861773266600AD89E2 /* UANavPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANavPageControl.m; sourceTree = "<group>"; };
-		533F32871773266600AD89E2 /* UANavPaginationTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANavPaginationTitleView.h; sourceTree = "<group>"; };
-		533F32881773266600AD89E2 /* UANavPaginationTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANavPaginationTitleView.m; sourceTree = "<group>"; };
-		533F32891773266600AD89E2 /* UANotesTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANotesTextView.h; sourceTree = "<group>"; };
-		533F328A1773266600AD89E2 /* UANotesTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANotesTextView.m; sourceTree = "<group>"; };
 		533F328C1773266600AD89E2 /* UAExportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAExportViewController.h; sourceTree = "<group>"; };
 		533F328D1773266600AD89E2 /* UAExportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAExportViewController.m; sourceTree = "<group>"; };
 		533F328E1773266600AD89E2 /* UAPDFDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAPDFDocument.h; sourceTree = "<group>"; };
@@ -465,10 +477,6 @@
 		53A5D6BB1870D5950077DFBE /* UAInsulinCalculatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorViewController.m; sourceTree = "<group>"; };
 		53A5D6BD1870D5950077DFBE /* UAInsulinCalculatorTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTitleView.h; sourceTree = "<group>"; };
 		53A5D6BE1870D5950077DFBE /* UAInsulinCalculatorTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTitleView.m; sourceTree = "<group>"; };
-		53AAE87E189C22D000499991 /* UAKeyboardShortcutAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAKeyboardShortcutAccessoryView.h; sourceTree = "<group>"; };
-		53AAE87F189C22D000499991 /* UAKeyboardShortcutAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAKeyboardShortcutAccessoryView.m; sourceTree = "<group>"; };
-		53AAE881189C26CC00499991 /* UAKeyboardShortcutButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAKeyboardShortcutButton.h; sourceTree = "<group>"; };
-		53AAE882189C26CC00499991 /* UAKeyboardShortcutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAKeyboardShortcutButton.m; sourceTree = "<group>"; };
 		53AE05BE189459430078B408 /* UATagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATagsViewController.h; sourceTree = "<group>"; };
 		53AE05BF189459430078B408 /* UATagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATagsViewController.m; sourceTree = "<group>"; };
 		53AE05D71894815D0078B408 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
@@ -514,8 +522,6 @@
 		53FE5FAD189EC077008AC334 /* UACategoryInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UACategoryInputView.m; sourceTree = "<group>"; };
 		53FE5FAF189EC0E6008AC334 /* UACategorySelectorButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACategorySelectorButton.h; sourceTree = "<group>"; };
 		53FE5FB0189EC0E6008AC334 /* UACategorySelectorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UACategorySelectorButton.m; sourceTree = "<group>"; };
-		53FE5FB2189EC455008AC334 /* UAEventInputCategoryViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputCategoryViewCell.h; sourceTree = "<group>"; };
-		53FE5FB3189EC455008AC334 /* UAEventInputCategoryViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputCategoryViewCell.m; sourceTree = "<group>"; };
 		A62F871070604BBAA3B69F9F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FBEE407F98E74807B5E3E8FD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
@@ -562,6 +568,70 @@
 			children = (
 				53240A81189534BB00AEA9E8 /* UATagTableViewCell.h */,
 				53240A82189534BB00AEA9E8 /* UATagTableViewCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		5330A25918AAC7E200000A47 /* Input View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5330A27218AAC9B800000A47 /* Cells */,
+				5330A27B18AAC9B800000A47 /* UI */,
+				5330A25A18AAC7E200000A47 /* UAActivityInputViewController.h */,
+				5330A25B18AAC7E200000A47 /* UAActivityInputViewController.m */,
+				5330A25C18AAC7E200000A47 /* UABGInputViewController.h */,
+				5330A25D18AAC7E200000A47 /* UABGInputViewController.m */,
+				5330A25E18AAC7E200000A47 /* UAInputBaseViewController.h */,
+				5330A25F18AAC7E200000A47 /* UAInputBaseViewController.m */,
+				5330A26018AAC7E200000A47 /* UAInputParentViewController.h */,
+				5330A26118AAC7E200000A47 /* UAInputParentViewController.m */,
+				5330A26218AAC7E200000A47 /* UAMealInputViewController.h */,
+				5330A26318AAC7E200000A47 /* UAMealInputViewController.m */,
+				5330A26418AAC7E200000A47 /* UAMedicineInputViewController.h */,
+				5330A26518AAC7E200000A47 /* UAMedicineInputViewController.m */,
+				5330A26618AAC7E200000A47 /* UANoteInputViewController.h */,
+				5330A26718AAC7E200000A47 /* UANoteInputViewController.m */,
+			);
+			path = "Input View Controllers";
+			sourceTree = "<group>";
+		};
+		5330A27218AAC9B800000A47 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5330A27318AAC9B800000A47 /* UAEventInputCategoryViewCell.h */,
+				5330A27418AAC9B800000A47 /* UAEventInputCategoryViewCell.m */,
+				5330A27518AAC9B800000A47 /* UAEventInputTextFieldViewCell.h */,
+				5330A27618AAC9B800000A47 /* UAEventInputTextFieldViewCell.m */,
+				5330A27718AAC9B800000A47 /* UAEventInputTextViewViewCell.h */,
+				5330A27818AAC9B800000A47 /* UAEventInputTextViewViewCell.m */,
+				5330A27918AAC9B800000A47 /* UAEventInputViewCell.h */,
+				5330A27A18AAC9B800000A47 /* UAEventInputViewCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		5330A27B18AAC9B800000A47 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				5330A27C18AAC9B800000A47 /* UAKeyboardShortcutAccessoryView.h */,
+				5330A27D18AAC9B800000A47 /* UAKeyboardShortcutAccessoryView.m */,
+				5330A27E18AAC9B800000A47 /* UAKeyboardShortcutButton.h */,
+				5330A27F18AAC9B800000A47 /* UAKeyboardShortcutButton.m */,
+				5330A28018AAC9B800000A47 /* UANavPageControl.h */,
+				5330A28118AAC9B800000A47 /* UANavPageControl.m */,
+				5330A28218AAC9B800000A47 /* UANavPaginationTitleView.h */,
+				5330A28318AAC9B800000A47 /* UANavPaginationTitleView.m */,
+				5330A28418AAC9B800000A47 /* UANotesTextView.h */,
+				5330A28518AAC9B800000A47 /* UANotesTextView.m */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		5330A28F18AAC9C500000A47 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5330A29018AAC9FE00000A47 /* UAEventCollectionViewCell.h */,
+				5330A29118AAC9FE00000A47 /* UAEventCollectionViewCell.m */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -750,40 +820,13 @@
 		533F325E1773266600AD89E2 /* Events */ = {
 			isa = PBXGroup;
 			children = (
-				533F327E1773266600AD89E2 /* UI */,
-				533F325F1773266600AD89E2 /* Cells */,
+				5330A28F18AAC9C500000A47 /* Cells */,
+				5330A25918AAC7E200000A47 /* Input View Controllers */,
 				533F326B1773266600AD89E2 /* Map View */,
-				533F32701773266600AD89E2 /* UAActivityInputViewController.h */,
-				533F32711773266600AD89E2 /* UAActivityInputViewController.m */,
-				533F32721773266600AD89E2 /* UABGInputViewController.h */,
-				533F32731773266600AD89E2 /* UABGInputViewController.m */,
-				533F32741773266600AD89E2 /* UAInputBaseViewController.h */,
-				533F32751773266600AD89E2 /* UAInputBaseViewController.m */,
-				533F32761773266600AD89E2 /* UAInputParentViewController.h */,
-				533F32771773266600AD89E2 /* UAInputParentViewController.m */,
-				533F32781773266600AD89E2 /* UAMealInputViewController.h */,
-				533F32791773266600AD89E2 /* UAMealInputViewController.m */,
-				533F327A1773266600AD89E2 /* UAMedicineInputViewController.h */,
-				533F327B1773266600AD89E2 /* UAMedicineInputViewController.m */,
-				533F327C1773266600AD89E2 /* UANoteInputViewController.h */,
-				533F327D1773266600AD89E2 /* UANoteInputViewController.m */,
+				5330A26F18AAC81000000A47 /* UAEventInputViewController.h */,
+				5330A27018AAC81000000A47 /* UAEventInputViewController.m */,
 			);
 			path = Events;
-			sourceTree = "<group>";
-		};
-		533F325F1773266600AD89E2 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				533F32601773266600AD89E2 /* UAEventInputTextFieldViewCell.h */,
-				533F32611773266600AD89E2 /* UAEventInputTextFieldViewCell.m */,
-				533F32621773266600AD89E2 /* UAEventInputTextViewViewCell.h */,
-				533F32631773266600AD89E2 /* UAEventInputTextViewViewCell.m */,
-				53FE5FB2189EC455008AC334 /* UAEventInputCategoryViewCell.h */,
-				53FE5FB3189EC455008AC334 /* UAEventInputCategoryViewCell.m */,
-				533F32641773266600AD89E2 /* UAEventInputViewCell.h */,
-				533F32651773266600AD89E2 /* UAEventInputViewCell.m */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		533F326B1773266600AD89E2 /* Map View */ = {
@@ -795,23 +838,6 @@
 				533F326F1773266600AD89E2 /* UAEventMapViewController.m */,
 			);
 			path = "Map View";
-			sourceTree = "<group>";
-		};
-		533F327E1773266600AD89E2 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				533F32851773266600AD89E2 /* UANavPageControl.h */,
-				533F32861773266600AD89E2 /* UANavPageControl.m */,
-				533F32871773266600AD89E2 /* UANavPaginationTitleView.h */,
-				533F32881773266600AD89E2 /* UANavPaginationTitleView.m */,
-				533F32891773266600AD89E2 /* UANotesTextView.h */,
-				533F328A1773266600AD89E2 /* UANotesTextView.m */,
-				53AAE881189C26CC00499991 /* UAKeyboardShortcutButton.h */,
-				53AAE882189C26CC00499991 /* UAKeyboardShortcutButton.m */,
-				53AAE87E189C22D000499991 /* UAKeyboardShortcutAccessoryView.h */,
-				53AAE87F189C22D000499991 /* UAKeyboardShortcutAccessoryView.m */,
-			);
-			path = UI;
 			sourceTree = "<group>";
 		};
 		533F328B1773266600AD89E2 /* Export */ = {
@@ -1541,13 +1567,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5330A26A18AAC7E200000A47 /* UAInputBaseViewController.m in Sources */,
 				53240A83189534BB00AEA9E8 /* UATagTableViewCell.m in Sources */,
 				53F78ED718422B5B006736F5 /* TGRImageViewController.m in Sources */,
 				533F32E91773266600AD89E2 /* NSDate+Extension.m in Sources */,
 				533F32EA1773266600AD89E2 /* NSString+Extension.m in Sources */,
 				533F32F51773266600AD89E2 /* UAActivity.m in Sources */,
+				5330A28618AAC9B800000A47 /* UAEventInputCategoryViewCell.m in Sources */,
 				53F78EDA18422B5B006736F5 /* UIImage+AspectFit.m in Sources */,
+				5330A26B18AAC7E200000A47 /* UAInputParentViewController.m in Sources */,
 				533F32F61773266600AD89E2 /* UAEvent.m in Sources */,
+				5330A28818AAC9B800000A47 /* UAEventInputTextViewViewCell.m in Sources */,
 				533F32F71773266600AD89E2 /* UAManagedObject.m in Sources */,
 				533F32F81773266600AD89E2 /* UAMeal.m in Sources */,
 				533F32F91773266600AD89E2 /* UAMedicine.m in Sources */,
@@ -1558,50 +1588,40 @@
 				533F32FD1773266600AD89E2 /* UAReminderRule.m in Sources */,
 				533F32FE1773266600AD89E2 /* UARunKeeperAccount.m in Sources */,
 				533F32FF1773266600AD89E2 /* UATag.m in Sources */,
+				5330A26818AAC7E200000A47 /* UAActivityInputViewController.m in Sources */,
 				533F33021773266600AD89E2 /* Diabetik.xcdatamodeld in Sources */,
 				533F33031773266600AD89E2 /* main.m in Sources */,
 				533F347C1773266600AD89E2 /* UAAppDelegate.m in Sources */,
-				53AAE880189C22D000499991 /* UAKeyboardShortcutAccessoryView.m in Sources */,
 				533F347D1773266600AD89E2 /* UAHelper.m in Sources */,
 				537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */,
 				53FE5FB1189EC0E6008AC334 /* UACategorySelectorButton.m in Sources */,
-				53AAE883189C26CC00499991 /* UAKeyboardShortcutButton.m in Sources */,
 				533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */,
 				53AFAA2118A90E7B00E65168 /* UAAddEntryiPadView.m in Sources */,
 				533F34A41773266600AD89E2 /* UIImage+Resize.m in Sources */,
-				533F34AA1773266600AD89E2 /* UAEventInputTextFieldViewCell.m in Sources */,
 				53895264189FA12500C8C3C8 /* VKRSAppSoundPlayer.m in Sources */,
-				533F34AB1773266600AD89E2 /* UAEventInputTextViewViewCell.m in Sources */,
-				533F34AC1773266600AD89E2 /* UAEventInputViewCell.m in Sources */,
 				539664D21856556600AD1842 /* Diabetik_1.1_to_1.3.xcmappingmodel in Sources */,
 				533F34AF1773266600AD89E2 /* UAEventMapPin.m in Sources */,
 				533F34B01773266600AD89E2 /* UAEventMapViewController.m in Sources */,
-				533F34B11773266600AD89E2 /* UAActivityInputViewController.m in Sources */,
 				53F2955D18786B560021F6FC /* UASettingsAnalytikViewController.m in Sources */,
+				5330A28718AAC9B800000A47 /* UAEventInputTextFieldViewCell.m in Sources */,
 				53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */,
-				533F34B21773266600AD89E2 /* UABGInputViewController.m in Sources */,
 				53FE5FAE189EC077008AC334 /* UACategoryInputView.m in Sources */,
 				53AFAA2418A90E7B00E65168 /* UAAddEntryModalView.m in Sources */,
-				533F34B31773266600AD89E2 /* UAInputBaseViewController.m in Sources */,
 				5304B5BB18745DCF00184544 /* UATooltipView.m in Sources */,
-				533F34B41773266600AD89E2 /* UAInputParentViewController.m in Sources */,
 				533D9D8918A0FC1300CE6104 /* UAActionSheet.m in Sources */,
+				5330A28B18AAC9B800000A47 /* UAKeyboardShortcutButton.m in Sources */,
 				53A5D6BF1870D5950077DFBE /* UAInsulinCalculatorTextFieldViewCell.m in Sources */,
 				53895265189FA12500C8C3C8 /* VKRSSound.m in Sources */,
-				533F34B51773266600AD89E2 /* UAMealInputViewController.m in Sources */,
-				533F34B61773266600AD89E2 /* UAMedicineInputViewController.m in Sources */,
-				533F34B71773266600AD89E2 /* UANoteInputViewController.m in Sources */,
 				539E9FA4184B8C22009803D1 /* UITextView+Extension.m in Sources */,
-				533F34BB1773266600AD89E2 /* UANavPageControl.m in Sources */,
-				533F34BC1773266600AD89E2 /* UANavPaginationTitleView.m in Sources */,
-				533F34BD1773266600AD89E2 /* UANotesTextView.m in Sources */,
 				533F34BE1773266600AD89E2 /* UAExportViewController.m in Sources */,
 				533F34BF1773266600AD89E2 /* UAPDFDocument.m in Sources */,
+				5330A26918AAC7E200000A47 /* UABGInputViewController.m in Sources */,
 				533F34C01773266600AD89E2 /* UAJournalMonthViewCell.m in Sources */,
 				533F34C21773266600AD89E2 /* UAJournalViewController.m in Sources */,
 				533F34C41773266600AD89E2 /* UASideMenuCell.m in Sources */,
 				533F34C51773266600AD89E2 /* UASideMenuViewController.m in Sources */,
 				533F34C61773266600AD89E2 /* UALocationMapPin.m in Sources */,
+				5330A26E18AAC7E200000A47 /* UANoteInputViewController.m in Sources */,
 				533F34C81773266600AD89E2 /* UALocationReminderMapViewController.m in Sources */,
 				53F2955E18786B560021F6FC /* UASettingsDropboxViewController.m in Sources */,
 				533F34C91773266600AD89E2 /* UALocationReminderViewController.m in Sources */,
@@ -1611,6 +1631,7 @@
 				533F34CD1773266600AD89E2 /* UARemindersViewController.m in Sources */,
 				533F34CE1773266600AD89E2 /* UAChartCrosshairTooltip.m in Sources */,
 				53AE05C0189459430078B408 /* UATagsViewController.m in Sources */,
+				5330A26C18AAC7E200000A47 /* UAMealInputViewController.m in Sources */,
 				533F34CF1773266600AD89E2 /* UAChartLineCrosshair.m in Sources */,
 				533F34D01773266600AD89E2 /* UAAvgBloodGlucoseChartViewController.m in Sources */,
 				53949907184A98B400FF20D1 /* UASettingsViewCell.m in Sources */,
@@ -1618,7 +1639,9 @@
 				533F34D21773266600AD89E2 /* UACarbsChartViewController.m in Sources */,
 				533F34D31773266600AD89E2 /* UAChartViewController.m in Sources */,
 				533F34D41773266600AD89E2 /* UALeastSquareFitCalculator.m in Sources */,
+				5330A26D18AAC7E200000A47 /* UAMedicineInputViewController.m in Sources */,
 				533F34D51773266600AD89E2 /* UAScatterChartViewController.m in Sources */,
+				5330A28C18AAC9B800000A47 /* UANavPageControl.m in Sources */,
 				533F34D61773266600AD89E2 /* UAReportPreviewView.m in Sources */,
 				533F34D71773266600AD89E2 /* UAReportsViewController.m in Sources */,
 				533F34D81773266600AD89E2 /* UADateButton.m in Sources */,
@@ -1629,6 +1652,7 @@
 				5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */,
 				533F34DC1773266600AD89E2 /* UASettingsGlucoseViewController.m in Sources */,
 				533F34DD1773266600AD89E2 /* UASettingsLicensesViewController.m in Sources */,
+				5330A29218AAC9FE00000A47 /* UAEventCollectionViewCell.m in Sources */,
 				539E1CCF17B7FEA10059ED17 /* UIImage+ImageEffects.m in Sources */,
 				533F34DF1773266600AD89E2 /* UASettingsViewController.m in Sources */,
 				533F34E01773266600AD89E2 /* UATimelineHeaderViewCell.m in Sources */,
@@ -1644,6 +1668,7 @@
 				533F352717736C0600AD89E2 /* UALocationController.m in Sources */,
 				533F352817736C0600AD89E2 /* UAMediaController.m in Sources */,
 				533255651892E29400D28C34 /* UATagHighlightTextStorage.m in Sources */,
+				5330A28D18AAC9B800000A47 /* UANavPaginationTitleView.m in Sources */,
 				533F352917736C0600AD89E2 /* UAReminderController.m in Sources */,
 				533F352B17736C0600AD89E2 /* UATagController.m in Sources */,
 				533F355C17736C5500AD89E2 /* UAAutocompleteBar.m in Sources */,
@@ -1652,16 +1677,19 @@
 				533F356017736C5500AD89E2 /* UAInputLabel.m in Sources */,
 				533F356117736C5500AD89E2 /* UASlider.m in Sources */,
 				533F356217736C5500AD89E2 /* UAGenericTableHeaderView.m in Sources */,
-				53FE5FB4189EC455008AC334 /* UAEventInputCategoryViewCell.m in Sources */,
 				533F356317736C5500AD89E2 /* UAGenericTableViewCell.m in Sources */,
 				533F356517736C5500AD89E2 /* UAViewControllerMessageView.m in Sources */,
+				5330A27118AAC81000000A47 /* UAEventInputViewController.m in Sources */,
 				53AFAA2218A90E7B00E65168 /* UAAddEntryModaliPadButton.m in Sources */,
 				533F356617736C5500AD89E2 /* UAFont.m in Sources */,
 				53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */,
+				5330A28E18AAC9B800000A47 /* UANotesTextView.m in Sources */,
 				534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */,
 				533F356717736C5500AD89E2 /* UANavSubtitleHeaderView.m in Sources */,
+				5330A28A18AAC9B800000A47 /* UAKeyboardShortcutAccessoryView.m in Sources */,
 				533F356817736C5500AD89E2 /* UAUIHintView.m in Sources */,
 				533F356917736C5500AD89E2 /* UANavigationController.m in Sources */,
+				5330A28918AAC9B800000A47 /* UAEventInputViewCell.m in Sources */,
 				533F356A17736C5500AD89E2 /* UATooltipViewController.m in Sources */,
 				53AFAA2318A90E7B00E65168 /* UAAddEntryModalButton.m in Sources */,
 				533F356B17736C5500AD89E2 /* UACreditsTooltipView.m in Sources */,

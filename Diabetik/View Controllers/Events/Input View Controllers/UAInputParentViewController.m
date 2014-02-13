@@ -30,7 +30,6 @@
 #import "UANoteInputViewController.h"
 
 #define kDragBuffer 15.0f
-#define kVCHorizontalPadding 0.0f
 
 @interface UAInputParentViewController ()
 {
@@ -44,6 +43,11 @@
     BOOL isAnimatingAddEntry;
     BOOL isBeingPopped;
 }
+@property (nonatomic, assign) NSUInteger prerotationIndex;
+@property (nonatomic, assign) NSUInteger currentIndex;
+
+// Setup
+- (void)commonInit;
 
 // Logic
 - (void)layoutViewControllers;
@@ -63,10 +67,8 @@
     self = [super init];
     if (self)
     {
-        isAddingQuickEntry = NO;
-        isAnimatingAddEntry = NO;
-        isBeingPopped = NO;
-    
+        [self commonInit];
+     
         UAInputBaseViewController *vc = nil;
         if(eventType == 0)
         {
@@ -88,9 +90,7 @@
         {
             vc = [[UANoteInputViewController alloc] init];
         }
-        self.viewControllers = [NSMutableArray arrayWithObject:vc];
-        
-        [self performSetup];
+        [self addVC:vc];
     }
     return self;
 }
@@ -101,9 +101,7 @@
     self = [super init];
     if(self)
     {
-        isAddingQuickEntry = NO;
-        isAnimatingAddEntry = NO;
-        isBeingPopped = NO;
+        [self commonInit];
         
         UAInputBaseViewController *vc = nil;
         if([aEvent isKindOfClass:[UAMedicine class]])
@@ -126,9 +124,7 @@
         {
             vc = [[UANoteInputViewController alloc] initWithEvent:aEvent];
         }
-        self.viewControllers = [NSMutableArray arrayWithObject:vc];
-        
-        [self performSetup];
+        [self addVC:vc];
     }
     
     return self;
@@ -138,19 +134,38 @@
     self = [super init];
     if (self)
     {
-        isAddingQuickEntry = NO;
-        isAnimatingAddEntry = NO;
-        isBeingPopped = NO;
+        [self commonInit];
         
         UAMedicineInputViewController *vc = [[UAMedicineInputViewController alloc] initWithAmount:amount];
-        self.viewControllers = [NSMutableArray arrayWithObject:vc];
-        
-        [self performSetup];
+        [self addVC:vc];
     }
     return self;
 }
-- (void)performSetup
+- (void)commonInit
 {
+    isAddingQuickEntry = NO;
+    isAnimatingAddEntry = NO;
+    isBeingPopped = NO;
+    
+    self.viewControllers = [NSMutableArray array];
+    self.currentIndex = 0;
+    self.prerotationIndex = 0;
+    
+    // Setup our scroll view
+    if(!self.scrollView)
+    {
+        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
+        self.scrollView.delegate = self;
+        self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
+        self.scrollView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
+        self.scrollView.alwaysBounceHorizontal = YES;
+        self.scrollView.directionalLockEnabled = YES;
+        self.scrollView.backgroundColor = [UIColor clearColor];
+        self.scrollView.pagingEnabled = YES;
+        self.scrollView.showsHorizontalScrollIndicator = NO;
+        self.scrollView.showsVerticalScrollIndicator = NO;
+    }
+    
     // Setup notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(presentMediaOptions:)
@@ -169,40 +184,9 @@
 {
     [super viewWillAppear:animated];
     
-    [self setNeedsStatusBarAppearanceUpdate];
-    
-    // Setup our table view
     self.view.backgroundColor = [UIColor whiteColor];
-    
-    // Setup our scroll view
-    if(!self.scrollView)
-    {
-        self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length)];
-        self.scrollView.delegate = self;
-        self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        self.scrollView.backgroundColor = [UIColor colorWithRed:247.0f/255.0f green:250.0f/255.0f blue:249.0f/255.0f alpha:1.0f];
-        self.scrollView.alwaysBounceHorizontal = YES;
-        self.scrollView.directionalLockEnabled = YES;
-        self.scrollView.backgroundColor = [UIColor clearColor];
-        
-        [self.view addSubview:self.scrollView];
-        
-        for(UAInputBaseViewController *vc in self.viewControllers)
-        {
-            [self addVC:vc];
-        }
-        self.scrollView.pagingEnabled = YES;
-        self.scrollView.showsHorizontalScrollIndicator = NO;
-        self.scrollView.showsVerticalScrollIndicator = NO;
-    }
-    
-    if(!addEntryBubbleImageView)
-    {
-        addEntryBubbleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AddEntryMedicineBubble.png"]];
-        addEntryBubbleImageView.frame = CGRectMake(self.view.frame.size.width - addEntryBubbleImageView.frame.size.width, self.scrollView.frame.size.height/2.0f - addEntryBubbleImageView.frame.size.height/2.0f, addEntryBubbleImageView.frame.size.width, addEntryBubbleImageView.frame.size.height);
-        addEntryBubbleImageView.alpha = 0.0f;
-        [self.view addSubview:addEntryBubbleImageView];
-    }
+    self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
+    [self.view addSubview:self.scrollView];
     
     // Setup header buttons
     if([self isPresentedModally])
@@ -210,11 +194,8 @@
         UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconCancel"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
         [self.navigationItem setLeftBarButtonItem:cancelBarButtonItem animated:NO];
     }
-    
     UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconSave"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(saveEvent:)];
     [self.navigationItem setRightBarButtonItem:saveBarButtonItem animated:NO];
-    
-    [self updateNavigationBar];
     
     if(!self.event && ![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenAddDragUIHint])
     {
@@ -235,6 +216,8 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
+    [self layoutViewControllers];
+    [self updateNavigationBar];
     [self performSelector:@selector(activateTargetViewController) withObject:nil afterDelay:0.0f];
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -412,45 +395,42 @@
 }
 - (void)addVC:(UIViewController *)vc
 {
-    CGFloat contentWidth = self.scrollView.contentSize.width > 0 ? self.scrollView.contentSize.width-kVCHorizontalPadding : 0.0f;
-    
+    CGFloat contentWidth = self.scrollView.contentSize.width;
     vc.view.frame = CGRectMake(contentWidth, 0.0f, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+    
+    [vc willMoveToParentViewController:vc];
+    [self.scrollView addSubview:vc.view];
     [self addChildViewController:vc];
     [vc didMoveToParentViewController:self];
-    [self.scrollView addSubview:vc.view];
     
-    self.scrollView.contentSize = CGSizeMake(contentWidth + vc.view.frame.size.width + kVCHorizontalPadding, self.scrollView.bounds.size.height);
+    [self.viewControllers addObject:vc];
+    [self layoutViewControllers];
+    [self updateNavigationBar];
 }
 - (void)removeVC:(UIViewController *)vc
 {
+    [vc willMoveToParentViewController:nil];
     [vc.view removeFromSuperview];
     [vc removeFromParentViewController];
-    [self.viewControllers removeObject:vc];
+    [vc didMoveToParentViewController:nil];
     
+    [self.viewControllers removeObject:vc];
     [self layoutViewControllers];
     [self activateTargetViewController];
+    [self updateNavigationBar];
 }
 - (void)layoutViewControllers
 {
     if([self.viewControllers count])
     {
-        UIViewController *vc = self.viewControllers[0];
-        
-        // Re-layout subviews
         CGFloat x = 0.0f;
         for(UAInputBaseViewController *vc in self.viewControllers)
         {
-            vc.view.frame = CGRectMake(x, 0.0f, vc.view.frame.size.width, vc.view.frame.size.height);
-            x += vc.view.frame.size.width;
+            vc.view.frame = CGRectMake(x, 0.0f, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+            x += self.scrollView.bounds.size.width;
         }
         
-        // Adjust our viewport
-        CGFloat contentWidth = self.scrollView.contentSize.width > 0 ? self.scrollView.contentSize.width-kVCHorizontalPadding : 0.0f;
-        self.scrollView.contentSize = CGSizeMake((contentWidth - vc.view.frame.size.width) + kVCHorizontalPadding, self.scrollView.bounds.size.height);
-        if(self.scrollView.contentOffset.x >= self.scrollView.contentSize.width - vc.view.frame.size.width - kVCHorizontalPadding)
-        {
-            [self.scrollView setContentOffset:CGPointMake((self.viewControllers.count-1)*vc.view.frame.size.width, 0.0f) animated:NO];
-        }
+        self.scrollView.contentSize = CGSizeMake(x, self.scrollView.bounds.size.height);
     }
 }
 - (void)activateTargetViewController
@@ -559,6 +539,8 @@
 }
 - (void)updateNavigationBar
 {
+    [self setNeedsStatusBarAppearanceUpdate];
+    
     UAInputBaseViewController *targetVC = [self targetViewController];
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController.navigationBar setBackgroundImage:[[self targetViewController] navigationBarBackgroundImage] forBarMetrics:UIBarMetricsDefault];
@@ -588,36 +570,48 @@
     isAnimatingAddEntry = NO;
     originalContentOffset = aScrollView.contentOffset;
     
-    addEntryBubbleImageView.frame = CGRectMake(self.view.bounds.size.width - addEntryBubbleImageView.frame.size.width, self.scrollView.frame.size.height/2.0f - addEntryBubbleImageView.frame.size.height/2.0f, addEntryBubbleImageView.frame.size.width, addEntryBubbleImageView.frame.size.height);
+    // Lazily create our add entry image view
+    if(!addEntryBubbleImageView)
+    {
+        addEntryBubbleImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"AddEntryMedicineBubble"]];
+        addEntryBubbleImageView.alpha = 0.0f;
+        [self.view addSubview:addEntryBubbleImageView];
+    }
+    
+    addEntryBubbleImageView.frame = CGRectMake(self.view.frame.size.width - addEntryBubbleImageView.frame.size.width, self.scrollView.frame.size.height/2.0f - addEntryBubbleImageView.frame.size.height/2.0f, addEntryBubbleImageView.frame.size.width, addEntryBubbleImageView.frame.size.height);
 }
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView
 {
-    CGFloat offsetX = [self.viewControllers count] > 1 ? aScrollView.contentOffset.x - ([self.viewControllers count]-1)*aScrollView.frame.size.width : aScrollView.contentOffset.x;
-
-    if(aScrollView.isTracking && offsetX > kDragBuffer && [self.viewControllers count] < 8)
+    CGFloat offsetX = self.scrollView.contentOffset.x;
+    if(offsetX < 0.0f) offsetX = 0.0f;
+    if(offsetX > self.scrollView.contentSize.width) offsetX = self.scrollView.contentSize.width;
+    self.currentIndex = (NSUInteger)floorf(offsetX / self.scrollView.bounds.size.width);
+    
+    CGFloat dragOffsetX = [self.viewControllers count] > 1 ? aScrollView.contentOffset.x - ([self.viewControllers count]-1)*aScrollView.bounds.size.width : aScrollView.contentOffset.x;
+    if(aScrollView.isTracking && dragOffsetX > kDragBuffer && [self.viewControllers count] < 8)
     {
         addEntryBubbleImageView.alpha = 1.0f; //((offsetX-kDragBuffer > 20.0f ? 20.0f : offsetX-kDragBuffer)/20.0f)*1.0f;
-        aScrollView.alpha = 1.0f - ((offsetX-kDragBuffer > 20.0f ? 20.0f : offsetX-kDragBuffer)/20.0f)*0.5f;
+        aScrollView.alpha = 1.0f - ((dragOffsetX-kDragBuffer > 20.0f ? 20.0f : dragOffsetX-kDragBuffer)/20.0f)*0.5f;
         
-        if(offsetX-kDragBuffer < 20.0f)
+        if(dragOffsetX-kDragBuffer < 20.0f)
         {
-            addEntryBubbleImageView.image = [UIImage imageNamed:@"AddEntryMedicineBubble.png"];
+            addEntryBubbleImageView.image = [UIImage imageNamed:@"AddEntryMedicineBubble"];
         }
-        else if(offsetX-kDragBuffer < 40.0f)
+        else if(dragOffsetX-kDragBuffer < 40.0f)
         {
-            addEntryBubbleImageView.image = [UIImage imageNamed:@"AddEntryBloodBubble.png"];
+            addEntryBubbleImageView.image = [UIImage imageNamed:@"AddEntryBloodBubble"];
         }
-        else if(offsetX-kDragBuffer < 60.0f)
+        else if(dragOffsetX-kDragBuffer < 60.0f)
         {
-            addEntryBubbleImageView.image = [UIImage imageNamed:@"AddEntryMealBubble.png"];
+            addEntryBubbleImageView.image = [UIImage imageNamed:@"AddEntryMealBubble"];
         }
-        else if(offsetX-kDragBuffer < 80.0f)
+        else if(dragOffsetX-kDragBuffer < 80.0f)
         {
-            addEntryBubbleImageView.image = [UIImage imageNamed:@"AddEntryActivityBubble.png"];
+            addEntryBubbleImageView.image = [UIImage imageNamed:@"AddEntryActivityBubble"];
         }
-        else if(offsetX-kDragBuffer < 100.0f)
+        else if(dragOffsetX-kDragBuffer < 100.0f)
         {
-            addEntryBubbleImageView.image = [UIImage imageNamed:@"AddEntryNoteBubble.png"];
+            addEntryBubbleImageView.image = [UIImage imageNamed:@"AddEntryNoteBubble"];
         }
     }
     else
@@ -628,12 +622,12 @@
     
     if(isAddingQuickEntry && !aScrollView.tracking && !isAnimatingAddEntry)
     {
-        [aScrollView scrollRectToVisible:CGRectMake(aScrollView.contentSize.width-aScrollView.frame.size.width-kVCHorizontalPadding, 0.0f, aScrollView.frame.size.width, aScrollView.frame.size.height) animated:YES];
+        [aScrollView scrollRectToVisible:CGRectMake(aScrollView.contentSize.width-aScrollView.frame.size.width, 0.0f, aScrollView.frame.size.width, aScrollView.frame.size.height) animated:YES];
         isAnimatingAddEntry = YES;
     }
-    else if(!aScrollView.isTracking && aScrollView.contentOffset.x > aScrollView.contentSize.width-aScrollView.frame.size.width-kVCHorizontalPadding && !isAnimatingAddEntry)
+    else if(!aScrollView.isTracking && aScrollView.contentOffset.x > aScrollView.contentSize.width-aScrollView.frame.size.width && !isAnimatingAddEntry)
     {
-        [aScrollView scrollRectToVisible:CGRectMake(aScrollView.contentSize.width-aScrollView.frame.size.width-kVCHorizontalPadding, 0.0f, aScrollView.frame.size.width, aScrollView.frame.size.height) animated:YES];
+        [aScrollView scrollRectToVisible:CGRectMake(aScrollView.contentSize.width-aScrollView.frame.size.width, 0.0f, aScrollView.frame.size.width, aScrollView.frame.size.height) animated:YES];
         isAnimatingAddEntry = YES;
     }
     
@@ -652,31 +646,26 @@
         if(offsetX-kDragBuffer < 20.0f)
         {
             UAMedicineInputViewController *vc = [[UAMedicineInputViewController alloc] init];
-            [self.viewControllers addObject:vc];
             [self addVC:(UIViewController *)vc];
         }
         else if(offsetX-kDragBuffer < 40.0f)
         {
             UABGInputViewController *vc = [[UABGInputViewController alloc] init];
-            [self.viewControllers addObject:vc];
             [self addVC:(UIViewController *)vc];
         }
         else if(offsetX-kDragBuffer < 60.0f)
         {
             UAMealInputViewController *vc = [[UAMealInputViewController alloc] init];
-            [self.viewControllers addObject:vc];
             [self addVC:(UIViewController *)vc];
         }
         else if(offsetX-kDragBuffer < 80.0f)
         {
             UAActivityInputViewController *vc = [[UAActivityInputViewController alloc] init];
-            [self.viewControllers addObject:vc];
             [self addVC:(UIViewController *)vc];
         }
         else if(offsetX-kDragBuffer < 100.0f)
         {
             UANoteInputViewController *vc = [[UANoteInputViewController alloc] init];
-            [self.viewControllers addObject:vc];
             [self addVC:(UIViewController *)vc];
         }
     }
@@ -717,7 +706,6 @@
     NSDate *date = [[NSDate date] dateByAddingMinutes:minutes];
     UATimeReminderViewController *vc = [[UATimeReminderViewController alloc] initWithDate:date];
     UANavigationController *nvc = [[UANavigationController alloc] initWithRootViewController:vc];
-    nvc.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentViewController:nvc animated:YES completion:nil];
 }
 
@@ -726,10 +714,7 @@
 {
     [UIView animateWithDuration:[self keyboardAnimationDurationForNotification:aNotification] animations:^{
         CGRect keyboardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-        UIWindow *window = [[[UIApplication sharedApplication] windows] firstObject];
-        UIView *mainSubviewOfWindow = window.rootViewController.view;
-        CGRect keyboardFrameConverted = [mainSubviewOfWindow convertRect:keyboardFrame fromView:window];
-        CGSize kbSize = keyboardFrameConverted.size;
+        CGSize kbSize = [self.view convertRect:keyboardFrame fromView:nil].size;
         
         self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length- kbSize.height);
         
@@ -739,10 +724,7 @@
 {
     [UIView animateWithDuration: [self keyboardAnimationDurationForNotification:aNotification] animations:^{
         CGRect keyboardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-        UIWindow *window = [[[UIApplication sharedApplication] windows] firstObject];
-        UIView *mainSubviewOfWindow = window.rootViewController.view;
-        CGRect keyboardFrameConverted = [mainSubviewOfWindow convertRect:keyboardFrame fromView:window];
-        CGSize kbSize = keyboardFrameConverted.size;
+        CGSize kbSize = [self.view convertRect:keyboardFrame fromView:nil].size;
         
         self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length- kbSize.height);
     } completion:nil];
@@ -757,19 +739,26 @@
 #pragma mark - Helpers
 - (UAInputBaseViewController *)targetViewController
 {
-    CGFloat offsetX = self.scrollView.contentOffset.x;
-    if(offsetX < 0.0f) offsetX = 0.0f;
-    if(offsetX > self.scrollView.contentSize.width) offsetX = self.scrollView.contentSize.width;
-    
-    NSInteger page = (NSInteger)floorf(offsetX / self.scrollView.bounds.size.width);
-    if(page < 0) page = 0;
-    
-    if(self.viewControllers && [self.viewControllers count] && [self.viewControllers count]-1 >= page)
+    if(self.viewControllers && [self.viewControllers count])
     {
-        return (UAInputBaseViewController *)[self.viewControllers objectAtIndex:page];
+        NSUInteger index = self.currentIndex;
+        if(index > [self.viewControllers count]-1) index = [self.viewControllers count]-1;
+        return (UAInputBaseViewController *)self.viewControllers[index];
     }
     
     return nil;
+}
+
+#pragma mark - Rotation handling methods
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    self.prerotationIndex = self.currentIndex;
+}
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [self layoutViewControllers];
+    
+    self.scrollView.contentOffset = CGPointMake(self.scrollView.bounds.size.width*self.prerotationIndex, 0.0f);
 }
 
 #pragma mark - Autorotation

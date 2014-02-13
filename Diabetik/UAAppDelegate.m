@@ -103,7 +103,9 @@
     viewController.blurSaturationDeltaFactor = 3.0f;
     viewController.blurRadius = 10.0f;
     viewController.limitMenuViewSize = YES;
-    viewController.menuViewSize = CGSizeMake(280.0f, self.window.frame.size.height);
+    
+    CGFloat menuWidth = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) ? 340.0f : 280.0f;
+    viewController.menuViewSize = CGSizeMake(menuWidth, self.window.frame.size.height);
     self.viewController = viewController;
     
     // Delay launch on non-essential classes

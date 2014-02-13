@@ -32,6 +32,7 @@
 #import "UAActivityInputViewController.h"
 #import "UANoteInputViewController.h"
 #import "UAInputParentViewController.h"
+#import "UAEventInputViewController.h"
 
 #import "UAEvent.h"
 #import "UAReading.h"

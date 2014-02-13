@@ -395,7 +395,7 @@
         if(!imagePickerController)
         {
             imagePickerController = [[UIImagePickerController alloc] init];
-            imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
+            imagePickerController.modalPresentationStyle = UIModalPresentationFormSheet;
         }
         imagePickerController.sourceType = sourceType;
         
@@ -627,6 +627,10 @@
     [super didMoveToParentViewController:parent];
     
     parentVC = (UAInputParentViewController *)parent;
+    if(parent && self.activeView)
+    {
+        [self didBecomeActive];
+    }
 }
 
 @end

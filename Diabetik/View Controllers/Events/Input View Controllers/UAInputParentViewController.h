@@ -48,7 +48,6 @@
 - (id)initWithEventType:(NSInteger)eventType;
 - (id)initWithEvent:(UAEvent *)aEvent;
 - (id)initWithMedicineAmount:(NSNumber *)amount;
-- (void)performSetup;
 
 // Logic
 - (void)saveEvent:(id)sender;
