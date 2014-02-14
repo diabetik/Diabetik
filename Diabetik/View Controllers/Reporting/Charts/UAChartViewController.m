@@ -52,7 +52,7 @@
     
     if(!closeButton)
     {
-        closeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 50.0f, 0.0f, 50.0f, 50.0f)];
+        closeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - 60.0f, 20.0f, 40.0f, 40.0f)];
         [closeButton setImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
         [closeButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin];
         [closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];

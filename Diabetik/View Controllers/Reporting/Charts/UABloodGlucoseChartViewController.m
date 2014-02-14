@@ -92,7 +92,6 @@
     if([[chartData objectForKey:@"data"] count])
     {
         self.chart = [[ShinobiChart alloc] initWithFrame:self.view.bounds];
-        
         self.chart.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.chart.clipsToBounds = NO;
         self.chart.datasource = self;

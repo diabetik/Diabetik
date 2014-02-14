@@ -40,12 +40,14 @@
     UIScrollView *scrollView;
     UIPageControl *pageControl;
 }
-@property (nonatomic, strong) NSManagedObjectContext *moc;
+@property (nonatomic, strong) UIButton *closeButton;
+
+// Logic
+- (void)dismiss;
 
 @end
 
 @implementation UAReportsViewController
-@synthesize moc = _moc;
 
 #pragma mark - Setup
 - (id)initFromDate:(NSDate *)aFromDate toDate:(NSDate *)aToDate;
@@ -90,8 +92,16 @@
     pageControl.pageIndicatorTintColor = [UIColor colorWithRed:69.0f/255.0f green:77.0f/255.0f blue:74.0f/255.0f alpha:0.12];
     [self.view addSubview:pageControl];
     
-    CGFloat y = 35.0f;
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        self.closeButton = [[UIButton alloc] initWithFrame:CGRectZero];
+        self.closeButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        [self.closeButton setImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
+        [self.closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:self.closeButton];
+    }
     
+    CGFloat y = 35.0f;
     dateRangeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, y, 300.0f, 18.0f)];
     dateRangeLabel.backgroundColor = [UIColor clearColor];
     dateRangeLabel.textColor = [UIColor colorWithRed:128.0f/255.0f green:128.0f/255.0f blue:128.0f/255.0f alpha:1.0f];
@@ -173,6 +183,11 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
+    
+    if(self.closeButton)
+    {
+        self.closeButton.frame = CGRectMake(self.view.bounds.size.width - 40.0f - 20.0f, 20.0f, 40.0f, 40.0f);
+    }
     
     fromDateButton.frame = CGRectMake(fromDateButton.frame.origin.x, fromDateButton.frame.origin.y, [fromDateButton.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: fromDateButton.titleLabel.font}].width+20.0f, fromDateButton.frame.size.height);
     toDateButton.frame = CGRectMake(toDateButton.frame.origin.x, toDateButton.frame.origin.y, [toDateButton.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: toDateButton.titleLabel.font}].width+20.0f, toDateButton.frame.size.height);
@@ -288,6 +303,12 @@
     [datePicker present];
     [self.view addSubview:datePicker];
 }
+- (void)dismiss
+{
+    [self dismissViewControllerAnimated:NO completion:^{
+        [self.delegate didDismissReportsController:self];
+    }];
+}
 
 #pragma mark - UADatePickerDelegate methods
 - (void)datePicker:(UADatePickerController *)controller didSelectDate:(NSDate *)date
@@ -342,9 +363,7 @@
         {
             if([self.delegate shouldDismissReportsOnRotation:self])
             {
-                [self dismissViewControllerAnimated:NO completion:^{
-                    [self.delegate didDismissReportsController:self];
-                }];
+                [self dismiss];
             }
         }
     }
