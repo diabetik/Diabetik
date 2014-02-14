@@ -34,6 +34,9 @@
 // Logic
 - (void)performLogin;
 
+// UI
+- (void)layoutHeaderView;
+
 @end
 
 @implementation UASettingsAnalytikViewController
@@ -47,6 +50,7 @@
         self.title = NSLocalizedString(@"Analytik", nil);
         
         _usernameTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _usernameTextField.font = [UAFont standardRegularFontWithSize:16.0f];
         _usernameTextField.placeholder = NSLocalizedString(@"Email", nil);
         _usernameTextField.keyboardType = UIKeyboardTypeEmailAddress;
         _usernameTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
@@ -54,13 +58,12 @@
         _usernameTextField.delegate = self;
         
         _passwordTextField = [[UITextField alloc] initWithFrame:CGRectZero];
+        _passwordTextField.font = [UAFont standardRegularFontWithSize:16.0f];
         _passwordTextField.placeholder = NSLocalizedString(@"Password", nil);
         _passwordTextField.secureTextEntry = YES;
         _passwordTextField.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _passwordTextField.returnKeyType = UIReturnKeyDone;
         _passwordTextField.delegate = self;
-        
-        _isLoggedIn = [[[UASyncController sharedInstance] analytikController] activeAccount] ? YES : NO;
     }
     return self;
 }
@@ -68,8 +71,7 @@
 {
     [super viewDidLoad];
     
-    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
-    //self.headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.headerView = [[UIView alloc] initWithFrame:CGRectZero];
     self.headerView.backgroundColor = [UIColor clearColor];
     
     self.headerInfoTextView = [[UITextView alloc] initWithFrame:CGRectZero];
@@ -79,38 +81,21 @@
     self.headerInfoTextView.editable = NO;
     self.headerInfoTextView.scrollEnabled = NO;
     self.headerInfoTextView.dataDetectorTypes = UIDataDetectorTypeLink;
+    self.headerInfoTextView.contentInset = UIEdgeInsetsMake(0, 11.0f, 0, 11.0f);
     [self.headerView addSubview:self.headerInfoTextView];
-    
-    self.tableView.tableHeaderView = self.headerView;
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.isLoggedIn = [[[UASyncController sharedInstance] analytikController] activeAccount] ? YES : NO;
+}
+
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
-    NSLog(@"Layout");
-    
-    UIFont *font = [self.headerInfoTextView font];
-    int width = self.view.bounds.size.width, height = self.headerInfoTextView.bounds.size.height;
-    
-    self.headerInfoTextView.contentInset = UIEdgeInsetsMake(0, 11.0f, 0, 11.0f);
-    
-    NSMutableDictionary *atts = [[NSMutableDictionary alloc] init];
-    [atts setObject:font forKey:NSFontAttributeName];
-    
-    CGRect rect = [self.headerInfoTextView.text boundingRectWithSize:CGSizeMake(width, height)
-                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                  attributes:atts
-                                     context:nil];
-    
-    
-    CGRect frame = self.headerInfoTextView.frame;
-    frame.size.width = self.view.bounds.size.width;
-    frame.size.height = rect.size.height + 40;
-    self.headerInfoTextView.frame = CGRectMake(0.0f, 10.0f, frame.size.width, frame.size.height);
-    
-    self.headerView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.headerInfoTextView.bounds.size.height);
-    
-    self.tableView.tableHeaderView = self.headerView;
-    
+
+    [self layoutHeaderView];
 }
 #pragma mark - Logic
 - (void)performLogin
@@ -130,8 +115,6 @@
             [MBProgressHUD hideHUDForView:self.view animated:YES];
             
             strongSelf.isLoggedIn = YES;
-            [strongSelf.tableView reloadData];
-            
             strongSelf.usernameTextField.text = @"";
             strongSelf.passwordTextField.text = @"";
             
@@ -177,6 +160,37 @@
     // Force a sync operation
     [[UASyncController sharedInstance] syncAnalytikWithCompletionHandler:nil];
 }
+- (void)layoutHeaderView
+{
+    UIFont *font = [self.headerInfoTextView font];
+    CGFloat width = self.view.bounds.size.width;
+    CGRect rect = [self.headerInfoTextView.text boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX)
+                                                             options:NSStringDrawingUsesLineFragmentOrigin
+                                                          attributes:@{NSFontAttributeName:font}
+                                                             context:nil];
+    
+    CGRect frame = self.headerInfoTextView.frame;
+    frame.size.width = self.view.bounds.size.width;
+    frame.size.height = rect.size.height + 40.0f;
+    
+    self.headerInfoTextView.frame = CGRectMake(0.0f, 10.0f, frame.size.width, frame.size.height);
+    self.headerView.frame = CGRectMake(0.0f, 0.0f, frame.size.width, frame.size.height);
+}
+
+#pragma mark - Accessors
+- (void)setIsLoggedIn:(BOOL)state
+{
+    _isLoggedIn = state;
+    
+    if(self.tableView)
+    {
+        [self layoutHeaderView];
+        
+        self.tableView.tableHeaderView = state ? nil : self.headerView;
+        [self.tableView reloadData];
+        [self.view setNeedsLayout];
+    }
+}
 
 #pragma mark - UITextFieldDelegate methods
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -219,7 +233,6 @@
                 [controller destroyCredentials];
                 
                 self.isLoggedIn = NO;
-                [aTableView reloadData];
             }
         }
     }
@@ -258,32 +271,13 @@
     
     return 1;
 }
-- (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section
-{
-    if(self.isLoggedIn)
-    {
-        if(section == 0)
-        {
-            return NSLocalizedString(@"Options", nil);
-        }
-    }
-    
-    return @"";
-}
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(self.isLoggedIn && section == 0)
-    {
-        return 40.0f;
-    }
-    
     return 0.0f;
 }
 - (UIView *)tableView:(UITableView *)aTableView viewForHeaderInSection:(NSInteger)section
 {
-    UAGenericTableHeaderView *header = [[UAGenericTableHeaderView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, aTableView.frame.size.width, 40.0f)];
-    [header setText:[self tableView:aTableView titleForHeaderInSection:section]];
-    return header;
+    return nil;
 }
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

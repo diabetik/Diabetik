@@ -433,9 +433,6 @@
     
     allowReportRotation = NO;
     
-    [self showReports];
-    return;
-    
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
     {
         UAAddEntryModalView *modalView = [[UAAddEntryModalView alloc] initWithFrame:self.navigationController.view.bounds];
