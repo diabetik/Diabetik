@@ -288,15 +288,6 @@
 }
 
 #pragma mark - UITextFieldDelegate methods
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    [super textFieldDidBeginEditing:textField];
-    
-    if(textField.tag == 0)
-    {
-        [self.keyboardShortcutAccessoryView showAutocompleteSuggestionsForInput:[textField text]];
-    }
-}
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if(textField.tag == 0)

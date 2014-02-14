@@ -269,11 +269,12 @@
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textView.tag inSection:0];
     
     [textView reloadInputViews];
+    [self.keyboardShortcutAccessoryView setShowingAutocompleteBar:NO];
     [self updateKeyboardShortcutButtons];
 }
 - (void)textViewDidChange:(UITextView *)textView
 {
-    // Determine whether we're current in tag 'edit mode'
+    // Determine whether we're currently in tag 'edit mode'
     NSUInteger caretLocation = [textView offsetFromPosition:textView.beginningOfDocument toPosition:textView.selectedTextRange.start];
     NSRange range = [[UATagController sharedInstance] rangeOfTagInString:textView.text withCaretLocation:caretLocation];
     if(range.location != NSNotFound)
@@ -293,7 +294,6 @@
     // Finally, update our tableview
     [UIView setAnimationsEnabled:NO];
     [self.tableView beginUpdates];
-    //textViewHeight = [textView height];
     [self.tableView endUpdates];
     [UIView setAnimationsEnabled:YES];
 }
@@ -303,8 +303,9 @@
 {
     self.keyboardShortcutAccessoryView.autocompleteBar.shouldFetchSuggestions = YES;
     self.activeControlIndexPath = [NSIndexPath indexPathForRow:textField.tag inSection:0];
-    [textField reloadInputViews];
     
+    [textField reloadInputViews];
+    [self.keyboardShortcutAccessoryView setShowingAutocompleteBar:NO];
     [self updateKeyboardShortcutButtons];
 }
 
