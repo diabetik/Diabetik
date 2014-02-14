@@ -52,7 +52,7 @@
 
 // Rules
 - (NSArray *)fetchAllReminderRules;
-- (void)deleteReminderRule:(UAReminderRule *)reminderRule error:(NSError **)error;
+- (BOOL)deleteReminderRule:(UAReminderRule *)reminderRule error:(NSError **)error;
 
 // Notifications
 - (void)didReceiveLocalNotification:(UILocalNotification *)notification;

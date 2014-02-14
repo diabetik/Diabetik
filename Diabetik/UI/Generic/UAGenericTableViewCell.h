@@ -28,10 +28,7 @@ typedef enum  {
 } UACellPosition;
 
 @interface UAGenericTableViewCell : UITableViewCell
+@property (nonatomic, assign) UACellPosition cellPosition;
 @property (nonatomic, retain) id accessoryControl;
-@property (nonatomic, assign) UACellPosition position;
-
-// Logic
-- (void)setCellStyleWithIndexPath:(NSIndexPath *)indexPath andTotalRows:(NSInteger)totalRows;
 
 @end

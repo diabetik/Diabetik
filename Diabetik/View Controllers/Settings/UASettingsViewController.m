@@ -136,7 +136,6 @@
     {
         cell = [[UASettingsViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UASettingCell"];
     }
-    [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     
     cell.imageView.image = nil;
     cell.accessoryType = UITableViewCellAccessoryNone;

@@ -207,7 +207,6 @@
         cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UAReminderCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     
     cell.textLabel.font = [UAFont standardRegularFontWithSize:16.0f];
     cell.textLabel.textColor = [UIColor colorWithRed:110.0f/255.0f green:114.0f/255.0f blue:115.0f/255.0f alpha:1.0f];

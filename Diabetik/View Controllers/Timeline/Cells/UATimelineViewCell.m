@@ -37,11 +37,9 @@
 @interface UATimelineViewCell ()
 {
     NSDate *date;
-    UACellPosition cellPosition;
     UATagHighlightTextStorage *textStorage;
     UIView *bottomBorder;
 }
-
 @end
 
 @implementation UATimelineViewCell
@@ -126,7 +124,7 @@
         self.notesTextView.frame = CGRectMake(ceilf(self.notesTextView.frame.origin.x), ceilf(self.notesTextView.frame.origin.y), ceilf(width), ceilf(notesFrame.size.height));
     }
     
-    if(cellPosition == UACellBackgroundViewPositionBottom)
+    if(self.cellPosition == UACellBackgroundViewPositionBottom)
     {
         bottomBorder.backgroundColor = [UIColor colorWithRed:204.0f/255.0f green:205.0f/255.0f blue:205.0f/255.0f alpha:1.0f];
         bottomBorder.frame = CGRectMake(0.0f, self.bounds.size.height-0.5f, self.bounds.size.width, 0.5f);
@@ -298,20 +296,6 @@
     }
     
     bottomBorder.hidden = highlighted;
-}
-- (void)setCellStyleWithIndexPath:(NSIndexPath *)indexPath andTotalRows:(NSInteger)totalRows
-{
-    UACellPosition position = UACellBackgroundViewPositionMiddle;
-    if(indexPath.row == totalRows-1)
-    {
-        position = UACellBackgroundViewPositionBottom;
-    }
-    else if(indexPath.row == 1)
-    {
-        position = UACellBackgroundViewPositionTop;
-    }
-    
-    cellPosition = position;
 }
 
 #pragma mark - Helpers

@@ -189,7 +189,6 @@
         cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UAReminderCell"];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
-    [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     
     NSInteger adjustedSection = [self adjustedSectionForSection:indexPath.section];
     if(adjustedSection == kReminderTypeDate)

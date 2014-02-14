@@ -39,7 +39,6 @@
 
 // Accessors
 - (void)setDate:(NSDate *)aDate;
-- (void)setCellStyleWithIndexPath:(NSIndexPath *)indexPath andTotalRows:(NSInteger)totalRows;
 
 // Helpers
 + (CGFloat)additionalHeightWithMetaData:(NSDictionary *)data width:(CGFloat)width;

@@ -400,17 +400,20 @@
 }
 - (void)addVC:(UIViewController *)vc
 {
-    CGFloat contentWidth = self.scrollView.contentSize.width;
-    vc.view.frame = CGRectMake(contentWidth, 0.0f, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
-    
-    [vc willMoveToParentViewController:vc];
-    [self.scrollView addSubview:vc.view];
-    [self addChildViewController:vc];
-    [vc didMoveToParentViewController:self];
-    
-    [self.viewControllers addObject:vc];
-    [self layoutViewControllers];
-    [self updateNavigationBar];
+    if(vc)
+    {
+        CGFloat contentWidth = self.scrollView.contentSize.width;
+        vc.view.frame = CGRectMake(contentWidth, 0.0f, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height);
+        
+        [vc willMoveToParentViewController:vc];
+        [self.scrollView addSubview:vc.view];
+        [self addChildViewController:vc];
+        [vc didMoveToParentViewController:self];
+        
+        [self.viewControllers addObject:vc];
+        [self layoutViewControllers];
+        [self updateNavigationBar];
+    }
 }
 - (void)removeVC:(UIViewController *)vc
 {

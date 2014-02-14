@@ -129,6 +129,8 @@
             position = UACellBackgroundViewPositionBottom;
         }
     }
+    
+    self.cellPosition = position;
 }
 - (void)setAccessoryView:(UIView *)controlView
 {

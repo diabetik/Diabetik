@@ -109,8 +109,6 @@
     {
         cell = [[UATagTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UATagTableViewCell"];
     }
-    [(UATagTableViewCell *)cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
-    
     [self configureCell:(UATagTableViewCell *)cell forTableview:aTableView atIndexPath:indexPath];
     
     return cell;

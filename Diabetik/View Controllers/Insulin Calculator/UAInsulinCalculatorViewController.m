@@ -319,7 +319,6 @@
         {
             cell = [[UAInsulinCalculatorTextFieldViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorInputCell"];
         }
-        [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if(indexPath.row == 0)
@@ -364,7 +363,6 @@
             {
                 cell = [[UAInsulinCalculatorTextFieldViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorInputCell"];
             }
-            [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.text = NSLocalizedString(@"Current blood glucose", nil);
             cell.detailTextLabel.text = nil;
@@ -381,7 +379,6 @@
             {
                 cell = [[UAInsulinCalculatorTextFieldViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorInputCell"];
             }
-            [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
             
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.text = NSLocalizedString(@"Total carbohydrates", nil);
@@ -399,7 +396,6 @@
             {
                 cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UACalculatorCell"];
             }
-            [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
             cell.accessoryType = UITableViewCellAccessoryNone;
             
             UAMeal *meal = (UAMeal *)[latestEvents objectAtIndex:indexPath.row-2];

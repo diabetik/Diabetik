@@ -131,7 +131,6 @@
         cell = [[UAGenericTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UAReminderCell"];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     
     cell.accessoryType = UITableViewCellAccessoryNone;
     if(indexPath.section == 0)

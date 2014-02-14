@@ -233,13 +233,16 @@
 }
 - (void)addVC:(UAInputBaseViewController *)aVC
 {
-    [self.viewControllers addObject:aVC];
-    [aVC willMoveToParentViewController:self];
-    [aVC didMoveToParentViewController:self];
-    
-    if(self.collectionView)
+    if(aVC)
     {
-        [self.collectionView reloadData];
+        [self.viewControllers addObject:aVC];
+        [aVC willMoveToParentViewController:self];
+        [aVC didMoveToParentViewController:self];
+        
+        if(self.collectionView)
+        {
+            [self.collectionView reloadData];
+        }
     }
 }
 - (void)removeVC:(UAInputBaseViewController *)aVC

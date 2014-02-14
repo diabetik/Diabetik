@@ -700,7 +700,6 @@
         {
             cell = [[UATimelineViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UATimelineViewCell"];
         }
-        [(UATimelineViewCell *)cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     }
     else
     {

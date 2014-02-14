@@ -185,8 +185,6 @@
 - (void)deleteExpiredReminders
 {
     NSArray *reminders = [self fetchAllReminders];
-    BOOL removedReminders = NO;
-    
     if(reminders)
     {
         // Expire any date-based reminders
@@ -196,11 +194,6 @@
             {
                 NSError *error = nil;
                 [self deleteReminderWithID:reminder.guid error:&error];
-                
-                if(!error)
-                {
-                    removedReminders = YES;
-                }
             }
         }
     }
@@ -268,7 +261,7 @@
     
     return nil;
 }
-- (void)deleteReminderRule:(UAReminderRule *)reminderRule error:(NSError **)error
+- (BOOL)deleteReminderRule:(UAReminderRule *)reminderRule error:(NSError **)error
 {
     if(reminderRule)
     {
@@ -281,9 +274,12 @@
             if(!*error)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+                return YES;
             }
         }
     }
+    
+    return NO;
 }
 
 #pragma mark - Notifications
