@@ -305,7 +305,8 @@
 }
 - (void)dismiss
 {
-    [self dismissViewControllerAnimated:NO completion:^{
+    BOOL animated = NO;// (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
+    [self dismissViewControllerAnimated:animated completion:^{
         [self.delegate didDismissReportsController:self];
     }];
 }

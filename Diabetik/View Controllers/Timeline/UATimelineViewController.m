@@ -72,8 +72,11 @@
 - (void)commonInit;
 
 // Logic
-- (void)showReports;
 - (void)handleTapGesture:(UITapGestureRecognizer *)gestureRecognizer;
+
+// UI
+- (void)addEvent:(id)sender;
+- (void)showReports:(id)sender;
 
 @end
 
@@ -153,7 +156,17 @@
     
     // Setup our nav bar buttons
     UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
-    [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
+    
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
+    {
+        [self.navigationItem setRightBarButtonItem:addBarButtonItem animated:NO];
+    }
+    else
+    {
+        UIBarButtonItem *reportBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconReport"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(showReports:)];
+        
+        [self.navigationItem setRightBarButtonItems:@[addBarButtonItem, reportBarButtonItem] animated:NO];
+    }
     
     self.tableView.backgroundColor = self.view.backgroundColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -276,30 +289,6 @@
     {
         self.tableView.alpha = 0.0f;
         self.noEntriesMessageView.alpha = 1.0f;
-    }
-}
-- (void)showReports
-{
-    if(!self.reportsVC)
-    {
-        NSArray *entries = [[self fetchedResultsController] fetchedObjects];
-        NSDate *_fromDate = [(UAEvent *)[entries lastObject] timestamp];
-        NSDate *_toDate = [(UAEvent *)[entries firstObject] timestamp];
-        
-        self.reportsVC = [[UAReportsViewController alloc] initFromDate:_fromDate toDate:_toDate];
-        self.reportsVC.delegate = self;
-    }
-    
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        //UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:self.reportsVC];
-        self.reportsVC.modalPresentationStyle = UIModalPresentationFullScreen;
-        [self presentViewController:self.reportsVC animated:YES completion:nil];
-    }
-    else
-    {
-        self.reportsVC.view.frame = self.parentViewController.view.frame;
-        [self presentViewController:self.reportsVC animated:NO completion:nil];
     }
 }
 - (void)handleTapGesture:(UITapGestureRecognizer *)gestureRecognizer
@@ -447,6 +436,29 @@
         modalView.delegate = self;
     }
 }
+- (void)showReports:(id)sender
+{
+    if(!self.reportsVC)
+    {
+        NSArray *entries = [[self fetchedResultsController] fetchedObjects];
+        NSDate *_fromDate = [(UAEvent *)[entries lastObject] timestamp];
+        NSDate *_toDate = [(UAEvent *)[entries firstObject] timestamp];
+        
+        self.reportsVC = [[UAReportsViewController alloc] initFromDate:_fromDate toDate:_toDate];
+        self.reportsVC.delegate = self;
+        self.reportsVC.modalPresentationStyle = UIModalPresentationFullScreen;
+    }
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [self presentViewController:self.reportsVC animated:YES completion:nil];
+    }
+    else
+    {
+        self.reportsVC.view.frame = self.parentViewController.view.frame;
+        [self presentViewController:self.reportsVC animated:NO completion:nil];
+    }
+}
 - (void)configureCell:(UITableViewCell *)aCell forTableview:(UITableView *)aTableView atIndexPath:(NSIndexPath *)indexPath
 {
     NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
@@ -457,6 +469,7 @@
         indexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
         
         UATimelineViewCell *cell = (UATimelineViewCell *)aCell;
+        [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]-1];
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         cell.valueLabel.text = @"";
         
@@ -954,7 +967,7 @@
 
     if(UIInterfaceOrientationIsLandscape(appOrientation) && !self.reportsVC)
     {
-        [self showReports];
+        [self showReports:nil];
     }
 }
 

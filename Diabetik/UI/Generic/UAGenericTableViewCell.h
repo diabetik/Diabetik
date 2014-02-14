@@ -31,4 +31,7 @@ typedef enum  {
 @property (nonatomic, assign) UACellPosition cellPosition;
 @property (nonatomic, retain) id accessoryControl;
 
+// Logic
+- (void)setCellStyleWithIndexPath:(NSIndexPath *)indexPath andTotalRows:(NSInteger)totalRows;
+
 @end

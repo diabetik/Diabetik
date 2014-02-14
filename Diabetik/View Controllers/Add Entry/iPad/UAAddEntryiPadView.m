@@ -62,7 +62,7 @@
         titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
         [self addSubview:titleLabel];
         
-        UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width - 40.0f - 20.0f, 40.0f, 40.0f, 40.0f)];
+        UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width - 60.0f, 40.0f, 40.0f, 40.0f)];
         closeButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [closeButton setImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
         [closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];

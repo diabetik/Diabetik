@@ -43,7 +43,6 @@
 - (void)calculateSectionStats;
 
 // UI
-- (void)addEvent:(id)sender;
 - (void)configureCell:(UITableViewCell *)cell forTableview:(UITableView *)tableView atIndexPath:(NSIndexPath *)indexPath;
 
 // Helpers
