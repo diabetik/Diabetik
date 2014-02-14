@@ -180,13 +180,9 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-    [super viewWillAppear:animated];
-    
-    self.view.backgroundColor = [UIColor whiteColor];
-    self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
-    [self.view addSubview:self.scrollView];
+    [super viewDidLoad];
     
     // Setup header buttons
     if([self isPresentedModally])
@@ -196,6 +192,15 @@
     }
     UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconSave"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(saveEvent:)];
     [self.navigationItem setRightBarButtonItem:saveBarButtonItem animated:NO];
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.scrollView];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
     
     if(!self.event && ![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenAddDragUIHint])
     {
@@ -218,7 +223,7 @@
     
     [self layoutViewControllers];
     [self updateNavigationBar];
-    [self performSelector:@selector(activateTargetViewController) withObject:nil afterDelay:0.0f];
+    [self performSelector:@selector(activateTargetViewController) withObject:nil afterDelay:0];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -716,8 +721,8 @@
         CGRect keyboardFrame = [[[aNotification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
         CGSize kbSize = [self.view convertRect:keyboardFrame fromView:nil].size;
         
-        self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length- kbSize.height);
-        
+        self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length - kbSize.height);
+        [self layoutViewControllers];
     } completion:nil];
 }
 - (void)keyboardWasShown:(NSNotification *)aNotification
@@ -727,12 +732,14 @@
         CGSize kbSize = [self.view convertRect:keyboardFrame fromView:nil].size;
         
         self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length- kbSize.height);
+        [self layoutViewControllers];
     } completion:nil];
 }
 - (void)keyboardWillBeHidden:(NSNotification *)aNotification
 {
     [UIView animateWithDuration: [self keyboardAnimationDurationForNotification:aNotification] animations:^{
         self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
+        [self layoutViewControllers];
     } completion:nil];
 }
 

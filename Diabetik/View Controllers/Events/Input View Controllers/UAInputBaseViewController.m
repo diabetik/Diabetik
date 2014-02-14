@@ -396,6 +396,7 @@
         {
             imagePickerController = [[UIImagePickerController alloc] init];
             imagePickerController.modalPresentationStyle = UIModalPresentationFormSheet;
+            imagePickerController.delegate = self;
         }
         imagePickerController.sourceType = sourceType;
         
@@ -587,9 +588,10 @@
             }
             
             weakSelf.currentPhotoPath = filename;
-            
             [self updateKeyboardShortcutButtons];
             
+            NSLog(@"Fetched image");
+
         } failure:^(NSError *error) {
             NSLog(@"Image failed with filename: %@. Error: %@", filename, error);
         }];
