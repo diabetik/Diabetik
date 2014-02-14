@@ -23,6 +23,8 @@
 #import "UASyncController.h"
 #import "MBProgressHUD.h"
 
+#import "UITextView+Extension.h"
+
 @interface UASettingsAnalytikViewController ()
 @property (nonatomic, strong) UITextField *usernameTextField, *passwordTextField;
 @property (nonatomic, strong) UIView *headerView;
@@ -66,15 +68,17 @@
 {
     [super viewDidLoad];
     
-    self.headerView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
     //self.headerView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.headerView.backgroundColor = [UIColor redColor];
+    self.headerView.backgroundColor = [UIColor clearColor];
     
     self.headerInfoTextView = [[UITextView alloc] initWithFrame:CGRectZero];
-    self.headerInfoTextView.text = NSLocalizedString(@"Free personal diabetes analytics\n\nFind patterns in your blood sugar, better understand your diabetes and support research.\n\nSignup for an account at http://analytikhq.com", nil);
+    self.headerInfoTextView.text = NSLocalizedString(@"Analytik is a service that provides free personal diabetes analytics.\n\nFind patterns in your blood sugar, better understand your diabetes and support research.\n\nSignup for an account at http://analytikhq.com", nil);
     self.headerInfoTextView.font = [UAFont standardRegularFontWithSize:16.0f];
     self.headerInfoTextView.backgroundColor = [UIColor clearColor];
     self.headerInfoTextView.editable = NO;
+    self.headerInfoTextView.scrollEnabled = NO;
+    self.headerInfoTextView.dataDetectorTypes = UIDataDetectorTypeLink;
     [self.headerView addSubview:self.headerInfoTextView];
     
     self.tableView.tableHeaderView = self.headerView;
@@ -82,9 +86,30 @@
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
+    NSLog(@"Layout");
     
-    self.headerView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 125.0f);
-    self.headerInfoTextView.frame = CGRectMake(16.0f, 0.0f, self.view.bounds.size.width-32.0f, 125.0f);
+    UIFont *font = [self.headerInfoTextView font];
+    int width = self.view.bounds.size.width, height = self.headerInfoTextView.bounds.size.height;
+    
+    self.headerInfoTextView.contentInset = UIEdgeInsetsMake(0, 11.0f, 0, 11.0f);
+    
+    NSMutableDictionary *atts = [[NSMutableDictionary alloc] init];
+    [atts setObject:font forKey:NSFontAttributeName];
+    
+    CGRect rect = [self.headerInfoTextView.text boundingRectWithSize:CGSizeMake(width, height)
+                                     options:NSStringDrawingUsesLineFragmentOrigin
+                                  attributes:atts
+                                     context:nil];
+    
+    
+    CGRect frame = self.headerInfoTextView.frame;
+    frame.size.width = self.view.bounds.size.width;
+    frame.size.height = rect.size.height + 40;
+    self.headerInfoTextView.frame = CGRectMake(0.0f, 10.0f, frame.size.width, frame.size.height);
+    
+    self.headerView.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, self.headerInfoTextView.bounds.size.height);
+    
+    self.tableView.tableHeaderView = self.headerView;
     
 }
 #pragma mark - Logic
@@ -242,19 +267,12 @@
             return NSLocalizedString(@"Options", nil);
         }
     }
-    else
-    {
-        if(section == 0)
-        {
-            return NSLocalizedString(@"Credentials", nil);
-        }
-    }
     
     return @"";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(section == 0)
+    if(self.isLoggedIn && section == 0)
     {
         return 40.0f;
     }

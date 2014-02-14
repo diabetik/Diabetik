@@ -68,6 +68,7 @@
     [Appirater setUsesUntilPrompt:5];
     [Appirater setSignificantEventsUntilPrompt:-1];
     [Appirater setTimeBeforeReminding:1];
+    [Appirater setOpenInAppStore:NO];
     [Appirater setDebug:NO];
     
     // Is this a first run experience?

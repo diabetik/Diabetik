@@ -136,7 +136,7 @@
 		533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355817736C5500AD89E2 /* UAIntroductionTooltipView.m */; };
 		533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */; };
 		534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */; };
-		5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5354083817B7B90A008C64A4 /* StoreKit.framework */; };
+		5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5354083817B7B90A008C64A4 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5356124F185B9E3900438A91 /* UAReminderBaseViewController.m */; };
 		535918A717809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */; };
 		537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 537983AE17CD3F5A00032F3A /* UAShortcutButton.m */; };

@@ -19,9 +19,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
+
 #import "UABaseViewController.h"
 #import "UARemindersViewController.h"
 #import "UAMediaController.h"
 
-@interface UASettingsViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface UASettingsViewController : UABaseTableViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, MFMailComposeViewControllerDelegate>
 @end

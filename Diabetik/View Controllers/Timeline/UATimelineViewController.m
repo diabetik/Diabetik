@@ -158,25 +158,6 @@
     self.tableView.backgroundColor = self.view.backgroundColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    // Setup our search bar
-    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectZero];
-    self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.searchBar.delegate = self;
-    
-    searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-    searchDisplayController.searchResultsDelegate = self;
-    searchDisplayController.searchResultsDataSource = self;
-    searchDisplayController.delegate = self;
-    searchDisplayController.displaysSearchBarInNavigationBar = NO;
-    searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
-    searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    self.searchBarHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 0.0f, 44.0f)];
-    self.searchBarHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    [self.searchBarHeaderView addSubview:self.searchBar];
-    
-    self.tableView.tableHeaderView = self.searchBarHeaderView;
-    
     // Footer view
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
     {
@@ -216,6 +197,28 @@
     self.navigationController.navigationBar.barTintColor = defaultBarTintColor;
     self.navigationController.navigationBar.tintColor = defaultTintColor;
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]};
+    
+    // Setup our search bar
+    if(!self.searchBar)
+    {
+        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f)];
+        self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.searchBar.delegate = self;
+        
+        searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+        searchDisplayController.searchResultsDelegate = self;
+        searchDisplayController.searchResultsDataSource = self;
+        searchDisplayController.delegate = self;
+        searchDisplayController.displaysSearchBarInNavigationBar = NO;
+        searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
+        searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        
+        self.searchBarHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f)];
+        self.searchBarHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.searchBarHeaderView addSubview:self.searchBar];
+        
+        self.tableView.tableHeaderView = self.searchBarHeaderView;
+    }
     
     // Only listen out for orientation changes if we're not using an iPad
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
@@ -289,15 +292,13 @@
     
     if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
     {
-        UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:self.reportsVC];
-        nvc.modalPresentationStyle = UIModalPresentationPageSheet;
-        
-        [self presentViewController:nvc animated:YES completion:nil];
+        //UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:self.reportsVC];
+        self.reportsVC.modalPresentationStyle = UIModalPresentationFullScreen;
+        [self presentViewController:self.reportsVC animated:YES completion:nil];
     }
     else
     {
         self.reportsVC.view.frame = self.parentViewController.view.frame;
-        
         [self presentViewController:self.reportsVC animated:NO completion:nil];
     }
 }
@@ -431,6 +432,9 @@
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
     allowReportRotation = NO;
+    
+    [self showReports];
+    return;
     
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
     {

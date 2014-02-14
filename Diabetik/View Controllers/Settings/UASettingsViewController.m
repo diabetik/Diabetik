@@ -19,6 +19,7 @@
 //
 
 #import "UAAppDelegate.h"
+#import "Appirater.h"
 
 #import "UASettingsViewController.h"
 #import "UASettingsEntryViewController.h"
@@ -97,7 +98,7 @@
     }
     else if(section == 2)
     {
-        return 2;
+        return 4;
     }
     
     return 3;
@@ -170,14 +171,6 @@
     }
     else if(indexPath.section == 1)
     {
-        /*
-        if(indexPath.row == 0)
-        {
-            cell.imageView.image = [UIImage imageNamed:@"iCloudSmallIcon"];
-            cell.textLabel.text = NSLocalizedString(@"iCloud settings", nil);
-            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }
-        */
         if(indexPath.row == 0)
         {
             cell.imageView.image = [UIImage imageNamed:@"diabetikSmallIcon"];
@@ -201,10 +194,20 @@
     {
         if(indexPath.row == 0)
         {
+            cell.textLabel.text = NSLocalizedString(@"Need help? Contact support!", nil);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if(indexPath.row == 1)
+        {
+            cell.textLabel.text = [NSString stringWithFormat:@"%@ 😊", NSLocalizedString(@"Rate Diabetik in the App Store", nil)];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else if(indexPath.row == 2)
+        {
             cell.textLabel.text = NSLocalizedString(@"Credits", nil);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
-        if(indexPath.row == 1)
+        else if(indexPath.row == 3)
         {
             cell.textLabel.text = NSLocalizedString(@"Licenses", @"An option to view third-party software licenses used throughout the application");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -264,10 +267,30 @@
     }
     else if(indexPath.section == 2)
     {
+        [aTableView deselectRowAtIndexPath:indexPath animated:YES];
+        
         if(indexPath.row == 0)
         {
-            [aTableView deselectRowAtIndexPath:indexPath animated:YES];
-            
+            if([MFMailComposeViewController canSendMail])
+            {
+                MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
+                [mailController setMailComposeDelegate:self];
+                [mailController setModalPresentationStyle:UIModalPresentationFormSheet];
+                [mailController setSubject:@"Diabetik Support"];
+                [mailController setToRecipients:@[@"support@diabetikapp.com"]];
+                [mailController setMessageBody:[NSString stringWithFormat:@"%@\n\n", NSLocalizedString(@"I need help with Diabetik! Here's the problem:", @"A default message shown to users when contacting support for help")] isHTML:NO];
+                if(mailController)
+                {
+                    [self presentViewController:mailController animated:YES completion:nil];
+                }
+            }
+        }
+        else if(indexPath.row == 1)
+        {
+            [Appirater rateApp];
+        }
+        else if(indexPath.row == 2)
+        {
             UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
             UIViewController *targetVC = appDelegate.viewController;
             
@@ -276,7 +299,7 @@
             [modalView setContentView:introductionView];
             [modalView present];
         }
-        else if(indexPath.row == 1)
+        else if(indexPath.row == 3)
         {
             UASettingsLicensesViewController *vc = [[UASettingsLicensesViewController alloc] init];
             [self.navigationController pushViewController:vc animated:YES];
@@ -300,4 +323,21 @@
     return YES;
 }
 
+#pragma mark - MFMailComposeViewDelegate methods
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError*)error;
+{
+    if (result == MFMailComposeResultSent)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Support email sent", nil)
+                                                            message:NSLocalizedString(@"We've received your support request and will try to reply as soon as possible", nil)
+                                                           delegate:nil
+                                                  cancelButtonTitle:NSLocalizedString(@"Okay", nil)
+                                                  otherButtonTitles:nil];
+        [alertView show];
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

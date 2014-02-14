@@ -53,6 +53,8 @@
     self = [super initWithNibName:nil bundle:nil];
     if(self)
     {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        
         fromDate = aFromDate;
         toDate = aToDate;
         reportData = nil;
@@ -74,8 +76,8 @@
                 @{@"title": NSLocalizedString(@"Carbohydrate in-take", nil), @"description": NSLocalizedString(@"A stacked bar chart (segmented by morning, afternoon and evening) showing total carbohydrate in-take per day", nil), @"class": [UACarbsChartViewController class]},
                 @{@"title": NSLocalizedString(@"Healthy Glucose Tally", nil), @"description": NSLocalizedString(@"A pie chart showing the number of healthy glucose readings versus unhealthy over a given period", nil), @"class": [UAScatterChartViewController class]}
                 ];
-    
-    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, self.view.frame.size.height)];
+
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
     scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     scrollView.pagingEnabled = YES;
     scrollView.delegate = self;
@@ -132,16 +134,7 @@
 {
     [super viewWillAppear:animated];
     
-    CGFloat x = 0.0f;
-    for(UIView *view in scrollView.subviews)
-    {
-        view.frame = CGRectMake(x + (self.view.bounds.size.width/2.0f - 300.0f/2.0f), self.view.bounds.size.height/2.0f - 151.0f/2.0f, 300.0f, 151.0f);
-        
-        x += self.view.bounds.size.width;
-    }
-    
-    scrollView.contentSize = CGSizeMake(self.view.bounds.size.width*[reports count], self.view.bounds.size.height);
-    pageControl.frame = CGRectMake(0.0f, self.view.bounds.size.height - 55.0f, self.view.bounds.size.width, 25.0f);
+    [self layoutReports];
     
     NSInteger reportKey = [[NSUserDefaults standardUserDefaults] integerForKey:kReportsDefaultKey];
     if(reportKey < 0) reportKey = 0;
@@ -232,6 +225,20 @@
             }
         }
     }
+}
+- (void)layoutReports
+{
+    CGFloat x = 0.0f;
+    for(UIView *view in scrollView.subviews)
+    {
+        view.frame = CGRectMake(x + (self.view.bounds.size.width/2.0f - 300.0f/2.0f), self.view.bounds.size.height/2.0f - 151.0f/2.0f, 300.0f, 151.0f);
+        
+        x += self.view.bounds.size.width;
+    }
+    
+    scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
+    scrollView.contentSize = CGSizeMake(self.view.bounds.size.width*[reports count], self.view.bounds.size.height);
+    pageControl.frame = CGRectMake(0.0f, self.view.bounds.size.height - 55.0f, self.view.bounds.size.width, 25.0f);
 }
 - (void)didSelectReport:(UIButton *)previewButton
 {
@@ -327,14 +334,41 @@
 }
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    if(UIInterfaceOrientationIsPortrait(toInterfaceOrientation))
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
     {
-        if([self.delegate shouldDismissReportsOnRotation:self])
+        if(UIInterfaceOrientationIsPortrait(toInterfaceOrientation))
         {
-            [self dismissViewControllerAnimated:NO completion:^{
-                [self.delegate didDismissReportsController:self];
-            }];
+            if([self.delegate shouldDismissReportsOnRotation:self])
+            {
+                [self dismissViewControllerAnimated:NO completion:^{
+                    [self.delegate didDismissReportsController:self];
+                }];
+            }
         }
+    }
+    else
+    {
+        [UIView animateWithDuration:0.1 animations:^{
+            scrollView.alpha = 0.0f;
+            pageControl.alpha = 0.0f;
+        }];
+    }
+}
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
+{
+    [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
+    
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [self layoutReports];
+        [scrollView setContentOffset:CGPointMake(self.view.bounds.size.width*pageControl.currentPage, 0.0f) animated:NO];
+        
+        [UIView animateWithDuration:0.1 animations:^{
+            scrollView.alpha = 1.0f;
+            pageControl.alpha = 1.0f;
+        }];
     }
 }
 
