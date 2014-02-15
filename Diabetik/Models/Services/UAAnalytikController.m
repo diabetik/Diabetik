@@ -106,7 +106,6 @@
                 NSArray *events = [strongSelf eventsToSyncFromDate:fromDate];
                 if(events)
                 {
-                    NSLog(@"%lu events found for sync", (unsigned long)[events count]);
                     @autoreleasepool {
                         
                         NSMutableArray *batch = [NSMutableArray array];

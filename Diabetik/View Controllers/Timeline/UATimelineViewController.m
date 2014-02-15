@@ -968,8 +968,9 @@
 #pragma mark - Autorotation
 - (void)orientationChanged:(NSNotification *)note
 {
+    if(!allowReportRotation) return;
+    
     UIDeviceOrientation appOrientation = [[UIDevice currentDevice] orientation];
-
     if(UIInterfaceOrientationIsLandscape(appOrientation) && !self.reportsVC)
     {
         [self showReports:nil];

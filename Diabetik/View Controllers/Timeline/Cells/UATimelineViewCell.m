@@ -218,7 +218,6 @@
                 self.notesTextView = nil;
             }
             
-            NSLog(@"%f", self.contentView.bounds.size.width);
             CGRect frame = CGRectMake(96.0f, 36.0f, self.contentView.bounds.size.width-96.0f-kHorizontalMargin, 17.0f);
             CGSize containerSize = CGSizeMake(frame.size.width,  CGFLOAT_MAX);
             

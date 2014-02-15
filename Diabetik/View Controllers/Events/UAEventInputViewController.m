@@ -309,7 +309,6 @@
                     [vc willBecomeInactive];
                 }
             }
-            NSLog(@"%@", targetVC);
             [targetVC didBecomeActive];
             [targetVC updateKeyboardShortcutButtons];
         }

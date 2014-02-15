@@ -591,8 +591,6 @@
             weakSelf.currentPhotoPath = filename;
             [self updateKeyboardShortcutButtons];
             
-            NSLog(@"Fetched image");
-
         } failure:^(NSError *error) {
             NSLog(@"Image failed with filename: %@. Error: %@", filename, error);
         }];
