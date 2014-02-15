@@ -215,7 +215,7 @@
     if(!self.searchBar)
     {
         self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f)];
-        self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.searchBar.delegate = self;
         
         searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
@@ -229,8 +229,13 @@
         self.searchBarHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f)];
         self.searchBarHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.searchBarHeaderView addSubview:self.searchBar];
-        
-        self.tableView.tableHeaderView = self.searchBarHeaderView;
+    }
+    self.searchBar.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f);
+    self.tableView.tableHeaderView = self.searchBar;
+    
+    if(self.tableView.contentOffset.y <= 44.0f)
+    {
+        self.tableView.contentOffset = CGPointMake(0.0f, 44.0f);
     }
     
     // Only listen out for orientation changes if we're not using an iPad
@@ -469,7 +474,6 @@
         indexPath = [NSIndexPath indexPathForRow:indexPath.row-1 inSection:indexPath.section];
         
         UATimelineViewCell *cell = (UATimelineViewCell *)aCell;
-        [cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]-1];
         cell.selectionStyle = UITableViewCellSelectionStyleBlue;
         cell.valueLabel.text = @"";
         
@@ -714,6 +718,7 @@
         {
             cell = [[UATimelineViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UATimelineViewCell"];
         }
+        [(UATimelineViewCell *)cell setCellStyleWithIndexPath:indexPath andTotalRows:[aTableView numberOfRowsInSection:indexPath.section]];
     }
     else
     {

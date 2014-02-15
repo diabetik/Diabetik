@@ -54,14 +54,6 @@
         self.blurRadius = 30.0f;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 20.0f, frame.size.width, 80.0f)];
-        titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.text = NSLocalizedString(@"Add Entry", @"Title for the Add Entry screen");
-        titleLabel.font = [UAFont standardDemiBoldFontWithSize:32.0f];
-        titleLabel.textColor = [UIColor colorWithRed:61.0f/255.0f green:61.0f/255.0f blue:61.0f/255.0f alpha:1.0f];
-        titleLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleBottomMargin;
-        [self addSubview:titleLabel];
-        
         UIButton *closeButton = [[UIButton alloc] initWithFrame:CGRectMake(frame.size.width - 60.0f, 40.0f, 40.0f, 40.0f)];
         closeButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
         [closeButton setImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
@@ -127,26 +119,6 @@
 }
 
 #pragma mark - Logic
-/*
-- (void)didMoveToSuperview
-{
-    [self performCustomLayout];
-    
-    for(NSInteger i = 1; i <= 5; i++)
-    {
-        UAAddEntryModalButtoniPad *button = (UAAddEntryModalButtoniPad *)[self viewWithTag:i];
-        button.frame = CGRectMake(button.frame.origin.x, button.frame.origin.y+((5-i)*15), button.frame.size.width, button.frame.size.height);
-        
-        [UIView animateWithDuration:0.05 delay:0.05*i options:UIViewAnimationOptionAllowUserInteraction animations:^{
-            button.alpha = 1;
-            button.frame = CGRectMake(button.frame.origin.x, self.bounds.size.height/2.0f - 140.0f/2.0f, button.frame.size.width, button.frame.size.height);
-            
-        } completion:^(BOOL finished) {
-            
-        }];
-    }
-}
-*/
 - (void)dismiss
 {
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"pop-view"];

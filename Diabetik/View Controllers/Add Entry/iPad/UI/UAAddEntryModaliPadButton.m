@@ -30,7 +30,7 @@
     {
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel.font = [UAFont standardRegularFontWithSize:18.0f];
-        
+
         [self setTitleColor:[UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f] forState:UIControlStateNormal];
         [self setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 25.0f, 0)];
     }

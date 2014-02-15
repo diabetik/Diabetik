@@ -111,11 +111,11 @@
         descriptionLabelFrame.size.width -= ceilf(valueFrame.size.width + 10.0f);
     }
     _descriptionLabel.frame = descriptionLabelFrame;
-    _valueLabel.frame = CGRectMake(96.0f, 13.0f, ceilf(self.bounds.size.width-96.0f-kHorizontalMargin), 19.0f);
+    _valueLabel.frame = CGRectMake(96.0f, 13.0f, ceilf(self.contentView.bounds.size.width-96.0f-kHorizontalMargin), 19.0f);
 
     if(self.notesTextView && self.notesTextView.text)
     {
-        CGRect notesFrame = [self.notesTextView.text boundingRectWithSize:CGSizeMake(self.notesTextView.bounds.size.width, CGFLOAT_MAX)
+        CGRect notesFrame = [self.notesTextView.text boundingRectWithSize:CGSizeMake(ceilf(self.contentView.bounds.size.width-96.0f-kHorizontalMargin), CGFLOAT_MAX)
                                                                   options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                                                attributes:@{NSFontAttributeName:self.notesTextView.font}
                                                                   context:nil];
@@ -218,7 +218,8 @@
                 self.notesTextView = nil;
             }
             
-            CGRect frame = CGRectMake(96.0f, 36.0f, self.bounds.size.width-96.0f-kHorizontalMargin, 17.0f);
+            NSLog(@"%f", self.contentView.bounds.size.width);
+            CGRect frame = CGRectMake(96.0f, 36.0f, self.contentView.bounds.size.width-96.0f-kHorizontalMargin, 17.0f);
             CGSize containerSize = CGSizeMake(frame.size.width,  CGFLOAT_MAX);
             
             NSTextContainer *textContainer = [[NSTextContainer alloc] initWithSize:containerSize];

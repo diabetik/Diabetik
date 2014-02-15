@@ -132,7 +132,10 @@
     }
     else
     {
-        *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No applicable MOC present"}];
+        if(error)
+        {
+            *error = [NSError errorWithDomain:kErrorDomain code:0 userInfo:@{NSLocalizedDescriptionKey: @"No applicable MOC present"}];
+        }
     }
     
     return nil;

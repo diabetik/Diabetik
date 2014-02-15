@@ -46,7 +46,7 @@
 // Reminders
 - (NSArray *)fetchAllReminders;
 - (void)deleteExpiredReminders;
-- (void)deleteReminderWithID:(NSString *)reminderID error:(NSError **)error;
+- (BOOL)deleteReminderWithID:(NSString *)reminderID error:(NSError **)error;
 - (NSString *)detailForReminder:(UAReminder *)aReminder;
 - (void)updateRemindersBasedOnCoreDataNotification:(NSNotification *)note;
 

@@ -200,7 +200,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
 }
-- (void)deleteReminderWithID:(NSString *)reminderID error:(NSError **)error
+- (BOOL)deleteReminderWithID:(NSString *)reminderID error:(NSError **)error
 {
     NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
     if(moc)
@@ -214,9 +214,12 @@
             if(!*error)
             {
                 [[NSNotificationCenter defaultCenter] postNotificationName:kRemindersUpdatedNotification object:nil];
+                return YES;
             }
         }
     }
+    
+    return NO;
 }
 - (NSString *)detailForReminder:(UAReminder *)aReminder
 {

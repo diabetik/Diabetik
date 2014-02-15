@@ -284,6 +284,15 @@
                     [self presentViewController:mailController animated:YES completion:nil];
                 }
             }
+            else
+            {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Uh oh!", nil)
+                                                                    message:NSLocalizedString(@"This device hasn't been setup to send emails", nil)
+                                                                   delegate:nil
+                                                          cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
+                                                          otherButtonTitles:nil];
+                [alertView show];
+            }
         }
         else if(indexPath.row == 1)
         {
