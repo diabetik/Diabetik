@@ -184,30 +184,7 @@
 {
     [super viewWillLayoutSubviews];
     
-    if(self.closeButton)
-    {
-        self.closeButton.frame = CGRectMake(self.view.bounds.size.width - 40.0f - 20.0f, 20.0f, 40.0f, 40.0f);
-    }
-    
-    fromDateButton.frame = CGRectMake(fromDateButton.frame.origin.x, fromDateButton.frame.origin.y, [fromDateButton.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: fromDateButton.titleLabel.font}].width+20.0f, fromDateButton.frame.size.height);
-    toDateButton.frame = CGRectMake(toDateButton.frame.origin.x, toDateButton.frame.origin.y, [toDateButton.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: toDateButton.titleLabel.font}].width+20.0f, toDateButton.frame.size.height);
-    
-    CGFloat width = [dateRangeLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeLabel.font}].width;
-    width += 5.0f + fromDateButton.bounds.size.width;
-    width += 5.0f + [dateRangeToLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeToLabel.font}].width;
-    width += 5.0f + toDateButton.bounds.size.width;
-    
-    CGFloat x = self.view.bounds.size.width/2.0f - width/2.0f;
-    dateRangeLabel.frame = CGRectMake(x, dateRangeLabel.frame.origin.y, [dateRangeLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeLabel.font}].width, dateRangeLabel.frame.size.height);
-    
-    x += dateRangeLabel.bounds.size.width + 5.0f;
-    fromDateButton.frame = CGRectMake(x, fromDateButton.frame.origin.y, fromDateButton.frame.size.width, fromDateButton.frame.size.height);
-    
-    x += fromDateButton.bounds.size.width + 5.0f;
-    dateRangeToLabel.frame = CGRectMake(x, dateRangeToLabel.frame.origin.y, [dateRangeToLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeToLabel.font}].width, dateRangeToLabel.frame.size.height);
-    
-    x += dateRangeToLabel.bounds.size.width + 5.0f;
-    toDateButton.frame = CGRectMake(x, toDateButton.frame.origin.y, toDateButton.frame.size.width, toDateButton.frame.size.height);
+    [self layoutReports];
 }
 
 #pragma mark - Logic
@@ -254,6 +231,32 @@
     scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
     scrollView.contentSize = CGSizeMake(self.view.bounds.size.width*[reports count], self.view.bounds.size.height);
     pageControl.frame = CGRectMake(0.0f, self.view.bounds.size.height - 55.0f, self.view.bounds.size.width, 25.0f);
+    
+    
+    if(self.closeButton)
+    {
+        self.closeButton.frame = CGRectMake(self.view.bounds.size.width - 40.0f - 20.0f, 20.0f, 40.0f, 40.0f);
+    }
+    
+    fromDateButton.frame = CGRectMake(fromDateButton.frame.origin.x, fromDateButton.frame.origin.y, [fromDateButton.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: fromDateButton.titleLabel.font}].width+20.0f, fromDateButton.frame.size.height);
+    toDateButton.frame = CGRectMake(toDateButton.frame.origin.x, toDateButton.frame.origin.y, [toDateButton.titleLabel.text sizeWithAttributes:@{NSFontAttributeName: toDateButton.titleLabel.font}].width+20.0f, toDateButton.frame.size.height);
+    
+    CGFloat width = [dateRangeLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeLabel.font}].width;
+    width += 5.0f + fromDateButton.bounds.size.width;
+    width += 5.0f + [dateRangeToLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeToLabel.font}].width;
+    width += 5.0f + toDateButton.bounds.size.width;
+    
+    x = self.view.bounds.size.width/2.0f - width/2.0f;
+    dateRangeLabel.frame = CGRectMake(x, dateRangeLabel.frame.origin.y, [dateRangeLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeLabel.font}].width, dateRangeLabel.frame.size.height);
+    
+    x += dateRangeLabel.bounds.size.width + 5.0f;
+    fromDateButton.frame = CGRectMake(x, fromDateButton.frame.origin.y, fromDateButton.frame.size.width, fromDateButton.frame.size.height);
+    
+    x += fromDateButton.bounds.size.width + 5.0f;
+    dateRangeToLabel.frame = CGRectMake(x, dateRangeToLabel.frame.origin.y, [dateRangeToLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeToLabel.font}].width, dateRangeToLabel.frame.size.height);
+    
+    x += dateRangeToLabel.bounds.size.width + 5.0f;
+    toDateButton.frame = CGRectMake(x, toDateButton.frame.origin.y, toDateButton.frame.size.width, toDateButton.frame.size.height);
 }
 - (void)didSelectReport:(UIButton *)previewButton
 {

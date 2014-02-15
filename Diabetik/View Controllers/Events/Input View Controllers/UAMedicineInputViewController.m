@@ -97,7 +97,6 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
-
     if(![self event] && moc && isFirstLoad)
     {
         if([[NSUserDefaults standardUserDefaults] boolForKey:kUseSmartInputKey])
@@ -129,7 +128,6 @@
             __weak typeof(self) weakSelf = self;
             [[UAEventController sharedInstance] attemptSmartInputWithExistingEntries:unsavedEntries success:^(UAMedicine *event) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
-                
                 strongSelf.name = [event name];
                 strongSelf.type = [[event type] integerValue];
 

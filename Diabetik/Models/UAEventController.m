@@ -72,7 +72,7 @@
             NSInteger numberOfSegments = 24/(hourInterval*2);
             
             // Execute the fetch.
-            NSError *error;
+            NSError *error = nil;
             NSMutableArray *objects = [NSMutableArray array];
             NSArray *results = [moc executeFetchRequest:request error:&error];
             if(results)
@@ -180,6 +180,11 @@
                     }
                 }
                 
+                failureBlock();
+            }
+            else
+            {
+                // No objects to perform Smart Input with
                 failureBlock();
             }
         }];
