@@ -482,7 +482,7 @@
                                               delegate:self
                                      cancelButtonTitle:NSLocalizedString(@"Cancel", nil)
                                 destructiveButtonTitle:nil
-                                     otherButtonTitles:NSLocalizedString(@"15 minutes", nil), NSLocalizedString(@"30 minutes", nil), NSLocalizedString(@"1 hour", nil), NSLocalizedString(@"The future", @"An option allow users to be reminded at some point in the future"), nil];
+                                     otherButtonTitles:NSLocalizedString(@"15 minutes", nil), NSLocalizedString(@"30 minutes", nil), NSLocalizedString(@"1 hour", nil), NSLocalizedString(@"2 hours", nil), NSLocalizedString(@"The future", @"An option allow users to be reminded at some point in the future"), nil];
     actionSheet.tag = kExistingImageActionSheetTag;
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     [actionSheet showInView:self.view];
@@ -708,6 +708,9 @@
             break;
         case 2:
             minutes = 60;
+            break;
+        case 3:
+            minutes = 120;
             break;
     }
     
