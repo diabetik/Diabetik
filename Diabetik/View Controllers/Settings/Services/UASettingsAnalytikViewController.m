@@ -27,7 +27,7 @@
 
 @interface UASettingsAnalytikViewController ()
 @property (nonatomic, strong) UITextField *usernameTextField, *passwordTextField;
-@property (nonatomic, strong) UIView *headerView;
+@property (nonatomic, strong) UIView *headerView, *footerView;
 @property (nonatomic, strong) UITextView *headerInfoTextView;
 @property (nonatomic, assign) BOOL isLoggedIn;
 
@@ -87,6 +87,24 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    if(!self.footerView)
+    {
+        // Setup our footer-based warning label
+        UILabel *footerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width-40.0f, 0.0f)];
+        footerLabel.numberOfLines = 0;
+        footerLabel.textAlignment = NSTextAlignmentCenter;
+        footerLabel.backgroundColor = [UIColor clearColor];
+        footerLabel.font = [UAFont standardRegularFontWithSize:14.0f];
+        footerLabel.textColor = [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
+        footerLabel.text = NSLocalizedString(@"Your data will now sync with Analytik automatically", nil);
+        [footerLabel sizeToFit];
+        
+        self.footerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.frame.size.width, footerLabel.frame.size.height+20.0f)];
+        footerLabel.frame = CGRectMake(floorf(self.view.frame.size.width/2.0f - footerLabel.frame.size.width/2), 0.0f, footerLabel.frame.size.width, footerLabel.frame.size.height);
+        self.footerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+        [self.footerView addSubview:footerLabel];
+    }
     
     self.isLoggedIn = [[[UASyncController sharedInstance] analytikController] activeAccount] ? YES : NO;
 }
@@ -187,6 +205,7 @@
         [self layoutHeaderView];
         
         self.tableView.tableHeaderView = state ? nil : self.headerView;
+        self.tableView.tableFooterView = state ? self.footerView : nil;
         [self.tableView reloadData];
         [self.view setNeedsLayout];
     }
