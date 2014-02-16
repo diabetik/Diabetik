@@ -149,10 +149,6 @@
     [super viewDidLoad];
     
     __weak typeof(self) weakSelf = self;
-
-    // Setup gesture recognizers
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    [self.tableView addGestureRecognizer:tapGesture];
     
     // Setup our nav bar buttons
     UIBarButtonItem *addBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconAdd"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent:)];
@@ -168,8 +164,32 @@
         [self.navigationItem setRightBarButtonItems:@[addBarButtonItem, reportBarButtonItem] animated:NO];
     }
     
+    // Setup our gesture recognisers
+    UITapGestureRecognizer *tagTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    UITapGestureRecognizer *searchTagTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    
+    // Configure our table view
+    [self.tableView addGestureRecognizer:tagTapGesture];
     self.tableView.backgroundColor = self.view.backgroundColor;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    // Setup our search bar
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f)];
+    self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.searchBar.delegate = self;
+    
+    searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
+    searchDisplayController.searchResultsDelegate = self;
+    searchDisplayController.searchResultsDataSource = self;
+    searchDisplayController.delegate = self;
+    searchDisplayController.displaysSearchBarInNavigationBar = NO;
+    searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
+    searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [searchDisplayController.searchResultsTableView addGestureRecognizer:searchTagTapGesture];
+    
+    self.searchBarHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f)];
+    self.searchBarHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [self.searchBarHeaderView addSubview:self.searchBar];
     
     // Footer view
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
@@ -211,28 +231,8 @@
     self.navigationController.navigationBar.tintColor = defaultTintColor;
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]};
     
-    // Setup our search bar
-    if(!self.searchBar)
-    {
-        self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f)];
-        self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.searchBar.delegate = self;
-        
-        searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:self.searchBar contentsController:self];
-        searchDisplayController.searchResultsDelegate = self;
-        searchDisplayController.searchResultsDataSource = self;
-        searchDisplayController.delegate = self;
-        searchDisplayController.displaysSearchBarInNavigationBar = NO;
-        searchDisplayController.searchResultsTableView.backgroundColor = self.tableView.backgroundColor;
-        searchDisplayController.searchResultsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
-        self.searchBarHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f)];
-        self.searchBarHeaderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        [self.searchBarHeaderView addSubview:self.searchBar];
-    }
-    self.searchBar.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f);
     self.tableView.tableHeaderView = self.searchBar;
-    
+//    self.searchBar.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f);
     if(self.tableView.contentOffset.y <= 44.0f)
     {
         self.tableView.contentOffset = CGPointMake(0.0f, 44.0f);
@@ -298,11 +298,13 @@
 }
 - (void)handleTapGesture:(UITapGestureRecognizer *)gestureRecognizer
 {
-    CGPoint point = [gestureRecognizer locationInView:self.tableView];
-    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    UITableView *targetTableView = (UITableView *)gestureRecognizer.view;
+    
+    CGPoint point = [gestureRecognizer locationInView:targetTableView];
+    NSIndexPath *indexPath = [targetTableView indexPathForRowAtPoint:point];
     if(indexPath)
     {
-        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+        UITableViewCell *cell = [targetTableView cellForRowAtIndexPath:indexPath];
         if(cell && [cell isKindOfClass:[UATimelineViewCell class]])
         {
             [(UATimelineViewCell *)cell handleTapGesture:gestureRecognizer withController:self indexPath:indexPath andTableView:self.tableView];
