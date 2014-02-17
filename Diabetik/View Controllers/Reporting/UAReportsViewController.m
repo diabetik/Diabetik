@@ -57,6 +57,10 @@
     {
         self.edgesForExtendedLayout = UIRectEdgeNone;
         
+        // If we're passed invalid dates, default to the current month
+        if(!aFromDate) aFromDate = [[NSDate date] dateAtStartOfMonth];
+        if(!aToDate) aToDate = [[NSDate date] dateAtEndOfMonth];
+        
         fromDate = aFromDate;
         toDate = aToDate;
         reportData = nil;
