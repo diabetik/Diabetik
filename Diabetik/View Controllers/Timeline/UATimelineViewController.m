@@ -29,6 +29,7 @@
 #import "UAMedicineInputViewController.h"
 #import "UAActivityInputViewController.h"
 #import "UANoteInputViewController.h"
+#import "UASummaryViewController.h"
 #import "UATagController.h"
 
 #import "UAMeal.h"
@@ -428,6 +429,10 @@
     [[VKRSAppSoundPlayer sharedInstance] playSound:@"tap-significant"];
     
     allowReportRotation = NO;
+    
+    UASummaryViewController *summaryVC = [[UASummaryViewController alloc] init];
+    [self presentViewController:summaryVC animated:YES completion:nil];
+    return;
     
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
     {
