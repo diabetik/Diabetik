@@ -112,22 +112,24 @@
     if(self.valueLabel && self.valueLabel.text)
     {
         valueLabelSize = [self.valueLabel.text sizeWithAttributes:@{NSFontAttributeName:self.valueLabel.font}];
-        descriptionLabelFrame.size.width -= ceilf(valueLabelSize.width + 10.0f);
+        
+        self.valueLabel.frame = CGRectMake(self.contentView.bounds.size.width-(valueLabelSize.width+kHorizontalMargin), 13.0f, valueLabelSize.width, 19.0f);
+
+        descriptionLabelFrame = CGRectMake(x, 13.0f, ceilf(self.valueLabel.frame.origin.x-(x+5.0f)), 19.0f);
     }
-    _descriptionLabel.frame = descriptionLabelFrame;
+    self.descriptionLabel.frame = descriptionLabelFrame;
     x += descriptionLabelFrame.size.width;
     
-    _valueLabel.frame = CGRectMake(x + 10.0f, 13.0f, valueLabelSize.width, 19.0f);
-
     if(self.notesTextView && self.notesTextView.text)
     {
-        CGRect notesFrame = [self.notesTextView.text boundingRectWithSize:CGSizeMake(ceilf(self.contentView.bounds.size.width-96.0f-kHorizontalMargin), CGFLOAT_MAX)
+        CGFloat maxNotesWidth = ceilf(self.contentView.bounds.size.width-self.descriptionLabel.frame.origin.x-kHorizontalMargin);
+        CGRect notesFrame = [self.notesTextView.text boundingRectWithSize:CGSizeMake(maxNotesWidth, CGFLOAT_MAX)
                                                                   options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                                                attributes:@{NSFontAttributeName:self.notesTextView.font}
                                                                   context:nil];
         
-        CGFloat width = notesFrame.size.width < self.bounds.size.width-96.0f-kHorizontalMargin ? notesFrame.size.width : self.bounds.size.width-96.0f-kHorizontalMargin;
-        self.notesTextView.frame = CGRectMake(ceilf(self.notesTextView.frame.origin.x), ceilf(self.notesTextView.frame.origin.y), ceilf(width), ceilf(notesFrame.size.height));
+        CGFloat width = notesFrame.size.width < maxNotesWidth ? notesFrame.size.width : maxNotesWidth;
+        self.notesTextView.frame = CGRectMake(ceilf(self.descriptionLabel.frame.origin.x), ceilf(self.notesTextView.frame.origin.y), ceilf(width), ceilf(notesFrame.size.height));
     }
     
     if(self.cellPosition == UACellBackgroundViewPositionBottom)
@@ -200,8 +202,7 @@
 #pragma mark - Accessors
 - (void)setDate:(NSDate *)aDate
 {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm"];
+    NSDateFormatter *formatter = [UAHelper shortTimeFormatter];
     NSString *formattedTimestamp = [formatter stringFromDate:aDate];
 
     self.timestampLabel.text = formattedTimestamp;

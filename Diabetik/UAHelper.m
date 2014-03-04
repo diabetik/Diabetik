@@ -63,6 +63,17 @@
     
     return glucoseFormatter;
 }
++ (NSDateFormatter *)shortTimeFormatter
+{
+    static dispatch_once_t pred;
+    static NSDateFormatter *shortTimeFormatter = nil;
+    dispatch_once(&pred, ^{
+        shortTimeFormatter = [[NSDateFormatter alloc] init];
+        [shortTimeFormatter setTimeStyle:NSDateFormatterShortStyle];
+    });
+    
+    return shortTimeFormatter;
+}
 
 #pragma mark - Converts
 + (NSNumber *)convertBGValue:(NSNumber *)value fromUnit:(NSInteger)fromUnit toUnit:(NSInteger)toUnit
