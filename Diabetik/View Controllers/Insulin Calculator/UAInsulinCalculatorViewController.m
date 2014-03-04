@@ -150,7 +150,9 @@
     if(predicate)
     {
         // Take our latest blood glucose reading
-        NSArray *previousGlucoseReadings = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate sortDescriptors:nil inContext:[[UACoreDataController sharedInstance] managedObjectContext]];
+        NSArray *previousGlucoseReadings = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate
+                                                                                        sortDescriptors:nil
+                                                                                              inContext:[[UACoreDataController sharedInstance] managedObjectContext]];
         if(previousGlucoseReadings)
         {
             UAReading *reading = (UAReading *)[previousGlucoseReadings objectAtIndex:0];

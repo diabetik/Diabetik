@@ -243,24 +243,29 @@
     
     return returnArray;
 }
-- (NSArray *)fetchEventsWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)moc
+- (NSArray *)fetchEventsWithPredicate:(NSPredicate *)predicate
+                      sortDescriptors:(NSArray *)sortDescriptors
+                            inContext:(NSManagedObjectContext *)moc
 {
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    __block NSArray *returnArray = nil;
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
-    [request setEntity:entity];
-    [request setPredicate:predicate];
-    [request setSortDescriptors:sortDescriptors];
-    
-    // Execute the fetch.
-    NSError *error = nil;
-    NSArray *objects = [moc executeFetchRequest:request error:&error];
-    if (objects != nil && [objects count] > 0)
-    {
-        return objects;
-    }
-    
-    return nil;
+    [moc performBlockAndWait:^{
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
+        [request setEntity:entity];
+        [request setPredicate:predicate];
+        [request setSortDescriptors:sortDescriptors];
+        
+        // Execute the fetch.
+        NSError *error = nil;
+        NSArray *objects = [moc executeFetchRequest:request error:&error];
+        if (objects != nil && [objects count] > 0)
+        {
+            returnArray = objects;
+        }
+    }];
+    return returnArray;
 }
 - (NSDictionary *)statisticsForEvents:(NSArray *)events fromDate:(NSDate *)minDate toDate:(NSDate *)maxDate
 {

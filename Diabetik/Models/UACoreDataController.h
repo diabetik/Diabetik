@@ -30,4 +30,7 @@
 // Logic
 - (void)saveContext;
 
+// Helpers
+- (NSManagedObjectContext *)newPrivateContext;
+
 @end

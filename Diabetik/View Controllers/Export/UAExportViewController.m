@@ -50,7 +50,9 @@
 @property (nonatomic, strong) UAViewControllerMessageView *noReportsMessageView;
 
 // Logic
-- (NSArray *)fetchEventsFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate;
+- (NSArray *)fetchEventsFromDate:(NSDate *)fromDate
+                          toDate:(NSDate *)toDate
+                         withMOC:(NSManagedObjectContext *)moc;
 
 @end
 
@@ -213,36 +215,39 @@
                 {
                     NSError *error = nil;
                     
-                    DBPath *newPath =nil;
-                    DBFile *file = nil;
-                    
                     // Generate our report data
                     if(exportCSV)
                     {
                         // Save our CSV
-                        newPath = [[DBPath root] childPath:[NSString stringWithFormat:@"exports/%@ Export.csv", date]];
-                        [[DBFilesystem sharedFilesystem] deletePath:newPath error:nil];
-                        file = [[DBFilesystem sharedFilesystem] createFile:newPath error:&error];
+                        DBPath *newPath = [[DBPath root] childPath:[NSString stringWithFormat:@"exports/%@ Export.csv", date]];
+                        DBFile *file = [[DBFilesystem sharedFilesystem] openFile:newPath error:nil];
+                        if(!file)
+                        {
+                            file = [[DBFilesystem sharedFilesystem] createFile:newPath error:&error];
+                        }
                         
-                        if(!error)
+                        if(file && !error)
                         {
                             [file writeData:csvData error:&error];
+                            [file close];
                         }
-                        [file close];
                     }
                     
                     // Save our PDF
                     if(exportPDF)
                     {
-                        newPath = [[DBPath root] childPath:[NSString stringWithFormat:@"exports/%@ Export.pdf", date]];
-                        [[DBFilesystem sharedFilesystem] deletePath:newPath error:nil];
-                        file = [[DBFilesystem sharedFilesystem] createFile:newPath error:&error];
+                        DBPath *newPath = [[DBPath root] childPath:[NSString stringWithFormat:@"exports/%@ Export.pdf", date]];
+                        DBFile *file = [[DBFilesystem sharedFilesystem] openFile:newPath error:nil];
+                        if(!file)
+                        {
+                            file = [[DBFilesystem sharedFilesystem] createFile:newPath error:&error];
+                        }
                         
-                        if(!error)
+                        if(file && !error)
                         {
                             [file writeData:pdfData error:&error];
+                            [file close];
                         }
-                        [file close];
                     }
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -302,9 +307,7 @@
                 
                 if (controller)
                 {
-                    [self presentViewController:controller animated:YES completion:^{
-                        // STUB
-                    }];
+                    [self presentViewController:controller animated:YES completion:nil];
                 }
             });
         }
@@ -411,255 +414,271 @@
     
     return nil;
 }
-- (NSArray *)fetchEventsFromDate:(NSDate *)fromDate toDate:(NSDate *)toDate
+- (NSArray *)fetchEventsFromDate:(NSDate *)fromDate
+                          toDate:(NSDate *)toDate
+                         withMOC:(NSManagedObjectContext *)moc
 {
-    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    __block NSArray *returnArray = nil;
     
     if(moc)
     {
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@", fromDate, toDate];
-        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-        
-        return [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate sortDescriptors:@[sortDescriptor] inContext:moc];
+        [moc performBlockAndWait:^{
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"timestamp >= %@ && timestamp <= %@", fromDate, toDate];
+            NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
+            
+            returnArray = [[UAEventController sharedInstance] fetchEventsWithPredicate:predicate
+                                                                       sortDescriptors:@[sortDescriptor]
+                                                                             inContext:moc];
+        }];
     }
     
-    return nil;
+    return returnArray;
 }
 - (NSData *)generateCSVData
 {
-    NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
-    NSNumberFormatter *glucoseFormatter = [UAHelper glucoseNumberFormatter];
-   
-    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    __block NSData *returnData = nil;
+    
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] newPrivateContext];
     if(moc)
     {
-        NSString *data = @"Month,Glucose Avg.,Total Activity,Total Grams,Glucose (Lowest),Glucose (Highest),Glucose (Avg. Deviation)";
-        for(NSString *month in reportData)
-        {
-            @autoreleasepool {
-                NSDictionary *monthData = [reportData objectForKey:month];
-                if([[selectedMonths objectForKey:month] boolValue])
-                {
-                    NSArray *events = [self fetchEventsFromDate:monthData[@"startDate"] toDate:monthData[@"endDate"]];
-                    if(events)
-                    {
-                        NSDictionary *monthStats = [[UAEventController sharedInstance] statisticsForEvents:events fromDate:monthData[@"startDate"] toDate:monthData[@"endDate"]];
-                        
-                        data = [data stringByAppendingFormat:@"\n\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\"", month, [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"readings_avg"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_minutes"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_grams"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"lowest_reading"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"highest_reading"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"readings_deviation"]]];
-                    }
-                }
-            }
-        }
-        
-        data = [data stringByAppendingFormat:@"\n\nDate,Time,Type,Info,Amount,Unit,Notes"];
-        for(NSString *month in reportData)
-        {
-            @autoreleasepool {
-                if([[selectedMonths objectForKey:month] boolValue])
-                {
+        [moc performBlockAndWait:^{
+            
+            NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
+            NSNumberFormatter *glucoseFormatter = [UAHelper glucoseNumberFormatter];
+            
+            NSString *data = @"Month,Glucose Avg.,Total Activity,Total Grams,Glucose (Lowest),Glucose (Highest),Glucose (Avg. Deviation)";
+            for(NSString *month in reportData)
+            {
+                @autoreleasepool {
                     NSDictionary *monthData = [reportData objectForKey:month];
-                    NSArray *events = [self fetchEventsFromDate:monthData[@"startDate"] toDate:monthData[@"endDate"]];
-                    if(events)
+                    if([[selectedMonths objectForKey:month] boolValue])
                     {
-                        for(UAEvent *event in events)
+                        NSArray *events = [self fetchEventsFromDate:monthData[@"startDate"] toDate:monthData[@"endDate"] withMOC:moc];
+                        if(events)
                         {
-                            NSString *notes = event.notes ? [event.notes escapedForCSV] : @"";
-                            NSString *name = [event.name escapedForCSV];
+                            NSDictionary *monthStats = [[UAEventController sharedInstance] statisticsForEvents:events fromDate:monthData[@"startDate"] toDate:monthData[@"endDate"]];
                             
-                            NSString *time = [timeFormatter stringFromDate:event.timestamp];
-                            NSString *date = [dateFormatter stringFromDate:event.timestamp];
-                            if([event isKindOfClass:[UANote class]])
-                            {
-                                data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,,,%@", date, time, [event humanReadableName], name, notes];
-                            }
-                            else if([event isKindOfClass:[UAMeal class]])
-                            {
-                                UAMeal *meal = (UAMeal *)event;
-                                
-                                NSString *value = [valueFormatter stringFromNumber:meal.grams];
-                                data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,\"%@\",%@,%@", date, time, [event humanReadableName], name, value, [NSLocalizedString(@"Grams", @"Unit of measurement") lowercaseString], notes];
-                            }
-                            else if([event isKindOfClass:[UAActivity class]])
-                            {
-                                UAActivity *activity = (UAActivity *)event;
-                                
-                                NSString *activityTime = [UAHelper formatMinutes:[activity.minutes integerValue]];
-                                data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,%@,%@,%@", date, time, [event humanReadableName], name, activityTime, NSLocalizedString(@"time", @"Unit of measurement"), notes];
-                            }
-                            else if([event isKindOfClass:[UAMedicine class]])
-                            {
-                                UAMedicine *medicine = (UAMedicine *)event;
-                                
-                                NSString *value = [valueFormatter stringFromNumber:medicine.amount];
-                                NSString *unit = [[UAEventController sharedInstance] medicineTypeHR:[medicine.type integerValue]];
-                                data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,\"%@\",%@,%@", date, time, [event humanReadableName], name, value, unit, notes];
-                            }
-                            else if([event isKindOfClass:[UAReading class]])
-                            {
-                                UAReading *reading = (UAReading *)event;
-                                
-                                NSString *value = [valueFormatter stringFromNumber:reading.value];
-                                NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
-                                data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,\"%@\",%@,%@", date, time, [event humanReadableName], name, value, unit, notes];
-                            }
-                            
-                            // Re-fault this object to conserve on memory
-                            [moc refreshObject:event mergeChanges:NO];
+                            data = [data stringByAppendingFormat:@"\n\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\"", month, [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"readings_avg"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_minutes"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_grams"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"lowest_reading"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"highest_reading"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"readings_deviation"]]];
                         }
                     }
                 }
             }
-        }
-        
-        return [data dataUsingEncoding:NSUTF8StringEncoding];
+            
+            data = [data stringByAppendingFormat:@"\n\nDate,Time,Type,Info,Amount,Unit,Notes"];
+            for(NSString *month in reportData)
+            {
+                @autoreleasepool {
+                    if([[selectedMonths objectForKey:month] boolValue])
+                    {
+                        NSDictionary *monthData = [reportData objectForKey:month];
+                        NSArray *events = [self fetchEventsFromDate:monthData[@"startDate"] toDate:monthData[@"endDate"] withMOC:moc];
+                        if(events)
+                        {
+                            for(UAEvent *event in events)
+                            {
+                                NSString *notes = event.notes ? [event.notes escapedForCSV] : @"";
+                                NSString *name = [event.name escapedForCSV];
+                                
+                                NSString *time = [timeFormatter stringFromDate:event.timestamp];
+                                NSString *date = [dateFormatter stringFromDate:event.timestamp];
+                                if([event isKindOfClass:[UANote class]])
+                                {
+                                    data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,,,%@", date, time, [event humanReadableName], name, notes];
+                                }
+                                else if([event isKindOfClass:[UAMeal class]])
+                                {
+                                    UAMeal *meal = (UAMeal *)event;
+                                    
+                                    NSString *value = [valueFormatter stringFromNumber:meal.grams];
+                                    data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,\"%@\",%@,%@", date, time, [event humanReadableName], name, value, [NSLocalizedString(@"Grams", @"Unit of measurement") lowercaseString], notes];
+                                }
+                                else if([event isKindOfClass:[UAActivity class]])
+                                {
+                                    UAActivity *activity = (UAActivity *)event;
+                                    
+                                    NSString *activityTime = [UAHelper formatMinutes:[activity.minutes integerValue]];
+                                    data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,%@,%@,%@", date, time, [event humanReadableName], name, activityTime, NSLocalizedString(@"time", @"Unit of measurement"), notes];
+                                }
+                                else if([event isKindOfClass:[UAMedicine class]])
+                                {
+                                    UAMedicine *medicine = (UAMedicine *)event;
+                                    
+                                    NSString *value = [valueFormatter stringFromNumber:medicine.amount];
+                                    NSString *unit = [[UAEventController sharedInstance] medicineTypeHR:[medicine.type integerValue]];
+                                    data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,\"%@\",%@,%@", date, time, [event humanReadableName], name, value, unit, notes];
+                                }
+                                else if([event isKindOfClass:[UAReading class]])
+                                {
+                                    UAReading *reading = (UAReading *)event;
+                                    
+                                    NSString *value = [valueFormatter stringFromNumber:reading.value];
+                                    NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
+                                    data = [data stringByAppendingFormat:@"\n\"%@\",%@,%@,%@,\"%@\",%@,%@", date, time, [event humanReadableName], name, value, unit, notes];
+                                }
+                                
+                                // Re-fault this object to conserve on memory
+                                [moc refreshObject:event mergeChanges:NO];
+                            }
+                        }
+                    }
+                }
+            }
+            
+            returnData = [data dataUsingEncoding:NSUTF8StringEncoding];
+        }];
     }
     
-    return nil;
+    return returnData;
 }
 - (NSData *)generatePDFData
 {
-    NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
-    NSNumberFormatter *glucoseFormatter = [UAHelper glucoseNumberFormatter];
+    __block NSData *returnData = nil;
     
-    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] newPrivateContext];
     if(moc)
     {
-        UAPDFDocument *pdfDocument = [[UAPDFDocument alloc] init];
-        [pdfDocument setDelegate:self];
-        [pdfDocument drawText:[dateFormatter stringFromDate:[NSDate date]]
-                       inRect:CGRectMake(pdfDocument.contentFrame.origin.x + pdfDocument.contentFrame.size.width - 100.0f, pdfDocument.contentFrame.origin.y, 100.0f, 16.0f)
-                     withFont:[UAFont standardDemiBoldFontWithSize:12.0f]
-                    alignment:NSTextAlignmentRight
-                lineBreakMode:NSLineBreakByClipping];
-        
-        [pdfDocument drawImage:[UIImage imageNamed:@"logo.png"] atPosition:pdfDocument.contentFrame.origin];
-        
-        [pdfDocument drawText:NSLocalizedString(@"Your Diabetic Record", nil) atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 30.0f) withFont:[UAFont standardDemiBoldFontWithSize:16.0f]];
-        
-        // Monthly breakdown
-        [pdfDocument drawText:@"Monthly Breakdown" atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 15.0f) withFont:[UAFont standardMediumFontWithSize:14.0f]];
-        
-        CGFloat columnWidth = ((pdfDocument.contentFrame.size.width/pdfDocument.contentFrame.size.width)*100)/7.0f;
-        NSArray *columns = @[
-            @{@"title": @"Month", @"width": [NSNumber numberWithDouble:columnWidth]},
-            @{@"title": @"Glucose Avg.", @"width": [NSNumber numberWithDouble:columnWidth]},
-            @{@"title": @"Total Activity", @"width": [NSNumber numberWithDouble:columnWidth]},
-            @{@"title": @"Total Grams", @"width": [NSNumber numberWithDouble:columnWidth]},
-            @{@"title": @"Glucose (Lowest)", @"width": [NSNumber numberWithDouble:columnWidth]},
-            @{@"title": @"Glucose (Highest)", @"width": [NSNumber numberWithDouble:columnWidth]},
-            @{@"title": @"Glucose Deviation", @"width": [NSNumber numberWithDouble:columnWidth]}
-        ];
-        
-        NSMutableArray *rows = [NSMutableArray array];
-        for(NSString *month in reportData)
-        {
-            @autoreleasepool {
-                NSDictionary *monthData = [reportData objectForKey:month];
-                if([[selectedMonths objectForKey:month] boolValue])
-                {
-                    NSArray *events = [self fetchEventsFromDate:monthData[@"startDate"] toDate:monthData[@"endDate"]];
-                    if(events)
-                    {
-                        NSDictionary *monthStats = [[UAEventController sharedInstance] statisticsForEvents:events fromDate:monthData[@"startDate"] toDate:monthData[@"endDate"]];
-                        
-                        [rows addObject:@[month, [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"readings_avg"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_minutes"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_grams"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"lowest_reading"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"highest_reading"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"readings_deviation"]]]];
-                    }
-                }
-            }
-        }
-
-        [pdfDocument drawTableWithRows:rows
-                            andColumns:columns
-                            atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 10.0f)
-                                 width:pdfDocument.contentFrame.size.width
-                            identifier:@"summary"];
-        
-        // Item entries
-        [pdfDocument drawText:@"Itemised entries" atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 25.0f) withFont:[UAFont standardMediumFontWithSize:14.0f]];
-        
-        columnWidth = ((pdfDocument.contentFrame.size.width/pdfDocument.contentFrame.size.width)*100)/5.0f;
-        columns = @[
-                    @{@"title": @"Date/Time", @"width": [NSNumber numberWithDouble:columnWidth]},
-                    @{@"title": @"Type", @"width": [NSNumber numberWithDouble:columnWidth]},
-                    @{@"title": @"Info", @"width": [NSNumber numberWithDouble:columnWidth]},
-                    @{@"title": @"Amount", @"width": [NSNumber numberWithDouble:columnWidth]},
-                    @{@"title": @"Notes", @"width": [NSNumber numberWithDouble:columnWidth]}
-                    ];
-        
-        rows = [NSMutableArray array];
-        for(NSString *month in reportData)
-        {
-            @autoreleasepool {
-                
-                if([[selectedMonths objectForKey:month] boolValue])
-                {
+        [moc performBlockAndWait:^{
+            
+            NSNumberFormatter *valueFormatter = [UAHelper standardNumberFormatter];
+            NSNumberFormatter *glucoseFormatter = [UAHelper glucoseNumberFormatter];
+            
+            UAPDFDocument *pdfDocument = [[UAPDFDocument alloc] init];
+            [pdfDocument setDelegate:self];
+            [pdfDocument drawText:[dateFormatter stringFromDate:[NSDate date]]
+                           inRect:CGRectMake(pdfDocument.contentFrame.origin.x + pdfDocument.contentFrame.size.width - 100.0f, pdfDocument.contentFrame.origin.y, 100.0f, 16.0f)
+                         withFont:[UAFont standardDemiBoldFontWithSize:12.0f]
+                        alignment:NSTextAlignmentRight
+                    lineBreakMode:NSLineBreakByClipping];
+            
+            [pdfDocument drawImage:[UIImage imageNamed:@"logo.png"] atPosition:pdfDocument.contentFrame.origin];
+            
+            [pdfDocument drawText:NSLocalizedString(@"Your Diabetic Record", nil) atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 30.0f) withFont:[UAFont standardDemiBoldFontWithSize:16.0f]];
+            
+            // Monthly breakdown
+            [pdfDocument drawText:@"Monthly Breakdown" atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 15.0f) withFont:[UAFont standardMediumFontWithSize:14.0f]];
+            
+            CGFloat columnWidth = ((pdfDocument.contentFrame.size.width/pdfDocument.contentFrame.size.width)*100)/7.0f;
+            NSArray *columns = @[
+                @{@"title": @"Month", @"width": [NSNumber numberWithDouble:columnWidth]},
+                @{@"title": @"Glucose Avg.", @"width": [NSNumber numberWithDouble:columnWidth]},
+                @{@"title": @"Total Activity", @"width": [NSNumber numberWithDouble:columnWidth]},
+                @{@"title": @"Total Grams", @"width": [NSNumber numberWithDouble:columnWidth]},
+                @{@"title": @"Glucose (Lowest)", @"width": [NSNumber numberWithDouble:columnWidth]},
+                @{@"title": @"Glucose (Highest)", @"width": [NSNumber numberWithDouble:columnWidth]},
+                @{@"title": @"Glucose Deviation", @"width": [NSNumber numberWithDouble:columnWidth]}
+            ];
+            
+            NSMutableArray *rows = [NSMutableArray array];
+            for(NSString *month in reportData)
+            {
+                @autoreleasepool {
                     NSDictionary *monthData = [reportData objectForKey:month];
-                
-                    NSArray *events = [self fetchEventsFromDate:monthData[@"startDate"] toDate:monthData[@"endDate"]];
-                    if(events)
+                    if([[selectedMonths objectForKey:month] boolValue])
                     {
-                        for(UAEvent *event in events)
+                        NSArray *events = [self fetchEventsFromDate:monthData[@"startDate"] toDate:monthData[@"endDate"] withMOC:moc];
+                        if(events)
                         {
-                            NSString *notes = event.notes ? event.notes : @"";
-                            NSString *name = event.name;
+                            NSDictionary *monthStats = [[UAEventController sharedInstance] statisticsForEvents:events fromDate:monthData[@"startDate"] toDate:monthData[@"endDate"]];
                             
-                            NSString *time = [timeFormatter stringFromDate:event.timestamp];
-                            NSString *date = [dateFormatter stringFromDate:event.timestamp];
-                            if([event isKindOfClass:[UANote class]])
-                            {
-                                [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, @"", notes]];
-                            }
-                            else if([event isKindOfClass:[UAMeal class]])
-                            {
-                                UAMeal *meal = (UAMeal *)event;
-                                
-                                NSString *value = [valueFormatter stringFromNumber:meal.grams];
-                                [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, value, notes]];
-                            }
-                            else if([event isKindOfClass:[UAActivity class]])
-                            {
-                                UAActivity *activity = (UAActivity *)event;
-                                
-                                NSString *activityTime = [valueFormatter stringFromNumber:activity.minutes];
-                                [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, activityTime, notes]];
-                            }
-                            else if([event isKindOfClass:[UAMedicine class]])
-                            {
-                                UAMedicine *medicine = (UAMedicine *)event;
-                                
-                                NSString *value = [valueFormatter stringFromNumber:medicine.amount];
-                                NSString *unit = [[UAEventController sharedInstance] medicineTypeHR:[medicine.type integerValue]];
-                                [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, [NSString stringWithFormat:@"%@ %@", value, unit], notes]];
-                            }
-                            else if([event isKindOfClass:[UAReading class]])
-                            {
-                                UAReading *reading = (UAReading *)event;
-                                
-                                NSString *value = [valueFormatter stringFromNumber:reading.value];
-                                NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
-                                [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, [NSString stringWithFormat:@"%@ %@", value, unit], notes]];
-                            }
-                            
-                            // Re-fault this object to conserve on memory
-                            [moc refreshObject:event mergeChanges:NO];
+                            [rows addObject:@[month, [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"readings_avg"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_minutes"]], [valueFormatter stringFromNumber:[monthStats objectForKey:@"total_grams"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"lowest_reading"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"highest_reading"]], [glucoseFormatter stringFromNumber:[monthStats objectForKey:@"readings_deviation"]]]];
                         }
                     }
                 }
             }
-        }
-        
-        [pdfDocument drawTableWithRows:rows
-                            andColumns:columns
-                            atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 10.0f)
-                                 width:pdfDocument.contentFrame.size.width
-                            identifier:@"itemised"];
-        
-        [pdfDocument close];
-        
-        return pdfDocument.data;
+
+            [pdfDocument drawTableWithRows:rows
+                                andColumns:columns
+                                atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 10.0f)
+                                     width:pdfDocument.contentFrame.size.width
+                                identifier:@"summary"];
+            
+            // Item entries
+            [pdfDocument drawText:@"Itemised entries" atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 25.0f) withFont:[UAFont standardMediumFontWithSize:14.0f]];
+            
+            columnWidth = ((pdfDocument.contentFrame.size.width/pdfDocument.contentFrame.size.width)*100)/5.0f;
+            columns = @[
+                        @{@"title": @"Date/Time", @"width": [NSNumber numberWithDouble:columnWidth]},
+                        @{@"title": @"Type", @"width": [NSNumber numberWithDouble:columnWidth]},
+                        @{@"title": @"Info", @"width": [NSNumber numberWithDouble:columnWidth]},
+                        @{@"title": @"Amount", @"width": [NSNumber numberWithDouble:columnWidth]},
+                        @{@"title": @"Notes", @"width": [NSNumber numberWithDouble:columnWidth]}
+                        ];
+            
+            rows = [NSMutableArray array];
+            for(NSString *month in reportData)
+            {
+                @autoreleasepool {
+                    
+                    if([[selectedMonths objectForKey:month] boolValue])
+                    {
+                        NSDictionary *monthData = [reportData objectForKey:month];
+                    
+                        NSArray *events = [self fetchEventsFromDate:monthData[@"startDate"] toDate:monthData[@"endDate"] withMOC:moc];
+                        if(events)
+                        {
+                            for(UAEvent *event in events)
+                            {
+                                NSString *notes = event.notes ? event.notes : @"";
+                                NSString *name = event.name;
+                                
+                                NSString *time = [timeFormatter stringFromDate:event.timestamp];
+                                NSString *date = [dateFormatter stringFromDate:event.timestamp];
+                                if([event isKindOfClass:[UANote class]])
+                                {
+                                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, @"", notes]];
+                                }
+                                else if([event isKindOfClass:[UAMeal class]])
+                                {
+                                    UAMeal *meal = (UAMeal *)event;
+                                    
+                                    NSString *value = [valueFormatter stringFromNumber:meal.grams];
+                                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, value, notes]];
+                                }
+                                else if([event isKindOfClass:[UAActivity class]])
+                                {
+                                    UAActivity *activity = (UAActivity *)event;
+                                    
+                                    NSString *activityTime = [valueFormatter stringFromNumber:activity.minutes];
+                                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, activityTime, notes]];
+                                }
+                                else if([event isKindOfClass:[UAMedicine class]])
+                                {
+                                    UAMedicine *medicine = (UAMedicine *)event;
+                                    
+                                    NSString *value = [valueFormatter stringFromNumber:medicine.amount];
+                                    NSString *unit = [[UAEventController sharedInstance] medicineTypeHR:[medicine.type integerValue]];
+                                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, [NSString stringWithFormat:@"%@ %@", value, unit], notes]];
+                                }
+                                else if([event isKindOfClass:[UAReading class]])
+                                {
+                                    UAReading *reading = (UAReading *)event;
+                                    
+                                    NSString *value = [valueFormatter stringFromNumber:reading.value];
+                                    NSString *unit = ([UAHelper userBGUnit] == BGTrackingUnitMG) ? @"mg/dL" : @"mmoI/L";
+                                    [rows addObject:@[[NSString stringWithFormat:@"%@\n%@", date, time], [event humanReadableName], name, [NSString stringWithFormat:@"%@ %@", value, unit], notes]];
+                                }
+                                
+                                // Re-fault this object to conserve on memory
+                                [moc refreshObject:event mergeChanges:NO];
+                            }
+                        }
+                    }
+                }
+            }
+            
+            [pdfDocument drawTableWithRows:rows
+                                andColumns:columns
+                                atPosition:CGPointMake(pdfDocument.contentFrame.origin.x, pdfDocument.currentY + 10.0f)
+                                     width:pdfDocument.contentFrame.size.width
+                                identifier:@"itemised"];
+            
+            [pdfDocument close];
+            
+            returnData = pdfDocument.data;
+        }];
     }
     
-    return nil;
+    return returnData;
 }
 
 #pragma mark - UAPDFDocumentDelegate methods
