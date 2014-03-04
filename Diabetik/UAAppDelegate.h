@@ -26,7 +26,7 @@
 #import "UAUI.h"
 #import "UABackupController.h"
 
-@interface UAAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate, BITHockeyManagerDelegate>
+@interface UAAppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate>
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) CLLocationManager *locationManager;
 @property (strong, nonatomic) UIViewController *viewController;

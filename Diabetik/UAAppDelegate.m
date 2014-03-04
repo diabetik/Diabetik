@@ -51,12 +51,13 @@
     )
     {
 #ifdef RELEASE_BUILD
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppLiveIdentifierKey delegate:self];
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppLiveIdentifierKey];
 #else
         NSLog(@"Running beta build");
-        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppBetaIdentifierKey delegate:self];
+        [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppBetaIdentifierKey];
 #endif
         [[BITHockeyManager sharedHockeyManager] startManager];
+        [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
     }
 
     // Initialise the Google Analytics API
