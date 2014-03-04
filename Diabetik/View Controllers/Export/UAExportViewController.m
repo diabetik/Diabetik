@@ -692,7 +692,7 @@
                          contentRect:(CGRect)contentRect
                             cellRect:(CGRect)cellRect
 {
-    [[UIColor colorWithRed:217.0f/255.0f green:219.0f/255.0f blue:219.0f/255.0f alpha:1.0f] setFill];
+    [[UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f] setFill];
     UIRectFill(cellRect);
     
     [[UIColor blackColor] setFill];
@@ -712,7 +712,7 @@
 {
     if((int)cellPosition.y%2)
     {
-        [[UIColor colorWithRed:217.0f/255.0f green:219.0f/255.0f blue:219.0f/255.0f alpha:1.0f] setFill];
+        [[UIColor colorWithRed:240.0f/255.0f green:242.0f/255.0f blue:242.0f/255.0f alpha:1.0f] setFill];
         UIRectFill(cellRect);
     }
     
