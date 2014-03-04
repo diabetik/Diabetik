@@ -18,6 +18,7 @@
 //  limitations under the License.
 //
 
+#import "NSDate+Extension.h"
 #import <QuartzCore/QuartzCore.h>
 #import "UATimelineViewCell.h"
 #import "UAMediaController.h"
@@ -39,6 +40,8 @@
     NSDate *date;
     UATagHighlightTextStorage *textStorage;
     UIView *bottomBorder;
+    
+    NSString *timestampLabelSizingString;
 }
 @end
 
@@ -57,7 +60,7 @@
     if (self)
     {
         self.backgroundColor = [UIColor whiteColor];
-        
+
         _iconImageView = [[UIImageView alloc] initWithFrame:CGRectMake(16.0f, 15.0f, 16.0f, 16.0f)];
         _iconImageView.image = [UIImage imageNamed:@"TimelineMealIcon.png"];
         _iconImageView.contentMode = UIViewContentModeCenter;
@@ -88,10 +91,17 @@
         _timestampLabel.font = [UAFont standardRegularFontWithSize:16.0f];
         _timestampLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
         _timestampLabel.highlightedTextColor = [UIColor whiteColor];
+        _timestampLabel.textAlignment = NSTextAlignmentRight;
+        _timestampLabel.lineBreakMode = NSLineBreakByClipping;
+        _timestampLabel.clipsToBounds = NO;
         [self.contentView addSubview:_timestampLabel];
         
         bottomBorder = [[UIView alloc] initWithFrame:CGRectZero];
         [self.contentView addSubview:bottomBorder];
+        
+        // A messy hack! We generate an NSDate at midnight and pass it to our NSDateFormatter to generate
+        // the maximum possible length for a timestamp. This helps keep all timeline cell content inline when timestamp lengths vary
+        timestampLabelSizingString = [[UAHelper shortTimeFormatter] stringFromDate:[[NSDate date] dateAtStartOfDay]];
     }
     return self;
 }
@@ -103,7 +113,7 @@
     
     CGFloat x = 43.0f;
     
-    CGSize timestampLabelSize = [self.timestampLabel.text sizeWithAttributes:@{NSFontAttributeName:self.timestampLabel.font}];
+    CGSize timestampLabelSize = [timestampLabelSizingString sizeWithAttributes:@{NSFontAttributeName:self.timestampLabel.font}];
     self.timestampLabel.frame = CGRectMake(x, 13.0f, timestampLabelSize.width, 19.0f);
     x += timestampLabelSize.width + 6.0f;
     
@@ -112,7 +122,6 @@
     if(self.valueLabel && self.valueLabel.text)
     {
         valueLabelSize = [self.valueLabel.text sizeWithAttributes:@{NSFontAttributeName:self.valueLabel.font}];
-        
         self.valueLabel.frame = CGRectMake(self.contentView.bounds.size.width-(valueLabelSize.width+kHorizontalMargin), 13.0f, valueLabelSize.width, 19.0f);
 
         descriptionLabelFrame = CGRectMake(x, 13.0f, ceilf(self.valueLabel.frame.origin.x-(x+5.0f)), 19.0f);

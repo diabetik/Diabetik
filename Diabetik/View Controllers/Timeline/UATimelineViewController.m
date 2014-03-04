@@ -232,11 +232,6 @@
     self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName:[UIColor blackColor], NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:17.0f]};
     
     self.tableView.tableHeaderView = self.searchBar;
-//    self.searchBar.frame = CGRectMake(0.0f, 0.0f, self.view.bounds.size.width, 44.0f);
-    if(self.tableView.contentOffset.y <= 44.0f)
-    {
-        self.tableView.contentOffset = CGPointMake(0.0f, 44.0f);
-    }
     
     // Only listen out for orientation changes if we're not using an iPad
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
