@@ -436,6 +436,7 @@
 		5354083817B7B90A008C64A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5356124E185B9E3900438A91 /* UAReminderBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAReminderBaseViewController.h; sourceTree = "<group>"; };
 		5356124F185B9E3900438A91 /* UAReminderBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAReminderBaseViewController.m; sourceTree = "<group>"; };
+		535844F218C61D9F0011DD48 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_2_to_1.1.xcmappingmodel; sourceTree = SOURCE_ROOT; };
 		536E964B177F5A3800140DF0 /* Diabetik_1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diabetik_1.1.xcdatamodel; sourceTree = "<group>"; };
 		537983AD17CD3F5A00032F3A /* UAShortcutButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAShortcutButton.h; sourceTree = "<group>"; };
@@ -1716,6 +1717,7 @@
 				533F31E71773266600AD89E2 /* sv */,
 				53AE668A178727D800DE66D9 /* cs */,
 				53CDF9DF18772C6E00F5FA48 /* pt-BR */,
+				535844F218C61D9F0011DD48 /* fr */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
