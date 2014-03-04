@@ -44,7 +44,7 @@
     
     BOOL exportPDF, exportCSV;
     
-    NSDateFormatter *dateFormatter;
+    NSDateFormatter *dateFormatter, *longDateFormatter;
     NSDateFormatter *timeFormatter;
 }
 @property (nonatomic, strong) UAViewControllerMessageView *noReportsMessageView;
@@ -69,10 +69,13 @@
         exportCSV = NO;
         
         dateFormatter = [[NSDateFormatter alloc] init];
-        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [dateFormatter setDateStyle:NSDateFormatterShortStyle];
+        
+        longDateFormatter = [[NSDateFormatter alloc] init];
+        [longDateFormatter setDateStyle:NSDateFormatterMediumStyle];
         
         timeFormatter = [[NSDateFormatter alloc] init];
-        [timeFormatter setTimeStyle:NSDateFormatterMediumStyle];
+        [timeFormatter setTimeStyle:NSDateFormatterShortStyle];
 
         reportData = nil;
         selectedMonths = [[NSMutableDictionary alloc] init];
@@ -194,7 +197,7 @@
     [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        NSString *date = [dateFormatter stringFromDate:[NSDate date]];
+        NSString *date = [longDateFormatter stringFromDate:[NSDate date]];
         
         NSData *csvData = [self generateCSVData];
         NSData *pdfData = [self generatePDFData];
@@ -447,7 +450,7 @@
             NSNumberFormatter *glucoseFormatter = [UAHelper glucoseNumberFormatter];
             
             NSString *data = @"Month,Glucose Avg.,Total Activity,Total Grams,Glucose (Lowest),Glucose (Highest),Glucose (Avg. Deviation)";
-            for(NSString *month in reportData)
+            for(NSString *month in [reportData reverseKeyEnumerator])
             {
                 @autoreleasepool {
                     NSDictionary *monthData = [reportData objectForKey:month];
@@ -465,7 +468,7 @@
             }
             
             data = [data stringByAppendingFormat:@"\n\nDate,Time,Type,Info,Amount,Unit,Notes"];
-            for(NSString *month in reportData)
+            for(NSString *month in [reportData reverseKeyEnumerator])
             {
                 @autoreleasepool {
                     if([[selectedMonths objectForKey:month] boolValue])
@@ -569,7 +572,7 @@
             ];
             
             NSMutableArray *rows = [NSMutableArray array];
-            for(NSString *month in reportData)
+            for(NSString *month in [reportData reverseKeyEnumerator])
             {
                 @autoreleasepool {
                     NSDictionary *monthData = [reportData objectForKey:month];
@@ -605,7 +608,7 @@
                         ];
             
             rows = [NSMutableArray array];
-            for(NSString *month in reportData)
+            for(NSString *month in [reportData reverseKeyEnumerator])
             {
                 @autoreleasepool {
                     
@@ -685,6 +688,7 @@
 - (void)drawPDFTableHeaderInDocument:(UAPDFDocument *)document
                       withIdentifier:(NSString *)identifier
                              content:(id)content
+                   contentAttributes:(NSDictionary *)contentAttributes
                          contentRect:(CGRect)contentRect
                             cellRect:(CGRect)cellRect
 {
@@ -694,13 +698,14 @@
     [[UIColor blackColor] setFill];
     [document drawText:(NSString *)content
                 inRect:contentRect
-              withFont:[UAFont standardDemiBoldFontWithSize:12.0f]
+              withFont:contentAttributes[UAPDFDocumentFontName]
              alignment:NSTextAlignmentLeft
          lineBreakMode:NSLineBreakByWordWrapping];
 }
 - (void)drawPDFTableCellInDocument:(UAPDFDocument *)document
                     withIdentifier:(NSString *)identifier
                            content:(id)content
+                 contentAttributes:(NSDictionary *)contentAttributes
                        contentRect:(CGRect)contentRect
                           cellRect:(CGRect)cellRect
                       cellPosition:(CGPoint)cellPosition
@@ -714,20 +719,22 @@
     [[UIColor blackColor] setFill];
     [document drawText:(NSString *)content
                 inRect:contentRect
-              withFont:[UAFont standardRegularFontWithSize:12.0f]
+              withFont:contentAttributes[UAPDFDocumentFontName]
              alignment:(cellPosition.x == 0 || [identifier isEqualToString:@"itemised"] ? NSTextAlignmentLeft : NSTextAlignmentCenter)
          lineBreakMode:NSLineBreakByWordWrapping];
 }
-- (UIFont *)fontForPDFTableInDocument:(UAPDFDocument *)document
-                       withIdentifier:(NSString *)identifier
-                               forRow:(NSInteger)rowIndex
+- (NSDictionary *)attributesForPDFCellInDocument:(UAPDFDocument *)document
+                                  withIdentifier:(NSString *)identifier
+                                        rowIndex:(NSInteger)rowIndex
+                                     columnIndex:(NSInteger)columnIndex
 {
+    UIFont *font = [UAFont standardRegularFontWithSize:12.0f];
     if(rowIndex == 0)
     {
-        [UAFont standardBoldFontWithSize:12.0f];
+        font = [UAFont standardDemiBoldFontWithSize:12.0f];
     }
-
-    return [UAFont standardRegularFontWithSize:12.0f];
+    
+    return @{UAPDFDocumentFontName:font};
 }
 
 #pragma mark - UITableViewDataSource methods

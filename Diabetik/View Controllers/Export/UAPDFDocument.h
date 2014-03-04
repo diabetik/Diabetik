@@ -20,24 +20,31 @@
 
 #import <Foundation/Foundation.h>
 
+static const NSString *UAPDFDocumentFontName = @"UAPDFDocumentFontName";
+static const NSString *UAPDFDocumentFontSize = @"UAPDFDocumentFontSize";
+static const NSString *UAPDFDocumentFontColor = @"UAPDFDocumentFontColor";
+
 @class UAPDFDocument;
 @protocol UAPDFDocumentDelegate <NSObject>
 
 @required
-- (UIFont *)fontForPDFTableInDocument:(UAPDFDocument *)document
-                       withIdentifier:(NSString *)identifier
-                               forRow:(NSInteger)rowIndex;
 - (void)drawPDFTableHeaderInDocument:(UAPDFDocument *)document
                       withIdentifier:(NSString *)identifier
                              content:(id)content
+                   contentAttributes:(NSDictionary *)contentAttributes
                          contentRect:(CGRect)contentRect
                             cellRect:(CGRect)cellRect;
 - (void)drawPDFTableCellInDocument:(UAPDFDocument *)document
                     withIdentifier:(NSString *)identifier
                            content:(id)content
+                 contentAttributes:(NSDictionary *)contentAttributes
                        contentRect:(CGRect)contentRect
                           cellRect:(CGRect)cellRect
                       cellPosition:(CGPoint)position;
+- (NSDictionary *)attributesForPDFCellInDocument:(UAPDFDocument *)document
+                                  withIdentifier:(NSString *)identifier
+                                        rowIndex:(NSInteger)rowIndex
+                                     columnIndex:(NSInteger)columnIndex;
 
 @end
 

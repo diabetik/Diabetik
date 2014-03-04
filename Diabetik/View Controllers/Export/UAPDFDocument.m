@@ -75,7 +75,7 @@
                andColumns:(NSArray *)columns
                atPosition:(CGPoint)position
                     width:(CGFloat)tableWidth
-               identifier:(NSString *)identifier
+               identifier:(NSString *)tableIdentifier
 {
     CGFloat x = position.x, y = position.y;
     
@@ -85,8 +85,11 @@
         [headerTitles addObject:[column objectForKey:@"title"]];
     }
     
-    UIFont *headerFont = [self.delegate fontForPDFTableInDocument:self withIdentifier:identifier forRow:0];
-    CGFloat headerHeight = [self maximumHeightForRow:headerTitles andColumns:columns atPosition:position width:tableWidth withFont:headerFont];
+    CGFloat headerHeight = [self heightForRow:headerTitles
+                                  withColumns:columns
+                                   atPosition:position
+                              tableIdentifier:tableIdentifier
+                                        width:tableWidth];
     
     // Make sure our header won't push us onto a new page
     if((y + headerHeight) > CGRectGetMaxY(self.contentFrame))
@@ -95,6 +98,8 @@
         y = self.contentFrame.origin.y;
     }
     
+    // Render our table headers
+    NSInteger columnIndex = 0, rowIndex = 0;
     for(NSDictionary *column in columns)
     {
         double columnWidthPercentage = [[column objectForKey:@"width"] doubleValue];
@@ -102,21 +107,35 @@
         
         NSString *headerTitle = [column objectForKey:@"title"];
         
-        [self.delegate drawPDFTableHeaderInDocument:self
-                                     withIdentifier:identifier
-                                            content:headerTitle
-                                        contentRect:CGRectMake(x+kTableCellPadding, y+kTableCellPadding, columnSize-(kTableCellPadding*2), headerHeight-(kTableCellPadding*2))
-                                           cellRect:CGRectMake(x, y, columnSize, headerHeight)];
+        NSDictionary *attributes = [self.delegate attributesForPDFCellInDocument:self
+                                                                  withIdentifier:tableIdentifier
+                                                                        rowIndex:rowIndex
+                                                                     columnIndex:columnIndex];
+        if(attributes)
+        {
+            [self.delegate drawPDFTableHeaderInDocument:self
+                                         withIdentifier:tableIdentifier
+                                                content:headerTitle
+                                      contentAttributes:attributes
+                                            contentRect:CGRectMake(x+kTableCellPadding, y+kTableCellPadding, columnSize-(kTableCellPadding*2), headerHeight-(kTableCellPadding*2))
+                                               cellRect:CGRectMake(x, y, columnSize, headerHeight)];
+        }
         
         x += columnSize;
+        columnIndex++;
     }
     y += headerHeight;
     
-    NSInteger columnIndex = 0, rowIndex = 1;
+    // Render our table content
+    columnIndex = 0;
+    rowIndex = 1;
     for(NSArray *row in rows)
     {
-        UIFont *rowFont = [self.delegate fontForPDFTableInDocument:self withIdentifier:identifier forRow:rowIndex];
-        CGFloat rowHeight = [self maximumHeightForRow:row andColumns:columns atPosition:CGPointMake(position.x, y) width:tableWidth withFont:rowFont];
+        CGFloat rowHeight = [self heightForRow:row
+                                   withColumns:columns
+                                    atPosition:CGPointMake(position.x, y)
+                               tableIdentifier:tableIdentifier
+                                         width:tableWidth];
         
         x = position.x;
         
@@ -132,13 +151,21 @@
             double columnWidthPercentage = [[column objectForKey:@"width"] doubleValue];
             double columnSize = (tableWidth/100)*columnWidthPercentage;
             
-            NSString *data = [row objectAtIndex:columnIndex];
-            [self.delegate drawPDFTableCellInDocument:self
-                                       withIdentifier:identifier
-                                              content:data
-                                          contentRect:CGRectMake(x+kTableCellPadding, y+kTableCellPadding, columnSize-(kTableCellPadding*2), rowHeight-(kTableCellPadding*2))
-                                             cellRect:CGRectMake(x, y, columnSize, rowHeight)
-                                         cellPosition:CGPointMake(columnIndex, rowIndex-1)];
+            NSDictionary *attributes = [self.delegate attributesForPDFCellInDocument:self
+                                                                      withIdentifier:tableIdentifier
+                                                                            rowIndex:rowIndex
+                                                                         columnIndex:columnIndex];
+            if(attributes)
+            {
+                NSString *data = [row objectAtIndex:columnIndex];
+                [self.delegate drawPDFTableCellInDocument:self
+                                           withIdentifier:tableIdentifier
+                                                  content:data
+                                        contentAttributes:attributes
+                                              contentRect:CGRectMake(x+kTableCellPadding, y+kTableCellPadding, columnSize-(kTableCellPadding*2), rowHeight-(kTableCellPadding*2))
+                                                 cellRect:CGRectMake(x, y, columnSize, rowHeight)
+                                             cellPosition:CGPointMake(columnIndex, rowIndex-1)];
+            }
             
             x += columnSize;
             columnIndex ++;
@@ -148,23 +175,40 @@
         rowIndex ++;
     }
 }
-- (CGFloat)maximumHeightForRow:(NSArray *)row andColumns:(NSArray *)columns atPosition:(CGPoint)position width:(CGFloat)tableWidth withFont:(UIFont *)font
+- (CGFloat)heightForRow:(NSArray *)row
+            withColumns:(NSArray *)columns
+             atPosition:(CGPoint)position
+        tableIdentifier:(NSString *)tableIdentifier
+                  width:(CGFloat)tableWidth
 {
+    NSInteger columnIndex = 0;
     CGFloat height = 0.0f;
     for(NSDictionary *column in columns)
     {
         double columnWidthPercentage = [[column objectForKey:@"width"] doubleValue];
         double columnSize = (tableWidth/100)*columnWidthPercentage;
         
+        NSInteger rowIndex = 0;
         for(NSString *data in row)
         {
-            CGRect textFrame = [data boundingRectWithSize:CGSizeMake(columnSize-kTableCellPadding*2, CGFLOAT_MAX)
-                                                  options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                               attributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:16.0f]}
-                                                  context:nil];
-            
-            if(textFrame.size.height > height) height = textFrame.size.height+kTableCellPadding*2;
+            NSDictionary *attributes = [self.delegate attributesForPDFCellInDocument:self
+                                                                      withIdentifier:tableIdentifier
+                                                                            rowIndex:rowIndex
+                                                                         columnIndex:column];
+            if(attributes)
+            {
+
+                CGRect textFrame = [data boundingRectWithSize:CGSizeMake(columnSize-(kTableCellPadding*2), CGFLOAT_MAX)
+                                                      options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                   attributes:@{NSFontAttributeName:attributes[UAPDFDocumentFontName]}
+                                                      context:nil];
+                
+                if(textFrame.size.height > height) height = textFrame.size.height+(kTableCellPadding*2);
+            }
+            rowIndex++;
         }
+        
+        columnIndex++;
     }
     
     return height;
@@ -175,7 +219,7 @@
 {
     CGRect textFrame = [string boundingRectWithSize:CGSizeMake(CGRectGetMaxX(self.contentFrame) - position.x, CGFLOAT_MAX)
                                             options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                         attributes:@{NSFontAttributeName:[UAFont standardDemiBoldFontWithSize:16.0f]}
+                                         attributes:@{NSFontAttributeName:font}
                                             context:nil];
     CGRect renderFrame = CGRectMake(position.x, position.y, textFrame.size.width, textFrame.size.height);
     
