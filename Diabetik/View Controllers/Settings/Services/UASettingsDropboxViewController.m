@@ -40,7 +40,10 @@
         
         __weak typeof(self) weakSelf = self;
         linkNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kDropboxLinkNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [strongSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+            });
         }];
     }
     return self;

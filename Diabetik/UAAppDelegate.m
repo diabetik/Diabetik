@@ -64,8 +64,8 @@
     
     // Initialise Appirater
     [Appirater setAppId:@"634983291"];
-    [Appirater setDaysUntilPrompt:4];
-    [Appirater setUsesUntilPrompt:5];
+    [Appirater setDaysUntilPrompt:2];
+    [Appirater setUsesUntilPrompt:2];
     [Appirater setSignificantEventsUntilPrompt:-1];
     [Appirater setTimeBeforeReminding:1];
     [Appirater setOpenInAppStore:NO];

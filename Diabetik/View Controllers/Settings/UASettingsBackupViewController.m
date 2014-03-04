@@ -26,6 +26,7 @@
 @interface UASettingsBackupViewController ()
 {
     UABackupController *backupController;
+    id dropboxLinkNotifier;
 }
 
 // UI
@@ -43,7 +44,14 @@
     {
         self.title = NSLocalizedString(@"Backup/Restore", nil);
         
+        __weak typeof(self) weakSelf = self;
         backupController = [[UABackupController alloc] init];
+        dropboxLinkNotifier = [[NSNotificationCenter defaultCenter] addObserverForName:kDropboxLinkNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [strongSelf.tableView reloadData];
+            });
+        }];
     }
     return self;
 }
@@ -66,6 +74,10 @@
     
     self.tableView.tableFooterView = footerView;
     [self.tableView reloadData];
+}
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:dropboxLinkNotifier];
 }
 
 #pragma mark - UI
