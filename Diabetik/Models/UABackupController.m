@@ -64,18 +64,16 @@
                 
                 if([[DBFilesystem sharedFilesystem] completedFirstSync])
                 {
-                    DBPath *newPath = nil;
-                    DBFile *file = nil;
-                    
-                    newPath = [[DBPath root] childPath:[NSString stringWithFormat:@"backup.dtk"]];
-                    if([[DBFilesystem sharedFilesystem] deletePath:newPath error:&error])
+                    DBPath *newPath = [[DBPath root] childPath:[NSString stringWithFormat:@"backup.dtk"]];
+                    DBFile *file = [[DBFilesystem sharedFilesystem] openFile:newPath error:nil];
+                    if(!file)
                     {
                         file = [[DBFilesystem sharedFilesystem] createFile:newPath error:&error];
-                        
-                        if(!error)
-                        {
-                            [file writeData:data error:&error];
-                        }
+                    }
+                    
+                    if(file && !error)
+                    {
+                        [file writeData:data error:&error];
                         [file close];
                     }
                 }
