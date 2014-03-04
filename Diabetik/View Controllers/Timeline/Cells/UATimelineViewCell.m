@@ -101,17 +101,23 @@
 {
     [super layoutSubviews];
     
-    CGRect descriptionLabelFrame = CGRectMake(96.0f, 13.0f, ceilf(self.bounds.size.width-96.0f-kHorizontalMargin), 19.0f);
+    CGFloat x = 43.0f;
+    
+    CGSize timestampLabelSize = [self.timestampLabel.text sizeWithAttributes:@{NSFontAttributeName:self.timestampLabel.font}];
+    self.timestampLabel.frame = CGRectMake(x, 13.0f, timestampLabelSize.width, 19.0f);
+    x += timestampLabelSize.width + 6.0f;
+    
+    CGRect descriptionLabelFrame = CGRectMake(x, 13.0f, ceilf(self.bounds.size.width-96.0f-kHorizontalMargin), 19.0f);
+    CGSize valueLabelSize = CGSizeZero;
     if(self.valueLabel && self.valueLabel.text)
     {
-        CGRect valueFrame = [self.valueLabel.text boundingRectWithSize:CGSizeMake(self.valueLabel.bounds.size.width, CGFLOAT_MAX)
-                                                               options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
-                                                            attributes:@{NSFontAttributeName:self.valueLabel.font}
-                                                               context:nil];
-        descriptionLabelFrame.size.width -= ceilf(valueFrame.size.width + 10.0f);
+        valueLabelSize = [self.valueLabel.text sizeWithAttributes:@{NSFontAttributeName:self.valueLabel.font}];
+        descriptionLabelFrame.size.width -= ceilf(valueLabelSize.width + 10.0f);
     }
     _descriptionLabel.frame = descriptionLabelFrame;
-    _valueLabel.frame = CGRectMake(96.0f, 13.0f, ceilf(self.contentView.bounds.size.width-96.0f-kHorizontalMargin), 19.0f);
+    x += descriptionLabelFrame.size.width;
+    
+    _valueLabel.frame = CGRectMake(x + 10.0f, 13.0f, valueLabelSize.width, 19.0f);
 
     if(self.notesTextView && self.notesTextView.text)
     {
