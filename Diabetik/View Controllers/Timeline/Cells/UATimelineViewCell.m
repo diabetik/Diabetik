@@ -99,7 +99,7 @@
 #pragma mark - Logic
 - (void)layoutSubviews
 {
-    [super layoutSubviews];
+    [super layoutSubviews]; 
     
     CGRect descriptionLabelFrame = CGRectMake(96.0f, 13.0f, ceilf(self.bounds.size.width-96.0f-kHorizontalMargin), 19.0f);
     if(self.valueLabel && self.valueLabel.text)
