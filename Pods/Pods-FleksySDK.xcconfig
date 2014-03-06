@@ -1,0 +1,2 @@
+PODS_FLEKSYSDK_FRAMEWORK_SEARCH_PATHS = "$(PODS_ROOT)/FleksySDK"
+PODS_FLEKSYSDK_OTHER_LDFLAGS = -lc++ -framework AudioToolbox -framework Fleksy -framework QuartzCore

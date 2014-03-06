@@ -452,6 +452,8 @@
             categoryInputView.textField.text = [NSString stringWithFormat:@"%.0f", triggerInterval];
             categoryInputView.textField.placeholder = @"";
             categoryInputView.textField.keyboardType = UIKeyboardTypeDecimalPad;
+            categoryInputView.textField.tag = 3;
+            categoryInputView.textField.delegate = self;
             cell.accessoryView = categoryInputView;
         }
     }

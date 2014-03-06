@@ -38,11 +38,14 @@
 #import "TPKeyboardAvoidingScrollView.h"
 
 @class UAInputBaseViewController;
-@interface UAInputParentViewController : UABaseViewController <UIActionSheetDelegate, UIScrollViewDelegate>
+@interface UAInputParentViewController : UABaseViewController <UIActionSheetDelegate, UIPopoverControllerDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) NSManagedObjectContext *moc;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UAEvent *event;
 @property (nonatomic, strong) NSMutableArray *viewControllers;
+
+@property (nonatomic, strong) UIPopoverController *popoverVC;
+@property (nonatomic, assign, getter=isDisplayingPopover) BOOL displayingPopover;
 
 // Setup
 - (id)initWithEventType:(NSInteger)eventType;
@@ -62,5 +65,8 @@
 - (void)presentMediaOptions:(id)sender;
 - (void)presentGeotagOptions:(id)sender;
 - (void)updateNavigationBar;
+
+// UIPopoverController logic
+- (void)closeActivePopoverController;
 
 @end

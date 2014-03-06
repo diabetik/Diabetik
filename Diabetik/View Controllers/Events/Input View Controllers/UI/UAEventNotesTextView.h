@@ -1,8 +1,8 @@
 //
-//  UAEventCollectionViewCell.h
+//  UAEventNotesTextView.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 11/02/2014.
+//  Created by Nial Giacomelli on 19/02/2013.
 //  Copyright (c) 2013-2014 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UAEventCollectionViewCell : UICollectionViewCell
-@property (nonatomic, weak) UIViewController *viewController;
-
+@interface UAEventNotesTextView : UITextView
+@property (nonatomic, weak) UITableView *tableView;
 @end

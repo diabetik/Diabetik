@@ -194,7 +194,7 @@
     }
     else if(indexPath.row == 2)
     {
-        UANotesTextView *textView = (UANotesTextView *)cell.control;
+        UAEventNotesTextView *textView = (UAEventNotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
         textView.inputView = nil;

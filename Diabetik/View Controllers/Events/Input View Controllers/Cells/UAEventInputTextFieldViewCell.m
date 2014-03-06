@@ -19,6 +19,7 @@
 //
 
 #import "UAEventInputTextFieldViewCell.h"
+#import "UAEventInputTextField.h"
 
 @implementation UAEventInputTextFieldViewCell
 
@@ -28,7 +29,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(10.0f, 0.0f, self.contentView.bounds.size.width-20.0f, self.contentView.frame.size.height)];
+        UAEventInputTextField *textField = [[UAEventInputTextField alloc] initWithFrame:CGRectMake(10.0f, 0.0f, self.contentView.bounds.size.width-20.0f, self.contentView.frame.size.height)];
         textField.borderStyle = UITextBorderStyleNone;
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         textField.backgroundColor = [UIColor clearColor];
@@ -41,7 +42,6 @@
         textField.text = @"";
         textField.inputView = nil;
         textField.inputAccessoryView = nil;
-        
         self.control = textField;
     }
     

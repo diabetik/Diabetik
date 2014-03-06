@@ -33,7 +33,7 @@
 
 @interface UAInputParentViewController ()
 {
-    UANotesTextView *notesTextView;
+    UAEventNotesTextView *notesTextView;
     UIImageView *addEntryBubbleImageView;
     
     CGPoint scrollVelocity;
@@ -150,6 +150,7 @@
     self.viewControllers = [NSMutableArray array];
     self.currentIndex = 0;
     self.prerotationIndex = 0;
+    self.displayingPopover = NO;
     
     // Setup our scroll view
     if(!self.scrollView)
@@ -571,6 +572,39 @@
     }
 }
 
+#pragma mark - UIPopoverController logic
+- (void)closeActivePopoverController
+{
+    if(_popoverVC)
+    {
+        [_popoverVC dismissPopoverAnimated:NO];
+        _popoverVC = nil;
+    }
+    self.displayingPopover = NO;
+}
+- (void)setPopoverVC:(UIPopoverController *)vc
+{
+    [self closeActivePopoverController];
+    
+    _popoverVC = vc;
+    self.displayingPopover = vc ? YES : NO;
+}
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    [self closeActivePopoverController];
+}
+- (void)popoverController:(UIPopoverController *)popoverController
+willRepositionPopoverToRect:(inout CGRect *)rect
+                   inView:(inout UIView *__autoreleasing *)view
+{
+    UAInputBaseViewController *targetVC = self.targetViewController;
+    if(targetVC && targetVC.keyboardShortcutAccessoryView)
+    {
+        UIView *button = [self.targetViewController.keyboardShortcutAccessoryView photoButton];
+        *rect = [self.view convertRect:CGRectMake(CGRectGetMidX(button.bounds), CGRectGetMidY(button.bounds), 1.0f, 1.0f) fromView:button];
+    }
+}
+
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)aScrollView
 {
@@ -784,7 +818,7 @@
         UAInputBaseViewController *vc = [self targetViewController];
         if(vc)
         {
-            [vc presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+           // [vc presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
         }
     }
 }

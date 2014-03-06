@@ -1,8 +1,8 @@
 //
-//  UAEventCollectionViewCell.m
+//  UAEventNotesTextView.m
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 11/02/2014.
+//  Created by Nial Giacomelli on 19/02/2013.
 //  Copyright (c) 2013-2014 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,42 +18,36 @@
 //  limitations under the License.
 //
 
-#import "UAEventCollectionViewCell.h"
+#import "UAEventNotesTextView.h"
+#import "UAInputBaseViewController.h"
 
-@implementation UAEventCollectionViewCell
+@implementation UAEventNotesTextView
 
 #pragma mark - Setup
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        [self setContentInset:UIEdgeInsetsMake(3.0f, 0.0f, 0.0f, 0.0f)];
     }
     return self;
 }
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-    
-    self.viewController = nil;
-}
 
-#pragma mark - Setters
-- (void)setViewController:(UIViewController *)theVC
+#pragma mark - Logic
+- (void)setContentOffset:(CGPoint)contentOffset
 {
-    if(_viewController)
+    [self setContentInset:UIEdgeInsetsMake(3.0f, 0.0f, 0.0f, 0.0f)];
+    [super setContentOffset:contentOffset];
+}
+- (BOOL)canResignFirstResponder
+{
+    if(self.delegate)
     {
-        [_viewController.view removeFromSuperview];
-        
+        UAInputBaseViewController *delegate = (UAInputBaseViewController *)self.delegate;
+        return !delegate.parentVC.isDisplayingPopover;
     }
     
-    if(theVC)
-    {
-        _viewController = theVC;
-        _viewController.view.frame = self.contentView.bounds;
-        [self.contentView addSubview:_viewController.view];
-    }
+    return [super canResignFirstResponder];
 }
 
 @end

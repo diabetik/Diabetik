@@ -1,8 +1,8 @@
 //
-//  UANotesTextView.h
+//  UAEventInputTextField.m
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 19/02/2013.
+//  Created by Nial Giacomelli on 06/03/2014.
 //  Copyright (c) 2013-2014 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,8 +18,20 @@
 //  limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
+#import "UAEventInputTextField.h"
+#import "UAInputBaseViewController.h"
 
-@interface UANotesTextView : UITextView
-@property (nonatomic, weak) UITableView *tableView;
+@implementation UAEventInputTextField
+
+- (BOOL)canResignFirstResponder
+{
+    if(self.delegate)
+    {
+        UAInputBaseViewController *delegate = (UAInputBaseViewController *)self.delegate;
+        return !delegate.parentVC.isDisplayingPopover;
+    }
+    
+    return [super canResignFirstResponder];
+}
+
 @end

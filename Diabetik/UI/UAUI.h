@@ -40,7 +40,7 @@
 #import "UACategoryInputView.h"
 #import "UASlider.h"
 #import "UAInputLabel.h"
-#import "UANotesTextView.h"
+#import "UAEventNotesTextView.h"
 #import "UAAutocompleteBar.h"
 #import "UAActionSheet.h"
 

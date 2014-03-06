@@ -46,11 +46,10 @@
 @interface UAInputBaseViewController : UABaseTableViewController <CLLocationManagerDelegate, UITextFieldDelegate, UITextViewDelegate, UIAlertViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UAAutocompleteBarDelegate, UAKeyboardShortcutDelegate, UIViewControllerTransitioningDelegate>
 {
 @protected
-    UAInputParentViewController *parentVC;
     UIImagePickerController *imagePickerController;
     NSDateFormatter *dateFormatter;
     NSString *notes;
-    UANotesTextView *dummyNotesTextView;
+    UAEventNotesTextView *dummyNotesTextView;
     
     BOOL usingSmartInput;
 }
@@ -58,6 +57,7 @@
 @property (nonatomic, strong) NSManagedObjectID *eventOID;
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) UAKeyboardShortcutAccessoryView *keyboardShortcutAccessoryView;
+@property (nonatomic, weak) UAInputParentViewController *parentVC;
 
 @property (nonatomic, strong) NSString *currentPhotoPath;
 @property (nonatomic, strong) NSNumber *lat;
@@ -85,6 +85,6 @@
 
 // Metadata
 - (void)requestCurrentLocation;
-- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType;
+- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType fromView:(UIView *)view;
 
 @end

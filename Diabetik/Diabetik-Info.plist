@@ -28,14 +28,6 @@
 	<array>
 		<dict>
 			<key>CFBundleURLName</key>
-			<string>RunkeeperURL</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>rk2a0c6cf38855460f90a96937f9842a9c</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleURLName</key>
 			<string>DropboxURL</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
@@ -44,7 +36,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2422</string>
+	<string>2510</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIAppFonts</key>

@@ -57,7 +57,7 @@
         [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:kHockeyAppBetaIdentifierKey];
 #endif
         [[BITHockeyManager sharedHockeyManager] startManager];
-        [[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
+        //[[BITHockeyManager sharedHockeyManager].authenticator authenticateInstallation];
     }
 
     // Initialise the Google Analytics API

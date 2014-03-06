@@ -1,8 +1,8 @@
 //
-//  UANotesTextView.m
+//  UAEventInputTextField.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 19/02/2013.
+//  Created by Nial Giacomelli on 06/03/2014.
 //  Copyright (c) 2013-2014 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,25 +18,7 @@
 //  limitations under the License.
 //
 
-#import "UANotesTextView.h"
+#import <UIKit/UIKit.h>
 
-@implementation UANotesTextView
-
-#pragma mark - Setup
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self setContentInset:UIEdgeInsetsMake(3.0f, 0.0f, 0.0f, 0.0f)];
-    }
-    return self;
-}
-
-#pragma mark - Logic
-- (void)setContentOffset:(CGPoint)contentOffset
-{
-    [self setContentInset:UIEdgeInsetsMake(3.0f, 0.0f, 0.0f, 0.0f)];
-    [super setContentOffset:contentOffset];
-}
-
+@interface UAEventInputTextField : UITextField
 @end

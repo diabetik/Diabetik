@@ -19,7 +19,7 @@
 //
 
 #import "UAEventInputTextViewViewCell.h"
-#import "UANotesTextView.h"
+#import "UAEventNotesTextView.h"
 
 @implementation UAEventInputTextViewViewCell
 
@@ -29,7 +29,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self)
     {
-        UANotesTextView *textView = [[UANotesTextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.contentView.bounds.size.width, self.contentView.bounds.size.height)];
+        UAEventNotesTextView *textView = [[UAEventNotesTextView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, self.contentView.bounds.size.width, self.contentView.bounds.size.height)];
         textView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         textView.scrollEnabled = NO;
         textView.autocapitalizationType = UITextAutocapitalizationTypeSentences;

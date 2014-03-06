@@ -42,7 +42,7 @@
         self.date = [NSDate date];
         self.view.tintColor = [self tintColor];
         
-        dummyNotesTextView = [[UANotesTextView alloc] initWithFrame:CGRectZero];
+        dummyNotesTextView = [[UAEventNotesTextView alloc] initWithFrame:CGRectZero];
         dummyNotesTextView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         dummyNotesTextView.scrollEnabled = NO;
         dummyNotesTextView.autocapitalizationType = UITextAutocapitalizationTypeSentences;
@@ -167,13 +167,13 @@
         [self discardChanges];
     
         [[VKRSAppSoundPlayer sharedInstance] playSound:@"success"];
-        if([parentVC.viewControllers count] == 1)
+        if([self.parentVC.viewControllers count] == 1)
         {
             [self handleBack:self withSound:NO];
         }
         else
         {
-            [parentVC removeVC:self];
+            [self.parentVC removeVC:self];
         }
     }
     else
@@ -192,7 +192,7 @@
     if(self.activeControlIndexPath)
     {
         UAEventInputViewCell *cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:self.activeControlIndexPath];
-        if([cell.control isKindOfClass:[UANotesTextView class]])
+        if([cell.control isKindOfClass:[UAEventNotesTextView class]])
         {
             [self.keyboardShortcutAccessoryView.tagButton setEnabled:YES];
         }
@@ -215,6 +215,80 @@
     else
     {
         self.keyboardShortcutAccessoryView.photoButton.fullsizeImageView.image = nil;
+    }
+}
+
+#pragma mark - Photograph logic
+- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType fromView:(UIView *)view
+{
+    if([UIImagePickerController isSourceTypeAvailable:sourceType])
+    {
+        if(!imagePickerController)
+        {
+            imagePickerController = [[UIImagePickerController alloc] init];
+            imagePickerController.delegate = self;
+        }
+        imagePickerController.sourceType = sourceType;
+        
+        if (imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+        {
+            CGRect r = [self.parentVC.view convertRect:CGRectMake(CGRectGetMidX(view.bounds), CGRectGetMidY(view.bounds), 1.0f, 1.0f) fromView:view];
+            UIPopoverController *popover = [[UIPopoverController alloc] initWithContentViewController:imagePickerController];
+            [popover setDelegate:self.parentVC];
+            
+            self.parentVC.popoverVC = popover;
+            [popover presentPopoverFromRect:r inView:self.parentVC.view permittedArrowDirections:UIPopoverArrowDirectionDown animated:YES];
+        }
+        else
+        {
+            [self.parentViewController presentViewController:imagePickerController animated:YES completion:nil];
+        }
+    }
+}
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    if(!image) image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if(!image) image = [info objectForKey:UIImagePickerControllerCropRect];
+    
+    if(image)
+    {
+        NSTimeInterval timestamp = [NSDate timeIntervalSinceReferenceDate];
+        NSString *filename = [NSString stringWithFormat:@"%ld", (long)timestamp];
+        
+        __weak typeof(self) weakSelf = self;
+        [[UAMediaController sharedInstance] saveImage:image withFilename:filename success:^{
+            
+            // Remove any existing photo (provided it's not our original photo)
+            if(weakSelf.currentPhotoPath && (!weakSelf.event || (weakSelf.event && ![weakSelf.event.photoPath isEqualToString:weakSelf.currentPhotoPath])))
+            {
+                [[UAMediaController sharedInstance] deleteImageWithFilename:weakSelf.currentPhotoPath success:nil failure:nil];
+            }
+            
+            weakSelf.currentPhotoPath = filename;
+            [self updateKeyboardShortcutButtons];
+            
+        } failure:^(NSError *error) {
+            NSLog(@"Image failed with filename: %@. Error: %@", filename, error);
+        }];
+        
+        if (imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+        {
+            [self.parentVC closeActivePopoverController];
+        }
+    }
+}
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    if (imagePickerController.sourceType == UIImagePickerControllerSourceTypePhotoLibrary && [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad)
+    {
+        [self.parentVC closeActivePopoverController];
+    }
+    else
+    {
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -361,9 +435,9 @@
     }
     cell = (UAEventInputViewCell *)[self.tableView cellForRowAtIndexPath:self.activeControlIndexPath];
     
-    if([cell.control isKindOfClass:[UANotesTextView class]])
+    if([cell.control isKindOfClass:[UAEventNotesTextView class]])
     {
-        UANotesTextView *activeTextField = (UANotesTextView *)cell.control;
+        UAEventNotesTextView *activeTextField = (UAEventNotesTextView *)cell.control;
         activeTextField.text = [activeTextField.text stringByAppendingString:@"#"];
     }
 }
@@ -388,21 +462,6 @@
         
         [strongSelf.keyboardShortcutAccessoryView.locationButton showActivityIndicator:NO];
     }];
-}
-- (void)presentImagePickerWithSourceType:(UIImagePickerControllerSourceType)sourceType
-{
-    if([UIImagePickerController isSourceTypeAvailable:sourceType])
-    {
-        if(!imagePickerController)
-        {
-            imagePickerController = [[UIImagePickerController alloc] init];
-            imagePickerController.modalPresentationStyle = UIModalPresentationFormSheet;
-            imagePickerController.delegate = self;
-        }
-        imagePickerController.sourceType = sourceType;
-        
-        [self.navigationController presentViewController:imagePickerController animated:YES completion:nil];
-    }
 }
 
 #pragma mark - Accessors
@@ -525,16 +584,19 @@
         {
             if(buttonIndex != actionSheet.cancelButtonIndex && buttonIndex != actionSheet.destructiveButtonIndex)
             {
-                [self.view endEditing:YES];
+                if(buttonIndex == 0)
+                {
+                    [self.view endEditing:YES];
+                }
             }
             
             if(buttonIndex == 0)
             {
-                [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera];
+                [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypeCamera fromView:[self.keyboardShortcutAccessoryView photoButton]];
             }
             else if(buttonIndex == 1)
             {
-                [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
+                [self presentImagePickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary fromView:[self.keyboardShortcutAccessoryView photoButton]];
             }
         }
     }
@@ -557,44 +619,6 @@
         return [[TGRImageZoomAnimationController alloc] initWithReferenceImageView:imageView];
     }
     return nil;
-}
-
-#pragma mark - UIImagePickerControllerDelegate methods
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    
-    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
-    if(!image)
-    {
-        image = [info objectForKey:UIImagePickerControllerOriginalImage];
-    }
-    if(!image)
-    {
-        image = [info objectForKey:UIImagePickerControllerCropRect];
-    }
-    
-    if(image)
-    {
-        NSTimeInterval timestamp = [NSDate timeIntervalSinceReferenceDate];
-        NSString *filename = [NSString stringWithFormat:@"%ld", (long)timestamp];
-        
-        __weak typeof(self) weakSelf = self;
-        [[UAMediaController sharedInstance] saveImage:image withFilename:filename success:^{
-            
-            // Remove any existing photo (provided it's not our original photo)
-            if(weakSelf.currentPhotoPath && (!weakSelf.event || (weakSelf.event && ![weakSelf.event.photoPath isEqualToString:weakSelf.currentPhotoPath])))
-            {
-                [[UAMediaController sharedInstance] deleteImageWithFilename:weakSelf.currentPhotoPath success:nil failure:nil];
-            }
-            
-            weakSelf.currentPhotoPath = filename;
-            [self updateKeyboardShortcutButtons];
-            
-        } failure:^(NSError *error) {
-            NSLog(@"Image failed with filename: %@. Error: %@", filename, error);
-        }];
-    }
 }
 
 #pragma mark - UIKeyboardShortcutDelegate methods
@@ -627,7 +651,7 @@
 {
     [super didMoveToParentViewController:parent];
     
-    parentVC = (UAInputParentViewController *)parent;
+    self.parentVC = (UAInputParentViewController *)parent;
     if(parent && self.activeView)
     {
         [self didBecomeActive];

@@ -33,7 +33,7 @@
 		5330A28B18AAC9B800000A47 /* UAKeyboardShortcutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A27F18AAC9B800000A47 /* UAKeyboardShortcutButton.m */; };
 		5330A28C18AAC9B800000A47 /* UANavPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A28118AAC9B800000A47 /* UANavPageControl.m */; };
 		5330A28D18AAC9B800000A47 /* UANavPaginationTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A28318AAC9B800000A47 /* UANavPaginationTitleView.m */; };
-		5330A28E18AAC9B800000A47 /* UANotesTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A28518AAC9B800000A47 /* UANotesTextView.m */; };
+		5330A28E18AAC9B800000A47 /* UAEventNotesTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A28518AAC9B800000A47 /* UAEventNotesTextView.m */; };
 		5330A29218AAC9FE00000A47 /* UAEventCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A29118AAC9FE00000A47 /* UAEventCollectionViewCell.m */; };
 		533255651892E29400D28C34 /* UATagHighlightTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 533255641892E29400D28C34 /* UATagHighlightTextStorage.m */; };
 		53350EC917B6A86300223662 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53350EC817B6A86300223662 /* Media.xcassets */; };
@@ -175,6 +175,7 @@
 		53B53AF418672BE000773EE7 /* UASettingsTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
 		53BE89EE18983E650035CF4A /* UASettingsEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */; };
+		53D1DD6418C8CED30083C524 /* UAEventInputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D1DD6318C8CED30083C524 /* UAEventInputTextField.m */; };
 		53D5C4D618412A720000CB86 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4D518412A720000CB86 /* libc++.dylib */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
@@ -241,8 +242,8 @@
 		5330A28118AAC9B800000A47 /* UANavPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANavPageControl.m; sourceTree = "<group>"; };
 		5330A28218AAC9B800000A47 /* UANavPaginationTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANavPaginationTitleView.h; sourceTree = "<group>"; };
 		5330A28318AAC9B800000A47 /* UANavPaginationTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANavPaginationTitleView.m; sourceTree = "<group>"; };
-		5330A28418AAC9B800000A47 /* UANotesTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UANotesTextView.h; sourceTree = "<group>"; };
-		5330A28518AAC9B800000A47 /* UANotesTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UANotesTextView.m; sourceTree = "<group>"; };
+		5330A28418AAC9B800000A47 /* UAEventNotesTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventNotesTextView.h; sourceTree = "<group>"; };
+		5330A28518AAC9B800000A47 /* UAEventNotesTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventNotesTextView.m; sourceTree = "<group>"; };
 		5330A29018AAC9FE00000A47 /* UAEventCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventCollectionViewCell.h; sourceTree = "<group>"; };
 		5330A29118AAC9FE00000A47 /* UAEventCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventCollectionViewCell.m; sourceTree = "<group>"; };
 		533255631892E29400D28C34 /* UATagHighlightTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATagHighlightTextStorage.h; sourceTree = "<group>"; };
@@ -497,6 +498,8 @@
 		53BE89EC18983E650035CF4A /* UASettingsEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsEntryViewController.h; sourceTree = "<group>"; };
 		53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsEntryViewController.m; sourceTree = "<group>"; };
 		53CDF9DF18772C6E00F5FA48 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		53D1DD6218C8CED30083C524 /* UAEventInputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputTextField.h; sourceTree = "<group>"; };
+		53D1DD6318C8CED30083C524 /* UAEventInputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputTextField.m; sourceTree = "<group>"; };
 		53D5C4D518412A720000CB86 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -622,8 +625,10 @@
 				5330A28118AAC9B800000A47 /* UANavPageControl.m */,
 				5330A28218AAC9B800000A47 /* UANavPaginationTitleView.h */,
 				5330A28318AAC9B800000A47 /* UANavPaginationTitleView.m */,
-				5330A28418AAC9B800000A47 /* UANotesTextView.h */,
-				5330A28518AAC9B800000A47 /* UANotesTextView.m */,
+				5330A28418AAC9B800000A47 /* UAEventNotesTextView.h */,
+				5330A28518AAC9B800000A47 /* UAEventNotesTextView.m */,
+				53D1DD6218C8CED30083C524 /* UAEventInputTextField.h */,
+				53D1DD6318C8CED30083C524 /* UAEventInputTextField.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -1684,13 +1689,14 @@
 				53AFAA2218A90E7B00E65168 /* UAAddEntryModaliPadButton.m in Sources */,
 				533F356617736C5500AD89E2 /* UAFont.m in Sources */,
 				53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */,
-				5330A28E18AAC9B800000A47 /* UANotesTextView.m in Sources */,
+				5330A28E18AAC9B800000A47 /* UAEventNotesTextView.m in Sources */,
 				534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */,
 				533F356717736C5500AD89E2 /* UANavSubtitleHeaderView.m in Sources */,
 				5330A28A18AAC9B800000A47 /* UAKeyboardShortcutAccessoryView.m in Sources */,
 				533F356817736C5500AD89E2 /* UAUIHintView.m in Sources */,
 				533F356917736C5500AD89E2 /* UANavigationController.m in Sources */,
 				5330A28918AAC9B800000A47 /* UAEventInputViewCell.m in Sources */,
+				53D1DD6418C8CED30083C524 /* UAEventInputTextField.m in Sources */,
 				533F356A17736C5500AD89E2 /* UATooltipViewController.m in Sources */,
 				53AFAA2318A90E7B00E65168 /* UAAddEntryModalButton.m in Sources */,
 				533F356B17736C5500AD89E2 /* UACreditsTooltipView.m in Sources */,

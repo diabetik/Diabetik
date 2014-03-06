@@ -107,7 +107,7 @@
             // create temporary UAMedicine objects so that
             // they can be factored into the Smart Input calculation
             NSMutableArray *unsavedEntries = [NSMutableArray array];
-            for(UAInputBaseViewController *vc in parentVC.viewControllers)
+            for(UAInputBaseViewController *vc in self.parentVC.viewControllers)
             {
                 if([vc isKindOfClass:[self class]] && vc != self)
                 {
@@ -335,7 +335,7 @@
     }
     else if(indexPath.row == 3)
     {
-        UANotesTextView *textView = (UANotesTextView *)cell.control;
+        UAEventNotesTextView *textView = (UAEventNotesTextView *)cell.control;
         textView.text = notes;
         textView.delegate = self;
         textView.inputAccessoryView = [self keyboardShortcutAccessoryView];

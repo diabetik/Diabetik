@@ -189,7 +189,6 @@
     }
     if(month < 6) month = 6;
     
-    // Past 6 months
     for(NSInteger i = 0; i <= month; i++)
     {
         NSDateComponents *comps = [[NSDateComponents alloc] init];
