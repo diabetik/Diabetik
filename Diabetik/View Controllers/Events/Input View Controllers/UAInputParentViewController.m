@@ -203,23 +203,22 @@
     
     self.scrollView.frame = CGRectMake(0.0f, self.topLayoutGuide.length, self.view.bounds.size.width, self.view.bounds.size.height - self.topLayoutGuide.length);
     
-    if(!self.event && ![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenAddDragUIHint])
+    if(!self.event && ![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenAddDragUIHint] && [self.viewControllers count])
     {
-        __weak typeof(self) weakSelf = self;
-        UAUIHintView *hintView = [[UAUIHintView alloc] initWithFrame:self.scrollView.frame text:NSLocalizedString(@"Drag left to add additional entries", nil) presentationCallback:^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
+        UAInputBaseViewController *inputVC = (UAInputBaseViewController *)self.viewControllers[0];
+        if(inputVC)
+        {
+            UAUIHintView *hintView = [[UAUIHintView alloc] initWithFrame:self.scrollView.frame text:NSLocalizedString(@"Drag left to add additional entries", nil) presentationCallback:^{
+                inputVC.tableView.alpha = 0.25f;
+            } dismissCallback:^{
+                inputVC.tableView.alpha = 1.0f;
+            }];
+            [[(UAInputBaseViewController *)self.viewControllers[0] view] addSubview:hintView];
+            [hintView present];
             
-            strongSelf.scrollView.alpha = 0.25f;
-        } dismissCallback:^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            
-            strongSelf.scrollView.alpha = 1.0f;
-        }];
-        [self.view addSubview:hintView];
-        [hintView present];
-        
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenAddDragUIHint];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenAddDragUIHint];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
     }
     
     [self layoutViewControllers];

@@ -42,6 +42,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        
         isRemoving = NO;
         presentCallback = present;
         dismissCallback = dismiss;
