@@ -19,9 +19,9 @@
         _showingSettings = NO;
         
         self.widgetSettingsView = [[UIView alloc] initWithFrame:CGRectZero];
-        self.widgetSettingsView.backgroundColor = [UIColor greenColor];
+        self.widgetSettingsView.backgroundColor = [UIColor grayColor];
         self.widgetContentView = [[UIView alloc] initWithFrame:CGRectZero];
-        self.widgetContentView.backgroundColor = [UIColor yellowColor];
+        self.widgetContentView.backgroundColor = [UIColor clearColor];
     }
     
     return self;
@@ -36,6 +36,10 @@
     {
         NSLog(@"Updating cell");
         [self.cell setSettingsVisible:_showingSettings animated:YES];
+    }
+    else
+    {
+        NSLog(@"No cell to update");
     }
 }
 - (void)setCell:(UASummaryWidgetViewCell *)aCell

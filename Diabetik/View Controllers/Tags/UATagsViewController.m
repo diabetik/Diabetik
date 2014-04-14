@@ -113,6 +113,29 @@
     
     return cell;
 }
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UATag *tag = (UATag *)[self.fetchedResultsController objectAtIndexPath:indexPath];
+    for(UAEvent *event in tag.events)
+    {
+        event.notes = [event.notes stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"#%@", tag.nameLC]
+                                                             withString:tag.name
+                                                                options:NSCaseInsensitiveSearch
+                                                                  range:NSMakeRange(0, [event.notes length])];
+    }
+    
+    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+    if(moc)
+    {
+        NSError *error = nil;
+        [moc deleteObject:tag];
+        [moc save:&error];
+    }
+}
 
 #pragma mark - UITableViewDelegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -205,6 +228,7 @@
 {
     [self.tableView endUpdates];
     [self.tableView reloadData];
+    [self refreshView];
 }
 
 

@@ -18,6 +18,7 @@
 
 @interface UASummaryViewController ()
 @property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) UIButton *addButton;
 @property (nonatomic, strong) NSMutableArray *widgets;
 @property (nonatomic, assign) NSInteger numberOfDays;
 @end
@@ -32,34 +33,52 @@
         
         self.widgets = [NSMutableArray array];
         for(NSInteger i = 0; i < 20; i++)
+        {
             [self.widgets addObject:[[UASummaryWidget alloc] init]];
-        
+        }
         
         //self.numberOfDays = 90;
         //[self analyse];
     }
     return self;
 }
+- (void)loadView
+{
+    FXBlurView *view = [[FXBlurView alloc] initWithFrame:CGRectZero];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    view.tintColor = [UIColor blackColor];
+    view.dynamic = NO;
+    view.blurRadius = 30.0f;
+    
+    self.view = view;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     
     UASummaryCollectionViewFlowLayout *layout = [[UASummaryCollectionViewFlowLayout alloc] init];
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-//    self.collectionView.backgroundColor = [UIColor blueColor];
+    self.collectionView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:self.collectionView];
     
     [self.collectionView registerClass:[UASummaryWidgetViewCell class] forCellWithReuseIdentifier:@"widget"];
     [self.collectionView reloadData];
+    
+    self.addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+    [self.addButton setBackgroundImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
+    [self.view addSubview:self.addButton];
 }
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
     
     self.collectionView.frame = self.view.bounds;
+    self.addButton.frame = CGRectMake(self.view.bounds.size.width/2.0f-40.0f/2.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
 }
 
 #pragma mark - UICollectionViewDelegate methods

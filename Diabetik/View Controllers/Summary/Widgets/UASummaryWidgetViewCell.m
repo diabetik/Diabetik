@@ -19,7 +19,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.backgroundColor = [UIColor redColor];
+        self.contentView.backgroundColor = [UIColor clearColor];
     }
     return self;
 }
@@ -28,6 +28,11 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
+    
+    for(UIView *subview in self.contentView.subviews)
+    {
+        [subview removeFromSuperview];
+    }
     
     if(self.widget)
     {
@@ -47,31 +52,32 @@
 {
     if(animated)
     {
-        [self.widget.widgetSettingsView removeFromSuperview];
-    //    [self.contentView addSubview:self.widget.widgetSettingsView];
+        UIView *toView = visible ? self.widget.widgetSettingsView : self.widget.widgetContentView;
+        UIView *fromView = visible ? self.widget.widgetContentView : self.widget.widgetSettingsView;
         
-        /*
+        if(fromView.superview != self.contentView)
+        {
+            fromView.frame = self.contentView.bounds;
+            [self.contentView addSubview:fromView];
+        }
+        
         NSLog(@"Settings visible: %@", self.widget);
-        [UIView transitionFromView:self.widget.widgetContentView
-                            toView:self.widget.widgetSettingsView
+        [UIView transitionFromView:fromView
+                            toView:toView
                           duration:0.5
                            options:UIViewAnimationOptionTransitionFlipFromTop
                         completion:nil];
-         */
     }
     else
     {
-        [self.widget.widgetSettingsView removeFromSuperview];
-        [self.widget.widgetContentView removeFromSuperview];
+        UIView *activeView = visible ? self.widget.widgetSettingsView : self.widget.widgetContentView;
         
-        if(visible)
+        if(activeView.superview != self.contentView)
         {
-            [self.contentView addSubview:self.widget.widgetSettingsView];
+            activeView.frame = self.contentView.bounds;
+            [self.contentView addSubview:activeView];
         }
-        else
-        {
-            [self.contentView addSubview:self.widget.widgetContentView];
-        }
+        
     }
 }
 
