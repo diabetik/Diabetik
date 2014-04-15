@@ -29,6 +29,10 @@
 + (NSNumberFormatter *)glucoseNumberFormatter;
 + (NSNumberFormatter *)standardNumberFormatter;
 
+// Regular Expressions
++ (NSRegularExpression *)tagRegularExpression;
++ (NSRegularExpression *)tagRegularExpressionWithPrefixSymbol:(NSString *)symbol;
+
 // Converters
 + (NSNumber *)convertBGValue:(NSNumber *)value fromUnit:(NSInteger)fromUnit toUnit:(NSInteger)toUnit;
 

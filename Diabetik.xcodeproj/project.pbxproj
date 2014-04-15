@@ -73,7 +73,6 @@
 		533F34791773266600AD89E2 /* tap-significant.caf in Resources */ = {isa = PBXBuildFile; fileRef = 533F31E51773266600AD89E2 /* tap-significant.caf */; };
 		533F347A1773266600AD89E2 /* tap.caf in Resources */ = {isa = PBXBuildFile; fileRef = 533F31E61773266600AD89E2 /* tap.caf */; };
 		533F347C1773266600AD89E2 /* UAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F31ED1773266600AD89E2 /* UAAppDelegate.m */; };
-		533F347D1773266600AD89E2 /* UAHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F31F01773266600AD89E2 /* UAHelper.m */; };
 		533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F324B1773266600AD89E2 /* OrderedDictionary.m */; };
 		533F34A41773266600AD89E2 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F324E1773266600AD89E2 /* UIImage+Resize.m */; };
 		533F34AF1773266600AD89E2 /* UAEventMapPin.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F326D1773266600AD89E2 /* UAEventMapPin.m */; };
@@ -142,6 +141,7 @@
 		536EAB8218FC3030002EFE47 /* UASummaryIntroductionWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 536EAB8118FC3030002EFE47 /* UASummaryIntroductionWidget.m */; };
 		537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 537983AE17CD3F5A00032F3A /* UAShortcutButton.m */; };
 		537BC4FE18FD3AB30098BF20 /* UAInsulinCalculatorTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 537BC4FD18FD3AB30098BF20 /* UAInsulinCalculatorTooltipView.m */; };
+		537BC50018FD53300098BF20 /* UAHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 537BC4FF18FD53300098BF20 /* UAHelper.m */; };
 		5389525B189FA10F00C8C3C8 /* AFNetworking-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53895258189FA10F00C8C3C8 /* AFNetworking-License.txt */; };
 		5389525C189FA10F00C8C3C8 /* AppSoundEngine-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53895259189FA10F00C8C3C8 /* AppSoundEngine-License.txt */; };
 		5389525D189FA10F00C8C3C8 /* HockeyApp-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5389525A189FA10F00C8C3C8 /* HockeyApp-License.txt */; };
@@ -315,7 +315,6 @@
 		533F31ED1773266600AD89E2 /* UAAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAAppDelegate.m; sourceTree = "<group>"; };
 		533F31EE1773266600AD89E2 /* UACommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACommon.h; sourceTree = "<group>"; };
 		533F31EF1773266600AD89E2 /* UAHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAHelper.h; sourceTree = "<group>"; };
-		533F31F01773266600AD89E2 /* UAHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAHelper.m; sourceTree = "<group>"; };
 		533F324A1773266600AD89E2 /* OrderedDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderedDictionary.h; sourceTree = "<group>"; };
 		533F324B1773266600AD89E2 /* OrderedDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OrderedDictionary.m; sourceTree = "<group>"; };
 		533F324D1773266600AD89E2 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
@@ -452,6 +451,7 @@
 		537983AE17CD3F5A00032F3A /* UAShortcutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAShortcutButton.m; sourceTree = "<group>"; };
 		537BC4FC18FD3AB30098BF20 /* UAInsulinCalculatorTooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTooltipView.h; sourceTree = "<group>"; };
 		537BC4FD18FD3AB30098BF20 /* UAInsulinCalculatorTooltipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsulinCalculatorTooltipView.m; sourceTree = "<group>"; };
+		537BC4FF18FD53300098BF20 /* UAHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAHelper.m; sourceTree = "<group>"; };
 		53895258189FA10F00C8C3C8 /* AFNetworking-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "AFNetworking-License.txt"; sourceTree = "<group>"; };
 		53895259189FA10F00C8C3C8 /* AppSoundEngine-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "AppSoundEngine-License.txt"; sourceTree = "<group>"; };
 		5389525A189FA10F00C8C3C8 /* HockeyApp-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "HockeyApp-License.txt"; sourceTree = "<group>"; };
@@ -693,7 +693,7 @@
 				533F31EE1773266600AD89E2 /* UACommon.h */,
 				539E9FA7184BAA20009803D1 /* UACredentials.h */,
 				533F31EF1773266600AD89E2 /* UAHelper.h */,
-				533F31F01773266600AD89E2 /* UAHelper.m */,
+				537BC4FF18FD53300098BF20 /* UAHelper.m */,
 				533F30641773266500AD89E2 /* Resources */,
 			);
 			path = Diabetik;
@@ -1644,7 +1644,6 @@
 				533F33021773266600AD89E2 /* Diabetik.xcdatamodeld in Sources */,
 				533F33031773266600AD89E2 /* main.m in Sources */,
 				533F347C1773266600AD89E2 /* UAAppDelegate.m in Sources */,
-				533F347D1773266600AD89E2 /* UAHelper.m in Sources */,
 				537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */,
 				53FE5FB1189EC0E6008AC334 /* UACategorySelectorButton.m in Sources */,
 				533F34A31773266600AD89E2 /* OrderedDictionary.m in Sources */,
@@ -1703,6 +1702,7 @@
 				53F29548187845360021F6FC /* UAAnalytikController.m in Sources */,
 				53EABCD818B3DABA001C5C39 /* UASummaryWidgetViewCell.m in Sources */,
 				53240A89189547EB00AEA9E8 /* UABadgeView.m in Sources */,
+				537BC50018FD53300098BF20 /* UAHelper.m in Sources */,
 				533F34DA1773266600AD89E2 /* UASettingsBackupViewController.m in Sources */,
 				5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */,
 				533F34DC1773266600AD89E2 /* UASettingsGlucoseViewController.m in Sources */,

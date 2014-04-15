@@ -71,7 +71,7 @@
         [[UAMediaController sharedInstance] deleteImageWithFilename:self.photoPath success:nil failure:nil];
         self.photoPath = nil;
     }
-    
+
     // Remove any tags
     for (UATag *tag in self.tags)
     {

@@ -65,9 +65,7 @@
 #pragma mark - Tag highlighting logic
 - (void)processEditing
 {
-	static NSRegularExpression *regex;
-	regex = regex ?: [NSRegularExpression regularExpressionWithPattern:@"#([\\w])+" options:NSRegularExpressionCaseInsensitive error:NULL];
-	
+    NSRegularExpression *regex = [UAHelper tagRegularExpression];
 	NSRange paragraphRange = [self.string paragraphRangeForRange:self.editedRange];
 	[self removeAttribute:NSForegroundColorAttributeName range:paragraphRange];
     [self removeAttribute:@"tag" range:paragraphRange];

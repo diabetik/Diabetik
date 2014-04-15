@@ -75,6 +75,32 @@
     return shortTimeFormatter;
 }
 
+#pragma mark - Regular Expressions
++ (NSRegularExpression *)tagRegularExpression
+{
+    static NSRegularExpression *tagRegularExpression = nil;
+    if(!tagRegularExpression)
+    {
+        tagRegularExpression = [UAHelper tagRegularExpressionWithPrefixSymbol:@"\\#"];
+    }
+    
+    return tagRegularExpression;
+}
++ (NSRegularExpression *)tagRegularExpressionWithPrefixSymbol:(NSString *)symbol
+{
+    NSError *error = nil;
+    NSString *regexString = [NSString stringWithFormat:@"%@([\\w\\-_]+)\\b", symbol];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:regexString
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
+    if(!error)
+    {
+        return regex;
+    }
+    
+    return nil;
+}
+
 #pragma mark - Converts
 + (NSNumber *)convertBGValue:(NSNumber *)value fromUnit:(NSInteger)fromUnit toUnit:(NSInteger)toUnit
 {

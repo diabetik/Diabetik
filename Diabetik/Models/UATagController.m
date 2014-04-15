@@ -39,8 +39,7 @@
 #pragma mark - String helpers
 - (NSRange)rangeOfTagInString:(NSString *)string withCaretLocation:(NSUInteger)caretLocation
 {
-    NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\b\\#([\\w]+)?\\b" options:NSRegularExpressionUseUnicodeWordBoundaries error:&error];
+    NSRegularExpression *regex = [UAHelper tagRegularExpression];
     __block NSRange range = NSMakeRange(NSNotFound, 0);
     [regex enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
         if (result.range.location <= caretLocation && result.range.location+result.range.length >= caretLocation)
@@ -64,8 +63,7 @@
     
     if(string && [string length])
     {
-        NSString *pattern = [NSString stringWithFormat:@"\\b%@[\\w]+\\b", prefix];
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionUseUnicodeWordBoundaries error:NULL];
+        NSRegularExpression *regex = [UAHelper tagRegularExpressionWithPrefixSymbol:prefix];
         [regex enumerateMatchesInString:string
                                 options:0
                                   range:NSMakeRange(0, string.length)
@@ -158,6 +156,10 @@
             for (UATag *tag in existingEventTags)
             {
                 [[event mutableSetValueForKey:@"tags"] removeObject:tag];
+                if(tag.events.count <= 0)
+                {
+                    [moc deleteObject:tag];
+                }
             }
         }
         

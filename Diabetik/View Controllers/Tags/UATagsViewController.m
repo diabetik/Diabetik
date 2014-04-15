@@ -120,20 +120,32 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UATag *tag = (UATag *)[self.fetchedResultsController objectAtIndexPath:indexPath];
-    for(UAEvent *event in tag.events)
-    {
-        event.notes = [event.notes stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"#%@", tag.nameLC]
-                                                             withString:tag.name
-                                                                options:NSCaseInsensitiveSearch
-                                                                  range:NSMakeRange(0, [event.notes length])];
-    }
     
-    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
-    if(moc)
+    NSError *error = nil;
+    NSRegularExpression *regex = [UAHelper tagRegularExpression];
+    if(!error)
     {
-        NSError *error = nil;
-        [moc deleteObject:tag];
-        [moc save:&error];
+        for(UAEvent *event in tag.events)
+        {
+            /*
+            event.notes = [event.notes stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"#%@", tag.nameLC]
+                                                                 withString:tag.name
+                                                                    options:NSCaseInsensitiveSearch
+                                                                      range:NSMakeRange(0, [event.notes length])];
+            */
+          
+            event.notes = [regex stringByReplacingMatchesInString:event.notes
+                                                          options:0
+                                                            range:NSMakeRange(0, [event.notes length])
+                                                     withTemplate:@"$1"];
+        }
+        
+        NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
+        if(moc)
+        {
+            [moc deleteObject:tag];
+            [moc save:&error];
+        }
     }
 }
 
