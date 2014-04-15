@@ -109,7 +109,7 @@
 #pragma mark - Logic
 - (void)layoutSubviews
 {
-    [super layoutSubviews];
+    [super layoutSubviews]; 
     
     CGFloat x = 43.0f;
     
