@@ -27,6 +27,7 @@
 
 #import "UAInsulinCalculatorTitleView.h"
 #import "UAInsulinCalculatorTextFieldViewCell.h"
+#import "UAInsulinCalculatorTooltipView.h"
 
 @interface UAInsulinCalculatorViewController ()
 {
@@ -108,10 +109,14 @@
     warningLabel.frame = CGRectMake(floorf(self.view.frame.size.width/2.0f - warningLabel.frame.size.width/2), 0.0f, warningLabel.frame.size.width, warningLabel.frame.size.height);
     footerView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     [footerView addSubview:warningLabel];
-    
     self.tableView.tableFooterView = footerView;
     
     [self recalculate];
+    
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasSeenInsulinCalculatorTooltip])
+    {
+        [self showTips];
+    }
 }
 - (void)viewWillLayoutSubviews
 {
@@ -209,6 +214,17 @@
         calculatedInsulin = nil;
     }
 }
+- (void)showTips
+{
+    UAAppDelegate *appDelegate = (UAAppDelegate *)[[UIApplication sharedApplication] delegate];
+    UIViewController *targetVC = appDelegate.viewController;
+    
+    UATooltipViewController *modalView = [[UATooltipViewController alloc] initWithParentVC:targetVC andDelegate:self];
+    UAInsulinCalculatorTooltipView *tooltipView = [[UAInsulinCalculatorTooltipView alloc] initWithFrame:CGRectZero];
+    [modalView setContentView:tooltipView];
+    [modalView present];
+}
+
 
 #pragma mark - UI
 - (void)addEntry:(id)sender
@@ -494,6 +510,17 @@
     [textField resignFirstResponder];
     
     return YES;
+}
+
+#pragma mark - UATooltipViewControllerDelegate methods
+- (void)willDisplayModalView:(UATooltipViewController *)aModalController
+{
+    // STUB
+}
+- (void)didDismissModalView:(UATooltipViewController *)aModalController
+{
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kHasSeenInsulinCalculatorTooltip];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

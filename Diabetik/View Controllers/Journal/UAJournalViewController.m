@@ -368,7 +368,7 @@
     return nil;
 }
 
-#pragma mark - UAModalViewControllerDelegate methods
+#pragma mark - UATooltipViewControllerDelegate methods
 - (void)willDisplayModalView:(UATooltipViewController *)aModalController
 {
 }

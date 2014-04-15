@@ -109,6 +109,7 @@ static NSString * const kHasSeenStarterTooltip = @"kHasSeenStarterTooltip";
 static NSString * const kHasSeenReminderTooltip = @"kHasSeenReminderTooltip";
 static NSString * const kHasSeenExportTooltip = @"kHasSeenExportTooltip";
 static NSString * const kHasSeenAddDragUIHint = @"kHasSeenAddDragUIHint";
+static NSString * const kHasSeenInsulinCalculatorTooltip = @"kHasSeenInsulinCalculatorTooltip";
 static NSString * const kFilterSearchResultsKey = @"kFilterSearchResultsKey";
 static NSString * const kReportsDefaultKey = @"kReportsDefaultKey";
 static NSString * const kShowInlineImages = @"kShowInlineImages";
