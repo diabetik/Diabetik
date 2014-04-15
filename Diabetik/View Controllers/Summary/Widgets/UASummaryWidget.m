@@ -19,27 +19,26 @@
         _showingSettings = NO;
         
         self.widgetSettingsView = [[UIView alloc] initWithFrame:CGRectZero];
-        self.widgetSettingsView.backgroundColor = [UIColor grayColor];
+        self.widgetSettingsView.backgroundColor = [UIColor colorWithRed:55/255.0f green:55/255.0f blue:55/255.0f alpha:0.5f];
         self.widgetContentView = [[UIView alloc] initWithFrame:CGRectZero];
-        self.widgetContentView.backgroundColor = [UIColor clearColor];
+        self.widgetContentView.backgroundColor = [UIColor colorWithRed:55/255.0f green:55/255.0f blue:55/255.0f alpha:0.5f];
     }
     
     return self;
 }
 
 #pragma mark - Accessors
+- (void)showSettings
+{
+    [self setShowingSettings:YES];
+}
 - (void)setShowingSettings:(BOOL)state
 {
     _showingSettings = state;
-    NSLog(@"Showing settings: %@", state ? @"Y" : @"N");
+    
     if(self.cell)
     {
-        NSLog(@"Updating cell");
         [self.cell setSettingsVisible:_showingSettings animated:YES];
-    }
-    else
-    {
-        NSLog(@"No cell to update");
     }
 }
 - (void)setCell:(UASummaryWidgetViewCell *)aCell
@@ -53,7 +52,7 @@
 }
 - (CGFloat)height
 {
-    return 90.0f;
+    return 180.0f;
 }
 
 @end

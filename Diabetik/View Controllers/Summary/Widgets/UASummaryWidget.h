@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) UIView *widgetContentView;
 @property (nonatomic, strong) UIView *widgetSettingsView;
+@property (nonatomic, strong) UIButton *widgetSettingsButton;
 
 // Helpers
 - (CGFloat)height;

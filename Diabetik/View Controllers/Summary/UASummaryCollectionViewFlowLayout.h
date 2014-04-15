@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <LXReorderableCollectionViewFlowLayout/LXReorderableCollectionViewFlowLayout.h>
 
-@interface UASummaryCollectionViewFlowLayout : UICollectionViewFlowLayout
+@interface UASummaryCollectionViewFlowLayout : LXReorderableCollectionViewFlowLayout
 
 @end

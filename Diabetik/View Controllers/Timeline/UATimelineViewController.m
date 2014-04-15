@@ -431,12 +431,7 @@
     allowReportRotation = NO;
     
     UASummaryViewController *summaryVC = [[UASummaryViewController alloc] init];
-    [summaryVC willMoveToParentViewController:self.navigationController];
-    summaryVC.view.frame = self.navigationController.view.bounds;
-    //[(FXBlurView *)summaryVC.view setUnderlyingView:self.navigationController.view];
-    [self.navigationController.view addSubview:summaryVC.view];
-    [self.navigationController addChildViewController:summaryVC];
-    [summaryVC didMoveToParentViewController:self.navigationController];
+    [summaryVC presentInViewController:self.navigationController];
     
     //[self presentViewController:summaryVC animated:YES completion:nil];
     return;

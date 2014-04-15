@@ -15,6 +15,7 @@
 
 #import "UASummaryWidgetViewCell.h"
 #import "UASummaryWidget.h"
+#import "UASummaryIntroductionWidget.h"
 
 @interface UASummaryViewController ()
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -32,9 +33,12 @@
     if (self) {
         
         self.widgets = [NSMutableArray array];
-        for(NSInteger i = 0; i < 20; i++)
+        
+        for(int i = 0; i < 5; i++)
         {
-            [self.widgets addObject:[[UASummaryWidget alloc] init]];
+            UASummaryIntroductionWidget *w = [[UASummaryIntroductionWidget alloc] init];
+            w.label.text = [NSString stringWithFormat:@"%i", i];
+            [self.widgets addObject:w];
         }
         
         //self.numberOfDays = 90;
@@ -48,7 +52,7 @@
     view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     view.tintColor = [UIColor blackColor];
     view.dynamic = NO;
-    view.blurRadius = 30.0f;
+    view.blurRadius = 15.0f;
     
     self.view = view;
 }
@@ -64,6 +68,7 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     self.collectionView.backgroundColor = [UIColor clearColor];
+    self.collectionView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 60.0f, 0.0f);
     [self.view addSubview:self.collectionView];
     
     [self.collectionView registerClass:[UASummaryWidgetViewCell class] forCellWithReuseIdentifier:@"widget"];
@@ -71,6 +76,7 @@
     
     self.addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
     [self.addButton setBackgroundImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
+    [self.addButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.addButton];
 }
 - (void)viewWillLayoutSubviews
@@ -79,6 +85,40 @@
     
     self.collectionView.frame = self.view.bounds;
     self.addButton.frame = CGRectMake(self.view.bounds.size.width/2.0f-40.0f/2.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
+}
+
+#pragma mark - Presentation logic
+- (void)presentInViewController:(UIViewController *)parentVC
+{
+    self.view.alpha = 0.0f;
+    
+    [self willMoveToParentViewController:parentVC];
+    self.view.frame = parentVC.view.bounds;
+    //[(FXBlurView *)summaryVC.view setUnderlyingView:self.navigationController.view];
+    [parentVC.view addSubview:self.view];
+    [parentVC addChildViewController:self];
+    [self didMoveToParentViewController:parentVC];
+    
+    self.collectionView.contentInset = UIEdgeInsetsMake(self.view.bounds.size.height, 0.0f, 0.0f, 0.0f);
+    [UIView animateWithDuration:0.15 animations:^{
+        self.view.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        
+//        self.collectionView.frame = self.view.bounds;
+    }];
+    
+    [UIView animateWithDuration:0.5 delay:0.075 usingSpringWithDamping:1 initialSpringVelocity:1 options:0 animations:^{
+        self.collectionView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+- (void)dismiss
+{
+    UASummaryViewController *weakRef = self;
+    [weakRef willMoveToParentViewController:nil];
+    [weakRef.view removeFromSuperview];
+    [weakRef removeFromParentViewController];
 }
 
 #pragma mark - UICollectionViewDelegate methods
@@ -208,6 +248,16 @@
      
      NSLog(@"%@", hourArray);
      */
+}
+
+#pragma mark - LXReorderableCollectionViewDataSource methods
+- (void)collectionView:(UICollectionView *)collectionView
+       itemAtIndexPath:(NSIndexPath *)fromIndexPath
+   willMoveToIndexPath:(NSIndexPath *)toIndexPath
+{
+    id object = [self.widgets objectAtIndex:fromIndexPath.item];
+    [self.widgets removeObjectAtIndex:fromIndexPath.item];
+    [self.widgets insertObject:object atIndex:toIndexPath.item];
 }
 
 @end
