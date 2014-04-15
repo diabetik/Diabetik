@@ -425,12 +425,6 @@
     
     allowReportRotation = NO;
     
-    UASummaryViewController *summaryVC = [[UASummaryViewController alloc] init];
-    [summaryVC presentInViewController:self.navigationController];
-    
-    //[self presentViewController:summaryVC animated:YES completion:nil];
-    return;
-    
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
     {
         UAAddEntryModalView *modalView = [[UAAddEntryModalView alloc] initWithFrame:self.navigationController.view.bounds];

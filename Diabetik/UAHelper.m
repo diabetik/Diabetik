@@ -74,6 +74,17 @@
     
     return shortTimeFormatter;
 }
++ (NSDateFormatter *)hhmmTimeFormatter
+{
+    static dispatch_once_t pred;
+    static NSDateFormatter *shortTimeFormatter = nil;
+    dispatch_once(&pred, ^{
+        shortTimeFormatter = [[NSDateFormatter alloc] init];
+        [shortTimeFormatter setDateFormat:@"HH:mm"];
+    });
+    
+    return shortTimeFormatter;
+}
 
 #pragma mark - Regular Expressions
 + (NSRegularExpression *)tagRegularExpression

@@ -26,6 +26,7 @@
 + (NSString *)formatMinutes:(double)minutes;
 + (NSNumber *)formatBGReadingWithValue:(NSNumber *)value inUnit:(NSInteger)unit;
 + (NSDateFormatter *)shortTimeFormatter;
++ (NSDateFormatter *)hhmmTimeFormatter;
 + (NSNumberFormatter *)glucoseNumberFormatter;
 + (NSNumberFormatter *)standardNumberFormatter;
 

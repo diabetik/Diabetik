@@ -40,8 +40,6 @@
     NSDate *date;
     UATagHighlightTextStorage *textStorage;
     UIView *bottomBorder;
-    
-    NSString *timestampLabelSizingString;
 }
 @end
 
@@ -91,17 +89,13 @@
         _timestampLabel.font = [UAFont standardRegularFontWithSize:16.0f];
         _timestampLabel.textColor = [UIColor colorWithRed:147.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f];
         _timestampLabel.highlightedTextColor = [UIColor whiteColor];
-        _timestampLabel.textAlignment = NSTextAlignmentRight;
+        _timestampLabel.textAlignment = NSTextAlignmentLeft;
         _timestampLabel.lineBreakMode = NSLineBreakByClipping;
         _timestampLabel.clipsToBounds = NO;
         [self.contentView addSubview:_timestampLabel];
         
         bottomBorder = [[UIView alloc] initWithFrame:CGRectZero];
         [self.contentView addSubview:bottomBorder];
-        
-        // A messy hack! We generate an NSDate at midnight and pass it to our NSDateFormatter to generate
-        // the maximum possible length for a timestamp. This helps keep all timeline cell content inline when timestamp lengths vary
-        timestampLabelSizingString = [[UAHelper shortTimeFormatter] stringFromDate:[[NSDate date] dateAtStartOfDay]];
     }
     return self;
 }
@@ -113,7 +107,7 @@
     
     CGFloat x = 43.0f;
     
-    CGSize timestampLabelSize = [timestampLabelSizingString sizeWithAttributes:@{NSFontAttributeName:self.timestampLabel.font}];
+    CGSize timestampLabelSize = [self.timestampLabel.text sizeWithAttributes:@{NSFontAttributeName:self.timestampLabel.font}];
     self.timestampLabel.frame = CGRectMake(x, 13.0f, timestampLabelSize.width, 19.0f);
     x += timestampLabelSize.width + 6.0f;
     
@@ -211,7 +205,7 @@
 #pragma mark - Accessors
 - (void)setDate:(NSDate *)aDate
 {
-    NSDateFormatter *formatter = [UAHelper shortTimeFormatter];
+    NSDateFormatter *formatter = [UAHelper hhmmTimeFormatter];
     NSString *formattedTimestamp = [formatter stringFromDate:aDate];
 
     self.timestampLabel.text = formattedTimestamp;
