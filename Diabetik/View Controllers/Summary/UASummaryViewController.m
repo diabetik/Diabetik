@@ -5,6 +5,18 @@
 //  Created by Nial Giacomelli on 18/02/2014.
 //  Copyright (c) 2014 UglyApps. All rights reserved.
 //
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+//
 
 #import "NSDate+Extension.h"
 #import "FXBlurView.h"
@@ -13,15 +25,25 @@
 #import "UASummaryViewController.h"
 #import "UAEventController.h"
 
-#import "UASummaryWidgetViewCell.h"
 #import "UASummaryWidget.h"
-#import "UASummaryIntroductionWidget.h"
 
 @interface UASummaryViewController ()
+{
+}
+@property (nonatomic, strong) UASummaryWidgetListViewController *widgetListVC;
+
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) UIButton *addButton;
+@property (nonatomic, strong) UIButton *closeButton, *addButton;
 @property (nonatomic, strong) NSMutableArray *widgets;
 @property (nonatomic, assign) NSInteger numberOfDays;
+
+// Logic
+- (void)loadWidgets;
+- (void)saveWidgets;
+
+// Helpers
+- (NSString *)applicationSupportDirectoryPath;
+
 @end
 
 @implementation UASummaryViewController
@@ -33,13 +55,6 @@
     if (self) {
         
         self.widgets = [NSMutableArray array];
-        
-        for(int i = 0; i < 5; i++)
-        {
-            UASummaryIntroductionWidget *w = [[UASummaryIntroductionWidget alloc] init];
-            w.label.text = [NSString stringWithFormat:@"%i", i];
-            [self.widgets addObject:w];
-        }
         
         //self.numberOfDays = 90;
         //[self analyse];
@@ -67,91 +82,149 @@
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    self.collectionView.backgroundColor = [UIColor clearColor];
-    self.collectionView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 60.0f, 0.0f);
+    self.collectionView.backgroundColor = [UIColor greenColor];
+    self.collectionView.contentInset = UIEdgeInsetsMake(20.0f, 0.0f, 60.0f, 0.0f);
+    self.collectionView.alwaysBounceVertical = YES;
     [self.view addSubview:self.collectionView];
     
-    [self.collectionView registerClass:[UASummaryWidgetViewCell class] forCellWithReuseIdentifier:@"widget"];
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"widget"];
     [self.collectionView reloadData];
+    
+    self.closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+    [self.closeButton setBackgroundImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
+    [self.closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.closeButton];
     
     self.addButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
     [self.addButton setBackgroundImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
-    [self.addButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [self.addButton addTarget:self action:@selector(showAddWidgetScreen:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.addButton];
+    
+    [self loadWidgets];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [self saveWidgets];
 }
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];
     
     self.collectionView.frame = self.view.bounds;
-    self.addButton.frame = CGRectMake(self.view.bounds.size.width/2.0f-40.0f/2.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
-}
-
-#pragma mark - Presentation logic
-- (void)presentInViewController:(UIViewController *)parentVC
-{
-    self.view.alpha = 0.0f;
+    [self.collectionView.collectionViewLayout invalidateLayout];
     
-    [self willMoveToParentViewController:parentVC];
-    self.view.frame = parentVC.view.bounds;
-    //[(FXBlurView *)summaryVC.view setUnderlyingView:self.navigationController.view];
-    [parentVC.view addSubview:self.view];
-    [parentVC addChildViewController:self];
-    [self didMoveToParentViewController:parentVC];
-    
-    self.collectionView.contentInset = UIEdgeInsetsMake(self.view.bounds.size.height, 0.0f, 0.0f, 0.0f);
-    [UIView animateWithDuration:0.15 animations:^{
-        self.view.alpha = 1.0f;
-    } completion:^(BOOL finished) {
-        
-//        self.collectionView.frame = self.view.bounds;
-    }];
-    
-    [UIView animateWithDuration:0.5 delay:0.075 usingSpringWithDamping:1 initialSpringVelocity:1 options:0 animations:^{
-        self.collectionView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
-    } completion:^(BOOL finished) {
-        
-    }];
-}
-- (void)dismiss
-{
-    UASummaryViewController *weakRef = self;
-    [weakRef willMoveToParentViewController:nil];
-    [weakRef.view removeFromSuperview];
-    [weakRef removeFromParentViewController];
-}
-
-#pragma mark - UICollectionViewDelegate methods
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UASummaryWidget *widget = self.widgets[indexPath.row];
-    [widget setShowingSettings:!widget.showingSettings];
-}
-
-#pragma mark - UICollectionViewDatasource methods
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
-{
-    return 1;
-}
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return [self.widgets count];
-}
-- (UICollectionViewCell *)collectionView:(UICollectionView *)aCollectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UASummaryWidgetViewCell *cell = (UASummaryWidgetViewCell *)[aCollectionView dequeueReusableCellWithReuseIdentifier:@"widget" forIndexPath:indexPath];
-    [cell setWidget:self.widgets[indexPath.row]];
-    return cell;
-}
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    UASummaryWidget *widget = self.widgets[indexPath.row];
-    return CGSizeMake(collectionView.bounds.size.width, widget.height);
+    self.closeButton.frame = CGRectMake(self.view.bounds.size.width - 60.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
+    self.addButton.frame = CGRectMake(20.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
 }
 
 #pragma mark - Logic
+- (void)loadWidgets
+{
+    NSLog(@"Loading widgets");
+    
+    @try
+    {
+        NSString *appSupportDirectory = [self applicationSupportDirectoryPath];
+        if(appSupportDirectory)
+        {
+            NSString *filePath = [NSString stringWithFormat:@"%@/dashboard.dtk", appSupportDirectory];
+            
+            NSError *error = nil;
+            NSData *data = [NSData dataWithContentsOfFile:filePath options:kNilOptions error:&error];
+            if(!error && data)
+            {
+                NSDictionary *representations = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+                if(!error && representations)
+                {
+                    for(NSDictionary *representation in representations)
+                    {
+                        Class WidgetClass = NSClassFromString(representation[@"class"]);
+                        if(WidgetClass)
+                        {
+                            id widget = [(UASummaryWidget *)[WidgetClass alloc] initFromSerializedRepresentation:representation];
+                            if(widget)
+                            {
+                                [self.widgets addObject:widget];
+                                [widget update];
+                            }
+                        }
+                    }
+                    
+                    [self.collectionView reloadData];
+                }
+                else
+                {
+                    [NSException raise:@"Failed to parse JSON" format:@"Failed to parse dashboard widget JSON: %@", [error localizedDescription]];
+                }
+            }
+            else
+            {
+                [NSException raise:@"Failed to parse dashboard widget file" format:@"Failed to parse dashboard widget file: %@", [error localizedDescription]];
+            }
+        }
+        else
+        {
+            [NSException raise:@"Failed to find application support directory" format:@"Failed to find application support directory"];
+        }
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"Failed to load dashboard widgets: %@", [exception reason]);
+    }
+}
+- (void)saveWidgets
+{
+    NSLog(@"Saving widgets");
+    
+    @try
+    {
+        NSMutableArray *serializedWidgetRepresentations = [NSMutableArray array];
+        for(UASummaryWidget *widget in self.widgets)
+        {
+            NSDictionary *serializedRepresentation = [widget serializedRepresentation];
+            if(serializedRepresentation)
+            {
+                [serializedWidgetRepresentations addObject:[widget serializedRepresentation]];
+            }
+        }
+        
+        NSError *error = nil;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:serializedWidgetRepresentations
+                                                           options:kNilOptions
+                                                             error:&error];
+        
+        NSString *appSupportDirectory = [self applicationSupportDirectoryPath];
+        if(appSupportDirectory)
+        {
+            NSString *filePath = [NSString stringWithFormat:@"%@/dashboard.dtk", appSupportDirectory];
+            
+            NSFileManager *manager = [NSFileManager defaultManager];
+            if(![manager fileExistsAtPath:appSupportDirectory])
+            {
+                BOOL result = [manager createDirectoryAtPath:appSupportDirectory withIntermediateDirectories:NO attributes:nil error:&error];
+                if(!result || error)
+                {
+                    [NSException raise:@"Failed to find and create application support directory" format:@"Failed to find and create application support directory: %@", appSupportDirectory];
+                }
+            }
+            
+            if(![jsonData writeToFile:filePath atomically:YES])
+            {
+                [NSException raise:@"Failed to write serialized JSON" format:@"Failed to write serialized JSON to filepath: %@", filePath];
+            }
+        }
+        else
+        {
+            [NSException raise:@"Failed to find application support directory" format:@"Failed to find application support directory"];
+        }
+    }
+    @catch (NSException *exception)
+    {
+        NSLog(@"Failed to save dashboard widgets: %@", [exception reason]);
+    }
+}
 - (void)analyse
 {
     NSDate *date = [[NSDate date] dateBySubtractingDays:self.numberOfDays];
@@ -250,6 +323,119 @@
      */
 }
 
+#pragma mark - UI logic
+- (void)showAddWidgetScreen:(id)sender
+{
+    self.widgetListVC = [[UASummaryWidgetListViewController alloc] init];
+    self.widgetListVC.delegate = self;
+    self.widgetListVC.view.frame = self.view.bounds;
+    [self.widgetListVC willMoveToParentViewController:self];
+    [self.view addSubview:self.widgetListVC.view];
+    [self.widgetListVC didMoveToParentViewController:self];
+}
+
+#pragma mark - Presentation logic
+- (void)presentInViewController:(UIViewController *)parentVC
+{
+    self.view.alpha = 0.0f;
+    
+    [self willMoveToParentViewController:parentVC];
+    self.view.frame = parentVC.view.bounds;
+    //[(FXBlurView *)summaryVC.view setUnderlyingView:self.navigationController.view];
+    [parentVC.view addSubview:self.view];
+    [parentVC addChildViewController:self];
+    [self didMoveToParentViewController:parentVC];
+    
+    self.collectionView.contentInset = UIEdgeInsetsMake(self.view.bounds.size.height, 0.0f, 0.0f, 0.0f);
+    [UIView animateWithDuration:0.15 animations:^{
+        self.view.alpha = 1.0f;
+    } completion:^(BOOL finished) {
+        
+//        self.collectionView.frame = self.view.bounds;
+    }];
+    
+    [UIView animateWithDuration:0.5 delay:0.075 usingSpringWithDamping:1 initialSpringVelocity:1 options:0 animations:^{
+        self.collectionView.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 0.0f, 0.0f);
+    } completion:^(BOOL finished) {
+        
+    }];
+}
+- (void)dismiss
+{
+    [self saveWidgets];
+    
+    __weak typeof(self) weakRef = self;
+    [weakRef willMoveToParentViewController:nil];
+    [weakRef.view removeFromSuperview];
+    [weakRef removeFromParentViewController];
+}
+
+#pragma mark - UICollectionViewDelegate methods
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UASummaryWidget *widget = self.widgets[indexPath.row];
+    [widget setShowingSettings:!widget.showingSettings];
+}
+
+#pragma mark - UICollectionViewDatasource methods
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
+{
+    return 1;
+}
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [self.widgets count];
+}
+- (UICollectionViewCell *)collectionView:(UICollectionView *)aCollectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell *cell = [aCollectionView dequeueReusableCellWithReuseIdentifier:@"widget" forIndexPath:indexPath];
+    for(id subview in cell.contentView.subviews)
+    {
+        [subview removeFromSuperview];
+    }
+    
+    UIView *widgetView = [self.widgets objectAtIndex:indexPath.row];
+    widgetView.frame = cell.contentView.bounds;
+    [cell.contentView addSubview:widgetView];
+    cell.contentView.backgroundColor = [UIColor purpleColor];
+    
+    return cell;
+}
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UASummaryWidget *widget = self.widgets[indexPath.row];
+    return CGSizeMake(collectionView.bounds.size.width, widget.height);
+}
+
+#pragma mark - Helpers
+- (NSString *)applicationSupportDirectoryPath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    if(paths && [paths count])
+    {
+        return [paths lastObject];
+    }
+    
+    return nil;
+}
+
+#pragma mark - UASummaryWidgetListViewDelegate methods
+- (void)summaryList:(UASummaryWidgetListViewController *)summaryListVC didSelectWidgetClass:(Class)WidgetClass
+{
+    NSLog(@"Did select widget of class: %@", WidgetClass);
+    
+    id newWidget = [[WidgetClass alloc] init];
+    [self.widgets addObject:newWidget];
+    [self.collectionView reloadData];
+    
+    [newWidget update];
+    
+    [self saveWidgets];
+    [summaryListVC dismiss];
+}
+
 #pragma mark - LXReorderableCollectionViewDataSource methods
 - (void)collectionView:(UICollectionView *)collectionView
        itemAtIndexPath:(NSIndexPath *)fromIndexPath
@@ -258,6 +444,16 @@
     id object = [self.widgets objectAtIndex:fromIndexPath.item];
     [self.widgets removeObjectAtIndex:fromIndexPath.item];
     [self.widgets insertObject:object atIndex:toIndexPath.item];
+}
+- (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Will start drag: %@", indexPath);
+    [(UASummaryWidget *)self.widgets[indexPath.row] setBeingDragged:YES];
+}
+- (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didEndDraggingItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Ended drag: %@", indexPath);
+    [(UASummaryWidget *)self.widgets[indexPath.row] setBeingDragged:NO];
 }
 
 @end

@@ -1,8 +1,8 @@
 //
-//  UASummaryViewController.h
+//  UATimeOfDayWidget.m
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 18/02/2014.
+//  Created by Nial Giacomelli on 17/04/2014.
 //  Copyright (c) 2014 UglyApps. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,14 +18,26 @@
 //  limitations under the License.
 //
 
-#import <LXReorderableCollectionViewFlowLayout/LXReorderableCollectionViewFlowLayout.h>
-#import "UABaseViewController.h"
-#import "UASummaryWidgetListViewController.h"
+#import "UATimeOfDayWidget.h"
 
-@interface UASummaryViewController : UABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, LXReorderableCollectionViewDataSource, UASummaryWidgetListViewDelegate>
+@implementation UATimeOfDayWidget
 
-// Presentation logic
-- (void)presentInViewController:(UIViewController *)parentVC;
-- (void)dismiss;
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialization code
+    }
+    return self;
+}
+
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect
+{
+    // Drawing code
+}
+*/
 
 @end

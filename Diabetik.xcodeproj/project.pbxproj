@@ -138,7 +138,6 @@
 		5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5354083817B7B90A008C64A4 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5356124F185B9E3900438A91 /* UAReminderBaseViewController.m */; };
 		535918A717809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */; };
-		536EAB8218FC3030002EFE47 /* UASummaryIntroductionWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 536EAB8118FC3030002EFE47 /* UASummaryIntroductionWidget.m */; };
 		537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 537983AE17CD3F5A00032F3A /* UAShortcutButton.m */; };
 		537BC4FE18FD3AB30098BF20 /* UAInsulinCalculatorTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 537BC4FD18FD3AB30098BF20 /* UAInsulinCalculatorTooltipView.m */; };
 		537BC50018FD53300098BF20 /* UAHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 537BC4FF18FD53300098BF20 /* UAHelper.m */; };
@@ -150,6 +149,10 @@
 		53895268189FA19D00C8C3C8 /* Appirater-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53895266189FA19D00C8C3C8 /* Appirater-License.txt */; };
 		53895269189FA19D00C8C3C8 /* MBProgressHUD-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53895267189FA19D00C8C3C8 /* MBProgressHUD-License.txt */; };
 		5389526B189FA1D000C8C3C8 /* Reachability-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5389526A189FA1D000C8C3C8 /* Reachability-License.txt */; };
+		538A282A190024DD0083D124 /* UASummaryWidgetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538A2829190024DD0083D124 /* UASummaryWidgetListViewController.m */; };
+		538A282D1900264A0083D124 /* UAHbA1CWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 538A282C1900264A0083D124 /* UAHbA1CWidget.m */; };
+		538A2830190026550083D124 /* UATimeOfDayWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 538A282F190026550083D124 /* UATimeOfDayWidget.m */; };
+		538A2833190026600083D124 /* UATimeSinceWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 538A2832190026600083D124 /* UATimeSinceWidget.m */; };
 		538DBA78166F830300F0709F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA77166F830300F0709F /* UIKit.framework */; };
 		538DBA7A166F830300F0709F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA79166F830300F0709F /* Foundation.framework */; };
 		538DBA7C166F830300F0709F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA7B166F830300F0709F /* CoreGraphics.framework */; };
@@ -182,7 +185,6 @@
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
 		53EABCD418B3D8AF001C5C39 /* UASummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCD318B3D8AF001C5C39 /* UASummaryViewController.m */; };
-		53EABCD818B3DABA001C5C39 /* UASummaryWidgetViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCD718B3DABA001C5C39 /* UASummaryWidgetViewCell.m */; };
 		53EABCDB18B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCDA18B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.m */; };
 		53EABCDE18B3E02B001C5C39 /* UASummaryWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCDD18B3E02B001C5C39 /* UASummaryWidget.m */; };
 		53F29548187845360021F6FC /* UAAnalytikController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F29547187845360021F6FC /* UAAnalytikController.m */; };
@@ -445,8 +447,6 @@
 		535844F218C61D9F0011DD48 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		535918A617809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_2_to_1.1.xcmappingmodel; sourceTree = SOURCE_ROOT; };
 		536E964B177F5A3800140DF0 /* Diabetik_1.1.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diabetik_1.1.xcdatamodel; sourceTree = "<group>"; };
-		536EAB8018FC3030002EFE47 /* UASummaryIntroductionWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryIntroductionWidget.h; sourceTree = "<group>"; };
-		536EAB8118FC3030002EFE47 /* UASummaryIntroductionWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryIntroductionWidget.m; sourceTree = "<group>"; };
 		537983AD17CD3F5A00032F3A /* UAShortcutButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAShortcutButton.h; sourceTree = "<group>"; };
 		537983AE17CD3F5A00032F3A /* UAShortcutButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAShortcutButton.m; sourceTree = "<group>"; };
 		537BC4FC18FD3AB30098BF20 /* UAInsulinCalculatorTooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsulinCalculatorTooltipView.h; sourceTree = "<group>"; };
@@ -463,6 +463,14 @@
 		53895266189FA19D00C8C3C8 /* Appirater-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Appirater-License.txt"; sourceTree = "<group>"; };
 		53895267189FA19D00C8C3C8 /* MBProgressHUD-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MBProgressHUD-License.txt"; sourceTree = "<group>"; };
 		5389526A189FA1D000C8C3C8 /* Reachability-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Reachability-License.txt"; sourceTree = "<group>"; };
+		538A2828190024DD0083D124 /* UASummaryWidgetListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryWidgetListViewController.h; sourceTree = "<group>"; };
+		538A2829190024DD0083D124 /* UASummaryWidgetListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryWidgetListViewController.m; sourceTree = "<group>"; };
+		538A282B1900264A0083D124 /* UAHbA1CWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAHbA1CWidget.h; sourceTree = "<group>"; };
+		538A282C1900264A0083D124 /* UAHbA1CWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAHbA1CWidget.m; sourceTree = "<group>"; };
+		538A282E190026550083D124 /* UATimeOfDayWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATimeOfDayWidget.h; sourceTree = "<group>"; };
+		538A282F190026550083D124 /* UATimeOfDayWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATimeOfDayWidget.m; sourceTree = "<group>"; };
+		538A2831190026600083D124 /* UATimeSinceWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UATimeSinceWidget.h; sourceTree = "<group>"; };
+		538A2832190026600083D124 /* UATimeSinceWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UATimeSinceWidget.m; sourceTree = "<group>"; };
 		538DBA73166F830300F0709F /* Diabetik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Diabetik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		538DBA77166F830300F0709F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		538DBA79166F830300F0709F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -515,8 +523,6 @@
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		53EABCD218B3D8AF001C5C39 /* UASummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryViewController.h; sourceTree = "<group>"; };
 		53EABCD318B3D8AF001C5C39 /* UASummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryViewController.m; sourceTree = "<group>"; };
-		53EABCD618B3DABA001C5C39 /* UASummaryWidgetViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UASummaryWidgetViewCell.h; path = Widgets/UASummaryWidgetViewCell.h; sourceTree = "<group>"; };
-		53EABCD718B3DABA001C5C39 /* UASummaryWidgetViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UASummaryWidgetViewCell.m; path = Widgets/UASummaryWidgetViewCell.m; sourceTree = "<group>"; };
 		53EABCD918B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		53EABCDA18B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		53EABCDC18B3E02B001C5C39 /* UASummaryWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryWidget.h; sourceTree = "<group>"; };
@@ -1239,6 +1245,15 @@
 			path = AppSoundEngine;
 			sourceTree = "<group>";
 		};
+		538A2827190024DD0083D124 /* Widget List */ = {
+			isa = PBXGroup;
+			children = (
+				538A2828190024DD0083D124 /* UASummaryWidgetListViewController.h */,
+				538A2829190024DD0083D124 /* UASummaryWidgetListViewController.m */,
+			);
+			path = "Widget List";
+			sourceTree = "<group>";
+		};
 		538DBA68166F830300F0709F = {
 			isa = PBXGroup;
 			children = (
@@ -1373,11 +1388,10 @@
 		53EABCD118B3D8A3001C5C39 /* Summary */ = {
 			isa = PBXGroup;
 			children = (
+				538A2827190024DD0083D124 /* Widget List */,
 				53EABCD518B3DA17001C5C39 /* Widgets */,
 				53EABCD218B3D8AF001C5C39 /* UASummaryViewController.h */,
 				53EABCD318B3D8AF001C5C39 /* UASummaryViewController.m */,
-				53EABCD618B3DABA001C5C39 /* UASummaryWidgetViewCell.h */,
-				53EABCD718B3DABA001C5C39 /* UASummaryWidgetViewCell.m */,
 				53EABCD918B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.h */,
 				53EABCDA18B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.m */,
 			);
@@ -1389,8 +1403,12 @@
 			children = (
 				53EABCDC18B3E02B001C5C39 /* UASummaryWidget.h */,
 				53EABCDD18B3E02B001C5C39 /* UASummaryWidget.m */,
-				536EAB8018FC3030002EFE47 /* UASummaryIntroductionWidget.h */,
-				536EAB8118FC3030002EFE47 /* UASummaryIntroductionWidget.m */,
+				538A282B1900264A0083D124 /* UAHbA1CWidget.h */,
+				538A282C1900264A0083D124 /* UAHbA1CWidget.m */,
+				538A282E190026550083D124 /* UATimeOfDayWidget.h */,
+				538A282F190026550083D124 /* UATimeOfDayWidget.m */,
+				538A2831190026600083D124 /* UATimeSinceWidget.h */,
+				538A2832190026600083D124 /* UATimeSinceWidget.m */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -1628,6 +1646,7 @@
 				5330A28618AAC9B800000A47 /* UAEventInputCategoryViewCell.m in Sources */,
 				53F78EDA18422B5B006736F5 /* UIImage+AspectFit.m in Sources */,
 				5330A26B18AAC7E200000A47 /* UAInputParentViewController.m in Sources */,
+				538A282A190024DD0083D124 /* UASummaryWidgetListViewController.m in Sources */,
 				533F32F61773266600AD89E2 /* UAEvent.m in Sources */,
 				5330A28818AAC9B800000A47 /* UAEventInputTextViewViewCell.m in Sources */,
 				533F32F71773266600AD89E2 /* UAManagedObject.m in Sources */,
@@ -1643,6 +1662,7 @@
 				5330A26818AAC7E200000A47 /* UAActivityInputViewController.m in Sources */,
 				533F33021773266600AD89E2 /* Diabetik.xcdatamodeld in Sources */,
 				533F33031773266600AD89E2 /* main.m in Sources */,
+				538A2833190026600083D124 /* UATimeSinceWidget.m in Sources */,
 				533F347C1773266600AD89E2 /* UAAppDelegate.m in Sources */,
 				537983AF17CD3F5A00032F3A /* UAShortcutButton.m in Sources */,
 				53FE5FB1189EC0E6008AC334 /* UACategorySelectorButton.m in Sources */,
@@ -1654,6 +1674,7 @@
 				533F34AF1773266600AD89E2 /* UAEventMapPin.m in Sources */,
 				533F34B01773266600AD89E2 /* UAEventMapViewController.m in Sources */,
 				53F2955D18786B560021F6FC /* UASettingsAnalytikViewController.m in Sources */,
+				538A2830190026550083D124 /* UATimeOfDayWidget.m in Sources */,
 				5330A28718AAC9B800000A47 /* UAEventInputTextFieldViewCell.m in Sources */,
 				53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */,
 				53FE5FAE189EC077008AC334 /* UACategoryInputView.m in Sources */,
@@ -1666,6 +1687,7 @@
 				53895265189FA12500C8C3C8 /* VKRSSound.m in Sources */,
 				537BC4FE18FD3AB30098BF20 /* UAInsulinCalculatorTooltipView.m in Sources */,
 				539E9FA4184B8C22009803D1 /* UITextView+Extension.m in Sources */,
+				538A282D1900264A0083D124 /* UAHbA1CWidget.m in Sources */,
 				533F34BE1773266600AD89E2 /* UAExportViewController.m in Sources */,
 				533F34BF1773266600AD89E2 /* UAPDFDocument.m in Sources */,
 				5330A26918AAC7E200000A47 /* UABGInputViewController.m in Sources */,
@@ -1700,7 +1722,6 @@
 				533F34D81773266600AD89E2 /* UADateButton.m in Sources */,
 				533F34D91773266600AD89E2 /* UADatePickerController.m in Sources */,
 				53F29548187845360021F6FC /* UAAnalytikController.m in Sources */,
-				53EABCD818B3DABA001C5C39 /* UASummaryWidgetViewCell.m in Sources */,
 				53240A89189547EB00AEA9E8 /* UABadgeView.m in Sources */,
 				537BC50018FD53300098BF20 /* UAHelper.m in Sources */,
 				533F34DA1773266600AD89E2 /* UASettingsBackupViewController.m in Sources */,
@@ -1734,7 +1755,6 @@
 				533F356117736C5500AD89E2 /* UASlider.m in Sources */,
 				533F356217736C5500AD89E2 /* UAGenericTableHeaderView.m in Sources */,
 				533F356317736C5500AD89E2 /* UAGenericTableViewCell.m in Sources */,
-				536EAB8218FC3030002EFE47 /* UASummaryIntroductionWidget.m in Sources */,
 				533F356517736C5500AD89E2 /* UAViewControllerMessageView.m in Sources */,
 				5330A27118AAC81000000A47 /* UAEventInputViewController.m in Sources */,
 				53AFAA2218A90E7B00E65168 /* UAAddEntryModaliPadButton.m in Sources */,

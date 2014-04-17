@@ -38,5 +38,13 @@
 {
     return [UIFont fontWithName:@"AvenirNext-Bold" size:size];
 }
++ (UIFont *)standardUltraLightFontWithSize:(CGFloat)size
+{
+    return [UIFont fontWithName:@"AvenirNext-UltraLight" size:size];
+}
++ (UIFont *)standardItalicFontWithSize:(CGFloat)size
+{
+    return [UIFont fontWithName:@"AvenirNext-Italic" size:size];
+}
 
 @end

@@ -1,8 +1,8 @@
 //
-//  UASummaryViewController.h
+//  UATimeSinceWidget.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 18/02/2014.
+//  Created by Nial Giacomelli on 17/04/2014.
 //  Copyright (c) 2014 UglyApps. All rights reserved.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,14 +18,8 @@
 //  limitations under the License.
 //
 
-#import <LXReorderableCollectionViewFlowLayout/LXReorderableCollectionViewFlowLayout.h>
-#import "UABaseViewController.h"
-#import "UASummaryWidgetListViewController.h"
+#import "UASummaryWidget.h"
 
-@interface UASummaryViewController : UABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, LXReorderableCollectionViewDataSource, UASummaryWidgetListViewDelegate>
-
-// Presentation logic
-- (void)presentInViewController:(UIViewController *)parentVC;
-- (void)dismiss;
+@interface UATimeSinceWidget : UASummaryWidget
 
 @end

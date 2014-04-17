@@ -26,5 +26,7 @@
 + (UIFont *)standardMediumFontWithSize:(CGFloat)size;
 + (UIFont *)standardDemiBoldFontWithSize:(CGFloat)size;
 + (UIFont *)standardBoldFontWithSize:(CGFloat)size;
++ (UIFont *)standardUltraLightFontWithSize:(CGFloat)size;
++ (UIFont *)standardItalicFontWithSize:(CGFloat)size;
 
 @end

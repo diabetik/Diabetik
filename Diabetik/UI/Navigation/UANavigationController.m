@@ -19,17 +19,26 @@
 //
 
 #import "UANavigationController.h"
+#import "UASummaryViewController.h"
 
 @implementation UANavigationController
 
 #pragma mark - Setup
 - (void)viewDidLoad
 {
-    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)])
+    if([self respondsToSelector:@selector(interactivePopGestureRecognizer)])
     {
         self.interactivePopGestureRecognizer.delegate = self;
         self.delegate = self;
     }
+    
+    // Setup a double tap gesture recogniser
+    UITapGestureRecognizer *doubleTapRecogniser = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                          action:@selector(didDoubleTapNavigationBar:)];
+    doubleTapRecogniser.numberOfTapsRequired = 2;
+    doubleTapRecogniser.delaysTouchesBegan = NO;
+    doubleTapRecogniser.delaysTouchesEnded = NO;
+    [self.navigationBar addGestureRecognizer:doubleTapRecogniser];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -42,7 +51,7 @@
 - (void)pushViewController:(UIViewController *)viewController
                   animated:(BOOL)animated
 {
-    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)])
+    if([self respondsToSelector:@selector(interactivePopGestureRecognizer)])
     {
         self.interactivePopGestureRecognizer.enabled = NO;
     }
@@ -53,13 +62,20 @@
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animate
 {
-    if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)])
+    if([self respondsToSelector:@selector(interactivePopGestureRecognizer)])
     {
         self.interactivePopGestureRecognizer.enabled = YES;
     }
 }
 
 #pragma mark - Logic
+- (void)didDoubleTapNavigationBar:(UIGestureRecognizer*)recognizer
+{
+    [self.view endEditing:YES];
+    
+    UASummaryViewController *summaryVC = [[UASummaryViewController alloc] init];
+    [summaryVC presentInViewController:self];
+}
 - (NSUInteger)supportedInterfaceOrientations
 {
     if([self.topViewController respondsToSelector:@selector(supportedInterfaceOrientations)])
@@ -71,7 +87,7 @@
 }
 - (BOOL)shouldAutorotate
 {
-    if([self.topViewController respondsToSelector:@selector(shouldAutorotate)])
+    if([self.topViewController respondsToSelector:@selector(shouldAutorotate)]) 
     {
         return [self.topViewController shouldAutorotate];
     }
