@@ -128,7 +128,7 @@
     [self.window makeKeyAndVisible];
     
     // Let UAAppReviewManager know our application has launched
-    [UAAppReviewManager appLaunched:YES];
+    [UAAppReviewManager showPromptIfNecessary];
     
     return YES;
 }
@@ -141,7 +141,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"applicationResumed" object:nil];
     
     // Let UAAppReviewManager know our application has entered the foreground
-    [UAAppReviewManager appEnteredForeground:YES];
+    [UAAppReviewManager showPromptIfNecessary];
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
