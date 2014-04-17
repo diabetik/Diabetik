@@ -20,8 +20,8 @@
 
 #import <Dropbox/Dropbox.h>
 #import <ShinobiCharts/ShinobiChart.h>
+#import <UAAppReviewManager/UAAppReviewManager.h>
 #import "GAI.h"
-#import "Appirater.h"
 
 #import "UAHelper.h"
 #import "UAAppDelegate.h"
@@ -64,12 +64,12 @@
     [[GAI sharedInstance] trackerWithTrackingId:kGoogleAnalyticsTrackingID];
     
     // Initialise Appirater
-    [Appirater setAppId:@"634983291"];
-    [Appirater setDaysUntilPrompt:2];
-    [Appirater setUsesUntilPrompt:2];
-    [Appirater setSignificantEventsUntilPrompt:-1];
-    [Appirater setTimeBeforeReminding:1];
-    [Appirater setDebug:NO];
+    [UAAppReviewManager setAppID:@"634983291"];
+    [UAAppReviewManager setDaysUntilPrompt:2];
+    [UAAppReviewManager setUsesUntilPrompt:5];
+    [UAAppReviewManager setSignificantEventsUntilPrompt:-1];
+    [UAAppReviewManager setDaysBeforeReminding:3];
+    [UAAppReviewManager setReviewMessage:NSLocalizedString(@"If you find Diabetik useful you can help support further development by leaving a review on the App Store. It'll only take a minute!", nil)];
     
     // Is this a first run experience?
     if(![[NSUserDefaults standardUserDefaults] boolForKey:kHasRunBeforeKey])
@@ -127,8 +127,8 @@
     [self.window setRootViewController:self.viewController];
     [self.window makeKeyAndVisible];
     
-    // Let Appirater know our application has launched
-    [Appirater appLaunched:YES];
+    // Let UAAppReviewManager know our application has launched
+    [UAAppReviewManager appLaunched:YES];
     
     return YES;
 }
@@ -140,8 +140,8 @@
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"applicationResumed" object:nil];
     
-    // Let Appirater know our application has launched
-    [Appirater appLaunched:YES];
+    // Let UAAppReviewManager know our application has entered the foreground
+    [UAAppReviewManager appEnteredForeground:YES];
 }
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {

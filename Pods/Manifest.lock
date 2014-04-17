@@ -17,7 +17,6 @@ PODS:
   - AFNetworking/Serialization (2.1.0)
   - AFNetworking/UIKit (2.1.0):
     - AFNetworking/NSURLConnection
-  - Appirater (2.0.2)
   - Dropbox-Sync-API-SDK (2.0.3)
   - FXBlurView (1.5.3)
   - GoogleAnalytics-iOS-SDK (3.0.3)
@@ -28,10 +27,10 @@ PODS:
   - REFrostedViewController (2.4.2)
   - SSKeychain (1.2.1)
   - TPKeyboardAvoiding (1.2.2)
+  - UAAppReviewManager (0.2.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
-  - Appirater (~> 2.0.2)
   - Dropbox-Sync-API-SDK (~> 2.0.3)
   - FXBlurView (~> 1.5.3)
   - GoogleAnalytics-iOS-SDK (~> 3.0.3)
@@ -42,10 +41,10 @@ DEPENDENCIES:
   - REFrostedViewController (~> 2.4.2)
   - SSKeychain (~> 1.2.1)
   - TPKeyboardAvoiding (~> 1.2.2)
+  - UAAppReviewManager (~> 0.2.1)
 
 SPEC CHECKSUMS:
   AFNetworking: c7d7901a83f631414c7eda1737261f696101a5cd
-  Appirater: 32fb9089615b5e542c7ad7b5749741a8aed55290
   Dropbox-Sync-API-SDK: 1d8324eb145be5a6b3b46d5b34354f6f784b4acd
   FXBlurView: 8d662dd5b4ba15a1a0e97235501326fbdfb2b755
   GoogleAnalytics-iOS-SDK: 80c804540a992c59d88397b3f9567417ba1001dc
@@ -56,5 +55,6 @@ SPEC CHECKSUMS:
   REFrostedViewController: 87207eece6eda9c888c68d5e1b60b6bde4797142
   SSKeychain: d18926838c2e7cd342e2a49e9f869858e49f035a
   TPKeyboardAvoiding: de224784615ac78d1c351df28b0696d402449c41
+  UAAppReviewManager: 5951542f163e9964ce0e5bd6543f512dfc0efd51
 
-COCOAPODS: 0.29.0
+COCOAPODS: 0.32.1

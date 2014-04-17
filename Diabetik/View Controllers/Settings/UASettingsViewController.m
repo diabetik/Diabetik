@@ -18,8 +18,8 @@
 //  limitations under the License.
 //
 
+#import <UAAppReviewManager/UAAppReviewManager.h>
 #import "UAAppDelegate.h"
-#import "Appirater.h"
 
 #import "UASettingsViewController.h"
 #import "UASettingsEntryViewController.h"
@@ -296,7 +296,7 @@
         }
         else if(indexPath.row == 1)
         {
-            [Appirater rateApp];
+            [UAAppReviewManager rateApp];
         }
         else if(indexPath.row == 2)
         {
