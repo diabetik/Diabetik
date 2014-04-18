@@ -21,7 +21,6 @@ PODS:
   - FXBlurView (1.5.3)
   - GoogleAnalytics-iOS-SDK (3.0.3)
   - HockeySDK (3.5.2)
-  - LXReorderableCollectionViewFlowLayout (0.1.1)
   - MBProgressHUD (0.8)
   - Reachability (3.1.1)
   - REFrostedViewController (2.4.2)
@@ -35,7 +34,6 @@ DEPENDENCIES:
   - FXBlurView (~> 1.5.3)
   - GoogleAnalytics-iOS-SDK (~> 3.0.3)
   - HockeySDK (~> 3.5.2)
-  - LXReorderableCollectionViewFlowLayout (~> 0.1.1)
   - MBProgressHUD (~> 0.8)
   - Reachability (~> 3.1.1)
   - REFrostedViewController (~> 2.4.2)
@@ -49,7 +47,6 @@ SPEC CHECKSUMS:
   FXBlurView: 8d662dd5b4ba15a1a0e97235501326fbdfb2b755
   GoogleAnalytics-iOS-SDK: 80c804540a992c59d88397b3f9567417ba1001dc
   HockeySDK: 203d3af93c2a229bfb528ff085201670ff65e1cf
-  LXReorderableCollectionViewFlowLayout: 7476503803af6badf13fb6164953880396726cb3
   MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
   Reachability: be4883bb93f31e38266ae3365e5600a317aae735
   REFrostedViewController: 87207eece6eda9c888c68d5e1b60b6bde4797142

@@ -72,12 +72,6 @@
 #define COCOAPODS_VERSION_MINOR_HockeySDK 5
 #define COCOAPODS_VERSION_PATCH_HockeySDK 2
 
-// LXReorderableCollectionViewFlowLayout
-#define COCOAPODS_POD_AVAILABLE_LXReorderableCollectionViewFlowLayout
-#define COCOAPODS_VERSION_MAJOR_LXReorderableCollectionViewFlowLayout 0
-#define COCOAPODS_VERSION_MINOR_LXReorderableCollectionViewFlowLayout 1
-#define COCOAPODS_VERSION_PATCH_LXReorderableCollectionViewFlowLayout 1
-
 // MBProgressHUD
 #define COCOAPODS_POD_AVAILABLE_MBProgressHUD
 #define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0

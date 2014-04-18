@@ -31,9 +31,10 @@
 {
 }
 @property (nonatomic, strong) UASummaryWidgetListViewController *widgetListVC;
+@property (nonatomic, assign) BOOL inEditMode;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic, strong) UIButton *closeButton, *addButton;
+@property (nonatomic, strong) UIButton *closeButton, *addButton, *removeButton;
 @property (nonatomic, strong) NSMutableArray *widgets;
 @property (nonatomic, assign) NSInteger numberOfDays;
 
@@ -54,7 +55,10 @@
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         
+        _inEditMode = NO;
         self.widgets = [NSMutableArray array];
+        
+        
         
         //self.numberOfDays = 90;
         //[self analyse];
@@ -82,7 +86,7 @@
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-    self.collectionView.backgroundColor = [UIColor greenColor];
+    self.collectionView.backgroundColor = [UIColor clearColor];
     self.collectionView.contentInset = UIEdgeInsetsMake(20.0f, 0.0f, 60.0f, 0.0f);
     self.collectionView.alwaysBounceVertical = YES;
     [self.view addSubview:self.collectionView];
@@ -99,6 +103,12 @@
     [self.addButton setBackgroundImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
     [self.addButton addTarget:self action:@selector(showAddWidgetScreen:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.addButton];
+    
+    self.removeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
+    [self.removeButton setBackgroundImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
+    [self.removeButton addTarget:self action:@selector(showAddWidgetScreen:) forControlEvents:UIControlEventTouchUpInside];
+    [self.removeButton setAlpha:0.0f];
+    [self.view addSubview:self.removeButton];
     
     [self loadWidgets];
 }
@@ -117,6 +127,7 @@
     
     self.closeButton.frame = CGRectMake(self.view.bounds.size.width - 60.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
     self.addButton.frame = CGRectMake(20.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
+    self.removeButton.frame = CGRectMake(self.view.bounds.size.width - 60.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
 }
 
 #pragma mark - Logic
@@ -224,6 +235,28 @@
     {
         NSLog(@"Failed to save dashboard widgets: %@", [exception reason]);
     }
+}
+- (void)setInEditMode:(BOOL)state
+{
+    if(_inEditMode != state)
+    {
+        [UIView animateWithDuration:0.15 animations:^{
+            if(state)
+            {
+                self.closeButton.alpha = 0.0f;
+                self.addButton.alpha = 0.0f;
+                self.removeButton.alpha = 1.0f;
+            }
+            else
+            {
+                self.closeButton.alpha = 1.0f;
+                self.addButton.alpha = 1.0f;
+                self.removeButton.alpha = 0.0f;
+            }
+        }];
+    }
+    
+    _inEditMode = state;
 }
 - (void)analyse
 {
@@ -397,7 +430,6 @@
     UIView *widgetView = [self.widgets objectAtIndex:indexPath.row];
     widgetView.frame = cell.contentView.bounds;
     [cell.contentView addSubview:widgetView];
-    cell.contentView.backgroundColor = [UIColor purpleColor];
     
     return cell;
 }
@@ -447,13 +479,42 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Will start drag: %@", indexPath);
+    [self setInEditMode:YES];
+    
     [(UASummaryWidget *)self.widgets[indexPath.row] setBeingDragged:YES];
 }
-- (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didEndDraggingItemAtIndexPath:(NSIndexPath *)indexPath
+- (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didEndDraggingItemAtIndexPath:(NSIndexPath *)indexPath atPoint:(CGPoint)point
 {
-    NSLog(@"Ended drag: %@", indexPath);
-    [(UASummaryWidget *)self.widgets[indexPath.row] setBeingDragged:NO];
+    UASummaryWidget *widget = (UASummaryWidget *)self.widgets[indexPath.row];
+    if(CGRectContainsPoint(self.removeButton.frame, point))
+    {
+        [self.widgets removeObject:widget];
+        [collectionView reloadData];
+    }
+    else
+    {
+        [widget setBeingDragged:NO];
+    }
+    
+    [self setInEditMode:NO];
 }
-
+- (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didDragItemAtIndexPath:(NSIndexPath *)indexPath toPoint:(CGPoint)point
+{
+    if(CGRectContainsPoint(self.removeButton.frame, point))
+    {
+        
+    }
+}
+- (BOOL)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout willPerformCustomDropAnimationForItemAtIndexPath:(NSIndexPath *)indexPath withRepresentationView:(UIView *)representationView atDropPoint:(CGPoint)point
+{
+    if(CGRectContainsPoint(self.removeButton.frame, point))
+    {
+        representationView.transform = CGAffineTransformMakeScale(0.0f, 0.0f);
+        representationView.center = self.removeButton.center;
+        
+        return YES;
+    }
+    
+    return NO;
+}
 @end

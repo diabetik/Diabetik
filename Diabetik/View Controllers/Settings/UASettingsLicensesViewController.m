@@ -58,7 +58,7 @@
     webView.frame = self.view.frame;
     
     NSString *licenseText = @"";
-    NSArray *licenses = @[@"AFNetworking-License", @"AppSoundEngine-License", @"MBProgressHUD-License", @"HockeyApp-License", @"Appirater-License", @"Reachability-License", @"FXBlurView-License"];
+    NSArray *licenses = @[@"AFNetworking-License", @"AppSoundEngine-License", @"MBProgressHUD-License", @"HockeyApp-License", @"UAAppReviewManager-License", @"Reachability-License", @"FXBlurView-License", @"LXReorderableCollectionViewFlowLayout-License"];
     for(NSString *license in licenses)
     {
         NSString *bundlePath = [[NSBundle mainBundle] pathForResource:license ofType:@"txt"];

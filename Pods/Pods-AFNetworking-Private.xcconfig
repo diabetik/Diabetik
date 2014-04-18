@@ -1,5 +1,5 @@
 #include "Pods-AFNetworking.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/AFNetworking" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/Dropbox-Sync-API-SDK" "${PODS_ROOT}/Headers/FXBlurView" "${PODS_ROOT}/Headers/GoogleAnalytics-iOS-SDK" "${PODS_ROOT}/Headers/HockeySDK" "${PODS_ROOT}/Headers/LXReorderableCollectionViewFlowLayout" "${PODS_ROOT}/Headers/MBProgressHUD" "${PODS_ROOT}/Headers/REFrostedViewController" "${PODS_ROOT}/Headers/Reachability" "${PODS_ROOT}/Headers/SSKeychain" "${PODS_ROOT}/Headers/TPKeyboardAvoiding" "${PODS_ROOT}/Headers/UAAppReviewManager"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/AFNetworking" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/Dropbox-Sync-API-SDK" "${PODS_ROOT}/Headers/FXBlurView" "${PODS_ROOT}/Headers/GoogleAnalytics-iOS-SDK" "${PODS_ROOT}/Headers/HockeySDK" "${PODS_ROOT}/Headers/MBProgressHUD" "${PODS_ROOT}/Headers/REFrostedViewController" "${PODS_ROOT}/Headers/Reachability" "${PODS_ROOT}/Headers/SSKeychain" "${PODS_ROOT}/Headers/TPKeyboardAvoiding" "${PODS_ROOT}/Headers/UAAppReviewManager"
 OTHER_LDFLAGS = -ObjC ${PODS_AFNETWORKING_OTHER_LDFLAGS}
 PODS_ROOT = ${SRCROOT}

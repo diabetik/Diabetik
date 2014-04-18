@@ -30,7 +30,7 @@
     {
         _showingSettings = NO;
         
-        self.backgroundColor = [UIColor yellowColor];
+        self.backgroundColor = [UIColor clearColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         self.widgetSettingsView = [[UIView alloc] initWithFrame:CGRectZero];
