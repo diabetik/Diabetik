@@ -59,8 +59,7 @@
     if(!tagRegularExpression)
     {
         NSError *error = nil;
-        NSString *regexString = @"#([\\w\\d]{1,140})";
-        tagRegularExpression = [NSRegularExpression regularExpressionWithPattern:regexString
+        tagRegularExpression = [NSRegularExpression regularExpressionWithPattern:@"#([\\w\\d\\-]+)"
                                                                          options:NSRegularExpressionCaseInsensitive
                                                                            error:&error];
     }
@@ -97,7 +96,6 @@
         }];
     }
     
-    NSLog(@"%@", tags);
     return [NSArray arrayWithArray:tags];
 }
 - (NSArray *)fetchAllTags
