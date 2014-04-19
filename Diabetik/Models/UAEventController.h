@@ -34,7 +34,6 @@
 
 // Events
 - (void)attemptSmartInputWithExistingEntries:(NSMutableArray *)existingEntries success:(void (^)(UAMedicine*))successBlock failure:(void (^)(void))failureBlock;
-- (NSArray *)fetchEventsMatchingSearch:(NSString *)string withPredicate:(NSPredicate *)basePredicate;
 - (NSArray *)fetchEventsWithPredicate:(NSPredicate *)predicate sortDescriptors:(NSArray *)sortDescriptors inContext:(NSManagedObjectContext *)moc;
 - (NSDictionary *)statisticsForEvents:(NSArray *)events fromDate:(NSDate *)minDate toDate:(NSDate *)maxDate;
 - (NSArray *)fetchKey:(NSString *)key forEventsWithFilterType:(EventFilterType)filterType;

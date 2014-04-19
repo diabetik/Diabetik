@@ -39,7 +39,7 @@
 #pragma mark - String helpers
 - (NSRange)rangeOfTagInString:(NSString *)string withCaretLocation:(NSUInteger)caretLocation
 {
-    NSRegularExpression *regex = [UAHelper tagRegularExpression];
+    NSRegularExpression *regex = [UATagController tagRegularExpression];
     __block NSRange range = NSMakeRange(NSNotFound, 0);
     [regex enumerateMatchesInString:string options:0 range:NSMakeRange(0, string.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
         if (result.range.location <= caretLocation && result.range.location+result.range.length >= caretLocation)
@@ -52,32 +52,36 @@
     return range;
 }
 
+#pragma mark - Regular Expressions
++ (NSRegularExpression *)tagRegularExpression
+{
+    static NSRegularExpression *tagRegularExpression = nil;
+    if(!tagRegularExpression)
+    {
+        NSError *error = nil;
+        NSString *regexString = @"#([\\w\\d]{1,140})";
+        tagRegularExpression = [NSRegularExpression regularExpressionWithPattern:regexString
+                                                                         options:NSRegularExpressionCaseInsensitive
+                                                                           error:&error];
+    }
+    
+    return tagRegularExpression;
+}
+
 #pragma mark - Helpers
 - (NSArray *)fetchTagsInString:(NSString *)string
-{
-    return [self fetchTokensInString:string withPrefix:@"\\#"];
-}
-- (NSArray *)fetchTokensInString:(NSString *)string withPrefix:(NSString *)prefix
 {
     __block NSMutableArray *tags = [NSMutableArray array];
     
     if(string && [string length])
     {
-        NSRegularExpression *regex = [UAHelper tagRegularExpressionWithPrefixSymbol:prefix];
+        NSRegularExpression *regex = [UATagController tagRegularExpression];
         [regex enumerateMatchesInString:string
                                 options:0
                                   range:NSMakeRange(0, string.length)
                              usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
             
-            NSString *tag = nil;
-            if([prefix length])
-            {
-                tag = [string substringWithRange:NSMakeRange(result.range.location+1, result.range.length-1)];
-            }
-            else
-            {
-                tag = [string substringWithRange:NSMakeRange(result.range.location, result.range.length)];
-            }
+            NSString *tag = [string substringWithRange:[result rangeAtIndex:1]];
 
             // De-duplicate tags!
             BOOL tagAlreadyExists = NO;
@@ -93,6 +97,7 @@
         }];
     }
     
+    NSLog(@"%@", tags);
     return [NSArray arrayWithArray:tags];
 }
 - (NSArray *)fetchAllTags

@@ -20,24 +20,58 @@
 
 #import "UATimeOfDayWidget.h"
 
+@interface UATimeOfDayWidget ()
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *timeLabel;
+@end
+
 @implementation UATimeOfDayWidget
 
-- (id)initWithFrame:(CGRect)frame
+#pragma mark - Setup
+- (id)init
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+    self = [super init];
+    if(self)
+    {
+        self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.titleLabel.text = NSLocalizedString(@"Morning", nil);
+        self.titleLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.titleLabel.font = [UAFont standardRegularFontWithSize:22.0f];
+        self.titleLabel.hidden = YES;
+        [self.widgetContentView addSubview:self.titleLabel];
+        
+        self.timeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.timeLabel.text = NSLocalizedString(@"9AM - 12AM", nil);
+        self.timeLabel.textColor = [UIColor whiteColor];
+        self.timeLabel.textAlignment = NSTextAlignmentCenter;
+        self.timeLabel.font = [UAFont standardRegularFontWithSize:14.0f];
+        self.timeLabel.hidden = YES;
+        [self.widgetContentView addSubview:self.timeLabel];
+        
     }
     return self;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)layoutSubviews
 {
-    // Drawing code
+    [super layoutSubviews];
+    
+    self.titleLabel.frame = CGRectMake(0.0f, 20.0f, self.widgetContentView.bounds.size.width, 24.0f);
+    self.timeLabel.frame = CGRectMake(0.0f, 44.0f, self.widgetContentView.bounds.size.width, 16.0f);
 }
-*/
+
+#pragma mark - Logic
+- (void)update
+{
+    [super update];
+    
+    [self.titleLabel setHidden:NO];
+    [self.timeLabel setHidden:NO];
+    [self.activityIndicatorView stopAnimating];
+}
+- (CGFloat)height
+{
+    return 60.0f;
+}
 
 @end

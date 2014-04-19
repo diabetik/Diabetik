@@ -87,7 +87,6 @@
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     self.collectionView.backgroundColor = [UIColor clearColor];
-    self.collectionView.contentInset = UIEdgeInsetsMake(20.0f, 0.0f, 60.0f, 0.0f);
     self.collectionView.alwaysBounceVertical = YES;
     [self.view addSubview:self.collectionView];
     
@@ -123,11 +122,12 @@
     [super viewWillLayoutSubviews];
     
     self.collectionView.frame = self.view.bounds;
+    self.collectionView.contentInset = UIEdgeInsetsMake(20.0f, 0.0f, 60.0f, 0.0f);
     [self.collectionView.collectionViewLayout invalidateLayout];
     
     self.closeButton.frame = CGRectMake(self.view.bounds.size.width - 60.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
     self.addButton.frame = CGRectMake(20.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
-    self.removeButton.frame = CGRectMake(self.view.bounds.size.width - 60.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
+    self.removeButton.frame = CGRectMake(20.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
 }
 
 #pragma mark - Logic
@@ -371,9 +371,9 @@
 - (void)presentInViewController:(UIViewController *)parentVC
 {
     self.view.alpha = 0.0f;
+    self.view.frame = parentVC.view.bounds;
     
     [self willMoveToParentViewController:parentVC];
-    self.view.frame = parentVC.view.bounds;
     //[(FXBlurView *)summaryVC.view setUnderlyingView:self.navigationController.view];
     [parentVC.view addSubview:self.view];
     [parentVC addChildViewController:self];
@@ -476,6 +476,8 @@
     id object = [self.widgets objectAtIndex:fromIndexPath.item];
     [self.widgets removeObjectAtIndex:fromIndexPath.item];
     [self.widgets insertObject:object atIndex:toIndexPath.item];
+    
+    [collectionView.collectionViewLayout invalidateLayout];
 }
 - (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -507,11 +509,11 @@
 }
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout willPerformCustomDropAnimationForItemAtIndexPath:(NSIndexPath *)indexPath withRepresentationView:(UIView *)representationView atDropPoint:(CGPoint)point
 {
+        NSLog(@"%@ %@", NSStringFromCGRect(representationView.bounds), NSStringFromCGPoint(self.removeButton.center));    
     if(CGRectContainsPoint(self.removeButton.frame, point))
     {
         representationView.transform = CGAffineTransformMakeScale(0.0f, 0.0f);
-        representationView.center = self.removeButton.center;
-        
+        //representationView.center = self.removeButton.center;
         return YES;
     }
     

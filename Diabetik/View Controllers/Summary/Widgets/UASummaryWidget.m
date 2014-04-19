@@ -30,6 +30,7 @@
     {
         _showingSettings = NO;
         
+        self.contentMode = UIViewContentModeRedraw;
         self.backgroundColor = [UIColor clearColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
@@ -38,7 +39,8 @@
         [self addSubview:self.widgetSettingsView];
         
         self.widgetContentView = [[UIView alloc] initWithFrame:CGRectZero];
-        self.widgetContentView.backgroundColor = [UIColor clearColor];
+        self.widgetContentView.backgroundColor = [UIColor colorWithRed:171.0f/255.0f green:225.0f/255.0f blue:105.0f/255.0f alpha:1.0f];
+        self.widgetContentView.layer.cornerRadius = 5;
         [self addSubview:self.widgetContentView];
         
         self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -64,7 +66,7 @@
     [super layoutSubviews];
     
     self.widgetSettingsView.frame = self.bounds;
-    self.widgetContentView.frame = self.bounds;
+    self.widgetContentView.frame = CGRectInset(self.bounds, 10.0f, 0.0f);
     self.activityIndicatorView.center = self.widgetContentView.center;
 }
 

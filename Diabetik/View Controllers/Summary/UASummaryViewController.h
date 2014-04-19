@@ -18,7 +18,7 @@
 //  limitations under the License.
 //
 
-#import <LXReorderableCollectionViewFlowLayout/LXReorderableCollectionViewFlowLayout.h>
+#import "LXReorderableCollectionViewFlowLayout.h"
 #import "UABaseViewController.h"
 #import "UASummaryWidgetListViewController.h"
 

@@ -19,6 +19,7 @@
 //
 
 #import "UATagHighlightTextStorage.h"
+#import "UATagController.h"
 
 @implementation UATagHighlightTextStorage
 {
@@ -65,7 +66,7 @@
 #pragma mark - Tag highlighting logic
 - (void)processEditing
 {
-    NSRegularExpression *regex = [UAHelper tagRegularExpression];
+    NSRegularExpression *regex = [UATagController tagRegularExpression];
 	NSRange paragraphRange = [self.string paragraphRangeForRange:self.editedRange];
 	[self removeAttribute:NSForegroundColorAttributeName range:paragraphRange];
     [self removeAttribute:@"tag" range:paragraphRange];

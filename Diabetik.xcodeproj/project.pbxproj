@@ -134,6 +134,9 @@
 		533F356C17736C5500AD89E2 /* UAExportTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355617736C5500AD89E2 /* UAExportTooltipView.m */; };
 		533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355817736C5500AD89E2 /* UAIntroductionTooltipView.m */; };
 		533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */; };
+		53438ADF1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 53438ADE1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout.m */; };
+		53438AE21901799400E2B2E1 /* LXReorderableCollectionViewFlowLayout-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53438AE01901799400E2B2E1 /* LXReorderableCollectionViewFlowLayout-License.txt */; };
+		53438AE31901799400E2B2E1 /* UAAppReviewManager-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53438AE11901799400E2B2E1 /* UAAppReviewManager-License.txt */; };
 		534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */; };
 		5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5354083817B7B90A008C64A4 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5356124F185B9E3900438A91 /* UAReminderBaseViewController.m */; };
@@ -146,7 +149,6 @@
 		5389525D189FA10F00C8C3C8 /* HockeyApp-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5389525A189FA10F00C8C3C8 /* HockeyApp-License.txt */; };
 		53895264189FA12500C8C3C8 /* VKRSAppSoundPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 53895260189FA12500C8C3C8 /* VKRSAppSoundPlayer.m */; };
 		53895265189FA12500C8C3C8 /* VKRSSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 53895263189FA12500C8C3C8 /* VKRSSound.m */; };
-		53895268189FA19D00C8C3C8 /* Appirater-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53895266189FA19D00C8C3C8 /* Appirater-License.txt */; };
 		53895269189FA19D00C8C3C8 /* MBProgressHUD-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53895267189FA19D00C8C3C8 /* MBProgressHUD-License.txt */; };
 		5389526B189FA1D000C8C3C8 /* Reachability-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5389526A189FA1D000C8C3C8 /* Reachability-License.txt */; };
 		538A282A190024DD0083D124 /* UASummaryWidgetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 538A2829190024DD0083D124 /* UASummaryWidgetListViewController.m */; };
@@ -439,6 +441,10 @@
 		533F355917736C5500AD89E2 /* UARemindersTooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UARemindersTooltipView.h; sourceTree = "<group>"; };
 		533F355A17736C5500AD89E2 /* UARemindersTooltipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UARemindersTooltipView.m; sourceTree = "<group>"; };
 		533F355B17736C5500AD89E2 /* UAUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAUI.h; sourceTree = "<group>"; };
+		53438ADD1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXReorderableCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		53438ADE1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXReorderableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		53438AE01901799400E2B2E1 /* LXReorderableCollectionViewFlowLayout-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LXReorderableCollectionViewFlowLayout-License.txt"; sourceTree = "<group>"; };
+		53438AE11901799400E2B2E1 /* UAAppReviewManager-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "UAAppReviewManager-License.txt"; sourceTree = "<group>"; };
 		534617511852828E00ED4B6D /* UASettingsTimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsTimelineViewController.h; sourceTree = "<group>"; };
 		534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsTimelineViewController.m; sourceTree = "<group>"; };
 		5354083817B7B90A008C64A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -460,7 +466,6 @@
 		53895261189FA12500C8C3C8 /* VKRSAPSSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKRSAPSSingleton.h; sourceTree = "<group>"; };
 		53895262189FA12500C8C3C8 /* VKRSSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VKRSSound.h; sourceTree = "<group>"; };
 		53895263189FA12500C8C3C8 /* VKRSSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VKRSSound.m; sourceTree = "<group>"; };
-		53895266189FA19D00C8C3C8 /* Appirater-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Appirater-License.txt"; sourceTree = "<group>"; };
 		53895267189FA19D00C8C3C8 /* MBProgressHUD-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MBProgressHUD-License.txt"; sourceTree = "<group>"; };
 		5389526A189FA1D000C8C3C8 /* Reachability-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Reachability-License.txt"; sourceTree = "<group>"; };
 		538A2828190024DD0083D124 /* UASummaryWidgetListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryWidgetListViewController.h; sourceTree = "<group>"; };
@@ -791,6 +796,7 @@
 		533F32211773266600AD89E2 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				53438ADC1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout */,
 				53895257189FA10F00C8C3C8 /* Licensing */,
 				5389525E189FA12500C8C3C8 /* AppSoundEngine */,
 				53F78ECF18422B5B006736F5 /* Vertigo */,
@@ -1210,6 +1216,15 @@
 			path = "Modal view";
 			sourceTree = "<group>";
 		};
+		53438ADC1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				53438ADD1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout.h */,
+				53438ADE1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout.m */,
+			);
+			path = LXReorderableCollectionViewFlowLayout;
+			sourceTree = "<group>";
+		};
 		537983AC17CD3F5A00032F3A /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1222,9 +1237,10 @@
 		53895257189FA10F00C8C3C8 /* Licensing */ = {
 			isa = PBXGroup;
 			children = (
+				53438AE01901799400E2B2E1 /* LXReorderableCollectionViewFlowLayout-License.txt */,
+				53438AE11901799400E2B2E1 /* UAAppReviewManager-License.txt */,
 				53AFAA2518A90E9700E65168 /* FXBlurView-License.txt */,
 				5389526A189FA1D000C8C3C8 /* Reachability-License.txt */,
-				53895266189FA19D00C8C3C8 /* Appirater-License.txt */,
 				53895267189FA19D00C8C3C8 /* MBProgressHUD-License.txt */,
 				53895258189FA10F00C8C3C8 /* AFNetworking-License.txt */,
 				53895259189FA10F00C8C3C8 /* AppSoundEngine-License.txt */,
@@ -1555,10 +1571,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53438AE31901799400E2B2E1 /* UAAppReviewManager-License.txt in Resources */,
 				533F33001773266600AD89E2 /* Localizable.strings in Resources */,
 				533F33041773266600AD89E2 /* OpenSans-Bold.ttf in Resources */,
 				533F33051773266600AD89E2 /* OpenSans-BoldItalic.ttf in Resources */,
-				53895268189FA19D00C8C3C8 /* Appirater-License.txt in Resources */,
 				533F33061773266600AD89E2 /* OpenSans-ExtraBold.ttf in Resources */,
 				533F33071773266600AD89E2 /* OpenSans-ExtraBoldItalic.ttf in Resources */,
 				533F33081773266600AD89E2 /* OpenSans-Italic.ttf in Resources */,
@@ -1566,6 +1582,7 @@
 				533F330A1773266600AD89E2 /* OpenSans-LightItalic.ttf in Resources */,
 				533F330B1773266600AD89E2 /* OpenSans-Regular.ttf in Resources */,
 				533F330C1773266600AD89E2 /* OpenSans-Semibold.ttf in Resources */,
+				53438AE21901799400E2B2E1 /* LXReorderableCollectionViewFlowLayout-License.txt in Resources */,
 				53895269189FA19D00C8C3C8 /* MBProgressHUD-License.txt in Resources */,
 				533F330D1773266600AD89E2 /* OpenSans-SemiboldItalic.ttf in Resources */,
 				53350EC917B6A86300223662 /* Media.xcassets in Resources */,
@@ -1732,6 +1749,7 @@
 				539E1CCF17B7FEA10059ED17 /* UIImage+ImageEffects.m in Sources */,
 				533F34DF1773266600AD89E2 /* UASettingsViewController.m in Sources */,
 				533F34E01773266600AD89E2 /* UATimelineHeaderViewCell.m in Sources */,
+				53438ADF1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout.m in Sources */,
 				533F34E11773266600AD89E2 /* UATimelineViewCell.m in Sources */,
 				53A5D6C11870D5950077DFBE /* UAInsulinCalculatorTitleView.m in Sources */,
 				53F29555187855AB0021F6FC /* UASyncController.m in Sources */,

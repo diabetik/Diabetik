@@ -40,6 +40,7 @@
         
         self.titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         self.titleLabel.text = NSLocalizedString(@"HbA1C estimate", nil);
+        self.titleLabel.textColor = [UIColor whiteColor];
         self.titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel.font = [UAFont standardRegularFontWithSize:22.0f];
         self.titleLabel.hidden = YES;
@@ -47,6 +48,7 @@
         
         self.subtitleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         self.subtitleLabel.text = @"-";
+        self.subtitleLabel.textColor = [UIColor whiteColor];
         self.subtitleLabel.textAlignment = NSTextAlignmentCenter;
         self.subtitleLabel.font = [UAFont standardItalicFontWithSize:14.0f];
         self.subtitleLabel.hidden = NO;
@@ -54,6 +56,7 @@
         
         self.valueLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         self.valueLabel.text = @"-";
+        self.valueLabel.textColor = [UIColor whiteColor];
         self.valueLabel.textAlignment = NSTextAlignmentCenter;
         self.valueLabel.font = [UAFont standardUltraLightFontWithSize:50.0f];
         self.valueLabel.hidden = NO;

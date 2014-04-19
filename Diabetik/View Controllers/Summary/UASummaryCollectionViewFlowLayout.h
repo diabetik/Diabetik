@@ -19,7 +19,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <LXReorderableCollectionViewFlowLayout/LXReorderableCollectionViewFlowLayout.h>
+#import "LXReorderableCollectionViewFlowLayout.h"
 
 @interface UASummaryCollectionViewFlowLayout : LXReorderableCollectionViewFlowLayout
 

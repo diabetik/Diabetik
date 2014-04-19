@@ -34,7 +34,7 @@
     if (!(self = [super init])) return nil;
     
     self.minimumInteritemSpacing = 0;
-    self.minimumLineSpacing = 0;
+    self.minimumLineSpacing = 10;
     
     self.dynamicAnimator = [[UIDynamicAnimator alloc] initWithCollectionViewLayout:self];
     self.visibleIndexPathsSet = [NSMutableSet set];

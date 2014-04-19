@@ -29,6 +29,9 @@
 // String Helpers
 - (NSRange)rangeOfTagInString:(NSString *)string withCaretLocation:(NSUInteger)caretLocation;
 
+// Regular Expression
++ (NSRegularExpression *)tagRegularExpression;
+
 // Helpers
 - (NSArray *)fetchTagsInString:(NSString *)string;
 - (NSArray *)fetchTokensInString:(NSString *)string withPrefix:(NSString *)prefix;

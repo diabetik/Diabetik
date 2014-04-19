@@ -122,22 +122,29 @@
     UATag *tag = (UATag *)[self.fetchedResultsController objectAtIndexPath:indexPath];
     
     NSError *error = nil;
-    NSRegularExpression *regex = [UAHelper tagRegularExpression];
+    NSRegularExpression *regex = [UATagController tagRegularExpression];
     if(!error)
     {
         for(UAEvent *event in tag.events)
         {
-            /*
-            event.notes = [event.notes stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"#%@", tag.nameLC]
-                                                                 withString:tag.name
-                                                                    options:NSCaseInsensitiveSearch
-                                                                      range:NSMakeRange(0, [event.notes length])];
-            */
-          
-            event.notes = [regex stringByReplacingMatchesInString:event.notes
-                                                          options:0
-                                                            range:NSMakeRange(0, [event.notes length])
-                                                     withTemplate:@"$1"];
+            __block NSUInteger removedTags = 0;
+            __block NSString *notes = event.notes;
+            [regex enumerateMatchesInString:event.notes
+                                    options:kNilOptions
+                                      range:NSMakeRange(0, [event.notes length])
+                                 usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+                
+                NSString *tagValue = [event.notes substringWithRange:[match rangeAtIndex:1]];
+                if([[tagValue lowercaseString] isEqualToString:tag.nameLC])
+                {
+                    NSRange adjustedRange = NSMakeRange(match.range.location+removedTags, match.range.length);
+                    notes = [notes stringByReplacingCharactersInRange:adjustedRange withString:tagValue];
+                    removedTags ++;
+                }
+
+                
+            }];
+            event.notes = notes;
         }
         
         NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];

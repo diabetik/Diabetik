@@ -194,55 +194,6 @@
         failureBlock();
     }
 }
-- (NSArray *)fetchEventsMatchingSearch:(NSString *)string withPredicate:(NSPredicate *)basePredicate
-{
-    __block NSArray *returnArray = nil;
-    
-    NSManagedObjectContext *moc = [[UACoreDataController sharedInstance] managedObjectContext];
-    if(moc)
-    {
-        [moc performBlockAndWait:^{
-            
-            // Get an array of all tags contained within the string
-            NSArray *tags = [[UATagController sharedInstance] fetchTokensInString:string withPrefix:@""];
-            NSArray *existingTags = [[UATagController sharedInstance] fetchExistingTagsWithStrings:tags];
-            if(existingTags && [existingTags count])
-            {
-                NSFetchRequest *request = [[NSFetchRequest alloc] init];
-                NSEntityDescription *entity = [NSEntityDescription entityForName:@"UAEvent" inManagedObjectContext:moc];
-                [request setEntity:entity];
-                
-                NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:NO];
-                [request setSortDescriptors:@[sortDescriptor]];
-                
-                NSPredicate *tagPredicate = [NSPredicate predicateWithFormat:@"SUBQUERY(self.tags, $tag, $tag.nameLC IN %@).@count >= %d", tags, [tags count]];
-                if(tagPredicate)
-                {
-                    if(basePredicate)
-                    {
-                        NSPredicate *compoundPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[basePredicate, tagPredicate]];
-                        [request setPredicate:compoundPredicate];
-                    }
-                    else
-                    {
-                        [request setPredicate:tagPredicate];
-                    }
-                    
-                    // Execute the fetch.
-                    NSError *error = nil;
-                    NSArray *objects = [moc executeFetchRequest:request error:&error];
-                    if (objects != nil && [objects count] > 0)
-                    {
-                        returnArray = objects;
-                    }
-                }
-            }
-            
-        }];
-    }
-    
-    return returnArray;
-}
 - (NSArray *)fetchEventsWithPredicate:(NSPredicate *)predicate
                       sortDescriptors:(NSArray *)sortDescriptors
                             inContext:(NSManagedObjectContext *)moc
