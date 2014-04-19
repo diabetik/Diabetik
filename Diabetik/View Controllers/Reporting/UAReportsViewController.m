@@ -25,7 +25,8 @@
 #import "UABloodGlucoseChartViewController.h"
 #import "UAAvgBloodGlucoseChartViewController.h"
 #import "UACarbsChartViewController.h"
-#import "UAScatterChartViewController.h"
+#import "UAHealthyGlucoseChartViewController.h"
+#import "UAGlucoseTimeOfDayChartViewController.h"
 
 @interface UAReportsViewController ()
 {
@@ -79,8 +80,9 @@
     
     reports = @[
                 @{@"title": NSLocalizedString(@"Blood Glucose Readings", nil), @"description": NSLocalizedString(@"A line chart showing your blood glucose and general trend over a given period", nil), @"class": [UABloodGlucoseChartViewController class]},
+                @{@"title": NSLocalizedString(@"Time-of-Day Glucose Readings", nil), @"description": NSLocalizedString(@"A scatter chart showing blood glucose levels during different time segments", nil), @"class": [UAGlucoseTimeOfDayChartViewController class]},
                 @{@"title": NSLocalizedString(@"Carbohydrate in-take", nil), @"description": NSLocalizedString(@"A stacked bar chart (segmented by morning, afternoon and evening) showing total carbohydrate in-take per day", nil), @"class": [UACarbsChartViewController class]},
-                @{@"title": NSLocalizedString(@"Healthy Glucose Tally", nil), @"description": NSLocalizedString(@"A pie chart showing the number of healthy glucose readings versus unhealthy over a given period", nil), @"class": [UAScatterChartViewController class]}
+                @{@"title": NSLocalizedString(@"Healthy Glucose Tally", nil), @"description": NSLocalizedString(@"A pie chart showing the number of healthy glucose readings versus unhealthy over a given period", nil), @"class": [UAHealthyGlucoseChartViewController class]}
                 ];
 
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectZero];
@@ -250,16 +252,16 @@
     width += 5.0f + [dateRangeToLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeToLabel.font}].width;
     width += 5.0f + toDateButton.bounds.size.width;
     
-    x = self.view.bounds.size.width/2.0f - width/2.0f;
+    x = ceilf(self.view.bounds.size.width/2.0f - width/2.0f);
     dateRangeLabel.frame = CGRectMake(x, dateRangeLabel.frame.origin.y, [dateRangeLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeLabel.font}].width, dateRangeLabel.frame.size.height);
     
-    x += dateRangeLabel.bounds.size.width + 5.0f;
+    x += ceilf(dateRangeLabel.bounds.size.width + 5.0f);
     fromDateButton.frame = CGRectMake(x, fromDateButton.frame.origin.y, fromDateButton.frame.size.width, fromDateButton.frame.size.height);
     
-    x += fromDateButton.bounds.size.width + 5.0f;
+    x += ceilf(fromDateButton.bounds.size.width + 5.0f);
     dateRangeToLabel.frame = CGRectMake(x, dateRangeToLabel.frame.origin.y, [dateRangeToLabel.text sizeWithAttributes:@{NSFontAttributeName: dateRangeToLabel.font}].width, dateRangeToLabel.frame.size.height);
     
-    x += dateRangeToLabel.bounds.size.width + 5.0f;
+    x += ceilf(dateRangeToLabel.bounds.size.width + 5.0f);
     toDateButton.frame = CGRectMake(x, toDateButton.frame.origin.y, toDateButton.frame.size.width, toDateButton.frame.size.height);
 }
 - (void)didSelectReport:(UIButton *)previewButton

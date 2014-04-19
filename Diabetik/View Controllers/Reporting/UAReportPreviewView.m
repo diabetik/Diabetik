@@ -69,10 +69,10 @@
 {
     [super layoutSubviews];
     
-    CGFloat titleHeight = [[info valueForKey:@"title"] sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(self.frame.size.width-60.0f, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping].height;
-    CGFloat descriptionHeight = [[info valueForKey:@"description"] sizeWithFont:descriptionLabel.font constrainedToSize:CGSizeMake(self.frame.size.width-60.0f, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping].height;
+    CGFloat titleHeight = ceilf([[info valueForKey:@"title"] sizeWithFont:titleLabel.font constrainedToSize:CGSizeMake(self.frame.size.width-60.0f, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping].height);
+    CGFloat descriptionHeight = ceilf([[info valueForKey:@"description"] sizeWithFont:descriptionLabel.font constrainedToSize:CGSizeMake(self.frame.size.width-60.0f, CGFLOAT_MAX) lineBreakMode:NSLineBreakByWordWrapping].height);
     
-    CGFloat y = self.bounds.size.height/2.0f - (titleHeight + descriptionHeight + 10.0f)/2.0f;
+    CGFloat y = ceilf(self.bounds.size.height/2.0f - (titleHeight + descriptionHeight + 10.0f)/2.0f);
     
     titleLabel.frame = CGRectMake(0.0f, y, self.frame.size.width, 20.0f);
     descriptionLabel.frame = CGRectMake(30.0f, y + titleHeight + 10.0f, self.frame.size.width-60.0f, descriptionHeight);

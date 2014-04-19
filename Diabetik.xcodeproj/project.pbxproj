@@ -98,7 +98,6 @@
 		533F34D21773266600AD89E2 /* UACarbsChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32C01773266600AD89E2 /* UACarbsChartViewController.m */; };
 		533F34D31773266600AD89E2 /* UAChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32C21773266600AD89E2 /* UAChartViewController.m */; };
 		533F34D41773266600AD89E2 /* UALeastSquareFitCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32C41773266600AD89E2 /* UALeastSquareFitCalculator.m */; };
-		533F34D51773266600AD89E2 /* UAScatterChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32C61773266600AD89E2 /* UAScatterChartViewController.m */; };
 		533F34D61773266600AD89E2 /* UAReportPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32C81773266600AD89E2 /* UAReportPreviewView.m */; };
 		533F34D71773266600AD89E2 /* UAReportsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32CA1773266600AD89E2 /* UAReportsViewController.m */; };
 		533F34D81773266600AD89E2 /* UADateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F32CD1773266600AD89E2 /* UADateButton.m */; };
@@ -137,6 +136,8 @@
 		53438ADF1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 53438ADE1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout.m */; };
 		53438AE21901799400E2B2E1 /* LXReorderableCollectionViewFlowLayout-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53438AE01901799400E2B2E1 /* LXReorderableCollectionViewFlowLayout-License.txt */; };
 		53438AE31901799400E2B2E1 /* UAAppReviewManager-License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 53438AE11901799400E2B2E1 /* UAAppReviewManager-License.txt */; };
+		53438AEB1902CBF400E2B2E1 /* UAGlucoseTimeOfDayChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53438AE81902CBF400E2B2E1 /* UAGlucoseTimeOfDayChartViewController.m */; };
+		53438AEC1902CBF400E2B2E1 /* UAHealthyGlucoseChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53438AEA1902CBF400E2B2E1 /* UAHealthyGlucoseChartViewController.m */; };
 		534617531852828E00ED4B6D /* UASettingsTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */; };
 		5354083917B7B90A008C64A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5354083817B7B90A008C64A4 /* StoreKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		53561250185B9E3900438A91 /* UAReminderBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5356124F185B9E3900438A91 /* UAReminderBaseViewController.m */; };
@@ -368,8 +369,6 @@
 		533F32C21773266600AD89E2 /* UAChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAChartViewController.m; sourceTree = "<group>"; };
 		533F32C31773266600AD89E2 /* UALeastSquareFitCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UALeastSquareFitCalculator.h; sourceTree = "<group>"; };
 		533F32C41773266600AD89E2 /* UALeastSquareFitCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UALeastSquareFitCalculator.m; sourceTree = "<group>"; };
-		533F32C51773266600AD89E2 /* UAScatterChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAScatterChartViewController.h; sourceTree = "<group>"; };
-		533F32C61773266600AD89E2 /* UAScatterChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAScatterChartViewController.m; sourceTree = "<group>"; };
 		533F32C71773266600AD89E2 /* UAReportPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAReportPreviewView.h; sourceTree = "<group>"; };
 		533F32C81773266600AD89E2 /* UAReportPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAReportPreviewView.m; sourceTree = "<group>"; };
 		533F32C91773266600AD89E2 /* UAReportsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAReportsViewController.h; sourceTree = "<group>"; };
@@ -445,6 +444,10 @@
 		53438ADE1901798A00E2B2E1 /* LXReorderableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXReorderableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		53438AE01901799400E2B2E1 /* LXReorderableCollectionViewFlowLayout-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LXReorderableCollectionViewFlowLayout-License.txt"; sourceTree = "<group>"; };
 		53438AE11901799400E2B2E1 /* UAAppReviewManager-License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "UAAppReviewManager-License.txt"; sourceTree = "<group>"; };
+		53438AE71902CBF400E2B2E1 /* UAGlucoseTimeOfDayChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAGlucoseTimeOfDayChartViewController.h; sourceTree = "<group>"; };
+		53438AE81902CBF400E2B2E1 /* UAGlucoseTimeOfDayChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAGlucoseTimeOfDayChartViewController.m; sourceTree = "<group>"; };
+		53438AE91902CBF400E2B2E1 /* UAHealthyGlucoseChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAHealthyGlucoseChartViewController.h; sourceTree = "<group>"; };
+		53438AEA1902CBF400E2B2E1 /* UAHealthyGlucoseChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAHealthyGlucoseChartViewController.m; sourceTree = "<group>"; };
 		534617511852828E00ED4B6D /* UASettingsTimelineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsTimelineViewController.h; sourceTree = "<group>"; };
 		534617521852828E00ED4B6D /* UASettingsTimelineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsTimelineViewController.m; sourceTree = "<group>"; };
 		5354083817B7B90A008C64A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -1000,6 +1003,10 @@
 			children = (
 				533F32CB1773266600AD89E2 /* UI */,
 				533F32B61773266600AD89E2 /* Style */,
+				53438AE71902CBF400E2B2E1 /* UAGlucoseTimeOfDayChartViewController.h */,
+				53438AE81902CBF400E2B2E1 /* UAGlucoseTimeOfDayChartViewController.m */,
+				53438AE91902CBF400E2B2E1 /* UAHealthyGlucoseChartViewController.h */,
+				53438AEA1902CBF400E2B2E1 /* UAHealthyGlucoseChartViewController.m */,
 				533F32BB1773266600AD89E2 /* UAAvgBloodGlucoseChartViewController.h */,
 				533F32BC1773266600AD89E2 /* UAAvgBloodGlucoseChartViewController.m */,
 				533F32BD1773266600AD89E2 /* UABloodGlucoseChartViewController.h */,
@@ -1010,8 +1017,6 @@
 				533F32C21773266600AD89E2 /* UAChartViewController.m */,
 				533F32C31773266600AD89E2 /* UALeastSquareFitCalculator.h */,
 				533F32C41773266600AD89E2 /* UALeastSquareFitCalculator.m */,
-				533F32C51773266600AD89E2 /* UAScatterChartViewController.h */,
-				533F32C61773266600AD89E2 /* UAScatterChartViewController.m */,
 			);
 			path = Charts;
 			sourceTree = "<group>";
@@ -1675,6 +1680,7 @@
 				533F32FC1773266600AD89E2 /* UAReminder.m in Sources */,
 				533F32FD1773266600AD89E2 /* UAReminderRule.m in Sources */,
 				533F32FE1773266600AD89E2 /* UARunKeeperAccount.m in Sources */,
+				53438AEB1902CBF400E2B2E1 /* UAGlucoseTimeOfDayChartViewController.m in Sources */,
 				533F32FF1773266600AD89E2 /* UATag.m in Sources */,
 				5330A26818AAC7E200000A47 /* UAActivityInputViewController.m in Sources */,
 				533F33021773266600AD89E2 /* Diabetik.xcdatamodeld in Sources */,
@@ -1732,7 +1738,6 @@
 				533F34D31773266600AD89E2 /* UAChartViewController.m in Sources */,
 				533F34D41773266600AD89E2 /* UALeastSquareFitCalculator.m in Sources */,
 				5330A26D18AAC7E200000A47 /* UAMedicineInputViewController.m in Sources */,
-				533F34D51773266600AD89E2 /* UAScatterChartViewController.m in Sources */,
 				5330A28C18AAC9B800000A47 /* UANavPageControl.m in Sources */,
 				533F34D61773266600AD89E2 /* UAReportPreviewView.m in Sources */,
 				533F34D71773266600AD89E2 /* UAReportsViewController.m in Sources */,
@@ -1742,6 +1747,7 @@
 				53240A89189547EB00AEA9E8 /* UABadgeView.m in Sources */,
 				537BC50018FD53300098BF20 /* UAHelper.m in Sources */,
 				533F34DA1773266600AD89E2 /* UASettingsBackupViewController.m in Sources */,
+				53438AEC1902CBF400E2B2E1 /* UAHealthyGlucoseChartViewController.m in Sources */,
 				5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */,
 				533F34DC1773266600AD89E2 /* UASettingsGlucoseViewController.m in Sources */,
 				533F34DD1773266600AD89E2 /* UASettingsLicensesViewController.m in Sources */,

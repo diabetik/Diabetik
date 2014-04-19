@@ -1,8 +1,8 @@
 //
-//  UATagController.h
+//  UAHealthyGlucoseChartViewController.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 18/02/2013.
+//  Created by Nial Giacomelli on 09/03/2013.
 //  Copyright (c) 2013-2014 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,24 +18,9 @@
 //  limitations under the License.
 //
 
-#import <Foundation/Foundation.h>
-#import "UATag.h"
+#import "UAChartViewController.h"
 #import "UAEvent.h"
+#import "UAReading.h"
 
-@interface UATagController : NSObject
-
-+ (id)sharedInstance;
-
-// String Helpers
-- (NSRange)rangeOfTagInString:(NSString *)string withCaretLocation:(NSUInteger)caretLocation;
-
-// Regular Expression
-+ (NSRegularExpression *)tagRegularExpression;
-
-// Helpers
-- (NSArray *)fetchTagsInString:(NSString *)string;
-- (NSArray *)fetchAllTags;
-- (NSArray *)fetchExistingTagsWithStrings:(NSArray *)strings;
-- (void)assignTags:(NSArray *)tags toEvent:(UAEvent *)event;
-
+@interface UAHealthyGlucoseChartViewController : UAChartViewController <SChartDatasource, SChartDelegate>
 @end

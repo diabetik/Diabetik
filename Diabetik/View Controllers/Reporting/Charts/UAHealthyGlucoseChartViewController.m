@@ -1,5 +1,5 @@
 //
-//  UAScatterChartViewController.h
+//  UAHealthyGlucoseChartViewController.h
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 09/03/2013.
@@ -19,9 +19,9 @@
 //
 
 #import <ShinobiCharts/SChartCanvas.h>
-#import "UAScatterChartViewController.h"
+#import "UAHealthyGlucoseChartViewController.h"
 
-@implementation UAScatterChartViewController
+@implementation UAHealthyGlucoseChartViewController
 
 #pragma mark - Chart logic
 - (NSDictionary *)parseData:(NSArray *)theData
@@ -49,7 +49,7 @@
             totalBGValues++;
         }
     }
-
+    
     CGFloat healthyPercentage = totalBGValues > 0 ? ((healthyBGValues/totalBGValues)*100) : 0;
     CGFloat unhealthyPercentage = totalBGValues > 0 ? ((unhealthyBGValues/totalBGValues)*100) : 0;
     return @{@"healthyBGValues": [NSNumber numberWithFloat:healthyPercentage], @"unhealthyBGValues": [NSNumber numberWithFloat:unhealthyPercentage]};
@@ -141,7 +141,7 @@
         float extrusion = 40.0f;
         
         SChartPieSeries *pieSeries = (SChartPieSeries *)series;
-       
+        
         // three points:
         CGPoint pieCenter;
         CGPoint oldLabelCenter;

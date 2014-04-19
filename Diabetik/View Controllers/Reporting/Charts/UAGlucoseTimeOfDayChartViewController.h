@@ -1,8 +1,8 @@
 //
-//  UAScatterChartViewController.m
+//  UAGlucoseTimeOfDayChartViewController.h
 //  Diabetik
 //
-//  Created by Nial Giacomelli on 09/03/2013.
+//  Created by Nial Giacomelli on 22/05/2013.
 //  Copyright (c) 2013-2014 Nial Giacomelli
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,8 +19,10 @@
 //
 
 #import "UAChartViewController.h"
+
 #import "UAEvent.h"
 #import "UAReading.h"
+#import "UAMeal.h"
 
-@interface UAScatterChartViewController : UAChartViewController <SChartDatasource, SChartDelegate>
+@interface UAGlucoseTimeOfDayChartViewController : UAChartViewController <SChartDatasource, SChartDelegate>
 @end
