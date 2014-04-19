@@ -16,16 +16,24 @@
 
 @interface NSDate (Extension)
 
+// Constructing dates
++ (NSDate *)dateWithYear:(NSNumber *)year
+                   month:(NSNumber *)month
+                     day:(NSNumber *)day
+                    hour:(NSNumber *)hour
+                  minute:(NSNumber *)minute
+                 seconds:(NSNumber *)second;
+
 // Relative dates from the current date
 + (NSString *)timeAgoSince:(NSDate *)originalDate;
-+ (NSDate *) dateTomorrow;
-+ (NSDate *) dateYesterday;
-+ (NSDate *) dateWithDaysFromNow: (NSInteger) days;
-+ (NSDate *) dateWithDaysBeforeNow: (NSInteger) days;
-+ (NSDate *) dateWithHoursFromNow: (NSInteger) dHours;
-+ (NSDate *) dateWithHoursBeforeNow: (NSInteger) dHours;
-+ (NSDate *) dateWithMinutesFromNow: (NSInteger) dMinutes;
-+ (NSDate *) dateWithMinutesBeforeNow: (NSInteger) dMinutes;
++ (NSDate *)dateTomorrow;
++ (NSDate *)dateYesterday;
++ (NSDate *)dateWithDaysFromNow:(NSInteger)days;
++ (NSDate *)dateWithDaysBeforeNow:(NSInteger)days;
++ (NSDate *)dateWithHoursFromNow:(NSInteger)dHours;
++ (NSDate *)dateWithHoursBeforeNow:(NSInteger)dHours;
++ (NSDate *)dateWithMinutesFromNow:(NSInteger)dMinutes;
++ (NSDate *)dateWithMinutesBeforeNow:(NSInteger)dMinutes;
 
 // Comparing dates
 - (BOOL) isEqualToDateIgnoringTime: (NSDate *) aDate;

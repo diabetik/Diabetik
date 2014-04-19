@@ -13,6 +13,26 @@
 
 @implementation NSDate (Extension)
 
+#pragma mark - Constructing Dates
++ (NSDate *)dateWithYear:(NSNumber *)year
+                   month:(NSNumber *)month
+                     day:(NSNumber *)day
+                    hour:(NSNumber *)hour
+                  minute:(NSNumber *)minute
+                 seconds:(NSNumber *)second
+{
+    NSDateComponents *components = [[NSDateComponents alloc] init];
+    if(year) [components setYear:[year integerValue]];
+    if(month) [components setMonth:[month integerValue]];
+    if(day) [components setDay:[day integerValue]];
+    if(hour) [components setHour:[hour integerValue]];
+    if(minute) [components setMinute:[minute integerValue]];
+    if(second) [components setSecond:[second integerValue]];
+    
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    return [calendar dateFromComponents:components];
+}
+
 #pragma mark Relative Dates
 + (NSString *)timeAgoSince:(NSDate *)originalDate
 {

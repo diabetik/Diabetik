@@ -101,45 +101,34 @@
         self.chart.canvasAreaBackgroundColor = [UIColor clearColor];
         self.chart.plotAreaBackgroundColor = [UIColor clearColor];
         self.chart.borderThickness = [NSNumber numberWithDouble:1.0f];
-        self.chart.gesturePinchAspectLock = YES;
+        //self.chart.gesturePinchAspectLock = YES;
         self.chart.crosshair = [[UAChartLineCrosshair alloc] initWithChart:self.chart];
         [self.chart applyTheme:[SChartLightTheme new]];
         
         //Double tap can either reset zoom or zoom in
         self.chart.gestureDoubleTapResetsZoom = YES;
         
-        NSDateComponents *components = [[NSDateComponents alloc] init];
-        [components setHour:0];
-        [components setMinute:0];
-        [components setSecond:0];
-        
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDate *minDate = [calendar dateFromComponents:components];
-        
-        [components setHour:23];
-        [components setMinute:59];
-        [components setSecond:59];
-        
-        NSDate *maxDate = [calendar dateFromComponents:components];
+        NSDate *minDate = [NSDate dateWithYear:nil month:nil day:nil hour:@0 minute:@0 seconds:@0];
+        NSDate *maxDate = [NSDate dateWithYear:nil month:nil day:nil hour:@23 minute:@59 seconds:@59];
         
         //Our xAxis is a category to take the discrete month data
         SChartDateRange *xAxisRange = [[SChartDateRange alloc] initWithDateMinimum:minDate andDateMaximum:maxDate];
         SChartDateTimeAxis *xAxis = [[SChartDateTimeAxis alloc] initWithRange:xAxisRange];
         //xAxis.majorTickFrequency = [[SChartDateFrequency alloc] initWithHour:1];
         xAxis.labelFormatter = [SChartTickLabelFormatter dateFormatter];
+//        [xAxis.labelFormatter.dateFormatter setDateFormat:@"HH:mm"];
+        [xAxis.labelFormatter.dateFormatter setTimeStyle:NSDateFormatterShortStyle];
         xAxis.anchorPoint = minDate;
-        [xAxis.labelFormatter.dateFormatter setDateFormat:@"HH:mm"];
         xAxis.enableGesturePanning = YES;
         xAxis.enableGestureZooming = YES;
         xAxis.enableMomentumPanning = YES;
         xAxis.enableMomentumZooming = YES;
         xAxis.allowPanningOutOfDefaultRange = NO;
         xAxis.allowPanningOutOfMaxRange = NO;
-        xAxis.title = NSLocalizedString(@"Time of Day", nil);
         xAxis.style.titleStyle.position = SChartTitlePositionCenter;
         self.chart.xAxis = xAxis;
         
-        //Use a custom range to best display our data
+        // Use a custom range to best display our data
         NSInteger userUnit = [UAHelper userBGUnit];
         NSNumber *gloodRangeMin = [UAHelper convertBGValue:[NSNumber numberWithFloat:lowestReading] fromUnit:BGTrackingUnitMMO toUnit:userUnit];
         NSNumber *gloodRangeMax = [UAHelper convertBGValue:[NSNumber numberWithFloat:25.0f] fromUnit:BGTrackingUnitMMO toUnit:userUnit];
@@ -214,16 +203,7 @@
     SChartMultiYDataPoint *multiPoint = [[SChartMultiYDataPoint alloc] init];
     
     UAReading *reading = (UAReading *)[[chartData objectForKey:@"data"] objectAtIndex:dataIndex];
-    multiPoint.xValue = @([reading.timestamp hour] + (([reading.timestamp minute]/59)*1));
-    
-    NSDateComponents *components = [[NSDateComponents alloc] init];
-    [components setHour:[reading.timestamp hour]];
-    [components setMinute:[reading.timestamp minute]];
-    [components setSecond:0];
-    
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDate *date = [calendar dateFromComponents:components];
-    multiPoint.xValue = date;
+    multiPoint.xValue = [NSDate dateWithYear:nil month:nil day:nil hour:@([reading.timestamp hour]) minute:@([reading.timestamp minute]) seconds:@([reading.timestamp seconds])];
     
     if(seriesIndex == 0)
     {
