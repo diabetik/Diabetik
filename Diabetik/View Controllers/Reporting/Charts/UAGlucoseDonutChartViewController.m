@@ -1,5 +1,5 @@
 //
-//  UAHealthyGlucoseChartViewController.h
+//  UAGlucoseDonutChartViewController.m
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 09/03/2013.
@@ -19,9 +19,9 @@
 //
 
 #import <ShinobiCharts/SChartCanvas.h>
-#import "UAHealthyGlucoseChartViewController.h"
+#import "UAGlucoseDonutChartViewController.h"
 
-@implementation UAHealthyGlucoseChartViewController
+@implementation UAGlucoseDonutChartViewController
 
 #pragma mark - Chart logic
 - (NSDictionary *)parseData:(NSArray *)theData

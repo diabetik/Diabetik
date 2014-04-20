@@ -1,5 +1,5 @@
 //
-//  UABloodGlucoseChartViewController.m
+//  UAGlucoseDonutChartViewController.h
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 09/03/2013.
@@ -19,10 +19,8 @@
 //
 
 #import "UAChartViewController.h"
-
 #import "UAEvent.h"
 #import "UAReading.h"
 
-@class UALineFitCalculator;
-@interface UABloodGlucoseChartViewController : UAChartViewController <SChartDatasource, SChartDelegate>
+@interface UAGlucoseDonutChartViewController : UAChartViewController <SChartDatasource, SChartDelegate>
 @end

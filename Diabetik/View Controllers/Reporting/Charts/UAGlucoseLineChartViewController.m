@@ -1,5 +1,5 @@
 //
-//  UABloodGlucoseChartViewController.m
+//  UAGlucoseLineChartViewController.m
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 09/03/2013.
@@ -18,11 +18,11 @@
 //  limitations under the License.
 //
 
-#import "UABloodGlucoseChartViewController.h"
+#import "UAGlucoseLineChartViewController.h"
 #import "UAChartLineCrosshair.h"
 #import "UALeastSquareFitCalculator.h"
 
-@interface UABloodGlucoseChartViewController ()
+@interface UAGlucoseLineChartViewController ()
 {
     UALineFitCalculator *trendline;
     
@@ -30,7 +30,7 @@
 }
 @end
 
-@implementation UABloodGlucoseChartViewController
+@implementation UAGlucoseLineChartViewController
 
 #pragma mark - Chart logic
 - (NSDictionary *)parseData:(NSArray *)theData

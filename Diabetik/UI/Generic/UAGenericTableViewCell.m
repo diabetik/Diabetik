@@ -61,7 +61,7 @@
     CGFloat x = 16.0f;
     if(self.imageView && self.imageView.image)
     {
-        CGFloat y = floorf(self.contentView.bounds.size.height/2.0f - self.imageView.bounds.size.height/2.0f);
+        CGFloat y = ceilf(self.contentView.bounds.size.height/2.0f - self.imageView.bounds.size.height/2.0f);
         self.imageView.frame = CGRectMake(x, y, self.imageView.frame.size.width, self.imageView.frame.size.height);
         x += self.imageView.frame.size.width + 10.0f;
     }
@@ -78,35 +78,32 @@
             height += detailSize.height;
         }
         
-        CGFloat y = floorf(self.bounds.size.height/2.0f - height/2.0f);
+        CGFloat y = ceilf(self.bounds.size.height/2.0f - height/2.0f);
         CGFloat width = titleSize.width > detailSize.width ? titleSize.width : detailSize.width;
         self.textLabel.frame = CGRectMake(x, y, titleSize.width, titleSize.height);
         if(self.detailTextLabel && self.detailTextLabel.text)
         {
-            self.detailTextLabel.frame = CGRectMake(x, floorf(y+titleSize.height), detailSize.width, detailSize.height);
+            self.detailTextLabel.frame = CGRectMake(x, ceilf(y+titleSize.height), detailSize.width, detailSize.height);
         }
-        x += floorf(width + 10.0f);
+        x += ceilf(width + 10.0f);
     }
     
     if(self.accessoryControl)
     {
         self.accessoryView.frame = CGRectMake(x, 0.0f, self.bounds.size.width-x-16.0f, self.contentView.bounds.size.height);
         
-        if(self.accessoryControl)
+        UIView *control = (UIView *)self.accessoryControl;
+        CGRect controlFrame = CGRectZero;
+        if(control.bounds.size.width < self.accessoryView.bounds.size.width)
         {
-            UIView *control = (UIView *)self.accessoryControl;
-            CGRect controlFrame = CGRectZero;
-            if(control.bounds.size.width < self.accessoryView.bounds.size.width)
-            {
-                CGFloat y = control.bounds.size.height < self.accessoryView.bounds.size.height ? (self.accessoryView.bounds.size.height-control.bounds.size.height)/2.0f : 0.0f;
-                controlFrame = CGRectMake(self.accessoryView.bounds.size.width-control.bounds.size.width, y, control.bounds.size.width, control.bounds.size.height);
-            }
-            else
-            {
-                controlFrame = self.accessoryView.bounds;
-            }
-            [control setFrame:controlFrame];
+            CGFloat y = ceilf(control.bounds.size.height < self.accessoryView.bounds.size.height ? (self.accessoryView.bounds.size.height-control.bounds.size.height)/2.0f : 0.0f);
+            controlFrame = CGRectMake(self.accessoryView.bounds.size.width-control.bounds.size.width, y, control.bounds.size.width, control.bounds.size.height);
         }
+        else
+        {
+            controlFrame = self.accessoryView.bounds;
+        }
+        [control setFrame:controlFrame];
     }
 }
 

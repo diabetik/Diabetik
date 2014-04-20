@@ -1,5 +1,5 @@
 //
-//  UAHealthyGlucoseChartViewController.h
+//  UAGlucoseCandlestickChartViewController.h
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 09/03/2013.
@@ -19,8 +19,10 @@
 //
 
 #import "UAChartViewController.h"
+
 #import "UAEvent.h"
 #import "UAReading.h"
 
-@interface UAHealthyGlucoseChartViewController : UAChartViewController <SChartDatasource, SChartDelegate>
+@class UALineFitCalculator;
+@interface UAGlucoseCandlestickChartViewController : UAChartViewController <SChartDatasource, SChartDelegate>
 @end
