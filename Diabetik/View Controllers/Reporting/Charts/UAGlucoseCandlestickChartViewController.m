@@ -20,12 +20,11 @@
 
 #import "UAGlucoseCandlestickChartViewController.h"
 #import "UAChartLineCrosshair.h"
+#import "OrderedDictionary.h"
 #import "UALeastSquareFitCalculator.h"
 
 @interface UAGlucoseCandlestickChartViewController ()
 {
-    UALineFitCalculator *trendline;
-    
     double lowestReading;
 }
 @end
@@ -35,36 +34,58 @@
 #pragma mark - Chart logic
 - (NSDictionary *)parseData:(NSArray *)theData
 {
+    lowestReading = 999999.0f;
+    
     NSDate *minDate = [NSDate distantFuture];
     NSDate *maxDate = [NSDate distantPast];
     
-    lowestReading = 999999.0f;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterShortStyle];
     
-    NSMutableArray *formattedData = [NSMutableArray array];
+    OrderedDictionary *dictionary = [OrderedDictionary dictionary];
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timestamp" ascending:YES];
+    theData = [theData sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+    
     for(UAEvent *event in theData)
     {
         if([event isKindOfClass:[UAReading class]])
         {
-            if([event.timestamp isEarlierThanDate:minDate]) minDate = event.timestamp;
-            if([event.timestamp isLaterThanDate:maxDate]) maxDate = event.timestamp;
+            NSDate *timestamp = [event.timestamp dateAtStartOfDay];
+            if([timestamp isEarlierThanDate:minDate]) minDate = timestamp;
+            if([timestamp isLaterThanDate:maxDate]) maxDate = timestamp;
             
-            UAReading *reading = (UAReading *)event;
-            if(lowestReading > [reading.mmoValue doubleValue])
+            NSMutableArray *events = nil;
+            NSString *key = [dateFormatter stringFromDate:timestamp];
+            if(!dictionary[key])
             {
-                lowestReading = [reading.mmoValue doubleValue];
+                events = [NSMutableArray array];
             }
+            else
+            {
+                events = [NSMutableArray arrayWithArray:[dictionary objectForKey:key]];
+            }
+            [events addObject:event];
             
-            [formattedData addObject:event];
+            dictionary[key] = events;
         }
     }
     
-    trendline = [[UALineFitCalculator alloc] init];
-    double x = 0;
-    for(NSInteger i = formattedData.count-1; i >= 0; i--)
+    NSMutableDictionary *formattedData = [NSMutableDictionary dictionary];
+    for(NSString *date in dictionary)
     {
-        UAReading *reading = (UAReading *)[formattedData objectAtIndex:i];
-        [trendline addPoint:CGPointMake(x, [[reading value] doubleValue])];
-        x++;
+        if([dictionary[date] count] > 1)
+        {
+            UAReading *lowReading = nil;
+            UAReading *highReading = nil;
+            for(UAReading *reading in dictionary[date])
+            {
+                if([reading.value doubleValue] < lowestReading) lowestReading = [reading.value doubleValue];
+                if(!highReading || [reading.mmoValue doubleValue] > [highReading.mmoValue doubleValue]) highReading = reading;
+                if(!lowReading || [reading.mmoValue doubleValue] < [lowReading.mmoValue doubleValue]) lowReading = reading;
+            }
+            formattedData[date] = @{@"open": [dictionary[date] firstObject], @"close": [dictionary[date] lastObject], @"low": lowReading, @"high": highReading};
+        }
     }
     
     // Stop a crash from occuring if our minDate equals our maxDate
@@ -77,7 +98,7 @@
 }
 - (BOOL)hasEnoughDataToShowChart
 {
-    if([[chartData objectForKey:@"data"] count] >= 2)
+    if([[chartData objectForKey:@"data"] count] >= 1)
     {
         return YES;
     }
@@ -143,123 +164,37 @@
 #pragma mark - SChartDataSource methods
 - (NSInteger)numberOfSeriesInSChart:(ShinobiChart *)chart
 {
-    NSInteger dataPoints = [[chartData objectForKey:@"data"] count];
-    
-    return dataPoints > 1 ? 3 : 2;
+     return 1;
 }
 - (SChartSeries*)sChart:(ShinobiChart *)chart seriesAtIndex:(NSInteger)seriesIndex
 {
-    SChartSeries *series = nil;
-    
     if(seriesIndex == 0)
     {
-        SChartLineSeries *lineSeries = [[SChartLineSeries alloc] init];
-        lineSeries.selectionMode = SChartSelectionPoint;
-        lineSeries.togglePointSelection = YES;
-        lineSeries.crosshairEnabled = YES;
-        
-        SChartPointStyle *pointStyle = [[SChartPointStyle alloc] init];
-        pointStyle.innerColor = [UIColor whiteColor];
-        pointStyle.color = [UIColor colorWithRed:254.0f/255.0f green:110.0f/255.0f blue:116.0f/255.0f alpha:1.0f];
-        pointStyle.showPoints = YES;
-        
-        SChartLineSeriesStyle *style = [[SChartLineSeriesStyle alloc] init];
-        style.showFill = NO;
-        style.areaLineColor = [UIColor colorWithRed:254.0f/255.0f green:110.0f/255.0f blue:116.0f/255.0f alpha:1.0f];
-        style.lineColor = [UIColor colorWithRed:254.0f/255.0f green:110.0f/255.0f blue:116.0f/255.0f alpha:1.0f];
-        style.areaColor  = [UIColor colorWithRed:254.0f/255.0f green:110.0f/255.0f blue:116.0f/255.0f alpha:1.0f];
-        style.fillWithGradient = NO;
-        style.lineCrosshairTraceStyle = SChartLineCrosshairTraceStyleHorizontal;
-        style.lineWidth = [NSNumber numberWithDouble:3.0f];
-        style.areaLineWidth = [NSNumber numberWithDouble:3.0f];
-        style.pointStyle = pointStyle;
-        
-        lineSeries.style = style;
-        series = lineSeries;
-    }
-    else if(seriesIndex == 1)
-    {
-        SChartLineSeries *lineSeries = [[SChartLineSeries alloc] init];
-        
-        SChartLineSeriesStyle *style = [[SChartLineSeriesStyle alloc] init];
-        style.showFill = NO;
-        style.lineColor = [UIColor colorWithRed:186.0f/255.0f green:125.0f/255.0f blue:255.0f/255.0f alpha:1.0f];
-        
-        lineSeries.style = style;
-        
-        series = lineSeries;
-    }
-    else if(seriesIndex == 2)
-    {
-        SChartBandSeries *bandSeries = [SChartBandSeries new];
-        
-        UIColor *color = [UIColor colorWithRed:24.0f/255.0f green:197.0f/255.0f blue:186.0f/255.0f alpha:0.85f];
-        
-        SChartBandSeriesStyle *style = [[SChartBandSeriesStyle alloc] init];
-        style.lineWidth = [NSNumber numberWithDouble:1.0f];
-        style.lineColorLow = color;
-        style.lineColorHigh = color;
-        style.areaColorNormal = color;
-        bandSeries.style = style;
-        
-        series = bandSeries;
+        SChartCandlestickSeries *candlestickSeries = [[SChartCandlestickSeries alloc] init];
+        return candlestickSeries;
     }
     
-    return series;
+    return nil;
 }
 - (NSInteger)sChart:(ShinobiChart *)chart numberOfDataPointsForSeriesAtIndex:(NSInteger)seriesIndex
 {
-    NSInteger dataPoints = [[chartData objectForKey:@"data"] count];
-    if(seriesIndex == 1)
-    {
-        return 2;
-    }
-    
-    return dataPoints;
+    return [[chartData objectForKey:@"data"] count];
 }
 - (id<SChartData>)sChart:(ShinobiChart *)chart dataPointAtIndex:(NSInteger)dataIndex forSeriesAtIndex:(NSInteger)seriesIndex
 {
     SChartMultiYDataPoint *multiPoint = [[SChartMultiYDataPoint alloc] init];
     
-    UAReading *reading = (UAReading *)[[chartData objectForKey:@"data"] objectAtIndex:dataIndex];
-    multiPoint.xValue = reading.timestamp;
+    NSString *dateKey = [chartData[@"data"] allKeys][dataIndex];
+    NSDictionary *dayData = chartData[@"data"][dateKey];
+    NSDate *date = [[(UAReading *)dayData[@"open"] timestamp] dateAtStartOfDay];
     
+    multiPoint.xValue = date;
     if(seriesIndex == 0)
     {
-        multiPoint.yValue = reading.value;
-        
-        return multiPoint;
-    }
-    else if(seriesIndex == 1)
-    {
-        UAReading *reading = nil;
-        if(dataIndex == 0)
-        {
-            reading = (UAReading *)[[chartData objectForKey:@"data"] objectAtIndex:0];
-            multiPoint.yValue = [NSNumber numberWithDouble:[trendline projectedYValueForX:[[chartData objectForKey:@"data"] count]-1]];
-        }
-        else
-        {
-            reading = (UAReading *)[[chartData objectForKey:@"data"] lastObject];
-            multiPoint.yValue = [NSNumber numberWithDouble:[trendline projectedYValueForX:0]];
-        }
-        multiPoint.xValue = reading.timestamp;
-        
-        return multiPoint;
-    }
-    else if(seriesIndex == 2)
-    {
-        NSInteger userUnit = [UAHelper userBGUnit];
-        
-        double min = [[[NSUserDefaults standardUserDefaults] valueForKey:kMinHealthyBGKey] doubleValue];
-        double max = [[[NSUserDefaults standardUserDefaults] valueForKey:kMaxHealthyBGKey] doubleValue];
-        
-        NSNumber *minimumHealthy = (min < lowestReading && lowestReading < max) ? [NSNumber numberWithDouble:lowestReading] : [[NSUserDefaults standardUserDefaults] valueForKey:kMinHealthyBGKey];
-        NSNumber *healthyRangeMin = [UAHelper convertBGValue:minimumHealthy fromUnit:BGTrackingUnitMMO toUnit:userUnit];
-        NSNumber *healthyRangeMax = [UAHelper convertBGValue:[[NSUserDefaults standardUserDefaults] valueForKey:kMaxHealthyBGKey] fromUnit:BGTrackingUnitMMO toUnit:userUnit];
-        
-        [multiPoint.yValues setValue:healthyRangeMin forKey:@"Low"];
-        [multiPoint.yValues setValue:healthyRangeMax forKey:@"High"];
+        multiPoint.yValues[SChartCandlestickKeyOpen] = [(UAReading *)dayData[@"open"] value];
+        multiPoint.yValues[SChartCandlestickKeyClose] = [(UAReading *)dayData[@"close"] value];
+        multiPoint.yValues[SChartCandlestickKeyLow] = [(UAReading *)dayData[@"low"] value];
+        multiPoint.yValues[SChartCandlestickKeyHigh] = [(UAReading *)dayData[@"high"] value];
         
         return multiPoint;
     }

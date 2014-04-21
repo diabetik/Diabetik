@@ -81,7 +81,7 @@
     reports = @[
                 @{@"title": NSLocalizedString(@"Blood Glucose Readings", nil), @"description": NSLocalizedString(@"A line chart showing your blood glucose and general trend over a given period", nil), @"class": [UAGlucoseLineChartViewController class]},
                 @{@"title": NSLocalizedString(@"Time-of-Day Glucose Readings", nil), @"description": NSLocalizedString(@"A scatter chart showing blood glucose levels during different time segments", nil), @"class": [UAGlucoseTimeOfDayChartViewController class]},
-                @{@"title": NSLocalizedString(@"Daily Blood Glucose Ranges", nil), @"description": NSLocalizedString(@"A candlestick chart showing your first, last, lowest and highest glucose readings per day", nil), @"class": [UAGlucoseLineChartViewController class]},
+                @{@"title": NSLocalizedString(@"Daily Blood Glucose Ranges", nil), @"description": NSLocalizedString(@"A candlestick chart showing your first, last, lowest and highest glucose readings per day", nil), @"class": [UAGlucoseCandlestickChartViewController class]},
                 @{@"title": NSLocalizedString(@"Carbohydrate in-take", nil), @"description": NSLocalizedString(@"A stacked bar chart (segmented by morning, afternoon and evening) showing total carbohydrate in-take per day", nil), @"class": [UACarbsChartViewController class]},
                 @{@"title": NSLocalizedString(@"Healthy Glucose Tally", nil), @"description": NSLocalizedString(@"A pie chart showing the number of healthy glucose readings versus unhealthy over a given period", nil), @"class": [UAGlucoseDonutChartViewController class]}
                 ];
