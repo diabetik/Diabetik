@@ -19,6 +19,7 @@
 //
 
 #import "UASummaryWidgetListViewController.h"
+#import "UASummaryWidgetListTableViewCell.h"
 
 // Widgets
 #import "UAHbA1CWidget.h"
@@ -37,6 +38,8 @@
     self = [super initWithStyle:UITableViewStylePlain];
     if(self)
     {
+        self.title = NSLocalizedString(@"Add Widget", nil);
+        
         NSDictionary *hba1cWidget = @{@"name": NSLocalizedString(@"HbA1c estimate", nil),
                                       @"description": NSLocalizedString(@"An estimated HbA1c reading over a certain time period", nil), @"class": [UAHbA1CWidget class]};
         NSDictionary *todWidget = @{@"name": NSLocalizedString(@"Average glucose", nil),
@@ -44,15 +47,36 @@
         NSDictionary *timeSinceWidget = @{@"name": NSLocalizedString(@"Time since", nil),
                                     @"description": NSLocalizedString(@"The time since a certain event", nil), @"class":  [UATimeSinceWidget class]};
         self.widgetList = [NSArray arrayWithObjects:todWidget, hba1cWidget, timeSinceWidget, nil];
-        
-        
     }
     
     return self;
 }
+- (void)loadView
+{
+    FXBlurView *baseView = [[FXBlurView alloc] initWithFrame:CGRectZero];
+    baseView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    baseView.tintColor = [UIColor blackColor];
+    baseView.dynamic = NO;
+    baseView.blurRadius = 15.0f;
+    
+    self.tableView = [[TPKeyboardAvoidingTableView alloc] initWithFrame:baseView.frame style:tableStyle];
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundView = nil;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    self.tableView.separatorColor = [UIColor colorWithRed:189.0f/255.0f green:189.0f/255.0f blue:189.0f/255.0f alpha:1.0f];
+    [baseView addSubview:self.tableView];
+    
+    self.view = baseView;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
     [self.closeButton setBackgroundImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
@@ -69,10 +93,7 @@
 #pragma mark - Presentation logic
 - (void)dismiss
 {
-    __weak typeof(self) weakRef = self;
-    [weakRef willMoveToParentViewController:nil];
-    [weakRef.view removeFromSuperview];
-    [weakRef removeFromParentViewController];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDelegate methods
@@ -93,12 +114,16 @@
 {
     return [self.widgetList count];
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 92.0f;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"widget"];
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"widget"];
+        cell = [[UASummaryWidgetListTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"widget"];
     }
     
     cell.textLabel.text = self.widgetList[indexPath.row][@"name"];

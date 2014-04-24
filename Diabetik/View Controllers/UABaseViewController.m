@@ -20,8 +20,6 @@
 
 #import "UABaseViewController.h"
 
-#import "TPKeyboardAvoidingTableView.h"
-
 @interface UABaseViewController ()
 {
     UIView *dismissableOverlayView;

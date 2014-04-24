@@ -20,6 +20,7 @@
 
 #import <UIKit/UIKit.h>
 #import "GAI.h"
+#import "TPKeyboardAvoidingTableView.h"
 
 #import "UAUI.h"
 #import "UAHelper.h"

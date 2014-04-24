@@ -186,6 +186,7 @@
 		53BE89EE18983E650035CF4A /* UASettingsEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */; };
 		53D1DD6418C8CED30083C524 /* UAEventInputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D1DD6318C8CED30083C524 /* UAEventInputTextField.m */; };
 		53D5C4D618412A720000CB86 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4D518412A720000CB86 /* libc++.dylib */; };
+		53DED73F1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DED73E1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.m */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
 		53EABCD418B3D8AF001C5C39 /* UASummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCD318B3D8AF001C5C39 /* UASummaryViewController.m */; };
@@ -530,6 +531,8 @@
 		53D1DD6218C8CED30083C524 /* UAEventInputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputTextField.h; sourceTree = "<group>"; };
 		53D1DD6318C8CED30083C524 /* UAEventInputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputTextField.m; sourceTree = "<group>"; };
 		53D5C4D518412A720000CB86 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		53DED73D1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryWidgetListTableViewCell.h; sourceTree = "<group>"; };
+		53DED73E1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryWidgetListTableViewCell.m; sourceTree = "<group>"; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		53EABCD218B3D8AF001C5C39 /* UASummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryViewController.h; sourceTree = "<group>"; };
@@ -1276,6 +1279,8 @@
 			children = (
 				538A2828190024DD0083D124 /* UASummaryWidgetListViewController.h */,
 				538A2829190024DD0083D124 /* UASummaryWidgetListViewController.m */,
+				53DED73D1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.h */,
+				53DED73E1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.m */,
 			);
 			path = "Widget List";
 			sourceTree = "<group>";
@@ -1687,6 +1692,7 @@
 				533F32FE1773266600AD89E2 /* UARunKeeperAccount.m in Sources */,
 				53438AEB1902CBF400E2B2E1 /* UAGlucoseTimeOfDayChartViewController.m in Sources */,
 				533F32FF1773266600AD89E2 /* UATag.m in Sources */,
+				53DED73F1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.m in Sources */,
 				5330A26818AAC7E200000A47 /* UAActivityInputViewController.m in Sources */,
 				533F33021773266600AD89E2 /* Diabetik.xcdatamodeld in Sources */,
 				533F33031773266600AD89E2 /* main.m in Sources */,

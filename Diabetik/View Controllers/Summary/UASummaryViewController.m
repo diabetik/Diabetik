@@ -361,10 +361,18 @@
 {
     self.widgetListVC = [[UASummaryWidgetListViewController alloc] init];
     self.widgetListVC.delegate = self;
+    [(FXBlurView *)self.widgetListVC.view setUnderlyingView:self.parentViewController.view];
+    
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:self.widgetListVC];
+    [self presentViewController:nvc animated:YES completion:nil];
+    
+    /*
+    
     self.widgetListVC.view.frame = self.view.bounds;
     [self.widgetListVC willMoveToParentViewController:self];
     [self.view addSubview:self.widgetListVC.view];
     [self.widgetListVC didMoveToParentViewController:self];
+     */
 }
 
 #pragma mark - Presentation logic
