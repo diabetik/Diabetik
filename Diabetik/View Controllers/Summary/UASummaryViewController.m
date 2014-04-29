@@ -21,10 +21,10 @@
 #import "NSDate+Extension.h"
 #import "FXBlurView.h"
 
-#import "UASummaryCollectionViewFlowLayout.h"
 #import "UASummaryViewController.h"
 #import "UAEventController.h"
 
+#import "UASummaryCollectionViewCell.h"
 #import "UASummaryWidget.h"
 
 @interface UASummaryViewController ()
@@ -81,7 +81,8 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    UASummaryCollectionViewFlowLayout *layout = [[UASummaryCollectionViewFlowLayout alloc] init];
+    LXReorderableCollectionViewFlowLayout *layout = [[LXReorderableCollectionViewFlowLayout alloc] init];
+    //UASummaryCollectionViewFlowLayout *layout = [[UASummaryCollectionViewFlowLayout alloc] init];
     self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
     self.collectionView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.collectionView.delegate = self;
@@ -90,7 +91,7 @@
     self.collectionView.alwaysBounceVertical = YES;
     [self.view addSubview:self.collectionView];
     
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"widget"];
+    [self.collectionView registerClass:[UASummaryCollectionViewCell class] forCellWithReuseIdentifier:@"widget"];
     [self.collectionView reloadData];
     
     self.closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
@@ -429,15 +430,10 @@
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)aCollectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [aCollectionView dequeueReusableCellWithReuseIdentifier:@"widget" forIndexPath:indexPath];
-    for(id subview in cell.contentView.subviews)
-    {
-        [subview removeFromSuperview];
-    }
+    UASummaryCollectionViewCell *cell = (UASummaryCollectionViewCell *)[aCollectionView dequeueReusableCellWithReuseIdentifier:@"widget" forIndexPath:indexPath];
     
     UIView *widgetView = [self.widgets objectAtIndex:indexPath.row];
-    widgetView.frame = cell.contentView.bounds;
-    [cell.contentView addSubview:widgetView];
+    [cell setWidgetView:widgetView];
     
     return cell;
 }
@@ -446,7 +442,9 @@
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UASummaryWidget *widget = self.widgets[indexPath.row];
-    return CGSizeMake(collectionView.bounds.size.width, widget.height);
+    
+    NSLog(@"Widget %@ size: %@", indexPath, NSStringFromCGSize(CGSizeMake(collectionView.bounds.size.width, widget.height)));
+    return CGSizeMake(collectionView.bounds.size.width, [widget height]);
 }
 
 #pragma mark - Helpers
@@ -484,8 +482,6 @@
     id object = [self.widgets objectAtIndex:fromIndexPath.item];
     [self.widgets removeObjectAtIndex:fromIndexPath.item];
     [self.widgets insertObject:object atIndex:toIndexPath.item];
-    
-    [collectionView.collectionViewLayout invalidateLayout];
 }
 - (void)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout didBeginDraggingItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -517,7 +513,6 @@
 }
 - (BOOL)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout willPerformCustomDropAnimationForItemAtIndexPath:(NSIndexPath *)indexPath withRepresentationView:(UIView *)representationView atDropPoint:(CGPoint)point
 {
-        NSLog(@"%@ %@", NSStringFromCGRect(representationView.bounds), NSStringFromCGPoint(self.removeButton.center));    
     if(CGRectContainsPoint(self.removeButton.frame, point))
     {
         representationView.transform = CGAffineTransformMakeScale(0.0f, 0.0f);

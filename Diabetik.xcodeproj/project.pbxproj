@@ -184,13 +184,14 @@
 		53B53AF418672BE000773EE7 /* UASettingsTextViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53B53AF318672BE000773EE7 /* UASettingsTextViewCell.m */; };
 		53B576761709DF02007322EF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
 		53BE89EE18983E650035CF4A /* UASettingsEntryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */; };
+		53CF4B6E190D818000FC01AE /* UAGlucoseLineChartWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF4B6D190D818000FC01AE /* UAGlucoseLineChartWidget.m */; };
+		53CF4B71190DB1BC00FC01AE /* UASummaryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CF4B70190DB1BC00FC01AE /* UASummaryCollectionViewCell.m */; };
 		53D1DD6418C8CED30083C524 /* UAEventInputTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 53D1DD6318C8CED30083C524 /* UAEventInputTextField.m */; };
 		53D5C4D618412A720000CB86 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4D518412A720000CB86 /* libc++.dylib */; };
 		53DED73F1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DED73E1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.m */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
 		53EABCD418B3D8AF001C5C39 /* UASummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCD318B3D8AF001C5C39 /* UASummaryViewController.m */; };
-		53EABCDB18B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCDA18B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.m */; };
 		53EABCDE18B3E02B001C5C39 /* UASummaryWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCDD18B3E02B001C5C39 /* UASummaryWidget.m */; };
 		53F29548187845360021F6FC /* UAAnalytikController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F29547187845360021F6FC /* UAAnalytikController.m */; };
 		53F29555187855AB0021F6FC /* UASyncController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F29554187855AB0021F6FC /* UASyncController.m */; };
@@ -528,6 +529,10 @@
 		53BE89EC18983E650035CF4A /* UASettingsEntryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASettingsEntryViewController.h; sourceTree = "<group>"; };
 		53BE89ED18983E650035CF4A /* UASettingsEntryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASettingsEntryViewController.m; sourceTree = "<group>"; };
 		53CDF9DF18772C6E00F5FA48 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		53CF4B6C190D818000FC01AE /* UAGlucoseLineChartWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAGlucoseLineChartWidget.h; sourceTree = "<group>"; };
+		53CF4B6D190D818000FC01AE /* UAGlucoseLineChartWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAGlucoseLineChartWidget.m; sourceTree = "<group>"; };
+		53CF4B6F190DB1BC00FC01AE /* UASummaryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryCollectionViewCell.h; sourceTree = "<group>"; };
+		53CF4B70190DB1BC00FC01AE /* UASummaryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryCollectionViewCell.m; sourceTree = "<group>"; };
 		53D1DD6218C8CED30083C524 /* UAEventInputTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAEventInputTextField.h; sourceTree = "<group>"; };
 		53D1DD6318C8CED30083C524 /* UAEventInputTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAEventInputTextField.m; sourceTree = "<group>"; };
 		53D5C4D518412A720000CB86 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
@@ -537,8 +542,6 @@
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		53EABCD218B3D8AF001C5C39 /* UASummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryViewController.h; sourceTree = "<group>"; };
 		53EABCD318B3D8AF001C5C39 /* UASummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryViewController.m; sourceTree = "<group>"; };
-		53EABCD918B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryCollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		53EABCDA18B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		53EABCDC18B3E02B001C5C39 /* UASummaryWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryWidget.h; sourceTree = "<group>"; };
 		53EABCDD18B3E02B001C5C39 /* UASummaryWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryWidget.m; sourceTree = "<group>"; };
 		53F29546187845360021F6FC /* UAAnalytikController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAnalytikController.h; sourceTree = "<group>"; };
@@ -1423,8 +1426,8 @@
 				53EABCD518B3DA17001C5C39 /* Widgets */,
 				53EABCD218B3D8AF001C5C39 /* UASummaryViewController.h */,
 				53EABCD318B3D8AF001C5C39 /* UASummaryViewController.m */,
-				53EABCD918B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.h */,
-				53EABCDA18B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.m */,
+				53CF4B6F190DB1BC00FC01AE /* UASummaryCollectionViewCell.h */,
+				53CF4B70190DB1BC00FC01AE /* UASummaryCollectionViewCell.m */,
 			);
 			path = Summary;
 			sourceTree = "<group>";
@@ -1440,6 +1443,8 @@
 				538A282F190026550083D124 /* UATimeOfDayWidget.m */,
 				538A2831190026600083D124 /* UATimeSinceWidget.h */,
 				538A2832190026600083D124 /* UATimeSinceWidget.m */,
+				53CF4B6C190D818000FC01AE /* UAGlucoseLineChartWidget.h */,
+				53CF4B6D190D818000FC01AE /* UAGlucoseLineChartWidget.m */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -1712,7 +1717,6 @@
 				5330A28718AAC9B800000A47 /* UAEventInputTextFieldViewCell.m in Sources */,
 				53F78ED918422B5B006736F5 /* TGRImageZoomAnimationController.m in Sources */,
 				53FE5FAE189EC077008AC334 /* UACategoryInputView.m in Sources */,
-				53EABCDB18B3DEBE001C5C39 /* UASummaryCollectionViewFlowLayout.m in Sources */,
 				53AFAA2418A90E7B00E65168 /* UAAddEntryModalView.m in Sources */,
 				5304B5BB18745DCF00184544 /* UATooltipView.m in Sources */,
 				533D9D8918A0FC1300CE6104 /* UAActionSheet.m in Sources */,
@@ -1772,6 +1776,7 @@
 				53A5D6C11870D5950077DFBE /* UAInsulinCalculatorTitleView.m in Sources */,
 				53F29555187855AB0021F6FC /* UASyncController.m in Sources */,
 				533F34E21773266600AD89E2 /* UATimelineTableHeaderView.m in Sources */,
+				53CF4B71190DB1BC00FC01AE /* UASummaryCollectionViewCell.m in Sources */,
 				53A5D6C01870D5950077DFBE /* UAInsulinCalculatorViewController.m in Sources */,
 				533F34E31773266600AD89E2 /* UATimelineViewController.m in Sources */,
 				533F34E41773266600AD89E2 /* UABaseViewController.m in Sources */,
@@ -1813,6 +1818,7 @@
 				533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */,
 				53F78EE018425634006736F5 /* UATimelineStatView.m in Sources */,
 				5301AED5185A08A0005F4CF4 /* UACoreDataController.m in Sources */,
+				53CF4B6E190D818000FC01AE /* UAGlucoseLineChartWidget.m in Sources */,
 				53B53AF418672BE000773EE7 /* UASettingsTextViewCell.m in Sources */,
 				535918A717809663008C16DD /* Diabetik_2_to_1.1.xcmappingmodel in Sources */,
 			);

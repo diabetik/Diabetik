@@ -25,6 +25,7 @@
 #import "UAHbA1CWidget.h"
 #import "UATimeOfDayWidget.h"
 #import "UATimeSinceWidget.h"
+#import "UAGlucoseLineChartWidget.h"
 
 @interface UASummaryWidgetListViewController ()
 @property (nonatomic, strong) NSArray *widgetList;
@@ -46,7 +47,9 @@
                                       @"description": NSLocalizedString(@"Average glucose readings for a specific time of day", nil), @"class":  [UATimeOfDayWidget class]};
         NSDictionary *timeSinceWidget = @{@"name": NSLocalizedString(@"Time since", nil),
                                     @"description": NSLocalizedString(@"The time since a certain event", nil), @"class":  [UATimeSinceWidget class]};
-        self.widgetList = [NSArray arrayWithObjects:todWidget, hba1cWidget, timeSinceWidget, nil];
+        NSDictionary *glucoseLineChartWidget = @{@"name": NSLocalizedString(@"Glucose Line Chart", nil),
+                                          @"description": NSLocalizedString(@"The time since a certain event", nil), @"class":  [UAGlucoseLineChartWidget class]};
+        self.widgetList = [NSArray arrayWithObjects:todWidget, hba1cWidget, timeSinceWidget, glucoseLineChartWidget, nil];
     }
     
     return self;

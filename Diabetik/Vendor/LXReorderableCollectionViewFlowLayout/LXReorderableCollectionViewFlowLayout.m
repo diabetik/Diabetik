@@ -146,6 +146,7 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
 }
 
 - (void)invalidateLayoutIfNecessary {
+    
     NSIndexPath *newIndexPath = [self.collectionView indexPathForItemAtPoint:self.currentView.center];
     NSIndexPath *previousIndexPath = self.selectedItemIndexPath;
     
@@ -377,6 +378,7 @@ static NSString * const kLXCollectionViewKeyPath = @"collectionView";
                          
                          if([strongSelf.delegate respondsToSelector:@selector(collectionView:layout:didEndDraggingItemAtIndexPath:atPoint:)])
                          {
+                             NSLog(@"DROPPING NOW");
                              [strongSelf.delegate collectionView:strongSelf.collectionView layout:strongSelf didEndDraggingItemAtIndexPath:currentIndexPath atPoint:dragReleasePoint];
                          }
                      }

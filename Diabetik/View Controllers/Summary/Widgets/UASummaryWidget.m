@@ -31,7 +31,7 @@
         _showingSettings = NO;
         
         self.contentMode = UIViewContentModeRedraw;
-        self.backgroundColor = [UIColor clearColor];
+        self.backgroundColor = [UIColor yellowColor];
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         self.widgetSettingsView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -64,10 +64,15 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    NSLog(@"Layout with %f height", self.bounds.size.height);
     
     self.widgetSettingsView.frame = self.bounds;
     self.widgetContentView.frame = CGRectInset(self.bounds, 10.0f, 0.0f);
     self.activityIndicatorView.center = self.widgetContentView.center;
+}
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"%@ - %f", [self class], [self height]];
 }
 
 #pragma mark - Logic
