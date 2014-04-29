@@ -19,7 +19,7 @@
 //
 
 #import "UANavigationController.h"
-#import "UASummaryViewController.h"
+#import "UAInsightsViewController.h"
 
 @implementation UANavigationController
 
@@ -73,7 +73,7 @@
 {
     [self.view endEditing:YES];
     
-    UASummaryViewController *summaryVC = [[UASummaryViewController alloc] init];
+    UAInsightsViewController *summaryVC = [[UAInsightsViewController alloc] init];
     [summaryVC presentInViewController:self];
 }
 - (NSUInteger)supportedInterfaceOrientations

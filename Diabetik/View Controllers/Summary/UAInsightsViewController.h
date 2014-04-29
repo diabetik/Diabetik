@@ -1,5 +1,5 @@
 //
-//  UASummaryViewController.h
+//  UAInsightsViewController.h
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 18/02/2014.
@@ -22,7 +22,7 @@
 #import "UABaseViewController.h"
 #import "UASummaryWidgetListViewController.h"
 
-@interface UASummaryViewController : UABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, LXReorderableCollectionViewDataSource, UASummaryWidgetListViewDelegate>
+@interface UAInsightsViewController : UABaseViewController <UICollectionViewDataSource, UICollectionViewDelegate, LXReorderableCollectionViewDataSource, UASummaryWidgetListViewDelegate>
 
 // Presentation logic
 - (void)presentInViewController:(UIViewController *)parentVC;

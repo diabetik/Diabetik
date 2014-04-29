@@ -1,5 +1,5 @@
 //
-//  UASummaryViewController.m
+//  UAInsightsViewController.m
 //  Diabetik
 //
 //  Created by Nial Giacomelli on 18/02/2014.
@@ -21,13 +21,13 @@
 #import "NSDate+Extension.h"
 #import "FXBlurView.h"
 
-#import "UASummaryViewController.h"
+#import "UAInsightsViewController.h"
 #import "UAEventController.h"
 
 #import "UASummaryCollectionViewCell.h"
 #import "UASummaryWidget.h"
 
-@interface UASummaryViewController ()
+@interface UAInsightsViewController ()
 {
 }
 @property (nonatomic, strong) UASummaryWidgetListViewController *widgetListVC;
@@ -47,7 +47,7 @@
 
 @end
 
-@implementation UASummaryViewController
+@implementation UAInsightsViewController
 
 #pragma mark - Setup
 - (id)init
@@ -57,11 +57,6 @@
         
         _inEditMode = NO;
         self.widgets = [NSMutableArray array];
-        
-        
-        
-        //self.numberOfDays = 90;
-        //[self analyse];
     }
     return self;
 }

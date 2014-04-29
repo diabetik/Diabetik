@@ -30,7 +30,7 @@
 #import "UAExportViewController.h"
 #import "UAInsulinCalculatorViewController.h"
 #import "UATagsViewController.h"
-#import "UASummaryViewController.h"
+#import "UAInsightsViewController.h"
 
 #import "UASideMenuCell.h"
 
@@ -277,7 +277,7 @@
         }
         else if(indexPath.row == 1)
         {
-            UASummaryViewController *summaryVC = [[UASummaryViewController alloc] init];
+            UAInsightsViewController *summaryVC = [[UAInsightsViewController alloc] init];
             [summaryVC presentInViewController:navigationController];
         }
         else if(indexPath.row == 2)

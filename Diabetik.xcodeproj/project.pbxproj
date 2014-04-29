@@ -191,7 +191,7 @@
 		53DED73F1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 53DED73E1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.m */; };
 		53E59BFB16E91A7E001B5ECD /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
 		53E59BFD16E91A85001B5ECD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
-		53EABCD418B3D8AF001C5C39 /* UASummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCD318B3D8AF001C5C39 /* UASummaryViewController.m */; };
+		53EABCD418B3D8AF001C5C39 /* UAInsightsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCD318B3D8AF001C5C39 /* UAInsightsViewController.m */; };
 		53EABCDE18B3E02B001C5C39 /* UASummaryWidget.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EABCDD18B3E02B001C5C39 /* UASummaryWidget.m */; };
 		53F29548187845360021F6FC /* UAAnalytikController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F29547187845360021F6FC /* UAAnalytikController.m */; };
 		53F29555187855AB0021F6FC /* UASyncController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53F29554187855AB0021F6FC /* UASyncController.m */; };
@@ -540,8 +540,8 @@
 		53DED73E1909B5EB00A0B102 /* UASummaryWidgetListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryWidgetListTableViewCell.m; sourceTree = "<group>"; };
 		53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		53E59BFC16E91A85001B5ECD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		53EABCD218B3D8AF001C5C39 /* UASummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryViewController.h; sourceTree = "<group>"; };
-		53EABCD318B3D8AF001C5C39 /* UASummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryViewController.m; sourceTree = "<group>"; };
+		53EABCD218B3D8AF001C5C39 /* UAInsightsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAInsightsViewController.h; sourceTree = "<group>"; };
+		53EABCD318B3D8AF001C5C39 /* UAInsightsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UAInsightsViewController.m; sourceTree = "<group>"; };
 		53EABCDC18B3E02B001C5C39 /* UASummaryWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UASummaryWidget.h; sourceTree = "<group>"; };
 		53EABCDD18B3E02B001C5C39 /* UASummaryWidget.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UASummaryWidget.m; sourceTree = "<group>"; };
 		53F29546187845360021F6FC /* UAAnalytikController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAAnalytikController.h; sourceTree = "<group>"; };
@@ -1424,8 +1424,8 @@
 			children = (
 				538A2827190024DD0083D124 /* Widget List */,
 				53EABCD518B3DA17001C5C39 /* Widgets */,
-				53EABCD218B3D8AF001C5C39 /* UASummaryViewController.h */,
-				53EABCD318B3D8AF001C5C39 /* UASummaryViewController.m */,
+				53EABCD218B3D8AF001C5C39 /* UAInsightsViewController.h */,
+				53EABCD318B3D8AF001C5C39 /* UAInsightsViewController.m */,
 				53CF4B6F190DB1BC00FC01AE /* UASummaryCollectionViewCell.h */,
 				53CF4B70190DB1BC00FC01AE /* UASummaryCollectionViewCell.m */,
 			);
@@ -1813,7 +1813,7 @@
 				53AFAA2318A90E7B00E65168 /* UAAddEntryModalButton.m in Sources */,
 				533F356B17736C5500AD89E2 /* UACreditsTooltipView.m in Sources */,
 				533F356C17736C5500AD89E2 /* UAExportTooltipView.m in Sources */,
-				53EABCD418B3D8AF001C5C39 /* UASummaryViewController.m in Sources */,
+				53EABCD418B3D8AF001C5C39 /* UAInsightsViewController.m in Sources */,
 				533F356D17736C5500AD89E2 /* UAIntroductionTooltipView.m in Sources */,
 				533F356E17736C5500AD89E2 /* UARemindersTooltipView.m in Sources */,
 				53F78EE018425634006736F5 /* UATimelineStatView.m in Sources */,

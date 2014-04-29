@@ -29,7 +29,7 @@
 #import "UAMedicineInputViewController.h"
 #import "UAActivityInputViewController.h"
 #import "UANoteInputViewController.h"
-#import "UASummaryViewController.h"
+#import "UAInsightsViewController.h"
 #import "UATagController.h"
 
 #import "UAMeal.h"
