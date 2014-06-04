@@ -241,14 +241,9 @@
     
     return NO;
 }
-- (NSUInteger)supportedInterfaceOrientations
+- (BOOL)prefersStatusBarHidden
 {
-    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-    {
-        return UIInterfaceOrientationMaskAllButUpsideDown;
-    }
-    
-    return UIInterfaceOrientationMaskPortrait;
+    return NO;
 }
 
 @end

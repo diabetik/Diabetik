@@ -76,6 +76,28 @@ NSString *bit_base64String(NSData * data, unsigned long length) {
 #endif
 }
 
+NSString *bit_settingsDir(void) {
+  static NSString *settingsDir = nil;
+  static dispatch_once_t predSettingsDir;
+  
+  dispatch_once(&predSettingsDir, ^{
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    
+    // temporary directory for crashes grabbed from PLCrashReporter
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
+    settingsDir = [[paths objectAtIndex:0] stringByAppendingPathComponent:BITHOCKEY_IDENTIFIER];
+    
+    if (![fileManager fileExistsAtPath:settingsDir]) {
+      NSDictionary *attributes = [NSDictionary dictionaryWithObject: [NSNumber numberWithUnsignedLong: 0755] forKey: NSFilePosixPermissions];
+      NSError *theError = NULL;
+      
+      [fileManager createDirectoryAtPath:settingsDir withIntermediateDirectories: YES attributes: attributes error: &theError];
+    }
+  });
+  
+  return settingsDir;
+}
+
 BOOL bit_validateEmail(NSString *email) {
   NSString *emailRegex =
   @"(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"
@@ -91,7 +113,13 @@ BOOL bit_validateEmail(NSString *email) {
 }
 
 NSString *bit_keychainHockeySDKServiceName(void) {
-  NSString *serviceName = [NSString stringWithFormat:@"%@.HockeySDK", bit_mainBundleIdentifier()];
+  static NSString *serviceName = nil;
+  static dispatch_once_t predServiceName;
+  
+  dispatch_once(&predServiceName, ^{
+    serviceName = [NSString stringWithFormat:@"%@.HockeySDK", bit_mainBundleIdentifier()];
+  });
+  
   return serviceName;
 }
 
@@ -430,10 +458,7 @@ UIImage *bit_newWithContentsOfResolutionIndependentFile(NSString * path) {
 
 
 UIImage *bit_imageWithContentsOfResolutionIndependentFile(NSString *path) {
-#ifndef __clang_analyzer__
-  // clang alayzer in 4.2b3 thinks here's a leak, which is not the case.
   return bit_newWithContentsOfResolutionIndependentFile(path);
-#endif
 }
 
 

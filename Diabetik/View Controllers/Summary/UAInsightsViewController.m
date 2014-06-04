@@ -118,7 +118,7 @@
     [super viewWillLayoutSubviews];
     
     self.collectionView.frame = self.view.bounds;
-    self.collectionView.contentInset = UIEdgeInsetsMake(20.0f, 0.0f, 60.0f, 0.0f);
+    self.collectionView.contentInset = UIEdgeInsetsMake(40.0f, 0.0f, 60.0f, 0.0f);
     [self.collectionView.collectionViewLayout invalidateLayout];
     
     self.closeButton.frame = CGRectMake(self.view.bounds.size.width - 60.0f, self.view.bounds.size.height-60.0f, 40.0f, 40.0f);
@@ -357,7 +357,6 @@
 {
     self.widgetListVC = [[UASummaryWidgetListViewController alloc] init];
     self.widgetListVC.delegate = self;
-    [(FXBlurView *)self.widgetListVC.view setUnderlyingView:self.parentViewController.view];
     
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:self.widgetListVC];
     [self presentViewController:nvc animated:YES completion:nil];
@@ -438,32 +437,20 @@
 {
     UASummaryWidget *widget = self.widgets[indexPath.row];
     
-    NSLog(@"Widget %@ size: %@", indexPath, NSStringFromCGSize(CGSizeMake(collectionView.bounds.size.width, widget.height)));
     return CGSizeMake(collectionView.bounds.size.width, [widget height]);
-}
-
-#pragma mark - Helpers
-- (NSString *)applicationSupportDirectoryPath
-{
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
-    if(paths && [paths count])
-    {
-        return [paths lastObject];
-    }
-    
-    return nil;
 }
 
 #pragma mark - UASummaryWidgetListViewDelegate methods
 - (void)summaryList:(UASummaryWidgetListViewController *)summaryListVC didSelectWidgetClass:(Class)WidgetClass
 {
-    NSLog(@"Did select widget of class: %@", WidgetClass);
-    
     id newWidget = [[WidgetClass alloc] init];
     [self.widgets addObject:newWidget];
     [self.collectionView reloadData];
     
-    [newWidget update];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [newWidget update];
+    });
     
     [self saveWidgets];
     [summaryListVC dismiss];
@@ -516,5 +503,23 @@
     }
     
     return NO;
+}
+
+#pragma mark - UIViewController method overrides
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
+}
+
+#pragma mark - Helpers
+- (NSString *)applicationSupportDirectoryPath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES);
+    if(paths && [paths count])
+    {
+        return [paths lastObject];
+    }
+    
+    return nil;
 }
 @end

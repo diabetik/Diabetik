@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "UAManagedObject.h"
 
 @class UAAccount;
 @interface UAEvent : UAManagedObject

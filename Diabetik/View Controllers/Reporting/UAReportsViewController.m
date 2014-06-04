@@ -285,6 +285,7 @@
             [self addChildViewController:chartVC];
             chartVC.chart.alpha = 0.0f;        
             [self.view addSubview:chartVC.view];
+            [chartVC setupChart];
             
             [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                 chartVC.view.bounds = self.view.bounds;

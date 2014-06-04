@@ -21,5 +21,4 @@
 #import <UIKit/UIKit.h>
 
 @interface UANavigationController : UINavigationController <UINavigationControllerDelegate, UIGestureRecognizerDelegate>
-
 @end

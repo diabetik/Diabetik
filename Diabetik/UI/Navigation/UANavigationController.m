@@ -103,5 +103,14 @@
     
     return UIStatusBarStyleDefault;
 }
+- (BOOL)prefersStatusBarHidden
+{
+    if([self.topViewController respondsToSelector:@selector(prefersStatusBarHidden)])
+    {
+        return [self.topViewController prefersStatusBarHidden];
+    }
+    
+    return NO;
+}
 
 @end

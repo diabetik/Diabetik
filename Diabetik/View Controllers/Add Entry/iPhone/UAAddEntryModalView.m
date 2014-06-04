@@ -44,7 +44,7 @@
         backgroundView = [[UIView alloc] initWithFrame:frame];
         backgroundView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f];
         backgroundView.alpha = 0.0f;
-        [self addSubview:backgroundView];
+        //[self addSubview:backgroundView];
         
         container = [[UIView alloc] initWithFrame:containerFrame];
         container.backgroundColor = [UIColor colorWithRed:226.0f/255.0f green:236.0f/255.0f blue:233.0f/255.0f alpha:1.0f];

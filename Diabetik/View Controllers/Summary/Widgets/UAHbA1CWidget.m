@@ -26,6 +26,9 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *subtitleLabel;
 @property (nonatomic, strong) UILabel *valueLabel;
+
+@property (nonatomic, strong) UILabel *settingDaysLabel;
+@property (nonatomic, strong) UISlider *settingDaysSlider;
 @end
 
 @implementation UAHbA1CWidget
@@ -61,6 +64,22 @@
         self.valueLabel.font = [UAFont standardUltraLightFontWithSize:50.0f];
         self.valueLabel.hidden = NO;
         [self.widgetContentView addSubview:self.valueLabel];
+        
+        // Settings
+        self.settingDaysSlider = [[UISlider alloc] initWithFrame:CGRectZero];
+        self.settingDaysSlider.minimumValue = 7;
+        self.settingDaysSlider.maximumValue = 150;
+        self.settingDaysSlider.value = self.numberOfDays;
+        [self.widgetSettingsView insertSubview:self.settingDaysSlider belowSubview:self.widgetSettingsCloseButton];
+        [self.settingDaysSlider addTarget:self action:@selector(updateNumberOfDaysValue:) forControlEvents:UIControlEventValueChanged];
+
+        self.settingDaysLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        self.settingDaysLabel.textColor = [UIColor whiteColor];
+        self.settingDaysLabel.textAlignment = NSTextAlignmentCenter;
+        self.settingDaysLabel.font = [UAFont standardUltraLightFontWithSize:50.0f];
+        self.settingDaysLabel.hidden = NO;
+        [self.widgetSettingsView insertSubview:self.settingDaysLabel belowSubview:self.widgetSettingsCloseButton];
+        [self updateNumberOfDaysLabel];;
     }
     
     return self;
@@ -71,6 +90,9 @@
     if(self)
     {
         self.numberOfDays = [representation[@"settings"][@"days"] integerValue];
+        
+        self.settingDaysSlider.value = self.numberOfDays;
+        [self updateNumberOfDaysLabel];
     }
     
     return self;
@@ -82,9 +104,21 @@
     self.titleLabel.frame = CGRectMake(0.0f, 20.0f, self.widgetContentView.bounds.size.width, 24.0f);
     self.subtitleLabel.frame = CGRectMake(0.0f, 44.0f, self.widgetContentView.bounds.size.width, 16.0f);
     self.valueLabel.frame = CGRectMake(0.0f, 70.0f, self.widgetContentView.bounds.size.width, 50.0f);
+    
+    self.settingDaysLabel.frame = CGRectInset(self.widgetSettingsView.bounds, 10.0f, 1.0f);
+    self.settingDaysSlider.frame = CGRectMake(10.0f, self.widgetSettingsView.bounds.size.height-40.0f, self.widgetSettingsView.bounds.size.width-20.0f, 40.0f);
 }
 
 #pragma mark - Logic
+- (void)updateNumberOfDaysLabel
+{
+    self.settingDaysLabel.text = [NSString stringWithFormat:@"%d", self.numberOfDays];
+}
+- (void)updateNumberOfDaysValue:(UISlider *)sender
+{
+    self.numberOfDays = (NSInteger)sender.value;
+    [self updateNumberOfDaysLabel];
+}
 - (void)update
 {
     [super update];

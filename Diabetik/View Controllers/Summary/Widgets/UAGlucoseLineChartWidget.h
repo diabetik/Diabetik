@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 UglyApps. All rights reserved.
 //
 
+#import <ShinobiCharts/ShinobiChart.h>
 #import "UASummaryWidget.h"
 
-@interface UAGlucoseLineChartWidget : UASummaryWidget
+@interface UAGlucoseLineChartWidget : UASummaryWidget <SChartDatasource, SChartDelegate>
 
 @end

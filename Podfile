@@ -1,5 +1,7 @@
 platform :ios, '7.0'
 
+link_with 'Diabetik', 'Diabetik Widget'
+
 pod 'Dropbox-Sync-API-SDK', '~> 2.0.3'
 pod 'HockeySDK', '~> 3.5.2'
 pod 'AFNetworking', '~> 2.0'

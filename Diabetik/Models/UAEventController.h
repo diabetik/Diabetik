@@ -19,6 +19,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UACommon.h"
 #import "UAEvent.h"
 #import "UAMedicine.h"
 #import "UAMeal.h"

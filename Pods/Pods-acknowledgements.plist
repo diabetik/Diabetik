@@ -14,7 +14,7 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright (c) 2013 AFNetworking (http://afnetworking.com/)
+			<string>Copyright (c) 2013-2014 AFNetworking (http://afnetworking.com/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -64,7 +64,7 @@ THE SOFTWARE.
 			<key>FooterText</key>
 			<string>FXBlurView
 
-Version 1.5.3, January 30th, 2014
+Version 1.5.6, March 18th, 2014
 
 Copyright (C) 2013 Charcoal Design
 
@@ -301,7 +301,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright (c) 2010-2013 Sam Soffes.
+			<string>Copyright (c) 2010-2014 Sam Soffes, http://soff.es
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

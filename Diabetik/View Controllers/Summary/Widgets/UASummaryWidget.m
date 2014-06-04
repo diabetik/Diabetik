@@ -35,18 +35,30 @@
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         
         self.widgetSettingsView = [[UIView alloc] initWithFrame:CGRectZero];
-        self.widgetSettingsView.backgroundColor = [UIColor clearColor];
-        [self addSubview:self.widgetSettingsView];
+        self.widgetSettingsView.backgroundColor = [UIColor colorWithRed:171.0f/255.0f green:225.0f/255.0f blue:105.0f/255.0f alpha:1.0f];
+        self.widgetSettingsView.layer.cornerRadius = 5;
+        self.widgetSettingsView.clipsToBounds = YES;
         
         self.widgetContentView = [[UIView alloc] initWithFrame:CGRectZero];
         self.widgetContentView.backgroundColor = [UIColor colorWithRed:171.0f/255.0f green:225.0f/255.0f blue:105.0f/255.0f alpha:1.0f];
         self.widgetContentView.layer.cornerRadius = 5;
+        self.widgetContentView.clipsToBounds = YES;
         [self addSubview:self.widgetContentView];
         
         self.activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         self.activityIndicatorView.hidesWhenStopped = YES;
         [self.widgetContentView addSubview:self.activityIndicatorView];
         [self.activityIndicatorView startAnimating];
+        
+        self.widgetSettingsButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 32.0f, 32.0f)];
+        [self.widgetSettingsButton addTarget:self action:@selector(showSettings:) forControlEvents:UIControlEventTouchUpInside];
+        self.widgetSettingsButton.backgroundColor = [UIColor blueColor];
+        [self.widgetContentView addSubview:self.widgetSettingsButton];
+        
+        self.widgetSettingsCloseButton = [[UIButton alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 32.0f, 32.0f)];
+        [self.widgetSettingsCloseButton addTarget:self action:@selector(hideSettings:) forControlEvents:UIControlEventTouchUpInside];
+        self.widgetSettingsCloseButton.backgroundColor = [UIColor blueColor];
+        [self.widgetSettingsView addSubview:self.widgetSettingsCloseButton];
     }
     
     return self;
@@ -66,7 +78,7 @@
     [super layoutSubviews];
     NSLog(@"Layout with %f height", self.bounds.size.height);
     
-    self.widgetSettingsView.frame = self.bounds;
+    self.widgetSettingsView.frame = CGRectInset(self.bounds, 10.0f, 0.0f);
     self.widgetContentView.frame = CGRectInset(self.bounds, 10.0f, 0.0f);
     self.activityIndicatorView.center = self.widgetContentView.center;
 }
@@ -79,6 +91,35 @@
 - (void)update
 {
     NSLog(@"Updating widget of type: %@", [self class]);
+}
+- (void)showSettings:(id)sender
+{
+    UIView *toView = self.widgetSettingsView;
+    UIView *fromView = self.widgetContentView;
+    
+    [UIView transitionFromView:fromView
+                        toView:toView
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionFlipFromBottom
+                    completion:^(BOOL finished) {
+        
+    }];
+}
+- (void)hideSettings:(id)sender
+{
+    NSLog(@"Hide settings");
+    UIView *toView = self.widgetContentView;
+    UIView *fromView = self.widgetSettingsView;
+    
+    [self update];
+    
+    [UIView transitionFromView:fromView
+                        toView:toView
+                      duration:0.5
+                       options:UIViewAnimationOptionTransitionFlipFromTop
+                    completion:^(BOOL finished) {
+                        
+                    }];
 }
 - (NSDictionary *)serializedRepresentation
 {

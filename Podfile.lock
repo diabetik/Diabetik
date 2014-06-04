@@ -1,31 +1,32 @@
 PODS:
-  - AFNetworking (2.1.0):
+  - AFNetworking (2.2.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.1.0):
+  - AFNetworking/NSURLConnection (2.2.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.1.0):
+  - AFNetworking/NSURLSession (2.2.4):
     - AFNetworking/NSURLConnection
-  - AFNetworking/Reachability (2.1.0)
-  - AFNetworking/Security (2.1.0)
-  - AFNetworking/Serialization (2.1.0)
-  - AFNetworking/UIKit (2.1.0):
+  - AFNetworking/Reachability (2.2.4)
+  - AFNetworking/Security (2.2.4)
+  - AFNetworking/Serialization (2.2.4)
+  - AFNetworking/UIKit (2.2.4):
     - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
   - Dropbox-Sync-API-SDK (2.0.3)
-  - FXBlurView (1.5.3)
-  - GoogleAnalytics-iOS-SDK (3.0.3)
-  - HockeySDK (3.5.2)
+  - FXBlurView (1.5.6)
+  - GoogleAnalytics-iOS-SDK (3.0.7)
+  - HockeySDK (3.5.5)
   - MBProgressHUD (0.8)
   - Reachability (3.1.1)
-  - REFrostedViewController (2.4.2)
-  - SSKeychain (1.2.1)
-  - TPKeyboardAvoiding (1.2.2)
+  - REFrostedViewController (2.4.5)
+  - SSKeychain (1.2.2)
+  - TPKeyboardAvoiding (1.2.3)
   - UAAppReviewManager (0.2.1)
 
 DEPENDENCIES:
@@ -42,16 +43,16 @@ DEPENDENCIES:
   - UAAppReviewManager (~> 0.2.1)
 
 SPEC CHECKSUMS:
-  AFNetworking: c7d7901a83f631414c7eda1737261f696101a5cd
-  Dropbox-Sync-API-SDK: 1d8324eb145be5a6b3b46d5b34354f6f784b4acd
-  FXBlurView: 8d662dd5b4ba15a1a0e97235501326fbdfb2b755
-  GoogleAnalytics-iOS-SDK: 80c804540a992c59d88397b3f9567417ba1001dc
-  HockeySDK: 203d3af93c2a229bfb528ff085201670ff65e1cf
-  MBProgressHUD: 2bbc6f470111daf7f3eaa4eb12b8cbf01c4c0622
-  Reachability: be4883bb93f31e38266ae3365e5600a317aae735
-  REFrostedViewController: 87207eece6eda9c888c68d5e1b60b6bde4797142
-  SSKeychain: d18926838c2e7cd342e2a49e9f869858e49f035a
-  TPKeyboardAvoiding: de224784615ac78d1c351df28b0696d402449c41
-  UAAppReviewManager: 5951542f163e9964ce0e5bd6543f512dfc0efd51
+  AFNetworking: ab63e259fe91eef4519b371ef0a4955af0e73e64
+  Dropbox-Sync-API-SDK: 1befdcc7250e5956809620710d9e7a45af400dcd
+  FXBlurView: 980bb3a2646234366be3de1bc087ddfc31ac77c5
+  GoogleAnalytics-iOS-SDK: bb285d8eef15a682f1b82971becd0d22edd0e53b
+  HockeySDK: f9af97c2f5df4eb6ca6d2a9c408f2ff498edd608
+  MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
+  Reachability: 8e9635e3cb4f98e7f825e51147f677ecc694d0e7
+  REFrostedViewController: 93c85bf09c95c8166fc5314aa6811fb33611afb7
+  SSKeychain: cc48bd3ad24fcd9125adb9e0d23dd50b8bbd08b9
+  TPKeyboardAvoiding: ca26afa683d829cb96fe69b887fc8be4178f0b9a
+  UAAppReviewManager: 7700010ccb8e6acd2524c7b5a2e1e2b1e03d3c04
 
 COCOAPODS: 0.32.1

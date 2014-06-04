@@ -86,8 +86,8 @@
             
             if (objects != nil && [objects count] > 0)
             {
-                NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-                NSDateComponents *currentComponents = [gregorianCalendar components:NSHourCalendarUnit fromDate:[NSDate date]];
+                NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+                NSDateComponents *currentComponents = [gregorianCalendar components:NSCalendarUnitHour fromDate:[NSDate date]];
                 NSInteger currentHour = [currentComponents hour];
                 
                 // Create an event array index for each medicine 'type'
@@ -102,7 +102,7 @@
                 // Iterate over all medicine events that have taken place over the past 15 days
                 for(UAMedicine *event in objects)
                 {
-                    NSDateComponents *eventComponents = [gregorianCalendar components:NSHourCalendarUnit fromDate:[event timestamp]];
+                    NSDateComponents *eventComponents = [gregorianCalendar components:NSCalendarUnitHour fromDate:[event timestamp]];
                     NSInteger eventHour = [eventComponents hour];
                     
                     // If this event occurred today, remove it from the rest of the group
@@ -143,7 +143,7 @@
                                 NSString *pEventDesc = [[pEvent name] lowercaseString];
                                 if([eventDesc levenshteinDistanceToString:pEventDesc] <= 3)
                                 {
-                                    NSDateComponents *eventComponents = [gregorianCalendar components:NSHourCalendarUnit fromDate:[event timestamp]];
+                                    NSDateComponents *eventComponents = [gregorianCalendar components:NSCalendarUnitHour fromDate:[event timestamp]];
                                     NSInteger eventHour = [eventComponents hour];
                                     
                                     // Remove any medication taken within 3 hours of this date/time

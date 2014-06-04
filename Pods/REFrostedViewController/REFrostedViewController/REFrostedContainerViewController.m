@@ -71,10 +71,7 @@
         UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:self.view.bounds];
         toolbar.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         toolbar.barStyle = (UIBarStyle)self.frostedViewController.liveBlurBackgroundStyle;
-        if ([toolbar respondsToSelector:@selector(setBarTintColor:)])
-            [toolbar performSelector:@selector(setBarTintColor:) withObject:self.frostedViewController.blurTintColor];
         [self.containerView addSubview:toolbar];
-
     } else {
         self.backgroundImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
         [self.containerView addSubview:self.backgroundImageView];
@@ -92,28 +89,30 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.backgroundImageView.image = self.screenshotImage;
-    self.backgroundImageView.frame = self.view.bounds;
-    self.frostedViewController.menuViewController.view.frame = self.containerView.bounds;
-    
-    if (self.frostedViewController.direction == REFrostedViewControllerDirectionLeft) {
-        [self setContainerFrame:CGRectMake(- self.frostedViewController.calculatedMenuViewSize.width, 0, self.frostedViewController.calculatedMenuViewSize.width, self.frostedViewController.calculatedMenuViewSize.height)];
+    if(!self.frostedViewController.visible) {
+        self.backgroundImageView.image = self.screenshotImage;
+        self.backgroundImageView.frame = self.view.bounds;
+        self.frostedViewController.menuViewController.view.frame = self.containerView.bounds;
+        
+        if (self.frostedViewController.direction == REFrostedViewControllerDirectionLeft) {
+            [self setContainerFrame:CGRectMake(- self.frostedViewController.calculatedMenuViewSize.width, 0, self.frostedViewController.calculatedMenuViewSize.width, self.frostedViewController.calculatedMenuViewSize.height)];
+        }
+        
+        if (self.frostedViewController.direction == REFrostedViewControllerDirectionRight) {
+            [self setContainerFrame:CGRectMake(self.view.frame.size.width, 0, self.frostedViewController.calculatedMenuViewSize.width, self.frostedViewController.calculatedMenuViewSize.height)];
+        }
+        
+        if (self.frostedViewController.direction == REFrostedViewControllerDirectionTop) {
+            [self setContainerFrame:CGRectMake(0, -self.frostedViewController.calculatedMenuViewSize.height, self.frostedViewController.calculatedMenuViewSize.width, self.frostedViewController.calculatedMenuViewSize.height)];
+        }
+        
+        if (self.frostedViewController.direction == REFrostedViewControllerDirectionBottom) {
+            [self setContainerFrame:CGRectMake(0, self.view.frame.size.height, self.frostedViewController.calculatedMenuViewSize.width, self.frostedViewController.calculatedMenuViewSize.height)];
+        }
+        
+        if (self.animateApperance)
+            [self show];
     }
-    
-    if (self.frostedViewController.direction == REFrostedViewControllerDirectionRight) {
-        [self setContainerFrame:CGRectMake(self.view.frame.size.width, 0, self.frostedViewController.calculatedMenuViewSize.width, self.frostedViewController.calculatedMenuViewSize.height)];
-    }
-    
-    if (self.frostedViewController.direction == REFrostedViewControllerDirectionTop) {
-        [self setContainerFrame:CGRectMake(0, -self.frostedViewController.calculatedMenuViewSize.height, self.frostedViewController.calculatedMenuViewSize.width, self.frostedViewController.calculatedMenuViewSize.height)];
-    }
-    
-    if (self.frostedViewController.direction == REFrostedViewControllerDirectionBottom) {
-        [self setContainerFrame:CGRectMake(0, self.view.frame.size.height, self.frostedViewController.calculatedMenuViewSize.width, self.frostedViewController.calculatedMenuViewSize.height)];
-    }
-    
-    if (self.animateApperance)
-        [self show];
 }
 
 - (void)setContainerFrame:(CGRect)frame

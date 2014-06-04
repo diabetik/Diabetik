@@ -108,19 +108,19 @@ static unsigned char kBITPNGEndChunk[4] = {0x49, 0x45, 0x4e, 0x44};
   
   // make sure this is called after startManager so all modules are fully setup
   if (!_isSetup) {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(authenticateInstallation) object:nil];
     [self performSelector:@selector(authenticateInstallation) withObject:nil afterDelay:0.1];
+  } else {
+    switch ([[UIApplication sharedApplication] applicationState]) {
+      case UIApplicationStateActive:
+        [self authenticate];
+        break;
+      case UIApplicationStateBackground:
+      case UIApplicationStateInactive:
+        // do nothing, wait for active state
+        break;
+    }
   }
-  
-  switch ([[UIApplication sharedApplication] applicationState]) {
-    case UIApplicationStateActive:
-      [self authenticate];
-      break;
-    case UIApplicationStateBackground:
-    case UIApplicationStateInactive:
-      // do nothing, wait for active state
-      break;
-  }
-  
   [self registerObservers];
 }
 
@@ -156,6 +156,10 @@ static unsigned char kBITPNGEndChunk[4] = {0x49, 0x45, 0x4e, 0x44};
 }
 
 - (void)alertOnFailureStoringTokenInKeychain {
+  if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+    return;
+  }
+
   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil
                                                       message:BITHockeyLocalizedString(@"HockeyAuthenticationViewControllerStorageError")
                                                      delegate:self
@@ -578,6 +582,7 @@ static unsigned char kBITPNGEndChunk[4] = {0x49, 0x45, 0x4e, 0x44};
   NSString *const kAuthorizationHost = @"authorize";
   NSString *urlScheme = _urlScheme ? : [NSString stringWithFormat:@"ha%@", self.appIdentifier];
   if(!([[url scheme] isEqualToString:urlScheme] && [[url host] isEqualToString:kAuthorizationHost])) {
+    BITHockeyLog(@"URL scheme for authentication doesn't match!");
     return NO;
   }
   
@@ -606,11 +611,11 @@ static unsigned char kBITPNGEndChunk[4] = {0x49, 0x45, 0x4e, 0x44};
     case BITAuthenticatorIdentificationTypeHockeyAppEmail:
     case BITAuthenticatorIdentificationTypeAnonymous:
     case BITAuthenticatorIdentificationTypeHockeyAppUser:
-      NSAssert(NO, @"Should only be called for Device and WebAuth identificationType");
       return NO;
   }
   
   if(installationIdentifier){
+    BITHockeyLog(@"Authentication succeeded.");
     if(NO == self.restrictApplicationUsage) {
       [self dismissAuthenticationControllerAnimated:YES completion:nil];
     }
@@ -622,6 +627,7 @@ static unsigned char kBITPNGEndChunk[4] = {0x49, 0x45, 0x4e, 0x44};
     }
   } else {
     //reset token
+    BITHockeyLog(@"Resetting authentication token");
     [self storeInstallationIdentifier:nil withType:self.identificationType];
     self.identified = NO;
     if(self.identificationCompletion) {
@@ -693,6 +699,8 @@ static unsigned char kBITPNGEndChunk[4] = {0x49, 0x45, 0x4e, 0x44};
     return;
   }
   
+  BITHockeyLog(@"Processing full size image for possible authentication");
+  
   unsigned char *buffer, *source;
   source = (unsigned char *)malloc((unsigned long)fs.st_size);
   if (read(fd, source, (unsigned long)fs.st_size) != fs.st_size) {
@@ -720,7 +728,8 @@ static unsigned char kBITPNGEndChunk[4] = {0x49, 0x45, 0x4e, 0x44};
     length = ntohl(length);
     
     buffer += 4;
-    name = (unsigned char *)malloc(4);
+    name = (unsigned char *)malloc(5);
+    name[4] = 0;
     memcpy(name, buffer, 4);
     
     buffer += 4;
@@ -754,7 +763,10 @@ static unsigned char kBITPNGEndChunk[4] = {0x49, 0x45, 0x4e, 0x44};
   free(source);
   
   if (result) {
+    BITHockeyLog(@"Authenticating using full size image information: %@", result);
     [self handleOpenURL:[NSURL URLWithString:result] sourceApplication:nil annotation:nil];
+  } else {
+    BITHockeyLog(@"No authentication information found");
   }
 }
 

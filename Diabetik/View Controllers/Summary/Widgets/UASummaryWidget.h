@@ -28,6 +28,7 @@
 @property (nonatomic, strong) UIView *widgetContentView;
 @property (nonatomic, strong) UIView *widgetSettingsView;
 @property (nonatomic, strong) UIButton *widgetSettingsButton;
+@property (nonatomic, strong) UIButton *widgetSettingsCloseButton;
 @property (nonatomic, strong) UIActivityIndicatorView *activityIndicatorView;
 
 // Setup

@@ -56,7 +56,7 @@ static const int kStateKey;
     if ( [self isKindOfClass:[TPKeyboardAvoidingScrollView class]] ) {
         state.priorContentSize = self.contentSize;
         
-        if ( (![self respondsToSelector:@selector(constraints)] || self.constraints.count == 0) && CGSizeEqualToSize(self.contentSize, CGSizeZero) ) {
+        if ( CGSizeEqualToSize(self.contentSize, CGSizeZero) ) {
             // Set the content size, if it's not set. Do not set content size explicitly if auto-layout
             // is being used to manage subviews
             self.contentSize = [self TPKeyboardAvoiding_calculatedContentSizeFromSubviewFrames];
@@ -203,13 +203,25 @@ static const int kStateKey;
 }
 
 -(CGSize)TPKeyboardAvoiding_calculatedContentSizeFromSubviewFrames {
+    
+    BOOL wasShowingVerticalScrollIndicator = self.showsVerticalScrollIndicator;
+    BOOL wasShowingHorizontalScrollIndicator = self.showsHorizontalScrollIndicator;
+    
+    self.showsVerticalScrollIndicator = NO;
+    self.showsHorizontalScrollIndicator = NO;
+    
     CGRect rect = CGRectZero;
     for ( UIView *view in self.subviews ) {
         rect = CGRectUnion(rect, view.frame);
     }
     rect.size.height += kCalculatedContentPadding;
+    
+    self.showsVerticalScrollIndicator = wasShowingVerticalScrollIndicator;
+    self.showsHorizontalScrollIndicator = wasShowingHorizontalScrollIndicator;
+    
     return rect.size;
 }
+
 
 - (UIEdgeInsets)TPKeyboardAvoiding_contentInsetForKeyboard {
     TPKeyboardAvoidingState *state = self.keyboardAvoidingState;

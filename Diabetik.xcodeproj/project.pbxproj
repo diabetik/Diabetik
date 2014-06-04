@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09EEE651810D4526B17A8AEB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE407F98E74807B5E3E8FD /* libPods.a */; };
 		1DADC2BD9B3A453D97010A48 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FBEE407F98E74807B5E3E8FD /* libPods.a */; };
 		5301AED5185A08A0005F4CF4 /* UACoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301AED4185A08A0005F4CF4 /* UACoreDataController.m */; };
 		5304B5BB18745DCF00184544 /* UATooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5304B5BA18745DCF00184544 /* UATooltipView.m */; };
@@ -16,6 +17,46 @@
 		5324AFFD16DE8BE40004A30F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324AFFC16DE8BE30004A30F /* libz.dylib */; };
 		5324D3B3175102730003F257 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324D3B2175102730003F257 /* AudioToolbox.framework */; };
 		5326A32817CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */; };
+		53286FA4193F128B00B0414C /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53286FA3193F128B00B0414C /* NotificationCenter.framework */; };
+		53286FAA193F128B00B0414C /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53286FA9193F128B00B0414C /* TodayViewController.m */; };
+		53286FAC193F128B00B0414C /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53286FAB193F128B00B0414C /* MainInterface.storyboard */; };
+		53286FAF193F128B00B0414C /* com.uglyapps.diabetik.Diabetik-Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 53286FA2193F128B00B0414C /* com.uglyapps.diabetik.Diabetik-Widget.appex */; };
+		53286FB8193F13BE00B0414C /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 53286FB7193F13BE00B0414C /* Media.xcassets */; };
+		532870DF193F1A8400B0414C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA7D166F830300F0709F /* CoreData.framework */; };
+		532870E0193F1A9900B0414C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA77166F830300F0709F /* UIKit.framework */; };
+		532870E1193F1A9D00B0414C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA79166F830300F0709F /* Foundation.framework */; };
+		532870E2193F1AA200B0414C /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AE05D71894815D0078B408 /* AdSupport.framework */; };
+		532870E3193F1AA200B0414C /* ShinobiCharts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F78EE518427791006736F5 /* ShinobiCharts.framework */; };
+		532870E4193F1AA200B0414C /* libstdc++.6.0.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53F78EE31842700C006736F5 /* libstdc++.6.0.9.dylib */; };
+		532870E5193F1AA200B0414C /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53D5C4D518412A720000CB86 /* libc++.dylib */; };
+		532870E6193F1AA200B0414C /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539E1CD017B7FEDD0059ED17 /* Accelerate.framework */; };
+		532870E7193F1AA200B0414C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5354083817B7B90A008C64A4 /* StoreKit.framework */; };
+		532870E8193F1AA200B0414C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EA4177D7DD1000D793F /* CoreText.framework */; };
+		532870E9193F1AA200B0414C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324D3B2175102730003F257 /* AudioToolbox.framework */; };
+		532870EA193F1AA200B0414C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53388BFF17103ED9008C9E18 /* MobileCoreServices.framework */; };
+		532870EB193F1AA200B0414C /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53B576751709DF02007322EF /* MessageUI.framework */; };
+		532870EC193F1AA200B0414C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07441708B72300B7BF55 /* SystemConfiguration.framework */; };
+		532870ED193F1AA200B0414C /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 533F07421708B71700B7BF55 /* CFNetwork.framework */; };
+		532870EE193F1AA200B0414C /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538FF35216FB115E002B4FC9 /* Accounts.framework */; };
+		532870EF193F1AA200B0414C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538FF35016FB1152002B4FC9 /* Social.framework */; };
+		532870F0193F1AA200B0414C /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFC16E91A85001B5ECD /* Security.framework */; };
+		532870F1193F1AA200B0414C /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E59BFA16E91A7E001B5ECD /* OpenGLES.framework */; };
+		532870F2193F1AA200B0414C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5324AFFC16DE8BE30004A30F /* libz.dylib */; };
+		532870F3193F1AA200B0414C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5399F55716DBD850007E619B /* MapKit.framework */; };
+		532870F4193F1AA200B0414C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5399308916852640002F208D /* QuartzCore.framework */; };
+		532870F5193F1AA200B0414C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530603A3167FCFFA00EFBE8B /* CoreLocation.framework */; };
+		532870F6193F1AA200B0414C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 538DBA7B166F830300F0709F /* CoreGraphics.framework */; };
+		532870FA193F1BF300B0414C /* UAEventController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351617736C0600AD89E2 /* UAEventController.m */; };
+		532870FC193F1BF300B0414C /* UACoreDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5301AED4185A08A0005F4CF4 /* UACoreDataController.m */; };
+		532870FE193F1C1B00B0414C /* UAActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F30441773266500AD89E2 /* UAActivity.m */; };
+		53287100193F1C1B00B0414C /* UAEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F30461773266500AD89E2 /* UAEvent.m */; };
+		53287102193F1C1B00B0414C /* UAManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F30481773266500AD89E2 /* UAManagedObject.m */; };
+		53287104193F1C1B00B0414C /* UAMeal.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F304A1773266500AD89E2 /* UAMeal.m */; };
+		53287106193F1C1B00B0414C /* UAMedicine.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F304C1773266500AD89E2 /* UAMedicine.m */; };
+		53287108193F1C1B00B0414C /* UANote.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F304E1773266500AD89E2 /* UANote.m */; };
+		5328710A193F1C1B00B0414C /* UAReading.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F30501773266500AD89E2 /* UAReading.m */; };
+		53287112193F1C1B00B0414C /* UATag.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F30581773266500AD89E2 /* UATag.m */; };
+		53287113193F1C2E00B0414C /* UAMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 533F351C17736C0600AD89E2 /* UAMediaController.m */; };
 		532D0EA5177D7DD2000D793F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532D0EA4177D7DD1000D793F /* CoreText.framework */; };
 		5330A26818AAC7E200000A47 /* UAActivityInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A25B18AAC7E200000A47 /* UAActivityInputViewController.m */; };
 		5330A26918AAC7E200000A47 /* UABGInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5330A25D18AAC7E200000A47 /* UABGInputViewController.m */; };
@@ -208,6 +249,37 @@
 		53FE5FB1189EC0E6008AC334 /* UACategorySelectorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 53FE5FB0189EC0E6008AC334 /* UACategorySelectorButton.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		53286FAD193F128B00B0414C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 538DBA6A166F830300F0709F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53286FA1193F128B00B0414C;
+			remoteInfo = "Diabetik Widget";
+		};
+		53286FB0193F128B00B0414C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 538DBA6A166F830300F0709F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 53286FA1193F128B00B0414C;
+			remoteInfo = "Diabetik Widget";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		53286FB6193F128C00B0414C /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				53286FAF193F128B00B0414C /* com.uglyapps.diabetik.Diabetik-Widget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		5301AED3185A08A0005F4CF4 /* UACoreDataController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UACoreDataController.h; sourceTree = "<group>"; };
 		5301AED4185A08A0005F4CF4 /* UACoreDataController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UACoreDataController.m; sourceTree = "<group>"; };
@@ -222,6 +294,14 @@
 		5324D3B2175102730003F257 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		5326A32417CFB74900B5F4A2 /* Diabetik_1.2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Diabetik_1.2.xcdatamodel; sourceTree = "<group>"; };
 		5326A32717CFB86A00B5F4A2 /* Diabetik_1.1_to_1.2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Diabetik_1.1_to_1.2.xcmappingmodel; sourceTree = "<group>"; };
+		53286FA2193F128B00B0414C /* com.uglyapps.diabetik.Diabetik-Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "com.uglyapps.diabetik.Diabetik-Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		53286FA3193F128B00B0414C /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		53286FA7193F128B00B0414C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		53286FA8193F128B00B0414C /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		53286FA9193F128B00B0414C /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		53286FAB193F128B00B0414C /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
+		53286FB7193F13BE00B0414C /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		532870F8193F1B1600B0414C /* Diabetik-Widget-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Diabetik-Widget-Prefix.pch"; sourceTree = "<group>"; };
 		532D0EA4177D7DD1000D793F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		532D720E1858FEC300ECBC97 /* Diabetik.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Diabetik.entitlements; sourceTree = "<group>"; };
 		5330A25A18AAC7E200000A47 /* UAActivityInputViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UAActivityInputViewController.h; sourceTree = "<group>"; };
@@ -569,10 +649,42 @@
 		53FE5FB0189EC0E6008AC334 /* UACategorySelectorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UACategorySelectorButton.m; sourceTree = "<group>"; };
 		A62F871070604BBAA3B69F9F /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FBEE407F98E74807B5E3E8FD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		HYXIFWTDXJPPRRMDCEPMDTJH /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		53286F9F193F128B00B0414C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				532870E2193F1AA200B0414C /* AdSupport.framework in Frameworks */,
+				532870E3193F1AA200B0414C /* ShinobiCharts.framework in Frameworks */,
+				532870E4193F1AA200B0414C /* libstdc++.6.0.9.dylib in Frameworks */,
+				532870E5193F1AA200B0414C /* libc++.dylib in Frameworks */,
+				532870E6193F1AA200B0414C /* Accelerate.framework in Frameworks */,
+				532870E7193F1AA200B0414C /* StoreKit.framework in Frameworks */,
+				532870E8193F1AA200B0414C /* CoreText.framework in Frameworks */,
+				532870E9193F1AA200B0414C /* AudioToolbox.framework in Frameworks */,
+				532870EA193F1AA200B0414C /* MobileCoreServices.framework in Frameworks */,
+				532870EB193F1AA200B0414C /* MessageUI.framework in Frameworks */,
+				532870EC193F1AA200B0414C /* SystemConfiguration.framework in Frameworks */,
+				532870ED193F1AA200B0414C /* CFNetwork.framework in Frameworks */,
+				532870EE193F1AA200B0414C /* Accounts.framework in Frameworks */,
+				532870EF193F1AA200B0414C /* Social.framework in Frameworks */,
+				532870F0193F1AA200B0414C /* Security.framework in Frameworks */,
+				532870F1193F1AA200B0414C /* OpenGLES.framework in Frameworks */,
+				532870F2193F1AA200B0414C /* libz.dylib in Frameworks */,
+				532870F3193F1AA200B0414C /* MapKit.framework in Frameworks */,
+				532870F4193F1AA200B0414C /* QuartzCore.framework in Frameworks */,
+				532870F5193F1AA200B0414C /* CoreLocation.framework in Frameworks */,
+				532870E0193F1A9900B0414C /* UIKit.framework in Frameworks */,
+				532870E1193F1A9D00B0414C /* Foundation.framework in Frameworks */,
+				532870F6193F1AA200B0414C /* CoreGraphics.framework in Frameworks */,
+				532870DF193F1A8400B0414C /* CoreData.framework in Frameworks */,
+				09EEE651810D4526B17A8AEB /* libPods.a in Frameworks */,
+				53286FA4193F128B00B0414C /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		538DBA70166F830300F0709F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -615,6 +727,27 @@
 				53240A82189534BB00AEA9E8 /* UATagTableViewCell.m */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		53286FA5193F128B00B0414C /* Diabetik Widget */ = {
+			isa = PBXGroup;
+			children = (
+				53286FA8193F128B00B0414C /* TodayViewController.h */,
+				53286FA9193F128B00B0414C /* TodayViewController.m */,
+				53286FAB193F128B00B0414C /* MainInterface.storyboard */,
+				53286FA6193F128B00B0414C /* Supporting Files */,
+				532870F8193F1B1600B0414C /* Diabetik-Widget-Prefix.pch */,
+			);
+			path = "Diabetik Widget";
+			sourceTree = "<group>";
+		};
+		53286FA6193F128B00B0414C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				53286FA7193F128B00B0414C /* Info.plist */,
+				53286FB7193F13BE00B0414C /* Media.xcassets */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		5330A25918AAC7E200000A47 /* Input View Controllers */ = {
@@ -1292,6 +1425,7 @@
 			isa = PBXGroup;
 			children = (
 				533F30271773266500AD89E2 /* Diabetik */,
+				53286FA5193F128B00B0414C /* Diabetik Widget */,
 				538DBA76166F830300F0709F /* Frameworks */,
 				538DBA74166F830300F0709F /* Products */,
 				A62F871070604BBAA3B69F9F /* Pods.xcconfig */,
@@ -1302,6 +1436,7 @@
 			isa = PBXGroup;
 			children = (
 				538DBA73166F830300F0709F /* Diabetik.app */,
+				53286FA2193F128B00B0414C /* com.uglyapps.diabetik.Diabetik-Widget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1333,8 +1468,8 @@
 				538DBA79166F830300F0709F /* Foundation.framework */,
 				538DBA7B166F830300F0709F /* CoreGraphics.framework */,
 				538DBA7D166F830300F0709F /* CoreData.framework */,
-				HYXIFWTDXJPPRRMDCEPMDTJH /* SparkInspector.framework */,
 				FBEE407F98E74807B5E3E8FD /* libPods.a */,
+				53286FA3193F128B00B0414C /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1497,6 +1632,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		53286FA1193F128B00B0414C /* Diabetik Widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 53286FB5193F128C00B0414C /* Build configuration list for PBXNativeTarget "Diabetik Widget" */;
+			buildPhases = (
+				343CAAE97CD6498E9F54CC47 /* Check Pods Manifest.lock */,
+				53286F9E193F128B00B0414C /* Sources */,
+				53286F9F193F128B00B0414C /* Frameworks */,
+				53286FA0193F128B00B0414C /* Resources */,
+				B3036815FB0B44469D7E3644 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Diabetik Widget";
+			productName = "Diabetik Widget";
+			productReference = 53286FA2193F128B00B0414C /* com.uglyapps.diabetik.Diabetik-Widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		538DBA72166F830300F0709F /* Diabetik */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 538DBAA2166F830300F0709F /* Build configuration list for PBXNativeTarget "Diabetik" */;
@@ -1507,10 +1661,13 @@
 				538DBA71166F830300F0709F /* Resources */,
 				532A3F78185E565200508F75 /* ShellScript */,
 				2E0F6A5A91D047E7BE05CE8B /* Copy Pods Resources */,
+				53286FB6193F128C00B0414C /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				53286FAE193F128B00B0414C /* PBXTargetDependency */,
+				53286FB1193F128B00B0414C /* PBXTargetDependency */,
 			);
 			name = Diabetik;
 			productName = Diabetting;
@@ -1527,6 +1684,10 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = UglyApps;
 				TargetAttributes = {
+					53286FA1193F128B00B0414C = {
+						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = WJUU699234;
+					};
 					538DBA72166F830300F0709F = {
 						DevelopmentTeam = WJUU699234;
 						SystemCapabilities = {
@@ -1582,11 +1743,21 @@
 			projectRoot = "";
 			targets = (
 				538DBA72166F830300F0709F /* Diabetik */,
+				53286FA1193F128B00B0414C /* Diabetik Widget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		53286FA0193F128B00B0414C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53286FB8193F13BE00B0414C /* Media.xcassets in Resources */,
+				53286FAC193F128B00B0414C /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		538DBA71166F830300F0709F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1654,6 +1825,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		343CAAE97CD6498E9F54CC47 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		532A3F78185E565200508F75 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1667,9 +1853,43 @@
 			shellPath = /bin/sh;
 			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
+		B3036815FB0B44469D7E3644 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		53286F9E193F128B00B0414C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				53287113193F1C2E00B0414C /* UAMediaController.m in Sources */,
+				532870FE193F1C1B00B0414C /* UAActivity.m in Sources */,
+				53287100193F1C1B00B0414C /* UAEvent.m in Sources */,
+				53287102193F1C1B00B0414C /* UAManagedObject.m in Sources */,
+				53287104193F1C1B00B0414C /* UAMeal.m in Sources */,
+				53287106193F1C1B00B0414C /* UAMedicine.m in Sources */,
+				53287108193F1C1B00B0414C /* UANote.m in Sources */,
+				5328710A193F1C1B00B0414C /* UAReading.m in Sources */,
+				53287112193F1C1B00B0414C /* UATag.m in Sources */,
+				532870FA193F1BF300B0414C /* UAEventController.m in Sources */,
+				532870FC193F1BF300B0414C /* UACoreDataController.m in Sources */,
+				53286FAA193F128B00B0414C /* TodayViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		538DBA6F166F830300F0709F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1826,6 +2046,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		53286FAE193F128B00B0414C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53286FA1193F128B00B0414C /* Diabetik Widget */;
+			targetProxy = 53286FAD193F128B00B0414C /* PBXContainerItemProxy */;
+		};
+		53286FB1193F128B00B0414C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 53286FA1193F128B00B0414C /* Diabetik Widget */;
+			targetProxy = 53286FB0193F128B00B0414C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		533F30591773266500AD89E2 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
@@ -1845,6 +2078,117 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		53286FB2193F128C00B0414C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A62F871070604BBAA3B69F9F /* Pods.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREFIX_HEADER = "Diabetik Widget/Diabetik-Widget-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "Diabetik Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				METAL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "com.uglyapps.diabetik.$(TARGET_NAME:rfc1034identifier)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		53286FB3193F128C00B0414C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A62F871070604BBAA3B69F9F /* Pods.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREFIX_HEADER = "Diabetik Widget/Diabetik-Widget-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "Diabetik Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				METAL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "com.uglyapps.diabetik.$(TARGET_NAME:rfc1034identifier)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		53286FB4193F128C00B0414C /* Beta Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A62F871070604BBAA3B69F9F /* Pods.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PREFIX_HEADER = "Diabetik Widget/Diabetik-Widget-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "Diabetik Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				METAL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "com.uglyapps.diabetik.$(TARGET_NAME:rfc1034identifier)";
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Beta Release";
+		};
 		5359DD0517855DCB00141823 /* Beta Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2067,6 +2411,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		53286FB5193F128C00B0414C /* Build configuration list for PBXNativeTarget "Diabetik Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				53286FB2193F128C00B0414C /* Debug */,
+				53286FB3193F128C00B0414C /* Release */,
+				53286FB4193F128C00B0414C /* Beta Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		538DBA6D166F830300F0709F /* Build configuration list for PBXProject "Diabetik" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

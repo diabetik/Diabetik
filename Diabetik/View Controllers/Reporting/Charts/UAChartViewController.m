@@ -59,10 +59,12 @@
         [self.view addSubview:closeButton];
     }
 }
+/*
 - (void)willMoveToParentViewController:(UIViewController *)parent
 {
     [self setupChart];
 }
+*/
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];

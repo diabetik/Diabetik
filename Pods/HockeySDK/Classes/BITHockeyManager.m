@@ -34,6 +34,21 @@
 
 #import "BITHockeyHelper.h"
 #import "BITHockeyAppClient.h"
+#import "BITKeychainUtils.h"
+
+#include <stdint.h>
+
+typedef struct {
+  uint8_t       info_version;
+  const char    hockey_version[16];
+  const char    hockey_build[16];
+} bitstadium_info_t;
+
+bitstadium_info_t bitstadium_library_info __attribute__((section("__TEXT,__bit_hockey,regular,no_dead_strip"))) = {
+  .info_version = 1,
+  .hockey_version = BITHOCKEY_C_VERSION,
+  .hockey_build = BITHOCKEY_C_BUILD
+};
 
 
 #if HOCKEYSDK_FEATURE_CRASH_REPORTER
@@ -350,6 +365,56 @@
   }
 }
 
+- (void)modifyKeychainUserValue:(NSString *)value forKey:(NSString *)key {
+  NSError *error = nil;
+  BOOL success = YES;
+  NSString *updateType = @"update";
+  
+  if (value) {
+    success = [BITKeychainUtils storeUsername:key
+                                  andPassword:value
+                               forServiceName:bit_keychainHockeySDKServiceName()
+                               updateExisting:YES
+                                accessibility:kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+                                        error:&error];
+  } else {
+    updateType = @"delete";
+    if ([BITKeychainUtils getPasswordForUsername:key
+                                  andServiceName:bit_keychainHockeySDKServiceName()
+                                           error:&error]) {
+      success = [BITKeychainUtils deleteItemForUsername:key
+                                         andServiceName:bit_keychainHockeySDKServiceName()
+                                                  error:&error];
+    }
+  }
+  
+  if (!success) {
+    NSString *errorDescription = [error description] ?: @"";
+    BITHockeyLog(@"ERROR: Couldn't %@ key %@ in the keychain. %@", updateType, key, errorDescription);
+  }
+}
+
+- (void)setUserID:(NSString *)userID {
+  // always set it, since nil value will trigger removal of the keychain entry
+  _userID = userID;
+  
+  [self modifyKeychainUserValue:userID forKey:kBITHockeyMetaUserID];
+}
+
+- (void)setUserName:(NSString *)userName {
+  // always set it, since nil value will trigger removal of the keychain entry
+  _userName = userName;
+  
+  [self modifyKeychainUserValue:userName forKey:kBITHockeyMetaUserName];
+}
+
+- (void)setUserEmail:(NSString *)userEmail {
+  // always set it, since nil value will trigger removal of the keychain entry
+  _userEmail = userEmail;
+  
+  [self modifyKeychainUserValue:userEmail forKey:kBITHockeyMetaUserEmail];
+}
+
 - (void)testIdentifier {
   if (!_appIdentifier || [self isAppStoreEnvironment]) {
     return;
@@ -366,11 +431,11 @@
 
 
 - (NSString *)version {
-  return BITHOCKEY_VERSION;
+  return [NSString stringWithUTF8String:bitstadium_library_info.hockey_version];
 }
 
 - (NSString *)build {
-  return BITHOCKEY_BUILD;
+  return [NSString stringWithUTF8String:bitstadium_library_info.hockey_build];
 }
 
 

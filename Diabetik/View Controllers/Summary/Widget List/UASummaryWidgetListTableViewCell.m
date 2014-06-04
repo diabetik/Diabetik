@@ -29,9 +29,11 @@
         
         self.textLabel.textAlignment = NSTextAlignmentCenter;
         self.textLabel.textColor = [UIColor colorWithRed:0.0f/255.0f green:182.0f/255.0f blue:165.0f/255.0f alpha:1.0f];
+        self.textLabel.font = [UAFont standardBoldFontWithSize:16.0f];
         self.detailTextLabel.textAlignment = NSTextAlignmentCenter;
         self.detailTextLabel.textColor = [UIColor colorWithRed:108.0f/255.0f green:111.0f/255.0f blue:111.0f/255.0f alpha:1.0f];
         self.detailTextLabel.numberOfLines = 2;
+        self.detailTextLabel.font = [UAFont standardRegularFontWithSize:14.0f];
         
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
@@ -44,7 +46,8 @@
     
     self.buttonView.frame = CGRectInset(self.bounds, 15, 5);
     
-    self.textLabel.backgroundColor = [UIColor redColor];
+    self.textLabel.frame = CGRectMake(20.0f, self.textLabel.frame.origin.y, self.bounds.size.width - 40, self.textLabel.frame.size.height);
+    self.detailTextLabel.frame = CGRectMake(20.0f, self.detailTextLabel.frame.origin.y, self.bounds.size.width - 40, self.detailTextLabel.frame.size.height);
 //    self.textLabel.frame = CGRectInset(self.bounds, 10, 5);
 }
 

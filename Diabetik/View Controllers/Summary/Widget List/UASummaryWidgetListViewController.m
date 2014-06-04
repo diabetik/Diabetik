@@ -54,26 +54,6 @@
     
     return self;
 }
-- (void)loadView
-{
-    FXBlurView *baseView = [[FXBlurView alloc] initWithFrame:CGRectZero];
-    baseView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    baseView.tintColor = [UIColor blackColor];
-    baseView.dynamic = NO;
-    baseView.blurRadius = 15.0f;
-    
-    self.tableView = [[TPKeyboardAvoidingTableView alloc] initWithFrame:baseView.frame style:tableStyle];
-    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.backgroundColor = [UIColor clearColor];
-    self.tableView.backgroundView = nil;
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    self.tableView.separatorColor = [UIColor colorWithRed:189.0f/255.0f green:189.0f/255.0f blue:189.0f/255.0f alpha:1.0f];
-    [baseView addSubview:self.tableView];
-    
-    self.view = baseView;
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -81,10 +61,8 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.closeButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 32, 32)];
-    [self.closeButton setBackgroundImage:[UIImage imageNamed:@"AddEntryModalCloseIconiPad"] forState:UIControlStateNormal];
-    [self.closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.closeButton];
+    UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"NavBarIconCancel.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(handleBack:)];
+    [self.navigationItem setLeftBarButtonItem:cancelBarButtonItem animated:NO];
 }
 - (void)viewWillLayoutSubviews
 {
